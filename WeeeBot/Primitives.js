@@ -201,7 +201,7 @@ function weeebot_led_matrix_time(argValues, util){
     util.ioQuery('serial', 'sendMsg', [cmd]);
 }
 function weeebot_led_matrix_string(argValues, util){
-    var port = argValues.SENSOR_PORT
+    var port = argValues.SENSOR_PORT;
     var x = argValues.X;
     var y = argValues.Y;
     var str = argValues.STR;
@@ -210,13 +210,22 @@ function weeebot_led_matrix_string(argValues, util){
 }
 
 function weeebot_led_matrix_bitmap(argValues, util){
-    var port = argValues.SENSOR_PORT
+    var port = argValues.SENSOR_PORT;
     var x = argValues.X;
     var y = argValues.Y;
-    var data = argValues.LED_MATRIX_DATA;
-    var cmd = createCMD(115, port, x, y, data);
-    console.log(cmd);
+    var data = JSON.parse(argValues.LED_MATRIX_DATA);
+    var bytes = [];
+    for(var j=0; j<21; ++j){
+        bytes[j] = 0;
+        for(var i=0; i<7; ++i){
+            if(data[i] & (1 << j)){
+                bytes[j] |= 1 << i;
+            }
+        }
+    }
     
+    var cmd = createCMD(115, port, x, y, ...bytes);
+    util.ioQuery('serial', 'sendMsg', [cmd]);
 }
 module.exports = function(){
     return {
