@@ -28,6 +28,11 @@
     "react-dom": "^15.6.1"
   },
   "devDependencies": {
+    "brace": "latest",
+    "react-ace": "latest",
+    "react-bootstrap": "latest",
+    "react-fa": "latest",
+    "font-awesome": "latest",
     "autoprefixer": "^7.1.3",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.23.1",

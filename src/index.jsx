@@ -6,6 +6,7 @@ import GUI from './containers/gui.jsx';
 import ProjectLoaderHOC from './lib/project-loader-hoc.jsx';
 
 import styles from './index.css';
+require("./language/en");
 
 const App = AppStateHOC(ProjectLoaderHOC(GUI));
 

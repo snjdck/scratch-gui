@@ -8,6 +8,8 @@ import VM from 'scratch-vm';
 import Prompt from './prompt.jsx';
 import BlocksComponent from '../components/blocks/blocks.jsx';
 
+const Blockly = require("scratch-blocks");
+
 const addFunctionListener = (object, property, callback) => {
     const oldFn = object[property];
     object[property] = function () {
@@ -35,6 +37,8 @@ class Blocks extends React.Component {
             'onVisualReport',
             'onWorkspaceUpdate',
             'onWorkspaceMetricsChange',
+            "loadPlugin",
+            "sb2cpp",
             'setBlocks'
         ]);
         this.ScratchBlocks.prompt = this.handlePromptStart;
@@ -45,6 +49,17 @@ class Blocks extends React.Component {
         this.onTargetsUpdate = debounce(this.onTargetsUpdate, 100);
     }
     componentDidMount () {
+        if(this.props.vm.weeecode.plugin.getBlocks) {
+            var blocks = this.props.vm.weeecode.plugin.getBlocks();
+            for (var key in blocks) {
+                Blockly.Blocks[key] = blocks[key];
+            }
+        }
+
+        var toolbox = this.props.vm.weeecode.toolbox.getDefalutToolBox(this.ScratchBlocks.Msg);
+        var pluginToolbox = this.props.vm.weeecode.plugin.getToolbox();
+        Blockly.Blocks.defaultToolbox = toolbox.replace("</xml>", pluginToolbox + "</xml>");
+        
         const workspaceConfig = defaultsDeep({}, Blocks.defaultOptions, this.props.options);
         this.workspace = this.ScratchBlocks.inject(this.blocks, workspaceConfig);
 
@@ -76,6 +91,43 @@ class Blocks extends React.Component {
     componentWillUnmount () {
         this.detachVM();
         this.workspace.dispose();
+    }
+    loadPlugin(){
+        return;
+        //var pluginName = this.props.kb.pluginmng.enabled;
+        var pluginName = "WeeeBot";
+        var runtime = this.props.vm.runtime;
+        this.props.vm.weeecode.loadPlugin(pluginName,runtime);
+        /*
+        var pluginPackage = {
+            pluginName:this.props.vm.weeecode.pluginmodule
+        };*/
+        var vm = this.props.vm
+        var packageObject = new (this.props.vm.weeecode.pluginmodule)(vm.runtime);
+
+        const packagePrimitives = packageObject.getPrimitives();
+        for (const op in packagePrimitives) {
+            if (packagePrimitives.hasOwnProperty(op)) {
+                vm.runtime._primitives[op] =
+                    packagePrimitives[op].bind(packageObject);
+            }
+        }
+        const packageHats = packageObject.getHats();
+        for (const hatName in packageHats) {
+            if (packageHats.hasOwnProperty(hatName)) {
+                vm.runtime._hats[hatName] = packageHats[hatName];
+            }
+        }
+        //runtime._registerBlockPackages(pluginPackage);
+    }
+    sb2cpp(){
+        try {
+            var code = "";
+            code += Blockly.Arduino.workspaceToCode(this.workspace);
+        } catch(e) {
+            console.log(e.message);
+        }
+        return code;
     }
     attachVM () {
         this.workspace.addChangeListener(this.props.vm.blockListener);

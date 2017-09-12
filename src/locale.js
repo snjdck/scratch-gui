@@ -1,5 +1,5 @@
 import localeDataEn from 'react-intl/locale-data/en';
-import localeDataEs from 'react-intl/locale-data/es';
+import localeDataZh from 'react-intl/locale-data/zh';
 import localeDataFr from 'react-intl/locale-data/fr';
 
 import messages from '../locale/messages.json'; // eslint-disable-line import/no-unresolved
@@ -11,9 +11,9 @@ export default {
         messages: messages.en
     },
     es: {
-        name: 'Español',
-        localeData: localeDataEs,
-        messages: messages.es
+        name: '简体中文',
+        localeData: localeDataZh,
+        messages: messages.zh
     },
     fr: {
         name: 'Français',

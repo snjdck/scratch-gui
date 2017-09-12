@@ -19,7 +19,31 @@ import MenuBar from '../menu-bar/menu-bar.jsx';
 import layout from '../../lib/layout-constants.js';
 import styles from './gui.css';
 
-const GUIComponent = props => {
+import bindAll from 'lodash.bindall';
+
+const tabClassNames = {
+    tabs: styles.tabs,
+    tab: classNames(tabStyles.reactTabsTab, styles.tab),
+    tabList: classNames(tabStyles.reactTabsTabList, styles.tabList),
+    tabPanel: classNames(tabStyles.reactTabsTabPanel, styles.tabPanel),
+    tabPanelSelected: classNames(tabStyles.reactTabsTabPanelSelected, styles.isSelected),
+    tabSelected: classNames(tabStyles.reactTabsTabSelected, styles.isSelected)
+};
+
+const ArduinoPanel = require('../../containers/arduino-panel.jsx');
+
+class GUIComponent extends React.Component {
+    constructor(props){
+        super(props);
+        bindAll(this, ["toggleArduinoMode"]);
+        this.state = {
+            isArduinoMode:false
+        };
+    }
+    toggleArduinoMode(){
+        this.setState((prevState, props) => ({isArduinoMode:!prevState.isArduinoMode}));
+    }
+render(){
     const {
         basePath,
         children,
@@ -27,30 +51,17 @@ const GUIComponent = props => {
         onTabSelect,
         tabIndex,
         ...componentProps
-    } = props;
+    } = this.props;
     if (children) {
-        return (
-            <Box {...componentProps}>
-                {children}
-            </Box>
-        );
+        return <Box {...componentProps}>{children}</Box>;
     }
-
-    const tabClassNames = {
-        tabs: styles.tabs,
-        tab: classNames(tabStyles.reactTabsTab, styles.tab),
-        tabList: classNames(tabStyles.reactTabsTabList, styles.tabList),
-        tabPanel: classNames(tabStyles.reactTabsTabPanel, styles.tabPanel),
-        tabPanelSelected: classNames(tabStyles.reactTabsTabPanelSelected, styles.isSelected),
-        tabSelected: classNames(tabStyles.reactTabsTabSelected, styles.isSelected)
-    };
 
     return (
         <Box
             className={styles.pageWrapper}
             {...componentProps}
         >
-            <MenuBar />
+            <MenuBar vm={vm} toggleArduinoMode={this.toggleArduinoMode} />
             <Box className={styles.bodyWrapper}>
                 <Box className={styles.flexWrapper}>
                     <Box className={styles.editorWrapper}>
@@ -102,16 +113,16 @@ const GUIComponent = props => {
                             )}</MediaQuery>
                         </Box>
                         <Box className={styles.targetWrapper}>
-                            <TargetPane
-                                vm={vm}
-                            />
+                            <TargetPane vm={vm} />
                         </Box>
+                        <ArduinoPanel vm={vm} visible={this.state.isArduinoMode} consoleMsg={[]} firmwares={[]} />
                     </Box>
                 </Box>
             </Box>
         </Box>
     );
-};
+}
+}
 GUIComponent.propTypes = {
     basePath: PropTypes.string,
     children: PropTypes.node,
