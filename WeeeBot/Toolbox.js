@@ -132,6 +132,9 @@ const toolbox = newXML("category", {"name":"WeeeBot", "colour":"#FF6680", "secon
             newTextValue("STR", "Hello")
         ]),
         newBlock("weeebot_led_matrix_bitmap", [
+            newDropdownValue("SENSOR_PORT", 12),
+            newNumberValue("X", 0),
+            newNumberValue("Y", 0),
             newXML("value", {"name":"LED_MATRIX_DATA"}, [newXML("shadow", {"type":"led_matrix_data"})])
         ]),
     ]);

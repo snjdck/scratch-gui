@@ -11,7 +11,7 @@ var fs = require('fs');
 var cp = require('child_process');
 var ncp = require('ncp').ncp;
 
-var ArduinoManager = function(cfg){
+var ArduinoManager = function(){
     this.autotranslate = false;
     this.sendCmdEvent = new chrome.Event();
     this.baudrate = 115200;

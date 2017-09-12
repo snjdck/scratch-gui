@@ -43,7 +43,7 @@ function on_board_servo(argValues, util) {
 function weeebot_stop(argValues, util) {
     //var cmd = "M102";
     var cmd = createCMD(102);
-    util.ioQuery('serial', 'sendMsg', cmd);
+    util.ioQuery('serial', 'sendMsg', [cmd]);
 }
 
 function weeebot_rgb(argValues, util) {
@@ -53,7 +53,7 @@ function weeebot_rgb(argValues, util) {
     color = hexToRgb(color);
     //var cmd = "M9 "+pin+" "+pix+" "+color.r+" "+color.g+" "+color.b;
     var cmd = createCMD(9, pin, pix, color.r, color.g, color.b);
-    util.ioQuery('serial', 'sendMsg', cmd);
+    util.ioQuery('serial', 'sendMsg', [cmd]);
 }
 
 function weeebot_rgb3(argValues, util) {
@@ -67,7 +67,7 @@ function weeebot_rgb3(argValues, util) {
     b = 2.55 * Math.max(0, Math.min(100, b));
     var cmd = createCMD(9, pin, pix, r, g, b);
     //var cmd = "M9 "+ pin + " " + pix + " " + r + " " + g + " " + b;
-    util.ioQuery('serial', 'sendMsg', cmd);
+    util.ioQuery('serial', 'sendMsg', [cmd]);
 }
 
 function weeebot_distance(argValues, util) {
@@ -75,7 +75,7 @@ function weeebot_distance(argValues, util) {
     //var cmd = "M110 "+pin;
     var cmd = createCMD(110, pin);
     var exePromise = new Promise(function(resolve) {
-        util.ioQuery('serial', 'sendMsg', cmd);
+        util.ioQuery('serial', 'sendMsg', [cmd]);
         util.ioQuery('serial', 'regResolve', {"slot":("M110 "+pin), "resolve":resolve});
     });
     return exePromise;
@@ -85,7 +85,7 @@ function board_light_sensor(argValues, util) {
     //var cmd = "M8 " + port;
     var cmd = createCMD(8, port);
     var exePromise = new Promise(function(resolve) {
-        util.ioQuery('serial', 'sendMsg', cmd);
+        util.ioQuery('serial', 'sendMsg', [cmd]);
         util.ioQuery('serial', 'regResolve', {"slot":cmd, "resolve":resolve});
     });
     return exePromise;
@@ -96,7 +96,7 @@ function board_temperature_sensor(argValues, util) {
     //var cmd = "M12 " + port;
     var cmd = createCMD(12, port);
     var exePromise = new Promise(function(resolve) {
-        util.ioQuery('serial', 'sendMsg', cmd);
+        util.ioQuery('serial', 'sendMsg', [cmd]);
         util.ioQuery('serial', 'regResolve', {"slot":cmd, "resolve":resolve});
     });
     return exePromise;
@@ -106,7 +106,7 @@ function board_sound_sensor(argValues, util) {
     //var cmd = "M11 " + port;
     var cmd = createCMD(11, port);
     var exePromise = new Promise(function(resolve) {
-        util.ioQuery('serial', 'sendMsg', cmd);
+        util.ioQuery('serial', 'sendMsg', [cmd]);
         util.ioQuery('serial', 'regResolve', {"slot":cmd, "resolve":resolve});
     });
     return exePromise;
@@ -135,7 +135,7 @@ function weeebot_infraread(argValues, util) {
     //var cmd = "M7 "+ port + " " + code;
     var cmd = createCMD(7, port, code);
     var exePromise = new Promise(function(resolve) {
-        util.ioQuery('serial', 'sendMsg', cmd);
+        util.ioQuery('serial', 'sendMsg', [cmd]);
         util.ioQuery('serial', 'regResolve', {"slot":cmd, "resolve":resolve});
     });
     return exePromise;
@@ -146,7 +146,7 @@ function weeebot_on_board_button(argValues, util){
     var cmd = createCMD(0, port);
     console.log(cmd)
     var exePromise = new Promise(function(resolve) {
-        util.ioQuery('serial', 'sendMsg', cmd);
+        util.ioQuery('serial', 'sendMsg', [cmd]);
         util.ioQuery('serial', 'regResolve', {"slot":cmd, "resolve":resolve});
     });
     return exePromise;
@@ -163,7 +163,7 @@ function ultrasonic(argValues, util){
     var port = argValues.SENSOR_PORT;
     var cmd = createCMD(110, port);
     var exePromise = new Promise(function(resolve) {
-        util.ioQuery('serial', 'sendMsg', cmd);
+        util.ioQuery('serial', 'sendMsg', [cmd]);
         util.ioQuery('serial', 'regResolve', {"slot":cmd, "resolve":resolve});
     });
     return exePromise;
@@ -174,14 +174,14 @@ function ultrasonic_led(argValues, util){
     var color = argValues.COLOR;
     color = hexToRgb(color);
     var cmd = createCMD(109, port, index, color.r, color.g, color.b);
-    util.ioQuery('serial', 'sendMsg', cmd);
+    util.ioQuery('serial', 'sendMsg', [cmd]);
 }
 function line_follower(argValues, util){
     var port = argValues.SENSOR_PORT;
     var index = argValues.LINE_FOLLOWER_INDEX;
     var cmd = createCMD(111, port, index);
     var exePromise = new Promise(function(resolve) {
-        util.ioQuery('serial', 'sendMsg', cmd);
+        util.ioQuery('serial', 'sendMsg', [cmd]);
         util.ioQuery('serial', 'regResolve', {"slot":cmd, "resolve":resolve});
     });
     return exePromise;
@@ -190,7 +190,7 @@ function weeebot_led_matrix_number(argValues, util){
     var port = argValues.SENSOR_PORT
     var num = argValues.NUM;
     var cmd = createCMD(112, port, num);
-    util.ioQuery('serial', 'sendMsg', cmd);
+    util.ioQuery('serial', 'sendMsg', [cmd]);
 }
 function weeebot_led_matrix_time(argValues, util){
     var port = argValues.SENSOR_PORT
@@ -198,15 +198,25 @@ function weeebot_led_matrix_time(argValues, util){
     var second = argValues.SECOND;
     var showColon = argValues.SHOW_COLON
     var cmd = createCMD(113, port, hour, second, showColon);
-    util.ioQuery('serial', 'sendMsg', cmd);
+    util.ioQuery('serial', 'sendMsg', [cmd]);
 }
 function weeebot_led_matrix_string(argValues, util){
     var port = argValues.SENSOR_PORT
     var x = argValues.X;
     var y = argValues.Y;
-    var str = argValues.STR
+    var str = argValues.STR;
     var cmd = createCMD(114, port, x, y, str);
-    util.ioQuery('serial', 'sendMsg', cmd);
+    util.ioQuery('serial', 'sendMsg', [cmd]);
+}
+
+function weeebot_led_matrix_bitmap(argValues, util){
+    var port = argValues.SENSOR_PORT
+    var x = argValues.X;
+    var y = argValues.Y;
+    var data = argValues.LED_MATRIX_DATA;
+    var cmd = createCMD(115, port, x, y, data);
+    console.log(cmd);
+    
 }
 module.exports = function(){
     return {
@@ -229,6 +239,7 @@ module.exports = function(){
         line_follower,
         weeebot_led_matrix_number,
         weeebot_led_matrix_time,
-        weeebot_led_matrix_string
+        weeebot_led_matrix_string,
+        weeebot_led_matrix_bitmap
     };
 };

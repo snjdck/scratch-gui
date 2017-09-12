@@ -2992,6 +2992,7 @@ module.exports =
 	Blockly.FieldCheckbox.prototype.setValue=function(a){a="string"==typeof a?"TRUE"==a.toUpperCase():!!a;this.state_!==a&&(this.sourceBlock_&&Blockly.Events.isEnabled()&&Blockly.Events.fire(new Blockly.Events.BlockChange(this.sourceBlock_,"field",this.name,this.state_,a)),this.state_=a,this.checkElement_&&(this.checkElement_.style.display=a?"block":"none"))};Blockly.FieldCheckbox.prototype.showEditor_=function(){var a=!this.state_;this.sourceBlock_&&(a=this.callValidator(a));null!==a&&this.setValue(String(a).toUpperCase())};
 
 //case "field_led":h=new FieldLedMatrix(f.data);break;
+const LIGHT_BLUE = "rgb(0, 163, 235)";
 class FieldLedMatrix extends Blockly.Field
 {
 	init(block){
@@ -3050,10 +3051,20 @@ class FieldLedMatrix extends Blockly.Field
 		}
 	}
 
+	changeValueAt(x, y){
+		var oldValue = this.getValue();
+		this.data[y][x] = !this.data[y][x];
+		if(this.sourceBlock_ && Blockly.Events.isEnabled()){
+			this.updateData();
+			Blockly.Events.fire(new Blockly.Events.BlockChange(
+			this.sourceBlock_, 'field', this.name, oldValue, this.getValue()));
+		}
+	}
+
 	updateData(){
 		for(var j=0;j<7;++j){
 			for(var i=0; i<21;++i){
-				this._boxList[j][i].setAttribute("fill", this.data[j][i] ? "green" : "gray");
+				this._boxList[j][i].setAttribute("fill", this.data[j][i] ? LIGHT_BLUE : "gray");
 			}
 		}
 	}
@@ -3113,7 +3124,7 @@ class FieldLedMatrix extends Blockly.Field
 	    swatch.setAttribute("dy", dy)
 
 	    var innerItem = this.getDomHelper().createDom(goog.dom.TagName.DIV, {
-	      'style': 'width:100%;height:100%;background-color:' + (self.data[dy][dx] ? "green" : "gray")
+	      'style': 'width:100%;height:100%;background-color:' + (self.data[dy][dx] ? LIGHT_BLUE : "gray")
 	    });
 	    swatch.appendChild(innerItem);
 	    self._gridList[dy][dx] = innerItem;
@@ -3164,11 +3175,8 @@ class FieldLedMatrix extends Blockly.Field
         var item = event.target.colorPalette_.getSelectedItem();
         var dx = parseInt(item.getAttribute("dx"))
         var dy = parseInt(item.getAttribute("dy"))
-
-        this.data[dy][dx] = !this.data[dy][dx];
-        this._gridList[dy][dx].style.backgroundColor = this.data[dy][dx] ? "#00FF00" : "gray";
-        this.updateData();
-        
+        this.changeValueAt(dx, dy)
+        this._gridList[dy][dx].style.backgroundColor = this.data[dy][dx] ? LIGHT_BLUE : "gray";
       });
 	}
 

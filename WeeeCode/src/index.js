@@ -1,17 +1,13 @@
-/**
- * Created by Riven on 2016/12/15.
- */
+
 "use strict";
 var path = require('path');
 var fs = require('fs');
 var EventEmitter = require('events');
-//const {Icon} = require('react-fa');
 var SerialConnection = require('./SerialConnection');
-var UpdateManager = require('./UpdaterManager');
 var ArduinoManager = require('./ArduinoManager');
 var Toolbox = require('./Toolbox');
 var ResourceManager = require('./ResourceManager');
-var ConfigManager = require('./ConfigManager');
+
 var ProjectManager = require('./ProjectManager');
 
 
@@ -21,16 +17,10 @@ var KittenBlock = function () {
     this.mediapath = path.resolve(process.cwd(),'media');
     this.defaultExamples = path.resolve(process.cwd(),'examples');
     this.arduinoPath = path.resolve(process.cwd(),'arduino'); // not the one where arduino ide locate
-    this.updatePath = path.resolve(process.cwd());
 
-    instance.configmng  = new ConfigManager();
-    this.config = this.configmng.load();
-    this.config.arduino.path = this.arduinoPath;
-    this.config.version = "1.11"; // don't read from config file any more
 
     instance.serial = new SerialConnection();
-    instance.updater = new UpdateManager();
-    instance.arduino = new ArduinoManager(this.config.arduino);
+    instance.arduino = new ArduinoManager();
     instance.toolbox = new Toolbox();
     instance.resourcemng = new ResourceManager();
     instance.proj = new ProjectManager(this.workpath);
@@ -48,7 +38,7 @@ KittenBlock.prototype.connectPort = function (port,successCb,readlineCb,closeCb,
     var _this = this;
     if(port.type=='serial'){
         var ser = this.serial;
-        ser.connect(port.path,{bitrate: this.config.arduino.baudrate},function (ret) {
+        ser.connect(port.path,{bitrate: 115200},function (ret) {
             if(ret!=-1) {
                 ser.onReadLine.addListener(readlineCb);
                 ser.onDisconnect.addListener(function () {
@@ -58,7 +48,6 @@ KittenBlock.prototype.connectPort = function (port,successCb,readlineCb,closeCb,
                 });
                 _this.connectedPort = {"path": port.path, "type": "serial"};
                 _this.arduino.lastSerialPort = port.path;
-                _this.config.arduino.lastSerialPort = port.path;
                 _this.saveConfig();
                 successCb(port.path);
             }
@@ -95,9 +84,7 @@ KittenBlock.prototype.enumPort = function (callback) {
     });
 };
 
-KittenBlock.prototype.getUpdate = function (callback) {
-    this.updater.getServer(callback);
-};
+
 
 KittenBlock.prototype.loadDefaultProj = function () {
     var projfile = path.resolve(this.defaultExamples,"test.sb2");
@@ -147,7 +134,7 @@ KittenBlock.prototype.copyArduinoLibrary = function (srcpath) {
 
 
 KittenBlock.prototype.saveConfig = function () {
-    this.configmng.save(this.config);
+    
 };
 
 KittenBlock.prototype.reloadApp = function () {
@@ -167,8 +154,7 @@ KittenBlock.prototype.setPluginParseLine = function (func) {
 };
 
 KittenBlock.prototype.selectBoard = function (board) {
-    this.config.arduino.board = board.type;
-    this.arduino.arduinoboard = this.config.arduino.board;
+    this.arduino.arduinoboard = board.type;
     this.saveConfig();
 };
 
@@ -176,8 +162,6 @@ KittenBlock.prototype.copyResourceToWorkspace = function (resourceMd5) {
     this.resourcemng.copyToWorkspace(resourceMd5,this.mediapath,this.workpath);
 };
 
-KittenBlock.prototype.doUpdate = function (updater,updateDone,updateProgress) {
-    this.updater.doUpdate(updater.path,this.updatePath,updateDone,updateProgress);
-};
+
 
 module.exports = KittenBlock;
