@@ -158,7 +158,7 @@ class PortSelector extends React.Component {
 }
 
 PortSelector.propTypes = {
-    vm: React.PropTypes.instanceOf(VM)
+    vm: PropTypes.instanceOf(VM)
 };
 
 module.exports = PortSelector;

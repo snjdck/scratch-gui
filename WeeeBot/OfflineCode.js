@@ -28,6 +28,7 @@ module.exports = function(){
     arduino.board_port_rgb = option_handler;
     arduino.ir_code = option_handler;
     arduino.line_follower_index = option_handler;
+    arduino.ultrasonic_led_index = option_handler;
 
     function gen_rgb_code(block, color) {
         arduino.includes_["weeebot"] = '#include <WeELFPort.h>';
@@ -238,6 +239,44 @@ module.exports = function(){
         
         var code = key + ".startRead("+index+")";
         return [code, order];
+    };
+
+    arduino["ultrasonic"] = function (block) {
+        var order = arduino.ORDER_NONE;
+
+        var port = arduino.valueToCode(block, "SENSOR_PORT", order);
+
+        var key = "ultrasonic_" + port;
+
+        arduino.includes_["weeebot"] = '#include <WeELFPort.h>';
+        arduino.definitions_[key] = `WeUltrasonicSensor ${key}(${port});`;
+        
+        var code = key + ".distanceCm()";
+        return [code, order];
+    };
+
+    arduino["ultrasonic_led"] = function (block) {
+        var order = arduino.ORDER_NONE;
+
+        var port = arduino.valueToCode(block, "SENSOR_PORT", order);
+        var index = arduino.valueToCode(block, "ULTRASONIC_LED_INDEX", order);
+        var color = arduino.valueToCode(block, "COLOR", order);
+        color = hexToRgb(color);
+
+        var key = "ultrasonic_" + port;
+
+        arduino.includes_["weeebot"] = '#include <WeELFPort.h>';
+        arduino.definitions_[key] = `WeUltrasonicSensor ${key}(${port});`;
+        
+        var code = "";
+        if(index & 1){
+            code += arduino.tab() + `${key}.setColor1(${color.r}, ${color.r}, ${color.b})`  + arduino.END;
+        }
+        if(index & 2){
+             code += arduino.tab() + `${key}.setColor2(${color.r}, ${color.r}, ${color.b})`  + arduino.END;
+        }
+        code += arduino.tab() + `${key}.RGBShow()` + arduino.END;
+        return code;
     };
 
 

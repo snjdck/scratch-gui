@@ -1,5 +1,6 @@
 const bindAll = require('lodash.bindall');
 const React = require('react');
+import PropTypes from 'prop-types';
 
 const ArduinoPanelComponent = require('../components/arduino-panel/arduino-panel.jsx');
 
@@ -31,7 +32,7 @@ class ArduinoPanel extends React.Component {
 }
 
 ArduinoPanel.propTypes = {
-    visible: React.PropTypes.bool
+    visible: PropTypes.bool
 };
 
 module.exports = ArduinoPanel;
