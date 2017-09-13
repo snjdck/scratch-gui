@@ -69,6 +69,19 @@ module.exports = function(){
         arduino.definitions_["buzzer"] = "WeBuzzer buzzer;";
         return arduino.tab() + "buzzer.tone(" + note + "," + hz + ")" + arduino.END;
     };
+    arduino.on_board_servo = function(block){
+        var b = arduino.ORDER_NONE;
+        var port = arduino.valueToCode(block, "BOARD_PORT", b);
+        var angle = arduino.valueToCode(block, "ANGLE", b);
+        var pin = PORTS[port];
+
+        const key = `servo_${port}`;
+
+        arduino.includes_["weeebot"] = '#include <WeELFPort.h>';
+        arduino.definitions_[key] = `Servo ${key};`;
+        arduino.setupCodes_[key] = `${key}.attach(${pin});`;
+        return arduino.tab() + `${key}.write(${angle})` + arduino.END;
+    }
     arduino.board_light_sensor = function(block){
         var b = arduino.ORDER_NONE;
         var port = arduino.valueToCode(block, "BOARD_PORT", b);
@@ -163,6 +176,8 @@ module.exports = function(){
         };
         return gen_rgb_code(block, color);
     };
+
+
 /*
     arduino["weeebot_power"] = function (block) {
         var order = arduino.ORDER_HIGH;
@@ -223,6 +238,88 @@ module.exports = function(){
         
         var code = key + ".startRead("+index+")";
         return [code, order];
+    };
+
+
+    arduino["weeebot_led_matrix_number"] = function (block) {
+        var order = arduino.ORDER_NONE;
+
+        var port = arduino.valueToCode(block, "SENSOR_PORT", order);
+        var num = arduino.valueToCode(block, "NUM", order);
+
+        arduino.includes_["weeebot"] = '#include <WeELFPort.h>';
+        arduino.definitions_["ledPanel"] = "WeLEDPanelModuleMatrix7_21 ledPanel;";
+
+        var code = arduino.tab() + `ledPanel.reset(${port})`  + arduino.END;
+        code +=    arduino.tab() + `ledPanel.showNum(${num})` + arduino.END;
+        return code;
+    };
+
+    arduino.show_colon = option_handler;
+    arduino.led_matrix_data = function (block) {
+        var order = arduino.ORDER_ATOMIC;
+        var code = block.inputList[0].fieldRow[0].getValue();
+        return [code, order];
+    };
+
+    arduino["weeebot_led_matrix_time"] = function (block) {
+        var order = arduino.ORDER_NONE;
+
+        var port = arduino.valueToCode(block, "SENSOR_PORT", order);
+        var hour = arduino.valueToCode(block, "HOUR", order);
+        var second = arduino.valueToCode(block, "SECOND", order);
+        var showColon = arduino.valueToCode(block, "SHOW_COLON", order);
+
+        arduino.includes_["weeebot"] = '#include <WeELFPort.h>';
+        arduino.definitions_["ledPanel"] = "WeLEDPanelModuleMatrix7_21 ledPanel;";
+
+        var code = arduino.tab() + `ledPanel.reset(${port})`  + arduino.END;
+        code +=    arduino.tab() + `ledPanel.showClock(${hour}, ${second}, ${showColon})` + arduino.END;
+        return code;
+    };
+    arduino["weeebot_led_matrix_string"] = function (block) {
+        var order = arduino.ORDER_NONE;
+
+        var port = arduino.valueToCode(block, "SENSOR_PORT", order);
+        var x = arduino.valueToCode(block, "X", order);
+        var y = arduino.valueToCode(block, "Y", order);
+        var str = arduino.valueToCode(block, "STR", order);
+
+        arduino.includes_["weeebot"] = '#include <WeELFPort.h>';
+        arduino.definitions_["ledPanel"] = "WeLEDPanelModuleMatrix7_21 ledPanel;";
+
+        var code = arduino.tab() + `ledPanel.reset(${port})`  + arduino.END;
+        code +=    arduino.tab() + `ledPanel.showChar(${x}, ${y}, "${str}")` + arduino.END;
+        return code;
+    };
+    arduino["weeebot_led_matrix_bitmap"] = function (block) {
+        var order = arduino.ORDER_NONE;
+
+        var port = arduino.valueToCode(block, "SENSOR_PORT", order);
+        var x = arduino.valueToCode(block, "X", order);
+        var y = arduino.valueToCode(block, "Y", order);
+
+        var data = JSON.parse(arduino.valueToCode(block, "LED_MATRIX_DATA", order));
+        var bytes = [];
+        for(var j=0; j<21; ++j){
+            bytes[j] = 0;
+            for(var i=0; i<7; ++i){
+                if(data[i] & (1 << j)){
+                    bytes[j] |= 1 << i;
+                }
+            }
+        }
+
+        arduino.includes_["weeebot"] = '#include <WeELFPort.h>';
+        arduino.definitions_["ledPanel"] = "WeLEDPanelModuleMatrix7_21 ledPanel;";
+        arduino.definitions_["ledPanelData"] = "uint8_t ledPanelData[21];";
+
+        var code = arduino.tab() + `ledPanel.reset(${port})`  + arduino.END;
+        for(var i=0; i<21; i++){
+            code += arduino.tab() + `ledPanelData[${i}] = 0x${bytes[i].toString(16)}` + arduino.END;
+        }
+        code +=    arduino.tab() + `ledPanel.showBitmap(${x}, ${y}, ledPanelData)` + arduino.END;
+        return code;
     };
 
     
