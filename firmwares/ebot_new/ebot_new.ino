@@ -1,9 +1,6 @@
 #include <WeELFPort.h>
 
-const uint8_t ON_BOARD_PIN_RGB    = 9;
 const uint8_t ON_BOARD_PIN_RGB_GROUP = 13;
-const uint8_t ON_BOARD_PIN_BUTTON = 2;
-const uint8_t ON_BOARD_PIN_BUZZER = 11;
 const uint8_t ON_BOARD_PINS[] = {0, A0, A1, A5, A4, A3, A2, ON_BOARD_PIN_RGB_GROUP};
 
 WeUltrasonicSensor ultraSensor;
@@ -193,7 +190,7 @@ void doRgb(char * cmd)
 	nextStr(&cmd);
 	int port, pix, r, g, b;
 	parsePinVal(cmd, &port, &pix, &r, &g, &b);
-	uint8_t pin = port_to_pin(port, ON_BOARD_PIN_RGB);
+	uint8_t pin = port_to_pin(port, OnBoard_RGB);
 	led.reset(pin);
 	led.setColor(r >> 4, g >> 4, b >> 4);
 	led.show();
@@ -267,7 +264,7 @@ void getTemperature(char *cmd)
 
 void getOnBoardButton(char *cmd)
 {
-	uint8_t pin = nextPin(&cmd, ON_BOARD_PIN_BUTTON);
+	uint8_t pin = nextPin(&cmd, OnBoard_Button);
 	pinMode(pin, INPUT);
 	boolean pressed = digitalRead(pin) == 0;
 	Serial.println(pressed ? "true" : "false");
