@@ -11,7 +11,8 @@ var fs = require('fs');
 var cp = require('child_process');
 var ncp = require('ncp').ncp;
 
-var ArduinoManager = function(){
+var ArduinoManager = function(vm){
+    this.vm = vm;
     this.autotranslate = false;
     this.sendCmdEvent = new chrome.Event();
     this.baudrate = 115200;
@@ -101,36 +102,57 @@ ArduinoManager.prototype.openArduinoIde = function(code,path){
 };
 
 ArduinoManager.prototype.parseLine = function(msg){
-    if(this.pluginPareLine){
+    console.log("parseLine", msg)
+    /*
+    if (this.pluginPareLine) {
         return this.pluginPareLine(msg);
-    }
+    }*/
+    
     var ret = null;
+    var match = msg.trim().split(" ");
+    var report = match.pop();
+    var slot = match.join(" ");
+    switch(match[0]){
+      case "M0":
+      case "M7":
+      case "M8":
+      case "M12":
+      case "M11":
+      case "M110":
+      case "M111":
+      this.vm.postIOData('serial', { slot: slot, report: report });
+      break;
+    }
+    
     if (msg.indexOf("M3") > -1) {
         var tmp = msg.trim().split(" ");
         var pin = tmp[1];
         var val = tmp[2];
         this.digitalQuery[pin] = val;
-    }else if (msg.indexOf("M5") > -1) {
+    } else if (msg.indexOf("M5") > -1) {
         var tmp = msg.trim().split(" ");
         var pin = tmp[1];
         var val = tmp[2];
         this.analogQuery[pin] = val;
-    }else if(msg.indexOf("M100") > -1 ){
-        window.vm.postIOData('serial', {slot: "M100", report: null});
-    }else if(msg.indexOf("M101") > -1 ){
-        window.vm.postIOData('serial', {slot: "M101", report: null});
-    }else if(msg.indexOf("M8") > -1){
+    } else if (msg.indexOf("M100") > -1) {
+        this.vm.postIOData('serial', { slot: "M100", report: null });
+    } else if (msg.indexOf("M101") > -1) {
+        this.vm.postIOData('serial', { slot: "M101", report: null });
+    } else if (msg.indexOf("M8") > -1) {
         ret = msg.trim().split(" ")[1];
-        window.vm.postIOData('serial', {slot: "M8", report: ret});
-    }else if(msg.indexOf("M110") > -1){
+        this.vm.postIOData('serial', { slot: "M8", report: ret });
+    } else if (msg.indexOf("M110") > -1) {
         var tmp = msg.trim().split(" ");
         var pin = tmp[1];
         var val = tmp[2];
-        window.vm.postIOData('serial', {slot: "M110 "+pin, report: val});
-    }else if(msg.indexOf("M202") > -1){
+        this.vm.postIOData('serial', { slot: "M110 " + pin, report: val });
+    }/* else if (msg.indexOf("M202") > -1) {
         ret = msg.trim().split(" ")[1];
-        window.vm.postIOData('serial', {slot: "M202", report: ret});
-    }
+        this.vm.postIOData('serial', { slot: "M202", report: ret });
+    } else if (msg.indexOf("M204") > -1) {
+        ret = msg.trim().split(" ")[1];
+        this.vm.postIOData('serial', { slot: "M204", report: ret });
+    }*/
 };
 
 ArduinoManager.prototype.queryData = function(data){

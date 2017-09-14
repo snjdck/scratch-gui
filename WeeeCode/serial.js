@@ -23,7 +23,6 @@ export default class Serial {
     }
 
     sendMsg(data){
-        console.log("sendMsg");
         this.weeecode.sendCmd(data);
     }
 

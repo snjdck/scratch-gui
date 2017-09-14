@@ -21,7 +21,7 @@ function weeebot_motor_dc(argValues, util){
     //var cmd = "M200 "+idx +" "+spd;
     var cmd = createCMD(200, idx, spd);
     util.ioQuery('serial', 'sendMsg', [cmd]);
-    console.log("motorDc "+cmd);
+    console.log("motorDc " + cmd);
 }
 
 function weeebot_motor_move(argValues, util) {
@@ -76,7 +76,7 @@ function weeebot_distance(argValues, util) {
     var cmd = createCMD(110, pin);
     var exePromise = new Promise(function(resolve) {
         util.ioQuery('serial', 'sendMsg', [cmd]);
-        util.ioQuery('serial', 'regResolve', {"slot":("M110 "+pin), "resolve":resolve});
+        util.ioQuery('serial', 'regResolve', [{"slot":("M110 "+pin), "resolve":resolve}]);
     });
     return exePromise;
 }
@@ -86,7 +86,7 @@ function board_light_sensor(argValues, util) {
     var cmd = createCMD(8, port);
     var exePromise = new Promise(function(resolve) {
         util.ioQuery('serial', 'sendMsg', [cmd]);
-        util.ioQuery('serial', 'regResolve', {"slot":cmd, "resolve":resolve});
+        util.ioQuery('serial', 'regResolve', [{"slot":cmd, "resolve":resolve}]);
     });
     return exePromise;
 }
@@ -97,7 +97,7 @@ function board_temperature_sensor(argValues, util) {
     var cmd = createCMD(12, port);
     var exePromise = new Promise(function(resolve) {
         util.ioQuery('serial', 'sendMsg', [cmd]);
-        util.ioQuery('serial', 'regResolve', {"slot":cmd, "resolve":resolve});
+        util.ioQuery('serial', 'regResolve', [{"slot":cmd, "resolve":resolve}]);
     });
     return exePromise;
 }
@@ -107,7 +107,7 @@ function board_sound_sensor(argValues, util) {
     var cmd = createCMD(11, port);
     var exePromise = new Promise(function(resolve) {
         util.ioQuery('serial', 'sendMsg', [cmd]);
-        util.ioQuery('serial', 'regResolve', {"slot":cmd, "resolve":resolve});
+        util.ioQuery('serial', 'regResolve', [{"slot":cmd, "resolve":resolve}]);
     });
     return exePromise;
 }
@@ -118,7 +118,7 @@ function weeebot_encoder_move(argValues, util) {
     //var cmd = "M202 " + port + " " + speed + " " + distance;
     var cmd = createCMD(202, port, speed, distance);
     console.log(cmd);
-    //util.ioQuery('serial', 'sendMsg', cmd);
+    //util.ioQuery('serial', 'sendMsg', [cmd]);
 }
 function weeebot_steppermove(argValues, util) {
     var port = argValues.MOTOR_PORT;
@@ -127,7 +127,7 @@ function weeebot_steppermove(argValues, util) {
     //var cmd = "M203 " + port + " " + speed + " " + distance;
     var cmd = createCMD(203, port, speed, distance);
     console.log(cmd);
-    //util.ioQuery('serial', 'sendMsg', cmd);
+    //util.ioQuery('serial', 'sendMsg', [cmd]);
 }
 function weeebot_infraread(argValues, util) {
     var port = argValues.BOARD_PORT;
@@ -136,7 +136,7 @@ function weeebot_infraread(argValues, util) {
     var cmd = createCMD(7, port, code);
     var exePromise = new Promise(function(resolve) {
         util.ioQuery('serial', 'sendMsg', [cmd]);
-        util.ioQuery('serial', 'regResolve', {"slot":cmd, "resolve":resolve});
+        util.ioQuery('serial', 'regResolve', [{"slot":cmd, "resolve":resolve}]);
     });
     return exePromise;
 }
@@ -147,7 +147,7 @@ function weeebot_on_board_button(argValues, util){
     console.log(cmd)
     var exePromise = new Promise(function(resolve) {
         util.ioQuery('serial', 'sendMsg', [cmd]);
-        util.ioQuery('serial', 'regResolve', {"slot":cmd, "resolve":resolve});
+        util.ioQuery('serial', 'regResolve', [{"slot":cmd, "resolve":resolve}]);
     });
     return exePromise;
 }
@@ -156,7 +156,6 @@ function test_tone_note(argValues, util){
     var hz = argValues.TEST_TONE_NOTE_BEAT_OPTION;
     //var cmd = "M10 "+ note + " " + hz;
     var cmd = createCMD(10, note, hz);
-    console.log(cmd)
     util.ioQuery('serial', 'sendMsg', [cmd]);
 }
 function ultrasonic(argValues, util){
@@ -164,7 +163,7 @@ function ultrasonic(argValues, util){
     var cmd = createCMD(110, port);
     var exePromise = new Promise(function(resolve) {
         util.ioQuery('serial', 'sendMsg', [cmd]);
-        util.ioQuery('serial', 'regResolve', {"slot":cmd, "resolve":resolve});
+        util.ioQuery('serial', 'regResolve', [{"slot":cmd, "resolve":resolve}]);
     });
     return exePromise;
 }
@@ -182,13 +181,14 @@ function line_follower(argValues, util){
     var cmd = createCMD(111, port, index);
     var exePromise = new Promise(function(resolve) {
         util.ioQuery('serial', 'sendMsg', [cmd]);
-        util.ioQuery('serial', 'regResolve', {"slot":cmd, "resolve":resolve});
+        util.ioQuery('serial', 'regResolve', [{"slot":cmd, "resolve":resolve}]);
     });
     return exePromise;
 }
 function weeebot_led_matrix_number(argValues, util){
-    var port = argValues.SENSOR_PORT
+    var port = argValues.SENSOR_PORT;
     var num = argValues.NUM;
+    
     var cmd = createCMD(112, port, num);
     util.ioQuery('serial', 'sendMsg', [cmd]);
 }

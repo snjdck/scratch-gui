@@ -20,7 +20,7 @@ class WeeeCode
 
 
 		this.serial = new SerialConnection();
-		this.arduino = new ArduinoManager();
+		this.arduino = new ArduinoManager(vm);
 		this.toolbox = new Toolbox();
 		this.resourcemng = new ResourceManager();
 		this.proj = new ProjectManager(vm, this.workpath);

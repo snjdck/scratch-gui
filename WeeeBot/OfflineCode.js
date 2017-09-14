@@ -39,7 +39,7 @@ module.exports = function(){
 
         var pin = PORTS[port];
         if(pin == 0){
-            pin = 9;
+            pin = 3;
         }
 
         var key = "led_" + port;

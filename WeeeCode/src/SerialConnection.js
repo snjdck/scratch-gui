@@ -51,9 +51,10 @@ SerialConnection.prototype.onReceive = function(receiveInfo) {
     if (receiveInfo.connectionId !== this.connectionId) {
         return;
     }
+    /*
     if(this.pluginRecv){
         return this.pluginRecv(receiveInfo.data);
-    }
+    }*/
     //console.log("buf "+receiveInfo.data.byteLength+">>"+ab2str(receiveInfo.data));
     this.lineBuffer += ab2str(receiveInfo.data);
     var index;

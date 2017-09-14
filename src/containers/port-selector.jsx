@@ -13,7 +13,7 @@ class PortSelector extends React.Component {
         super(props);
         bindAll(this, [
         'handleTitle',
-        'serialDevUpdate','refreshPort','selectPort','portConnected','portClosed'
+        'serialDevUpdate','refreshPort','selectPort','portConnected','portClosed',"portReadLine"
         ]);
         this.state = {
             portDev: [],
@@ -22,6 +22,9 @@ class PortSelector extends React.Component {
             selectedBoard:{'name':'Arduino Uno','type':'arduino:avr:uno'},
             projectName:""
         };
+    }
+    get vm(){
+        return this.props.vm
     }
     handleTitle(e){
         var title = e.target.value;
@@ -40,14 +43,16 @@ class PortSelector extends React.Component {
     portClosed(){
         this.setState({connectedPort:null});
     }
+    portReadLine(line){
+        this.vm.weeecode.arduino.parseLine(line);
+    }
     selectPort(port){
         console.log("connect to port "+JSON.stringify(port));
         if(port.type=='disconnect'){
             this.props.vm.weeecode.disonnectPort();
         }else{
-
-                var onRecv = this.props.vm.weeebot.onRecv;
-                this.props.vm.weeecode.connectPort(port,this.portConnected,this.props.portReadLine,this.portClosed,onRecv);
+            //var onRecv = this.props.vm.weeebot.onRecv;
+            this.props.vm.weeecode.connectPort(port,this.portConnected,this.portReadLine,this.portClosed, this.portReadLine);
         }
     }
 
