@@ -24,7 +24,7 @@ module.exports = [
         },
         target:"node-webkit",
         output: {
-			library: 'KittenBlock',
+			library: 'WeeeCode',
 			libraryTarget: 'commonjs2',
             path: "../build",
             filename: '[name].js'

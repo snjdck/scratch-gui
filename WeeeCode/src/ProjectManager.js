@@ -31,7 +31,8 @@ var deleteFolderRecursive = function(path) {
     }
 };
 
-var ProjectManager = function(workspace){
+var ProjectManager = function(vm, workspace){
+	this.vm = vm;
     this.workspaceFolder = workspace;
 
 };
@@ -83,7 +84,7 @@ ProjectManager.prototype.loadsb2 = function(filepath){
     // 3. load project
     var projectJson = path.resolve(this.workspaceFolder,"project.json");
     var s = fs.readFileSync(projectJson, 'utf8');
-    window.vm.loadProject(s);
+    this.vm.loadProject(s);
 
     return projName;
 };

@@ -11,7 +11,7 @@ require("../../WeeeBot/OfflineCode")();
 
 function createVM(){
     var vm = new VM();
-    vm.weeecode = new WeeeCode();
+    vm.weeecode = new WeeeCode(vm);
     vm.weeebot = new WeeeBot(vm.runtime);
     vm.weeecode.plugin = vm.weeebot;
     vm.runtime.ioDevices.serial = new Serial(vm);
