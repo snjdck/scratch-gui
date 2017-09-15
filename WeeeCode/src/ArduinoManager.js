@@ -102,7 +102,6 @@ ArduinoManager.prototype.openArduinoIde = function(code,path){
 };
 
 ArduinoManager.prototype.parseLine = function(msg){
-    console.log("parseLine", msg)
     /*
     if (this.pluginPareLine) {
         return this.pluginPareLine(msg);
