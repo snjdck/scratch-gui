@@ -6,6 +6,7 @@ import {Popover} from "react-bootstrap";
 import MediaQuery from 'react-responsive';
 import tabStyles from 'react-tabs/style/react-tabs.css';
 import VM from 'scratch-vm';
+import Blockly from "scratch-blocks";
 
 import Blocks from '../../containers/blocks.jsx';
 import CostumeTab from '../../containers/costume-tab.jsx';
@@ -84,9 +85,9 @@ render(){
                             onSelect={onTabSelect}
                         >
                             <TabList className={tabClassNames.tabList}>
-                                <Tab className={tabClassNames.tab}>Blocks</Tab>
-                                <Tab className={tabClassNames.tab}>Costumes</Tab>
-                                <Tab className={tabClassNames.tab}>Sounds</Tab>
+                                <Tab className={tabClassNames.tab}>{Blockly.Msg.SCRATCH_BLOCKS}</Tab>
+                                <Tab className={tabClassNames.tab}>{Blockly.Msg.SCRATCH_COSTUMES}</Tab>
+                                <Tab className={tabClassNames.tab}>{Blockly.Msg.SCRATCH_SOUNDS}</Tab>
                             </TabList>
                             <TabPanel className={tabClassNames.tabPanel}>
                                 <Box className={styles.blocksWrapper}>

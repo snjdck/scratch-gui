@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 import VM from "scratch-vm";
+import Blockly from "scratch-blocks";
 
 const { Navbar,Nav,NavItem,ButtonGroup,Button,DropdownButton,FormControl,MenuItem  } = require('react-bootstrap');
 
@@ -47,7 +48,6 @@ class PortSelector extends React.Component {
         this.vm.weeecode.arduino.parseLine(line);
     }
     selectPort(port){
-        console.log("connect to port "+JSON.stringify(port));
         if(port.type=='disconnect'){
             this.props.vm.weeecode.disonnectPort();
         }else{
@@ -58,10 +58,6 @@ class PortSelector extends React.Component {
 
     componentDidMount () {
         this.refreshPort();
-        /*
-        if(this.props.kb.plugin.boards){
-            this.setState({boards:this.state.boards.concat(this.props.kb.plugin.boards)});
-        }*/
     }
     newProject(){
         console.log("newProject")
@@ -79,7 +75,7 @@ class PortSelector extends React.Component {
                 <MenuItem eventKey={{
                     'path': this.state.connectedPort,
                     'type': 'disconnect'
-                }} key={this.state.connectedPort}>Disconnect</MenuItem>;
+                }} key={this.state.connectedPort}>{Blockly.Msg.WC_DISCONNECT}</MenuItem>;
 
         }else{
             portMenuItem =
@@ -89,7 +85,7 @@ class PortSelector extends React.Component {
                         'type': dev.type
                     }} key={dev.path}>{dev.path}</MenuItem>
                 ));
-            portDropdownTxt = "Not Connected";
+            portDropdownTxt = Blockly.Msg.WC_NOT_CONNECTED;
         }
         var weeecode = this.props.vm.weeecode;
         return (
@@ -108,17 +104,17 @@ class PortSelector extends React.Component {
         <Nav>
                     <NavItem>
                         <ButtonGroup>
-                            <DropdownButton title="Project" bsStyle="success" id="projDropdown">
-                                <MenuItem eventKey="1" onClick={this.newProject}>{"New Project"}</MenuItem>
-                                <MenuItem eventKey="2" onClick={this.props.selectSaveFile} >{"Save"}</MenuItem>
-                                <MenuItem eventKey="3" onClick={this.props.selectLoadFile} >{"Load"}</MenuItem>
+                            <DropdownButton title={Blockly.Msg.SCRATCH_PROJECT} bsStyle="success" id="projDropdown">
+                                <MenuItem eventKey="1" onClick={this.newProject}>{Blockly.Msg.SCRATCH_PROJECT_NEW}</MenuItem>
+                                <MenuItem eventKey="2" onClick={this.props.selectSaveFile} >{Blockly.Msg.SCRATCH_PROJECT_SAVE}</MenuItem>
+                                <MenuItem eventKey="3" onClick={this.props.selectLoadFile} >{Blockly.Msg.SCRATCH_PROJECT_LOAD}</MenuItem>
                             </DropdownButton>
                         </ButtonGroup>
                     </NavItem>
             <NavItem>
                 <FormControl
                     type="text"
-                    placeholder="Project Title"
+                    placeholder={Blockly.Msg.SCRATCH_PROJECT_TITLE}
                     style={{
                         width: '200px',
                         backgroundColor: '#0b6684',

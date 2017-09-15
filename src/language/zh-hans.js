@@ -673,3 +673,14 @@ Blockly.Msg.WB_TONE_Eighth = "八分之一";
 Blockly.Msg.WB_TONE_Whole = "整拍";
 Blockly.Msg.WB_TONE_Double = "双拍";
 Blockly.Msg.WB_PROGRAM_BEGIN = "当程序开始";
+
+Blockly.Msg.SCRATCH_BLOCKS = "脚本";
+Blockly.Msg.SCRATCH_COSTUMES = "造型";
+Blockly.Msg.SCRATCH_SOUNDS = "声音";
+Blockly.Msg.WC_DISCONNECT = "断开连接";
+Blockly.Msg.WC_NOT_CONNECTED = "未连接";
+Blockly.Msg.SCRATCH_PROJECT = "项目";
+Blockly.Msg.SCRATCH_PROJECT_NEW = "新建";
+Blockly.Msg.SCRATCH_PROJECT_LOAD = "打开";
+Blockly.Msg.SCRATCH_PROJECT_SAVE = "保存";
+Blockly.Msg.SCRATCH_PROJECT_TITLE = "项目名称";

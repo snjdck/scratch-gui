@@ -675,3 +675,14 @@ Blockly.Msg.WB_TONE_Eighth = "Eighth";
 Blockly.Msg.WB_TONE_Whole = "Whole";
 Blockly.Msg.WB_TONE_Double = "Double";
 Blockly.Msg.WB_PROGRAM_BEGIN = "when program begin";
+
+Blockly.Msg.SCRATCH_BLOCKS = "Blocks";
+Blockly.Msg.SCRATCH_COSTUMES = "Costumes";
+Blockly.Msg.SCRATCH_SOUNDS = "Sounds";
+Blockly.Msg.WC_DISCONNECT = "Disconnect";
+Blockly.Msg.WC_NOT_CONNECTED = "Not Connected";
+Blockly.Msg.SCRATCH_PROJECT = "Project";
+Blockly.Msg.SCRATCH_PROJECT_NEW = "New";
+Blockly.Msg.SCRATCH_PROJECT_LOAD = "Load";
+Blockly.Msg.SCRATCH_PROJECT_SAVE = "Save";
+Blockly.Msg.SCRATCH_PROJECT_TITLE = "Project Title";

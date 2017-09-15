@@ -110,7 +110,8 @@ var Toolbox = function(){
     
 };
 
-Toolbox.prototype.getDefalutToolBox = function (Msg) {
+Toolbox.prototype.getDefalutToolBox = function () {
+    //const Msg = Blockly.Msg;
     return toolbox;
     var ret =
     '<xml id="toolbox-categories" style="display: none">' +
