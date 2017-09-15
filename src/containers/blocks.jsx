@@ -56,7 +56,8 @@ class Blocks extends React.Component {
             }
         }
 
-        var toolbox = this.props.vm.weeecode.toolbox.getDefalutToolBox(this.ScratchBlocks.Msg);
+        var toolbox = this.props.vm.weeecode.toolbox.getDefalutToolBox();
+        toolbox = toolbox.replace(/category name="(\w+)"/g, (str, name) => str.replace(name, Blockly.Msg[name.toUpperCase()]));
         var pluginToolbox = this.props.vm.weeecode.plugin.getToolbox();
         Blockly.Blocks.defaultToolbox = toolbox.replace("</xml>", pluginToolbox + "</xml>");
         

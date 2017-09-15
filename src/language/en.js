@@ -617,7 +617,8 @@ Blockly.Msg.WIRING = "Wiring";
 Blockly.Msg.SHOW = "Show";
 Blockly.Msg.DRAGGABLE = "Draggable";
 Blockly.Msg.ROTATION = "Rotation";
-// kittenbot related
+
+
 Blockly.Msg.KB_DCMOTOR = "DC motor %1 speed %2";
 Blockly.Msg.KB_MOTOR_MOVE = "Motor Move %1";
 Blockly.Msg.KB_STEPPER = "stepper %1 %2 degree %3 rpm";
@@ -631,78 +632,42 @@ Blockly.Msg.KB_DIGITAL = "DIGI clk %1 dio %2 num %3";
 Blockly.Msg.KB_INFRARX = "Infra RX pin %1";
 Blockly.Msg.KB_MATRIXATTACH = "Matrix Attch IO%1 CLK%2 CS%3";
 Blockly.Msg.KB_MATRIXPIX = "Matrix Col %1 Row %2 value %3";
-
-
-
 Blockly.Msg.WB_DCMOTOR = "DC motor %1 speed %2";
-
 Blockly.Msg.WB_MOTOR_MOVE = "Motor Move %1 %2";
-
 Blockly.Msg.WB_BOARD_SERVO = "on board servo %1 angle %2";
-
 Blockly.Msg.WB_TONE = "play tone on note %1 beat %2";
-
 Blockly.Msg.WB_ENCODER_MOVE = "Encoder Motor %1 speed %2 distance %3 cm";
-
 Blockly.Msg.WB_STEPPER_MOVE = "Stepper %1 speed %2 distance %3 cm";
-
 Blockly.Msg.WB_STOP_MOTOR = "Stop DC motors";
-
 Blockly.Msg.WB_RGB1 = "rgb pin %1 pixel %2 color %3";
-
 Blockly.Msg.WB_RGB2 = "RGB pin %1 pixel %2 R%3%  G%4%  B%5%";
-
 Blockly.Msg.WB_LIGHT = "light sensor %1";
-
 Blockly.Msg.WB_TEMPERATURE = "temperature sensor %1";
-
 Blockly.Msg.WB_SOUND = "sound sensor %1";
-
 Blockly.Msg.WB_BOARD_BUTTON = "button %1 pressed";
-
 Blockly.Msg.WB_IR = "IR %1 pressed %2";
-
 Blockly.Msg.WB_LINE_FOLLOWER = "line follower %1 %2";
-
 Blockly.Msg.WB_ULTRASONIC = "ultrasonic %1";
-
 Blockly.Msg.WB_ULTRASONIC_LED = "ultrasonic %1 led %2 %3";
-
 Blockly.Msg.WB_LED_MATRIX_NUMBER = "led matrix %1 show number %2";
-
 Blockly.Msg.WB_LED_MATRIX_TIME = "led matrix %1 show time %2 %3 %4";
-
 Blockly.Msg.WB_LED_MATRIX_STRING = "led matrix %1 x:%2 y:%3 show string %4";
+Blockly.Msg.WB_LED_MATRIX_BITMAP = "led matrix %1 x %2 y %3 show bitmap %4";
 Blockly.Msg.WB_Forward = "Forward";
-
 Blockly.Msg.WB_Backward = "Backward";
-
 Blockly.Msg.WB_Left = "Left";
-
 Blockly.Msg.WB_Right = "Right";
-
 Blockly.Msg.WB_Both = "Both";
-
 Blockly.Msg.WB_Port1 = "Port1";
-
 Blockly.Msg.WB_Port2 = "Port2";
-
 Blockly.Msg.WB_Port3 = "Port3";
-
 Blockly.Msg.WB_Port4 = "Port4";
-
 Blockly.Msg.WB_Port5 = "Port5";
-
 Blockly.Msg.WB_Port6 = "Port6";
-
 Blockly.Msg.WB_PortA = "PortA";
-
 Blockly.Msg.WB_PortB = "PortB";
-
 Blockly.Msg.WB_PortC = "PortC";
-
 Blockly.Msg.WB_PortD = "PortD";
-
 Blockly.Msg.WB_OnBoard = "OnBoard";
 Blockly.Msg.WB_TONE_Half = "Half";
 Blockly.Msg.WB_TONE_Quarter = "Quarter";

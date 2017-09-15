@@ -1,0 +1,56 @@
+KB_DCMOTOR,DC motor %1 speed %2,直流电机 %1 速度 %2,DC motor %1 speed %2
+KB_MOTOR_MOVE,Motor Move %1,电机移动 %1,
+KB_STEPPER,stepper %1 %2 degree %3 rpm,步进电机 %1 %2 角度 %3 RPM,stepper %1 %2 degree %3 rpm
+KB_STEPPERDUAL,"stepper %1 degree %2 rpm, %3 degree %4 rpm","步进电机 %1 角度 %2 RPM, %3 角度 %4 RPM","stepper %1 degree %2 rpm, %3 degree %4 rpm"
+KB_STOPMOTOR,Stop DC motors,停止所有直流电机,Stop DC motors
+KB_RGB,rgb pin %1 pixel %2 color %3,RGB 管脚 %1 像素 %2 颜色 %3,rgb pin %1 pixel %2 color %3
+KB_POWER,Light Sensor On Board,板载光线传感器,Power Voltage
+KB_PING,Ping trig %1 echo %2,超声波 触发引脚 %1 响应引脚 %2,Ping trig %1 echo %2
+KB_LCD,LCD %1,LCD屏幕 %1,LCD %1
+KB_DIGITAL,DIGI clk %1 dio %2 num %3,数码管 CLK %1 DIO %2 数字 %3,DIGI clk %1 dio %2 num %3
+KB_INFRARX,Infra RX pin %1,红外接收 引脚 %1,Infra RX pin %1
+KB_MATRIXATTACH,Matrix Attch IO%1 CLK%2 CS%3,LED矩阵连接 IO%1 CLK%2 CS%3,Matrix Attch IO%1 CLK%2 CS%3
+KB_MATRIXPIX,Matrix Col %1 Row %2 value %3,LED矩阵显示 行%1  列%2 数值 %3,Matrix Col %1 Row %2 value %3
+WB_DCMOTOR,DC motor %1 speed %2,直流电机 %1 速度 %2,DC motor %1 speed %2
+WB_MOTOR_MOVE,Motor Move %1 %2,电机移动 %1 %2,
+WB_BOARD_SERVO,on board servo %1 angle %2,舵机 %1 角度 %2,
+WB_TONE,play tone on note %1 beat %2,播放音调 %1 节拍 %2,
+WB_ENCODER_MOVE,Encoder Motor %1 speed %2 distance %3 cm,编码电机 %1 速度 %2 距离 %3 厘米,
+WB_STEPPER_MOVE,Stepper %1 speed %2 distance %3 cm,步进电机 %1 速度 %2 距离 %3 厘米,
+WB_STOP_MOTOR,Stop DC motors,停止所有直流电机,
+WB_RGB1,rgb pin %1 pixel %2 color %3,RGB 管脚 %1 像素 %2 颜色 %3,
+WB_RGB2,RGB pin %1 pixel %2 R%3%  G%4%  B%5%,RGB 管脚 %1 像素 %2 红 %3 绿 %4 蓝 %5,
+WB_LIGHT,light sensor %1,光线传感器 %1,
+WB_TEMPERATURE,temperature sensor %1,温度传感器 %1,
+WB_SOUND,sound sensor %1,声音传感器 %1,
+WB_BOARD_BUTTON,button %1 pressed,按钮 %1 按下,
+WB_IR,IR %1 pressed %2,红外传感器 %1 按下 %2,
+WB_LINE_FOLLOWER,line follower %1 %2,寻线传感器 %1 %2,
+WB_ULTRASONIC,ultrasonic %1,超声波传感器 %1,
+WB_ULTRASONIC_LED,ultrasonic %1 led %2 %3,设置超声波传感器 %1 灯 %2 %3,
+WB_LED_MATRIX_NUMBER,led matrix %1 show number %2,表情面板 %1 显示数字 %2,
+WB_LED_MATRIX_TIME,led matrix %1 show time %2 %3 %4,表情面板 %1 显示时间 %2 %3 %4,
+WB_LED_MATRIX_STRING,led matrix %1 x:%2 y:%3 show string %4,表情面板 %1 x:%2 y:%3 显示字符 %4,
+WB_LED_MATRIX_BITMAP,led matrix %1 x %2 y %3 show bitmap %4,表情面板 %1 x:%2 y:%3 显示图像 %4,
+WB_Forward,Forward,前,
+WB_Backward,Backward,后,
+WB_Left,Left,左,
+WB_Right,Right,右,
+WB_Both,Both,全部,
+WB_Port1,Port1,端口1,
+WB_Port2,Port2,端口2,
+WB_Port3,Port3,端口3,
+WB_Port4,Port4,端口4,
+WB_Port5,Port5,端口5,
+WB_Port6,Port6,端口6,
+WB_PortA,PortA,端口A,
+WB_PortB,PortB,端口B,
+WB_PortC,PortC,端口C,
+WB_PortD,PortD,端口D ,
+WB_OnBoard,OnBoard,板载,
+WB_TONE_Half,Half,二分之一,
+WB_TONE_Quarter,Quarter,四分之一,
+WB_TONE_Eighth,Eighth,八分之一,
+WB_TONE_Whole,Whole,整拍,
+WB_TONE_Double,Double,双拍,
+WB_PROGRAM_BEGIN,when program begin,当程序开始,
