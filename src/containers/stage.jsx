@@ -37,6 +37,7 @@ class Stage extends React.Component {
         this.updateRect();
         this.renderer = new Renderer(this.canvas);
         this.props.vm.attachRenderer(this.renderer);
+        this.props.vm.stageCanvasCenter = { 'x': this.rect.left + this.rect.width / 2, 'y': this.rect.top + this.rect.height / 2 };
     }
     shouldComponentUpdate (nextProps) {
         return this.props.width !== nextProps.width || this.props.height !== nextProps.height;

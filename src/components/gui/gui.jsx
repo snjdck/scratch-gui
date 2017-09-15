@@ -2,6 +2,7 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
 import {Tab, Tabs, TabList, TabPanel} from 'react-tabs';
+import {Popover} from "react-bootstrap";
 import MediaQuery from 'react-responsive';
 import tabStyles from 'react-tabs/style/react-tabs.css';
 import VM from 'scratch-vm';
@@ -35,13 +36,21 @@ const ArduinoPanel = require('../../containers/arduino-panel.jsx');
 class GUIComponent extends React.Component {
     constructor(props){
         super(props);
-        bindAll(this, ["toggleArduinoMode"]);
+        bindAll(this, ["toggleArduinoMode", "stageSay"]);
+        this.props.vm.runtime.stageSay = this.stageSay;
         this.state = {
-            isArduinoMode:false
+            isArduinoMode:false,
+            sayInfo:{msg:"",show:false,x:0,y:0}
         };
     }
     toggleArduinoMode(){
         this.setState((prevState, props) => ({isArduinoMode:!prevState.isArduinoMode}));
+    }
+    stageSay(msg, show, x, y) {
+        let vm = this.props.vm;
+        x += vm.stageCanvasCenter.x;
+        y  = vm.stageCanvasCenter.y - y - 36;
+        this.setState({sayInfo:{x,y,msg,show}});
     }
 render(){
     const {
@@ -55,6 +64,8 @@ render(){
     if (children) {
         return <Box {...componentProps}>{children}</Box>;
     }
+
+    const sayInfo = this.state.sayInfo;
 
     return (
         <Box
@@ -119,6 +130,14 @@ render(){
                     </Box>
                 </Box>
             </Box>
+            <Popover
+            id="sprite-say"
+            placement='top'
+            positionLeft={sayInfo.x}
+            positionTop={sayInfo.y}
+            style={{"display":sayInfo.show?'block':'none'}}>
+                {sayInfo.msg}
+            </Popover>
         </Box>
     );
 }
