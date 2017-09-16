@@ -445,6 +445,7 @@ Blockly.Msg.MOTION_GOTO = "移到 %1";
 Blockly.Msg.MOTION_GOTOXY = "移动到 x: %1 y: %2";
 Blockly.Msg.MOTION_CHANGEXBY = "改变 x 坐标到 %1";
 Blockly.Msg.MOTION_GLIDESECSTOX = "在 %1 秒内滑行到 x: %2 y: %3";
+Blockly.Msg.MOTION_GLIDESECSTO = "在 %1 秒内滑行到 %2";
 Blockly.Msg.MOTION_SETXTO = "将x坐标增加 %1";
 Blockly.Msg.MOTION_CHANGEYBY = "将y坐标增加%1";
 Blockly.Msg.MOTION_SETYTO = "将y坐标设定为%1";

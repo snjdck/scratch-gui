@@ -447,6 +447,7 @@ Blockly.Msg.MOTION_GOTO = "go to %1";
 Blockly.Msg.MOTION_GOTOXY = "go to x: %1 y: %2";
 Blockly.Msg.MOTION_CHANGEXBY = "change x by %1";
 Blockly.Msg.MOTION_GLIDESECSTOX = "glide %1 secs to x: %2 y: %3";
+Blockly.Msg.MOTION_GLIDESECSTO = "glide %1 secs to %2";
 Blockly.Msg.MOTION_SETXTO = "set x to %1";
 Blockly.Msg.MOTION_CHANGEYBY = "change y by %1";
 Blockly.Msg.MOTION_SETYTO = "set y to %1";
