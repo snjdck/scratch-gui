@@ -12,10 +12,12 @@ import PortSelector from '../../containers/port-selector.jsx';
 import styles from './menu-bar.css';
 import scratchLogo from './scratch-logo.svg';
 
+const emptyProjectJson = require("../../lib/empty-project.json");
+
 class MenuBar extends React.Component {
     constructor (props) {
         super(props);
-        bindAll(this, ["selectLoadFile", "selectSaveFile", "loadProject", "saveProject"]);
+        bindAll(this, ["newProject", "selectLoadFile", "selectSaveFile", "loadProject", "saveProject"]);
     }
     selectLoadFile(){
         this.loadProjDialog.click();
@@ -23,23 +25,24 @@ class MenuBar extends React.Component {
     selectSaveFile(){
         this.saveProjDialog.click();
     }
+    newProject(){
+        this.props.vm.loadProject(JSON.stringify(emptyProjectJson));
+    }
     loadFile(e, onLoad){
         const reader = new FileReader();
         reader.onload = () => onLoad(reader.result);
         reader.readAsText(e.target.files[0]);
     }
     loadProject(e){
-        console.log("loaded")
-        this.loadFile(e, console.log)
+        this.props.vm.weeecode.loadSb2(e.target.files[0].path)
     }
     saveProject(e){
-        console.log("saved")
-        this.loadFile(e, console.log)
+        console.log("saved", e.target.files[0].path)
     }
     render () {
         return (
-            <Box style={{height:30}}>
-                <PortSelector className={styles.menuItem} selectLoadFile={this.selectLoadFile} selectSaveFile={this.selectSaveFile} {...this.props} />
+            <Box className={styles.menuBar}>
+                <PortSelector className={styles.menuItem} newProject={this.newProject} selectLoadFile={this.selectLoadFile} selectSaveFile={this.selectSaveFile} {...this.props} />
                 <input type="file" style={{display:'none'}} ref={ref => this.loadProjDialog = ref} onChange={this.loadProject} accept=".sb2,.kb"/>
                 <input type="file" style={{display:'none'}} ref={ref => this.saveProjDialog = ref} onChange={this.saveProject} accept=".kb"/>
             </Box>

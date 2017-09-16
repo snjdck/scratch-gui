@@ -59,9 +59,6 @@ class PortSelector extends React.Component {
     componentDidMount () {
         this.refreshPort();
     }
-    newProject(){
-        console.log("newProject")
-    }
     openSetupModal(){
         console.log("openSetupModal")
     }
@@ -105,7 +102,7 @@ class PortSelector extends React.Component {
                     <NavItem>
                         <ButtonGroup>
                             <DropdownButton title={Blockly.Msg.SCRATCH_PROJECT} bsStyle="success" id="projDropdown">
-                                <MenuItem eventKey="1" onClick={this.newProject}>{Blockly.Msg.SCRATCH_PROJECT_NEW}</MenuItem>
+                                <MenuItem eventKey="1" onClick={this.props.newProject}>{Blockly.Msg.SCRATCH_PROJECT_NEW}</MenuItem>
                                 <MenuItem eventKey="2" onClick={this.props.selectSaveFile} >{Blockly.Msg.SCRATCH_PROJECT_SAVE}</MenuItem>
                                 <MenuItem eventKey="3" onClick={this.props.selectLoadFile} >{Blockly.Msg.SCRATCH_PROJECT_LOAD}</MenuItem>
                             </DropdownButton>
