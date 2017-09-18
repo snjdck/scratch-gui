@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import {FormattedMessage} from 'react-intl';
+import Blockly from "scratch-blocks";
 
 import Box from '../box/box.jsx';
 import SpriteInfo from '../../containers/sprite-info.jsx';
@@ -85,7 +86,7 @@ const SpriteSelectorComponent = function (props) {
             <IconButton
                 className={styles.addButton}
                 img={spriteIcon}
-                title={addSpriteMessage}
+                title={Blockly.Msg.SCRATCH_ADD_SPRITE}
                 onClick={onNewSpriteClick}
             />
         </Box>

@@ -35,7 +35,7 @@ const StageSelector = props => {
             {...componentProps}
         >
             <div className={styles.header}>
-                <div className={styles.headerTitle}>Stage</div>
+                <div className={styles.headerTitle}>{Blockly.Msg.STAGE}</div>
             </div>
             {url ? (
                 <CostumeCanvas
@@ -46,17 +46,13 @@ const StageSelector = props => {
                 />
             ) : null}
             <div className={styles.label}>
-                <FormattedMessage
-                    defaultMessage="Backdrops"
-                    description="Label for the backdrops in the stage selector"
-                    id="stageSelector.backdrops"
-                />
+                {Blockly.Msg.SCRATCH_BACKDROPS}
             </div>
             <div className={styles.count}>{backdropCount}</div>
             <IconButton
                 className={styles.addButton}
                 img={backdropIcon}
-                title={addBackdropMessage}
+                title={Blockly.Msg.SCRATCH_ADD_BACKDROP}
                 onClick={onNewBackdropClick}
             />
         </Box>

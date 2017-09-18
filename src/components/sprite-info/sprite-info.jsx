@@ -15,9 +15,10 @@ import xIcon from './icon--x.svg';
 import yIcon from './icon--y.svg';
 import showIcon from './icon--show.svg';
 import hideIcon from './icon--hide.svg';
+import Blockly from "scratch-blocks";
 
 const BufferedInput = BufferedInputHOC(Input);
-const ROTATION_STYLES = ['left-right', 'don\'t rotate', 'all around'];
+//const ROTATION_STYLES = [Blockly.Msg.SCRATCH_ROTATION_LEFT_RIGHT, Blockly.Msg.SCRATCH_ROTATION_NONE, Blockly.Msg.SCRATCH_ROTATION_ANY];
 
 class SpriteInfo extends React.Component {
     shouldComponentUpdate (nextProps) {
@@ -38,7 +39,7 @@ class SpriteInfo extends React.Component {
             >
                 <div className={classNames(styles.row, styles.rowPrimary)}>
                     <div className={styles.group}>
-                        <Label text="Sprite">
+                        <Label text={Blockly.Msg.SPRITE}>
                             <BufferedInput
                                 disabled={this.props.disabled}
                                 placeholder="Name"
@@ -100,7 +101,7 @@ class SpriteInfo extends React.Component {
                         <MediaQuery minWidth={layout.fullSizeMinWidth}>
                             <Label
                                 secondary
-                                text="Show"
+                                text={Blockly.Msg.SHOW}
                             />
                         </MediaQuery>
                         <div>
@@ -145,7 +146,7 @@ class SpriteInfo extends React.Component {
                     <div className={styles.group}>
                         <Label
                             secondary
-                            text="Direction"
+                            text={Blockly.Msg.SCRATCH_DIRECTION}
                         >
                             <BufferedInput
                                 small
@@ -161,7 +162,7 @@ class SpriteInfo extends React.Component {
                     <div className={styles.group}>
                         <Label
                             secondary
-                            text="Rotation"
+                            text={Blockly.Msg.ROTATION}
                         >
                             <select
                                 className={classNames(styles.selectForm, styles.rotationSelect)}
@@ -169,12 +170,16 @@ class SpriteInfo extends React.Component {
                                 value={this.props.rotationStyle}
                                 onChange={this.props.onChangeRotationStyle}
                             >
-                                {ROTATION_STYLES.map(style => (
+                                {[
+                                    [Blockly.Msg.SCRATCH_ROTATION_LEFT_RIGHT, "left-right"],
+                                    [Blockly.Msg.SCRATCH_ROTATION_NONE, "don't rotate"],
+                                    [Blockly.Msg.SCRATCH_ROTATION_ANY, "all around"]
+                                ].map(([label,style]) => (
                                     <option
                                         key={style}
                                         value={style}
                                     >
-                                        {style}
+                                        {label}
                                     </option>
                                 ))}
                             </select>
@@ -200,7 +205,7 @@ SpriteInfo.propTypes = {
     onChangeY: PropTypes.func,
     onClickNotVisible: PropTypes.func,
     onClickVisible: PropTypes.func,
-    rotationStyle: PropTypes.oneOf(ROTATION_STYLES),
+    rotationStyle: PropTypes.string,
     visible: PropTypes.bool,
     x: PropTypes.oneOfType([
         PropTypes.string,
