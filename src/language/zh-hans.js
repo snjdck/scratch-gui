@@ -696,3 +696,5 @@ Blockly.Msg.SCRATCH_ROTATION_ANY = "任意旋转";
 Blockly.Msg.SCRATCH_ADD_BACKDROP = "添加背景";
 Blockly.Msg.SCRATCH_ADD_SPRITE = "添加角色";
 Blockly.Msg.SCRATCH_BACKDROPS = "背景";
+Blockly.Msg.SCRATCH_SPRITE_LIBRARY = "角色库";
+Blockly.Msg.SCRATCH_BACKDROP_LIBRARY = "背景库";

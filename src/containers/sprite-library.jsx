@@ -2,6 +2,7 @@ import bindAll from 'lodash.bindall';
 import PropTypes from 'prop-types';
 import React from 'react';
 import VM from 'scratch-vm';
+import Blockly from 'scratch-blocks';
 
 import spriteLibraryContent from '../lib/libraries/sprites.json';
 
@@ -65,7 +66,7 @@ class SpriteLibrary extends React.PureComponent {
         return (
             <LibraryComponent
                 data={this.state.sprites}
-                title="Sprite Library"
+                title={Blockly.Msg.SCRATCH_SPRITE_LIBRARY}
                 onItemMouseEnter={this.handleMouseEnter}
                 onItemMouseLeave={this.handleMouseLeave}
                 onItemSelected={this.handleItemSelect}

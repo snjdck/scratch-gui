@@ -698,3 +698,5 @@ Blockly.Msg.SCRATCH_ROTATION_ANY = "all around";
 Blockly.Msg.SCRATCH_ADD_BACKDROP = "Add Backdrop";
 Blockly.Msg.SCRATCH_ADD_SPRITE = "Add Sprite";
 Blockly.Msg.SCRATCH_BACKDROPS = "Backdrops";
+Blockly.Msg.SCRATCH_SPRITE_LIBRARY = "Sprite Library";
+Blockly.Msg.SCRATCH_BACKDROP_LIBRARY = "Backdrop Library";

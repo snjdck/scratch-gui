@@ -2,6 +2,7 @@ import bindAll from 'lodash.bindall';
 import PropTypes from 'prop-types';
 import React from 'react';
 import VM from 'scratch-vm';
+import Blockly from 'scratch-blocks';
 
 import backdropLibraryContent from '../lib/libraries/backdrops.json';
 import LibraryComponent from '../components/library/library.jsx';
@@ -28,7 +29,7 @@ class BackdropLibrary extends React.Component {
         return (
             <LibraryComponent
                 data={backdropLibraryContent}
-                title="Backdrop Library"
+                title={Blockly.Msg.SCRATCH_BACKDROP_LIBRARY}
                 onItemSelected={this.handleItemSelect}
                 onRequestClose={this.props.onRequestClose}
             />
