@@ -19,6 +19,9 @@ class MenuBar extends React.Component {
         super(props);
         bindAll(this, ["newProject", "selectLoadFile", "selectSaveFile", "loadProject", "saveProject"]);
     }
+    componentDidMount(){
+        this.saveProjDialog.nwsaveas = "WeeeBot";
+    }
     selectLoadFile(){
         this.loadProjDialog.click();
     }
@@ -28,23 +31,26 @@ class MenuBar extends React.Component {
     newProject(){
         this.props.vm.loadProject(JSON.stringify(emptyProjectJson));
     }
+    /*
     loadFile(e, onLoad){
         const reader = new FileReader();
         reader.onload = () => onLoad(reader.result);
         reader.readAsText(e.target.files[0]);
-    }
+    }*/
     loadProject(e){
-        this.props.vm.weeecode.loadSb2(e.target.files[0].path)
+        var filePath = e.target.files[0].path;
+        this.props.vm.weeecode.loadWC(filePath)
     }
     saveProject(e){
-        console.log("saved", e.target.files[0].path)
+        var filePath = e.target.files[0].path;
+        this.props.vm.weeecode.saveWC(filePath);
     }
     render () {
         return (
             <Box className={styles.menuBar}>
                 <PortSelector className={styles.menuItem} newProject={this.newProject} selectLoadFile={this.selectLoadFile} selectSaveFile={this.selectSaveFile} {...this.props} />
                 <input type="file" style={{display:'none'}} ref={ref => this.loadProjDialog = ref} onChange={this.loadProject} accept=".sb2,.kb"/>
-                <input type="file" style={{display:'none'}} ref={ref => this.saveProjDialog = ref} onChange={this.saveProject} accept=".kb"/>
+                <input type="file" style={{display:'none'}} ref={ref => this.saveProjDialog = ref} onChange={this.saveProject} accept=".sb2"/>
             </Box>
         );
     }

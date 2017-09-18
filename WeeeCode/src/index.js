@@ -139,12 +139,12 @@ class WeeeCode
 	    document.location.reload(true); // reload all
 	}
 
-	loadKb(kbpath) {
-	    return this.proj.loadkb(kbpath);
+	loadWC(filePath) {
+	    return this.proj.loadwb(filePath);
 	}
 
-	saveKb(kbpath,xml) {
-	    return this.proj.savekb(kbpath,xml);
+	saveWC(filePath) {
+	    this.proj.savewb(filePath);
 	}
 
 	setPluginParseLine(func) {

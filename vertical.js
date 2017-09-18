@@ -1506,7 +1506,11 @@ module.exports =
 	Blockly.Blocks.motion_changeyby={init:function(){this.jsonInit({message0:Blockly.Msg.MOTION_CHANGEYBY,args0:[{type:"input_value",name:"DY"}],category:Blockly.Categories.motion,extensions:["colours_motion","shape_statement"]})}};
 	Blockly.Blocks.motion_sety={init:function(){this.jsonInit({message0:Blockly.Msg.MOTION_SETYTO,args0:[{type:"input_value",name:"Y"}],category:Blockly.Categories.motion,extensions:["colours_motion","shape_statement"]})}};
 	Blockly.Blocks.motion_ifonedgebounce={init:function(){this.jsonInit({message0:Blockly.Msg.MOTION_IFONEDGEBOUNCE,category:Blockly.Categories.motion,extensions:["colours_motion","shape_statement"]})}};
-	Blockly.Blocks.motion_setrotationstyle={init:function(){this.jsonInit({message0:Blockly.Msg.MOTION_SETROTATIONSTYLE,args0:[{type:"field_dropdown",name:"STYLE",options:[["left-right","left-right"],["don't rotate","don't rotate"],["all around","all around"]]}],category:Blockly.Categories.motion,extensions:["colours_motion","shape_statement"]})}};
+	Blockly.Blocks.motion_setrotationstyle={init:function(){this.jsonInit({message0:Blockly.Msg.MOTION_SETROTATIONSTYLE,args0:[{type:"field_dropdown",name:"STYLE",options:[
+		[Blockly.Msg.SCRATCH_ROTATION_LEFT_RIGHT,"left-right"],
+		[Blockly.Msg.SCRATCH_ROTATION_NONE,"don't rotate"],
+		[Blockly.Msg.SCRATCH_ROTATION_ANY,"all around"]
+	]}],category:Blockly.Categories.motion,extensions:["colours_motion","shape_statement"]})}};
 	Blockly.Blocks.motion_xposition={init:function(){this.jsonInit({message0:Blockly.Msg.MOTION_XPOSITION,category:Blockly.Categories.motion,checkboxInFlyout:!0,extensions:["colours_motion","output_number"]})}};
 	Blockly.Blocks.motion_yposition={init:function(){this.jsonInit({message0:Blockly.Msg.MOTION_YPOSITION,category:Blockly.Categories.motion,checkboxInFlyout:!0,extensions:["colours_motion","output_number"]})}};
 	Blockly.Blocks.motion_direction={init:function(){this.jsonInit({message0:Blockly.Msg.MOTION_DIRECTION,category:Blockly.Categories.motion,checkboxInFlyout:!0,extensions:["colours_motion","output_number"]})}};

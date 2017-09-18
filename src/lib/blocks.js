@@ -1,4 +1,5 @@
 import ScratchBlocks from 'scratch-blocks';
+const Blockly = ScratchBlocks;
 
 /**
  * Connect scratch blocks with the vm
@@ -92,23 +93,23 @@ export default function (vm) {
 
     ScratchBlocks.Blocks.motion_pointtowards_menu.init = function () {
         const json = jsonForMenuBlock('TOWARDS', spriteMenu, motionColors, [
-            ['mouse-pointer', '_mouse_']
+            [Blockly.Msg.SCRATCH_MOUSE_POINTER, '_mouse_']
         ]);
         this.jsonInit(json);
     };
 
     ScratchBlocks.Blocks.motion_goto_menu.init = function () {
         const json = jsonForMenuBlock('TO', spriteMenu, motionColors, [
-            ['mouse-pointer', '_mouse_'],
-            ['random position', '_random_']
+            [Blockly.Msg.SCRATCH_MOUSE_POINTER, '_mouse_'],
+            [Blockly.Msg.SCRATCH_RANDOM_POSITION, '_random_']
         ]);
         this.jsonInit(json);
     };
 
     ScratchBlocks.Blocks.motion_glideto_menu.init = function () {
         const json = jsonForMenuBlock('TO', spriteMenu, motionColors, [
-            ['mouse-pointer', '_mouse_'],
-            ['random position', '_random_']
+            [Blockly.Msg.SCRATCH_MOUSE_POINTER, '_mouse_'],
+            [Blockly.Msg.SCRATCH_RANDOM_POSITION, '_random_']
         ]);
         this.jsonInit(json);
     };
@@ -129,14 +130,14 @@ export default function (vm) {
 
     ScratchBlocks.Blocks.sensing_distancetomenu.init = function () {
         const json = jsonForMenuBlock('DISTANCETOMENU', spriteMenu, sensingColors, [
-            ['mouse-pointer', '_mouse_']
+            [Blockly.Msg.SCRATCH_MOUSE_POINTER, '_mouse_']
         ]);
         this.jsonInit(json);
     };
 
     ScratchBlocks.Blocks.sensing_touchingobjectmenu.init = function () {
         const json = jsonForMenuBlock('TOUCHINGOBJECTMENU', spriteMenu, sensingColors, [
-            ['mouse-pointer', '_mouse_'],
+            [Blockly.Msg.SCRATCH_MOUSE_POINTER, '_mouse_'],
             ['edge', '_edge_']
         ]);
         this.jsonInit(json);

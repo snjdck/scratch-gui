@@ -700,3 +700,5 @@ Blockly.Msg.SCRATCH_ADD_SPRITE = "Add Sprite";
 Blockly.Msg.SCRATCH_BACKDROPS = "Backdrops";
 Blockly.Msg.SCRATCH_SPRITE_LIBRARY = "Sprite Library";
 Blockly.Msg.SCRATCH_BACKDROP_LIBRARY = "Backdrop Library";
+Blockly.Msg.SCRATCH_MOUSE_POINTER = "mouse-pointer";
+Blockly.Msg.SCRATCH_RANDOM_POSITION = "random position";

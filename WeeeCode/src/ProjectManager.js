@@ -91,15 +91,17 @@ class ProjectManager
 	    return projName;
 	}
 
-	loadkb (filepath) {
+	loadwb (filepath) {
 	    var projName = path.basename(filepath, '.kb');
-	    // 1. extract sb2 file to workspace
-	    var xml = fs.readFileSync(filepath, 'utf8');
-	    return {"name":projName,"xml":xml};
+	    projName = "Test"
+	    var fileData = fs.readFileSync(filepath, 'utf8');
+	    this.vm.loadProject(fileData);
+	    //return {"name":projName,"xml":xml};
 	}
 
-	savekb (filepath,xml) {
-	    fs.writeFileSync(filepath, xml);
+	savewb (filePath) {
+		var fileData = this.vm.saveProjectSb3();
+	    fs.writeFileSync(filePath, fileData);
 	}
 }
 
