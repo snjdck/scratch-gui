@@ -687,3 +687,7 @@ Blockly.Msg.SCRATCH_PROJECT_NEW = "New";
 Blockly.Msg.SCRATCH_PROJECT_LOAD = "Load";
 Blockly.Msg.SCRATCH_PROJECT_SAVE = "Save";
 Blockly.Msg.SCRATCH_PROJECT_TITLE = "Project Title";
+Blockly.Msg.MATH_ABS = "abs";
+Blockly.Msg.MATH_FLOOR = "floor";
+Blockly.Msg.MATH_CEILING = "ceiling";
+Blockly.Msg.MATH_SQRT = "sqrt";

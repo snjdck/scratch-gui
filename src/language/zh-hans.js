@@ -685,3 +685,7 @@ Blockly.Msg.SCRATCH_PROJECT_NEW = "新建";
 Blockly.Msg.SCRATCH_PROJECT_LOAD = "打开";
 Blockly.Msg.SCRATCH_PROJECT_SAVE = "保存";
 Blockly.Msg.SCRATCH_PROJECT_TITLE = "项目名称";
+Blockly.Msg.MATH_ABS = "绝对值";
+Blockly.Msg.MATH_FLOOR = "向下取整";
+Blockly.Msg.MATH_CEILING = "向上取整";
+Blockly.Msg.MATH_SQRT = "平方根";
