@@ -1,6 +1,7 @@
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
+import Blockly from 'scratch-blocks';
 
 import filterIcon from './icon--filter.svg';
 import xIcon from './icon--x.svg';
@@ -27,7 +28,7 @@ const FilterComponent = props => {
             <input
                 autoFocus
                 className={styles.filterInput}
-                placeholder={placeholderText}
+                placeholder={placeholderText || Blockly.Msg.SCRATCH_WHAT_ARE_YOU_LOOKING_FOR}
                 type="text"
                 value={filterQuery}
                 onChange={onChange}
@@ -50,8 +51,5 @@ FilterComponent.propTypes = {
     onChange: PropTypes.func,
     onClear: PropTypes.func,
     placeholderText: PropTypes.string
-};
-FilterComponent.defaultProps = {
-    placeholderText: 'what are you looking for?'
 };
 export default FilterComponent;

@@ -60,7 +60,7 @@ class CostumeTab extends React.Component {
         if (!target) {
             return null;
         }
-
+        /*
         const addBackdropMsg = (
             <FormattedMessage
                 defaultMessage="Add Backdrop"
@@ -75,8 +75,8 @@ class CostumeTab extends React.Component {
                 id="action.addCostume"
             />
         );
-
-        const addMessage = target.isStage ? addBackdropMsg : addCostumeMsg;
+        */
+        const addMessage = target.isStage ? Blockly.Msg.SCRATCH_ADD_BACKDROP : Blockly.Msg.SCRATCH_ADD_COSTUME;
         const addFunc = target.isStage ? onNewBackdropClick : onNewCostumeClick;
 
         return (

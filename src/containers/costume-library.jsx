@@ -2,6 +2,7 @@ import bindAll from 'lodash.bindall';
 import PropTypes from 'prop-types';
 import React from 'react';
 import VM from 'scratch-vm';
+import Blockly from 'scratch-blocks';
 
 import costumeLibraryContent from '../lib/libraries/costumes.json';
 import LibraryComponent from '../components/library/library.jsx';
@@ -28,7 +29,7 @@ class CostumeLibrary extends React.PureComponent {
         return (
             <LibraryComponent
                 data={costumeLibraryContent}
-                title="Costume Library"
+                title={Blockly.Msg.SCRATCH_COSTUME_LIBRARY}
                 onItemSelected={this.handleItemSelected}
                 onRequestClose={this.props.onRequestClose}
             />
