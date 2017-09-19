@@ -73,7 +73,7 @@ render(){
             className={styles.pageWrapper}
             {...componentProps}
         >
-            <MenuBar vm={vm} toggleArduinoMode={this.toggleArduinoMode} />
+            <MenuBar vm={vm} toggleArduinoMode={this.toggleArduinoMode} isArduinoMode={this.state.isArduinoMode} />
             <Box className={styles.bodyWrapper}>
                 <Box className={styles.flexWrapper}>
                     <Box className={styles.editorWrapper}>

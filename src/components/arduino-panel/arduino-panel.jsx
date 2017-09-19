@@ -23,7 +23,7 @@ class ArduinoPanelComponent extends React.Component {
             firmwares:[]
         };
     }
-    wc(){
+    get wc(){
         return this.props.vm.weeecode;
     }
     translateCode(){
@@ -39,10 +39,10 @@ class ArduinoPanelComponent extends React.Component {
         });
     }
     uploadProject(){
-        this.wc().uploadProject(this.state.code);
+        this.wc.uploadProject(this.state.code);
     }
     openArduino(){
-        this.wc().openIno(this.state.code);
+        this.wc.openIno(this.state.code);
     }
     consoleClear(){
         console.log("consoleClear:");

@@ -34,11 +34,7 @@ class SerialConnection {
 
 
     enumSerial(callback){
-        this.getDevices(function (ports) {
-            if(callback){
-                callback(ports);
-            }
-        });
+        this.getDevices(ports => callback && callback(ports));
     }
 
     getDevices(callback) {

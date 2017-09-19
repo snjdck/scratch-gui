@@ -5,7 +5,7 @@ import React from 'react';
 import VM from "scratch-vm";
 import Blockly from "scratch-blocks";
 
-const { Navbar,Nav,NavItem,ButtonGroup,Button,DropdownButton,FormControl,MenuItem  } = require('react-bootstrap');
+const { Navbar,Nav,NavItem,ButtonGroup,Button,DropdownButton,FormControl,MenuItem,SplitButton  } = require('react-bootstrap');
 
 const {Icon} = require('react-fa');
 
@@ -139,6 +139,7 @@ class PortSelector extends React.Component {
                     </NavItem>
                     <NavItem>
                         <Button bsStyle="warning"
+                        		active={this.props.isArduinoMode}
                                 onClick={this.props.toggleArduinoMode}
                         >Arduino</Button>
                     </NavItem>
