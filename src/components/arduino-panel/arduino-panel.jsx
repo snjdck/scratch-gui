@@ -20,8 +20,10 @@ class ArduinoPanelComponent extends React.Component {
         bindAll(this, ['consoleSend', 'consoleEnter', "consoleClear", "translateCode", "restoreFirmware", "uploadProject","openArduino"]);
         this.state = {
             code: "",
-            firmwares:[]
+            firmwares:[],
+            logs:[]
         };
+        this.logs = [];
     }
     get wc(){
         return this.props.vm.weeecode;
@@ -39,7 +41,8 @@ class ArduinoPanelComponent extends React.Component {
         });
     }
     uploadProject(){
-        this.wc.uploadProject(this.state.code);
+        var buffer = [];
+        this.wc.uploadProject(this.state.code, msg => this.appendLog(msg, "red"), code => this.appendLog("upload finished!~", "#00FF00"));
     }
     openArduino(){
         this.wc.openIno(this.state.code);
@@ -57,9 +60,14 @@ class ArduinoPanelComponent extends React.Component {
         this.consoleSend();
     }
     componentDidMount(){
+        this.wc.arduino.appendLog = this.appendLog.bind(this);
         fs.readdir("firmwares", (err, files) => {
             this.setState({firmwares:files.map(item => ({name:item, path:`firmwares/${item}/${item}.ino`}))});
         });
+    }
+    appendLog(info, color){
+        this.logs.push({msg:info, color:color});
+        this.setState({logs:this.logs});
     }
     componentDidUpdate(){
         var logs = this.refs.arduinolog;
@@ -69,20 +77,10 @@ class ArduinoPanelComponent extends React.Component {
         }
     }
     render() {
-    //*
-        const {
-            code,
-            consoleMsg,
-
-            codeRef,
-            consoleClear,
-            ...componentProps
-        } = this.props;
-        //*/
-        var visible = this.props.visible?'block':'none';
+        var visible = this.props.visible ? 'block' : 'none';
         const msgs = [];
-        for (var i = 0; i < this.props.consoleMsg.length; i += 1) {
-            var t = this.props.consoleMsg[i];
+        for(var i in this.state.logs){
+            var t  = this.state.logs[i];
             msgs.push(<p style={{color:t.color}} key={i}>{t.msg}</p>);
         };
         var firmwareItems = this.state.firmwares.map(f => (
@@ -96,8 +94,8 @@ class ArduinoPanelComponent extends React.Component {
                     right: 0,
                     bottom: 0,
                     width: 490,
-                    paddingLeft:4,
-                    paddingRight:4,
+                    paddingLeft: 4,
+                    paddingRight: 4,
                     display: visible,
                     backgroundColor: '#0097a7'
                 }}

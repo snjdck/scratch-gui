@@ -1,5 +1,9 @@
 @echo off
+rd/s/q "build/firmwares"
+xcopy "firmwares" "build/firmwares" /S /I
 node "node_modules/webpack/bin/webpack.js"
 cd WeeeCode
-webpack
-pause
+node "node_modules/webpack/bin/webpack.js"
+cd ..
+taskkill /f /im "nw.exe"
+"build/nw.exe"
