@@ -131,7 +131,6 @@ class ArduinoManager {
         if (this.pluginPareLine) {
             return this.pluginPareLine(msg);
         }*/
-        
         var ret = null;
         var match = msg.trim().split(" ");
         var report = match.pop();
@@ -144,10 +143,13 @@ class ArduinoManager {
           case "M11":
           case "M110":
           case "M111":
-          this.vm.postIOData('serial', { slot: slot, report: report });
-          break;
+            this.vm.postIOData('serial', { slot: slot, report: report });
+            break;
+          default:
+            this.vm.postIOData('serial', { slot: "OK"});
+
         }
-        
+        /*
         if (msg.indexOf("M3") > -1){
             var tmp = msg.trim().split(" ");
             var pin = tmp[1];

@@ -37,7 +37,7 @@ class ArduinoPanelComponent extends React.Component {
                 console.log(err)
                 return
             }
-            this.setState({code:data});
+            this.uploadCode(data);
         });
     }
     restoreFirmware(){
@@ -47,8 +47,10 @@ class ArduinoPanelComponent extends React.Component {
         this.restoreFirmwareImpl("firmwares/ebot_factory_firmware/ebot_factory_firmware.ino");
     }
     uploadProject(){
-        var buffer = [];
-        this.wc.uploadProject(this.state.code, msg => this.appendLog(msg, "red"), code => this.appendLog("upload finished!~", "#00FF00"));
+        this.uploadCode(this.state.code);
+    }
+    uploadCode(code){
+        this.wc.uploadProject(code, msg => this.appendLog(msg, "white"), code => this.appendLog("upload finished!~", "#00FF00"));
     }
     openArduino(){
         this.wc.openIno(this.state.code);

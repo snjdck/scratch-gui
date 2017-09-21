@@ -10,11 +10,12 @@ export default class Serial {
         var slot = data.slot;
         var report = data.report;
         if(slot in this._resolves){
-            if(report!=null){
+            if(report != null){
                 this._resolves[slot](report);
             }else{
                 this._resolves[slot]();
             }
+            delete this._resolves[slot];
         }
     }
 
