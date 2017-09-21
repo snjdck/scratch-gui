@@ -714,3 +714,5 @@ Blockly.Msg.SOUND_SOFTER = "Softer";
 Blockly.Msg.SOUND_REVERSE = "Reverse";
 Blockly.Msg.SOUND_ADD = "Add Sound";
 Blockly.Msg.SOUND_RECORD = "Record Sound";
+Blockly.Msg.WC_RESTORE_FIRMWARE = "Restore Firmware";
+Blockly.Msg.WC_RESTORE_FACTORY_FIRMWARE = "Restore Factory Firmware";

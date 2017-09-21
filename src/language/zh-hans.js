@@ -712,3 +712,5 @@ Blockly.Msg.SOUND_SOFTER = "减小";
 Blockly.Msg.SOUND_REVERSE = "反转";
 Blockly.Msg.SOUND_ADD = "添加声音";
 Blockly.Msg.SOUND_RECORD = "录音";
+Blockly.Msg.WC_RESTORE_FIRMWARE = "恢复在线固件";
+Blockly.Msg.WC_RESTORE_FACTORY_FIRMWARE = "恢复出厂固件";
