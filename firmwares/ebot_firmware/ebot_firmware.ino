@@ -192,7 +192,7 @@ void doRgb(char * cmd)
 	parsePinVal(cmd, &port, &pix, &r, &g, &b);
 	uint8_t pin = port_to_pin(port, OnBoard_RGB);
 	led.reset(pin);
-	led.setColor(r >> 4, g >> 4, b >> 4);
+	led.setColor(pix, r >> 4, g >> 4, b >> 4);
 	led.show();
 }
 
@@ -219,11 +219,10 @@ void doServo(char *cmd)
 
 void doDcMove(char *cmd)
 {
-	int spd = nextInt(&cmd);
 	dc.reset(M1);
-	dc.run(-spd);
+	dc.run(nextInt(&cmd));
 	dc.reset(M2);
-	dc.run(-spd);
+	dc.run(nextInt(&cmd));
 }
 
 void doDcStop(char *cmd)
