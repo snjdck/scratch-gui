@@ -10,9 +10,10 @@ var ResourceManager = require('./ResourceManager');
 
 var ProjectManager = require('./ProjectManager');
 
-class WeeeCode
+class WeeeCode extends EventEmitter
 {
 	constructor(vm) {
+		super();
 		this.workpath = path.resolve(process.cwd(),'workspace');
 		this.mediapath = path.resolve(process.cwd(),'media');
 		this.defaultExamples = path.resolve(process.cwd(),'examples');
@@ -106,7 +107,6 @@ class WeeeCode
 	}
 
 	uploadProject(code,logCb,finishCb) {
-	    console.log("uploadProject")
 	    var workspaceFolder = path.resolve(this.workpath,"/project");
 	    var workspaceIno = path.resolve(this.workpath,"/project","project.ino");
 	    if(this.serial.connectionId != -1){
@@ -115,7 +115,6 @@ class WeeeCode
 	    if (!fs.existsSync(workspaceFolder)){
 	        fs.mkdirSync(workspaceFolder);
 	    }
-	    console.log(code,workspaceIno)
 	    this.arduino.uploadProject(code,workspaceIno,logCb,finishCb);
 	}
 

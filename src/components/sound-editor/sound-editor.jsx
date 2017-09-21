@@ -12,6 +12,7 @@ import AudioTrimmer from '../../containers/audio-trimmer.jsx';
 import IconButton from '../icon-button/icon-button.jsx';
 
 import styles from './sound-editor.css';
+import Blockly from 'scratch-blocks';
 
 import playIcon from '../record-modal/icon--play.svg';
 import stopIcon from '../record-modal/icon--stop-playback.svg';
@@ -192,43 +193,43 @@ const SoundEditor = props => (
             <IconButton
                 className={styles.effectButton}
                 img={higherIcon}
-                title={<FormattedMessage {...messages.faster} />}
+                title={Blockly.Msg.SOUND_FASTER}
                 onClick={props.onFaster}
             />
             <IconButton
                 className={styles.effectButton}
                 img={lowerIcon}
-                title={<FormattedMessage {...messages.slower} />}
+                title={Blockly.Msg.SOUND_SLOWER}
                 onClick={props.onSlower}
             />
             <IconButton
                 className={styles.effectButton}
                 img={echoIcon}
-                title={<FormattedMessage {...messages.echo} />}
+                title={Blockly.Msg.SOUND_ECHO}
                 onClick={props.onEcho}
             />
             <IconButton
                 className={styles.effectButton}
                 img={robotIcon}
-                title={<FormattedMessage {...messages.robot} />}
+                title={Blockly.Msg.SOUND_ROBOT}
                 onClick={props.onRobot}
             />
             <IconButton
                 className={styles.effectButton}
                 img={louderIcon}
-                title={<FormattedMessage {...messages.louder} />}
+                title={Blockly.Msg.SOUND_LOUDER}
                 onClick={props.onLouder}
             />
             <IconButton
                 className={styles.effectButton}
                 img={softerIcon}
-                title={<FormattedMessage {...messages.softer} />}
+                title={Blockly.Msg.SOUND_SOFTER}
                 onClick={props.onSofter}
             />
             <IconButton
                 className={styles.effectButton}
                 img={reverseIcon}
-                title={<FormattedMessage {...messages.reverse} />}
+                title={Blockly.Msg.SOUND_REVERSE}
                 onClick={props.onReverse}
             />
         </div>

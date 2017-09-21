@@ -3,6 +3,7 @@ import React from 'react';
 import bindAll from 'lodash.bindall';
 import {FormattedMessage} from 'react-intl';
 import VM from 'scratch-vm';
+import Blockly from 'scratch-blocks';
 
 import AssetPanel from '../components/asset-panel/asset-panel.jsx';
 import soundIcon from '../components/asset-panel/icon--sound.svg';
@@ -90,11 +91,11 @@ class SoundTab extends React.Component {
         return (
             <AssetPanel
                 buttons={[{
-                    message: recordSoundMsg,
+                    message: Blockly.Msg.SOUND_RECORD,
                     img: addSoundFromRecordingIcon,
                     onClick: onNewSoundFromRecordingClick
                 }, {
-                    message: addSoundMsg,
+                    message: Blockly.Msg.SOUND_ADD,
                     img: addSoundFromLibraryIcon,
                     onClick: onNewSoundFromLibraryClick
                 }]}

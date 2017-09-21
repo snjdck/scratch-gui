@@ -1,17 +1,30 @@
-/**
- * Created by Riven on 2016/12/15.
- */
 
-/**
- * Created by Riven on 10/7/16.
- */
-"use strict";
 
 const fs = require('fs');
-const cp = require('child_process');
+const {execFile, exec} = require('child_process');
 const ncp = require('ncp').ncp;
 
+function getExecPath(background=false){
+    if(process.platform=="darwin"){
+        return "Arduino.app/Contents/MacOS/Arduino";
+    }
+    if(background){
+    	return "arduino_debug.exe";
+    }
+    return "arduino.exe";
+}
+/*
 function buildUploadCommand(inofile,cmdType,arduinoboard,arduinopath,uploadPort){
+	var builtpath = process.cwd()+"/workspace/build/";
+	var result = [
+	"--upload",
+	`--board ${arduinoboard}`,
+	`--port ${uploadPort}`,
+	`--pref build.path=${builtpath}`,
+	"--verbose",
+	inofile
+	];
+
     if(!cmdType){
         cmdType = "upload";
     }
@@ -29,7 +42,7 @@ function buildUploadCommand(inofile,cmdType,arduinoboard,arduinopath,uploadPort)
     cmd+=" "+inofile;
     return cmd;
 }
-
+*/
 class ArduinoManager {
     constructor(vm){
         this.vm = vm;
@@ -72,9 +85,6 @@ class ArduinoManager {
             code += Blockly.Arduino.workspaceToCode(workspace);
             if(this.editor){
                 this.editor.setValue(code,-1);
-            }else{
-                console.log("arduino code generator:");
-                console.log(code);
             }
 
         } catch(e) {
@@ -106,15 +116,10 @@ class ArduinoManager {
         var arduinoPath = this.arduinopath;
         fs.writeFile(path, code, function(err) {
             if(err) {
-                console.log("Save error "+err);
                 throw err;
             }else{
-                var cmd = "arduino.exe "+path;
-                if(process.platform=="darwin"){
-                    cmd = "Arduino.app/Contents/MacOS/Arduino "+path;
-                }
-                var spawn = cp.exec(cmd,{
-                    encoding: 'utf8',
+                execFile(getExecPath(), [path],{
+                    encoding: 'ascii',
                     cwd: arduinoPath
                 });
             }
@@ -207,14 +212,13 @@ class ArduinoManager {
     }
 
     
-
+/*
     compileCode(path,callback,errCallback){
         var errorcode = null;
         var arduinopath = this.arduinopath;
         this.checkArduinoPath();
 
         var cmd = buildUploadCommand(path,"verify",this.arduinoboard,this.arduinopath);
-        console.log(cmd);
 
         var spawn = cp.exec(cmd,{
             encoding: 'utf8',
@@ -250,31 +254,29 @@ class ArduinoManager {
         });
 
     }
-
+*/
     uploadCode(path,logCb,finishCb,uploadPort){
         this.checkArduinoPath();
         if(this.arduinoboard.indexOf('arduino')>-1){
             uploadPort = this.lastSerialPort;
         }
-        var cmd = buildUploadCommand(path,"upload",this.arduinoboard,this.arduinopath,uploadPort); // temporary project folder
-        console.log(cmd);
-
-        var spawn = cp.exec(cmd,{
-            encoding: 'utf8',
+        //var cmd = buildUploadCommand(path,"upload",this.arduinoboard,this.arduinopath,uploadPort); // temporary project folder
+        var builtpath = process.cwd()+"/workspace/build/";
+        var spawn = exec([
+        	getExecPath(true),
+			"--upload",
+			`--board ${this.arduinoboard}`,
+			`--port ${uploadPort}`,
+			`--pref build.path=${builtpath}`,
+			path
+			].join(" "),{
+			encoding: "utf8",
             cwd: this.arduinopath
         });
-
-        spawn.stdout.on('data', function (data) {
-            if(logCb) logCb(data+"");
-            console.log(data+"");
-        });
-        spawn.stdout.on('end', function (code) {
-            if(finishCb) finishCb(0);
-        });
-        spawn.stderr.on('data', function (data) {
-            if(logCb) logCb(data+"");
-            console.log(data+"");
-        });
+        
+        spawn.stdout.on('data', data => logCb && logCb(data));
+        spawn.stdout.on('end' , code => finishCb && finishCb(0));
+        spawn.stderr.on('data', data => logCb && logCb(data));
     }
 
     uploadProject(code,path,logCb,finishCb){
@@ -294,7 +296,5 @@ class ArduinoManager {
         }
     }
 }
-
-
 
 module.exports = ArduinoManager;
