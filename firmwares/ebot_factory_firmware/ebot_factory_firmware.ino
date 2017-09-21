@@ -1,14 +1,3 @@
-/*************************************************************************
-* File Name          : mbot_factory_firmware.ino
-* Author             : Ander, Mark Yan
-* Updated            : Ander, Mark Yan
-* Version            : V06.01.007
-* Date               : 07/06/2016
-* Description        : Firmware for Makeblock Electronic modules with Scratch.  
-* License            : CC-BY-SA 3.0
-* Copyright (C) 2013 - 2016 Maker Works Technology Co., Ltd. All right reserved.
-* http://www.makeblock.cc/
-**************************************************************************/
 #include <WeELFPort.h>
 
 WeRGBLed rgb(OnBoard_RGB);
