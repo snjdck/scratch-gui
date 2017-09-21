@@ -21,13 +21,20 @@ function weeebot_motor_dc(argValues, util){
     //var cmd = "M200 "+idx +" "+spd;
     var cmd = createCMD(200, idx, spd);
     util.ioQuery('serial', 'sendMsg', [cmd]);
-    console.log("motorDc " + cmd);
 }
 
 function weeebot_motor_move(argValues, util) {
     var spd = argValues.SPEED;
-    //var cmd = "M201 "+spd;
-    var cmd = createCMD(201, spd);
+    var dir = argValues.MOVE_DIRECTION;
+    var speeds;
+    switch(dir){
+    	case 2: speeds = [-spd,-spd];break;
+    	case 3: speeds = [-spd,spd];break;
+    	case 4: speeds = [spd,-spd];break;
+    	default:
+    		speeds = [spd,spd];
+    }
+    var cmd = createCMD(201, ...speeds);
     util.ioQuery('serial', 'sendMsg', [cmd]);
 }
 
@@ -36,7 +43,6 @@ function on_board_servo(argValues, util) {
     var angle = argValues.ANGLE;
     //var cmd = "M202 " + port + " " + angle;
     var cmd = createCMD(202, port, angle);
-    console.log(cmd);
     util.ioQuery('serial', 'sendMsg', [cmd]);
 }
 

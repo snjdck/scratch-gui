@@ -87,34 +87,6 @@ const toolbox = newXML("category", {"name":"WeeeBot", "colour":"#FF6680", "secon
             newNumberValue("G", 150),
             newNumberValue("B", 150)
         ]),
-        newBlock("board_light_sensor", [
-            newDropdownValue("BOARD_PORT", 1)
-        ]),
-        newBlock("board_temperature_sensor", [
-            newDropdownValue("BOARD_PORT", 1)
-        ]),
-        newBlock("board_sound_sensor", [
-            newDropdownValue("BOARD_PORT", 1)
-        ]),
-        newBlock("weeebot_on_board_button", [
-            newDropdownValue("ON_BOARD_PORT", 0)
-        ]),
-        newBlock("weeebot_infraread", [
-            newDropdownValue("BOARD_PORT", 1),
-            newDropdownValue("IR_CODE", 69)
-        ]),
-        newBlock("line_follower", [
-            newDropdownValue("SENSOR_PORT", 9),
-            newDropdownValue("LINE_FOLLOWER_INDEX", 1)
-        ]),
-        newBlock("ultrasonic", [
-            newDropdownValue("SENSOR_PORT", 10)
-        ]),
-        newBlock("ultrasonic_led", [
-            newDropdownValue("SENSOR_PORT", 10),
-            newDropdownValue("ULTRASONIC_LED_INDEX", 3),
-            newXML("value", {"name":"COLOR"}, [newXML("shadow", {"type":"colour_picker"})])
-        ]),
         newBlock("weeebot_led_matrix_number", [
             newDropdownValue("SENSOR_PORT", 12),
             newNumberValue("NUM", 100)
@@ -137,5 +109,33 @@ const toolbox = newXML("category", {"name":"WeeeBot", "colour":"#FF6680", "secon
             newNumberValue("Y", 0),
             newXML("value", {"name":"LED_MATRIX_DATA"}, [newXML("shadow", {"type":"led_matrix_data"})])
         ]),
+        newBlock("ultrasonic_led", [
+            newDropdownValue("SENSOR_PORT", 10),
+            newDropdownValue("ULTRASONIC_LED_INDEX", 3),
+            newXML("value", {"name":"COLOR"}, [newXML("shadow", {"type":"colour_picker"})])
+        ]),
+        newBlock("ultrasonic", [
+            newDropdownValue("SENSOR_PORT", 10)
+        ]),
+        newBlock("line_follower", [
+            newDropdownValue("SENSOR_PORT", 9),
+            newDropdownValue("LINE_FOLLOWER_INDEX", 1)
+        ]),
+        newBlock("board_light_sensor", [
+            newDropdownValue("BOARD_PORT", 1)
+        ]),
+        newBlock("board_sound_sensor", [
+            newDropdownValue("BOARD_PORT", 1)
+        ]),
+        newBlock("board_temperature_sensor", [
+            newDropdownValue("BOARD_PORT", 1)
+        ]),
+        newBlock("weeebot_on_board_button", [
+            newDropdownValue("ON_BOARD_PORT", 0)
+        ]),
+        newBlock("weeebot_infraread", [
+            newDropdownValue("BOARD_PORT", 1),
+            newDropdownValue("IR_CODE", 69)
+        ])
     ]);
 export default toolbox;
