@@ -46,7 +46,7 @@ function newBlock(type, children){
     return newXML("block", {"type":type}, children);
 }
 */
-const toolbox = newXML("category", {"name":"WeeeBot", "colour":"#FF6680", "secondaryColour":"#FF3355"}, [
+const toolbox = newXML("category", {"name":"WeeeBot", "key":"WeeeBot", "colour":"#FF6680", "secondaryColour":"#FF3355"}, [
         newBlock("weeebot_program"),
         newBlock("weeebot_motor_dc", [
             newDropdownValue("WEEEBOT_DCMOTOR_OPTION", 1),

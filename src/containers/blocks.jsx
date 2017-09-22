@@ -57,7 +57,7 @@ class Blocks extends React.Component {
         }
 
         var toolbox = this.props.vm.weeecode.toolbox.getDefalutToolBox();
-        toolbox = toolbox.replace(/category name="(\w+)"/g, (str, name) => str.replace(name, Blockly.Msg[name.toUpperCase()]));
+        toolbox = toolbox.replace(/category name="(\w+)"/g, (str, name) => str.replace(name, Blockly.Msg[name.toUpperCase()]) + ` key="${name}"`);
         var pluginToolbox = this.props.vm.weeecode.plugin.getToolbox();
         Blockly.Blocks.defaultToolbox = toolbox.replace("</xml>", pluginToolbox + "</xml>");
         
