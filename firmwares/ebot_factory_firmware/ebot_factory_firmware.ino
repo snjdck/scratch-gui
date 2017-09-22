@@ -277,8 +277,8 @@ void Stop()
 
 void doRun()
 { 
-     MotorL.run(speedSetLeft);
-     MotorR.run(speedSetRight);
+     MotorL.run(-speedSetLeft);
+     MotorR.run(-speedSetRight);
 }
 //uint8_t prevState = 0;
 
@@ -400,8 +400,8 @@ void modeB()
   uint8_t randNumber = random(2);
   if (d >=50 || d == 0)
   {
-      MotorL.run(-moveSpeed);
-      MotorR.run(-moveSpeed);
+      MotorL.run(moveSpeed);
+      MotorR.run(moveSpeed);
       delay(100);
   }
   else if ((d > 15) && (d < 50)) 
@@ -409,33 +409,33 @@ void modeB()
     switch (randNumber)
     {
       case 0:
-     MotorL.run(-moveSpeed);
-     MotorR.run(moveSpeed/5);
+     MotorL.run(moveSpeed);
+     MotorR.run(-moveSpeed/5);
         delay(200);
         break;
       case 1:
-    MotorL.run(moveSpeed/5);
-    MotorR.run(-moveSpeed);
+    MotorL.run(-moveSpeed/5);
+    MotorR.run(moveSpeed);
         delay(200);
         break;
     }
   }
   else if(d < 16)
   {
-     MotorL.run(moveSpeed); 
-     MotorR.run(moveSpeed);
+     MotorL.run(-moveSpeed); 
+     MotorR.run(-moveSpeed);
      delay(300);
     
     switch (randNumber)
     {
       case 0:
-     MotorL.run(-moveSpeed); 
-     MotorR.run(moveSpeed);
+     MotorL.run(moveSpeed); 
+     MotorR.run(-moveSpeed);
         delay(300);
         break;
       case 1:
-      MotorL.run(moveSpeed); 
-      MotorR.run(-moveSpeed);
+      MotorL.run(-moveSpeed); 
+      MotorR.run(moveSpeed);
         delay(300);        
         break;
     }
@@ -456,15 +456,15 @@ void modeC()
     if((s1>160)&&(s2<160))
     { 
       flag=1;
-      MotorL.run(-line_speed);
-      MotorR.run(-line_speed);
+      MotorL.run(line_speed);
+      MotorR.run(line_speed);
       line_speed=line_speed+1;
      }
      else if((s1<=160)&&(s2>=160))
     {
       flag=2;
-      MotorL.run(-line_speed);
-      MotorR.run(-line_speed);
+      MotorL.run(line_speed);
+      MotorR.run(line_speed);
       line_speed=line_speed+1;
      }
      else if((s1<=160)&&(s2<=160))
@@ -472,22 +472,22 @@ void modeC()
       if(flag==1)
       {
         
-         MotorL.run(line_speed);
-         MotorR.run(-line_speed);  
+         MotorL.run(-line_speed);
+         MotorR.run(line_speed);  
            line_speed=line_speed-20;    
         }
        else if(flag==2)
        {
        
-         MotorL.run(-line_speed);
-         MotorR.run(line_speed);   
+         MotorL.run(line_speed);
+         MotorR.run(-line_speed);   
          line_speed=line_speed-20;
         }
      }
      else
      {
-        MotorL.run(-line_speed);
-        MotorR.run(-line_speed);
+        MotorL.run(line_speed);
+        MotorR.run(line_speed);
          line_speed=line_speed+1;
       }
       if( line_speed<150)
@@ -501,13 +501,13 @@ void modeC()
    if(f_cout>20)
    {
      MotorL.run(0);
-     MotorR.run(-ult_speed);
+     MotorR.run(ult_speed);
      delay(100);
      f_cout--;
    }
    else if(f_cout<20)
    {
-     MotorL.run(-ult_speed);
+     MotorL.run(ult_speed);
      MotorR.run(0);
      delay(100);
      f_cout++;
