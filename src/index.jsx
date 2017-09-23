@@ -1,3 +1,5 @@
+
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 
@@ -6,7 +8,18 @@ import GUI from './containers/gui.jsx';
 import ProjectLoaderHOC from './lib/project-loader-hoc.jsx';
 
 import styles from './index.css';
-require("./language/en");
+
+if(!localStorage.language){
+	localStorage.language = "en";
+}
+
+switch(localStorage.language){
+	case "zh-cn":
+		require("./language/zh-hans");
+		break;
+	default:
+		require("./language/en");
+}
 
 const App = AppStateHOC(ProjectLoaderHOC(GUI));
 

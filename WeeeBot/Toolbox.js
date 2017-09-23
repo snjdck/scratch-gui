@@ -114,18 +114,18 @@ const toolbox = newXML("category", {"name":"WeeeBot", "key":"WeeeBot", "colour":
             newDropdownValue("ULTRASONIC_LED_INDEX", 3),
             newXML("value", {"name":"COLOR"}, [newXML("shadow", {"type":"colour_picker"})])
         ]),
-        newBlock("ultrasonic", [
-            newDropdownValue("SENSOR_PORT", 10)
-        ]),
         newBlock("line_follower", [
             newDropdownValue("SENSOR_PORT", 9),
             newDropdownValue("LINE_FOLLOWER_INDEX", 1)
+        ]),
+        newBlock("ultrasonic", [
+            newDropdownValue("SENSOR_PORT", 10)
         ]),
         newBlock("board_light_sensor", [
             newDropdownValue("BOARD_PORT", 1)
         ]),
         newBlock("board_sound_sensor", [
-            newDropdownValue("BOARD_PORT", 1)
+            newDropdownValue("BOARD_PORT", 3)
         ]),
         newBlock("board_temperature_sensor", [
             newDropdownValue("BOARD_PORT", 1)
@@ -134,7 +134,7 @@ const toolbox = newXML("category", {"name":"WeeeBot", "key":"WeeeBot", "colour":
             newDropdownValue("ON_BOARD_PORT", 0)
         ]),
         newBlock("weeebot_infraread", [
-            newDropdownValue("BOARD_PORT", 1),
+            newDropdownValue("BOARD_PORT", 2),
             newDropdownValue("IR_CODE", 69)
         ])
     ]);

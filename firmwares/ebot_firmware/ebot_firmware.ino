@@ -1,7 +1,7 @@
 #include <WeELFPort.h>
 
 const uint8_t ON_BOARD_PIN_RGB_GROUP = 13;
-const uint8_t ON_BOARD_PINS[] = {0, A0, A1, A5, A4, A3, A2, ON_BOARD_PIN_RGB_GROUP};
+const uint8_t ON_BOARD_PINS[] = {0, PORT_1, PORT_2, PORT_3, PORT_4, PORT_5, PORT_6, ON_BOARD_PIN_RGB_GROUP};
 
 WeUltrasonicSensor ultraSensor;
 WeLineFollower lineFollower;
@@ -10,7 +10,7 @@ WeDCMotor dc;
 WeTemperature ts;
 WeRGBLed led;
 WeBuzzer buzzer;
-WeInfraredReceiver ir(A6);
+WeInfraredReceiver ir(PORT_2);
 
 Servo servos[6];
 int servo_pins[]={0,0,0,0,0,0};
@@ -219,9 +219,9 @@ void doServo(char *cmd)
 
 void doDcMove(char *cmd)
 {
-	dc.reset(M1);
-	dc.run(nextInt(&cmd));
 	dc.reset(M2);
+	dc.run(nextInt(&cmd));
+	dc.reset(M1);
 	dc.run(nextInt(&cmd));
 }
 
@@ -248,7 +248,7 @@ void getSound(char *cmd)
 void getIR(char *cmd)
 {
 	uint8_t pin = nextPin(&cmd);
-	//ir.reset(pin);
+	ir.reset(pin);
 	int code = nextInt(&cmd);
 	Serial.println(IR_VALUE == code ? "true" : "false");
 }
@@ -468,7 +468,7 @@ void loopIR()
 
 void loopSerial()
 {
-	const int buffer_len = 64;
+	const int buffer_len = 128;
 	static char buffer[buffer_len];
 	static int buffer_index = 0;
 

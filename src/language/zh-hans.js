@@ -443,12 +443,14 @@ Blockly.Msg.MOTION_POINTINDIRECTION = "指向方向 %1";
 Blockly.Msg.MOTION_POINTTOWARD = "面向 %1";
 Blockly.Msg.MOTION_GOTO = "移到 %1";
 Blockly.Msg.MOTION_GOTOXY = "移动到 x: %1 y: %2";
-Blockly.Msg.MOTION_CHANGEXBY = "改变 x 坐标到 %1";
+
 Blockly.Msg.MOTION_GLIDESECSTOX = "在 %1 秒内滑行到 x: %2 y: %3";
 Blockly.Msg.MOTION_GLIDESECSTO = "在 %1 秒内滑行到 %2";
-Blockly.Msg.MOTION_SETXTO = "将x坐标增加 %1";
-Blockly.Msg.MOTION_CHANGEYBY = "将y坐标增加%1";
+Blockly.Msg.MOTION_SETXTO = "将x坐标设定为%1";
 Blockly.Msg.MOTION_SETYTO = "将y坐标设定为%1";
+Blockly.Msg.MOTION_CHANGEXBY = "将x坐标增加%1";
+Blockly.Msg.MOTION_CHANGEYBY = "将y坐标增加%1";
+
 Blockly.Msg.MOTION_IFONEDGEBOUNCE = "碰到边缘就反弹";
 Blockly.Msg.MOTION_SETROTATIONSTYLE = "将旋转模式设定为%1";
 Blockly.Msg.MOTION_XPOSITION = "x坐标";
@@ -712,5 +714,7 @@ Blockly.Msg.SOUND_SOFTER = "减小";
 Blockly.Msg.SOUND_REVERSE = "反转";
 Blockly.Msg.SOUND_ADD = "添加声音";
 Blockly.Msg.SOUND_RECORD = "录音";
-Blockly.Msg.WC_RESTORE_FIRMWARE = "恢复在线固件";
+Blockly.Msg.WC_RESTORE_FIRMWARE = "恢复固件";
+Blockly.Msg.WC_RESTORE_ONLINE_FIRMWARE = "恢复在线固件";
 Blockly.Msg.WC_RESTORE_FACTORY_FIRMWARE = "恢复出厂固件";
+Blockly.Msg.WC_OPEN_ARDUINO = "打开Arduino";

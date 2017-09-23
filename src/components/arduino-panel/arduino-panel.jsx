@@ -3,7 +3,7 @@ const ReactDOM = require('react-dom');
 const bindAll = require('lodash.bindall');
 const arduinoIcon = require('./arduino.png');
 
-import {Button,FormControl,MenuItem,ButtonGroup,DropdownButton } from 'react-bootstrap';
+import {Button,FormControl,MenuItem,ButtonGroup,DropdownButton,ButtonToolbar } from 'react-bootstrap';
 import brace from 'brace';
 import AceEditor from 'react-ace';
 import 'brace/mode/java';
@@ -17,7 +17,7 @@ class ArduinoPanelComponent extends React.Component {
     constructor (props) {
         super(props);
 
-        bindAll(this, ['updateCodeView','consoleSend', 'consoleEnter', "consoleClear", "restoreFirmware", "restoreFactoryFirmware", "uploadProject","openArduino"]);
+        bindAll(this, ['updateCodeView','consoleSend', 'consoleEnter', "consoleClear", "restoreFirmware", "uploadProject","openArduino"]);
         this.state = {
             code: "",
             logs:[]
@@ -40,11 +40,8 @@ class ArduinoPanelComponent extends React.Component {
             this.uploadCode(data);
         });
     }
-    restoreFirmware(){
-        this.restoreFirmwareImpl("firmwares/ebot_firmware/ebot_firmware.ino");
-    }
-    restoreFactoryFirmware(){
-        this.restoreFirmwareImpl("firmwares/ebot_factory_firmware/ebot_factory_firmware.ino");
+    restoreFirmware(name){
+        this.restoreFirmwareImpl(`firmwares/${name}/${name}.ino`);
     }
     uploadProject(){
         this.uploadCode(this.state.code);
@@ -149,14 +146,18 @@ class ArduinoPanelComponent extends React.Component {
                     backgroundColor: '#0097a7'
                 }}
             >
+            <table width="100%" height="100%"><tr><td>
             <div className="group" id="code-buttons">
-                <Button onClick={this.restoreFactoryFirmware}>{Blockly.Msg.WC_RESTORE_FACTORY_FIRMWARE}</Button>
-                <Button onClick={this.restoreFirmware}>{Blockly.Msg.WC_RESTORE_FIRMWARE}</Button>
+                <DropdownButton title={Blockly.Msg.WC_RESTORE_FIRMWARE} id="restore_firmware" onSelect={this.restoreFirmware}>
+                  <MenuItem eventKey="ebot_factory_firmware">{Blockly.Msg.WC_RESTORE_FACTORY_FIRMWARE}</MenuItem>
+                  <MenuItem eventKey="ebot_firmware">{Blockly.Msg.WC_RESTORE_ONLINE_FIRMWARE}</MenuItem>
+                </DropdownButton>
                 <Button onClick={this.uploadProject}>{<Icon name="arrow-up"/>}{Blockly.Msg.UPLOAD}</Button>
-                <Button style={{float:'right'}} onClick={this.openArduino}>{<img style={{height: 20}} src={arduinoIcon} />}{Blockly.Msg.OPENWITHARDUINO}</Button>
+                <Button style={{"float":"right"}} onClick={this.openArduino}>{<img style={{height: 20}} src={arduinoIcon}/>}{Blockly.Msg.WC_OPEN_ARDUINO}</Button>
             </div>
+            </td></tr><tr><td height="100%">
             <AceEditor
-                style={{width:"100%",height:436}}
+                style={{width:"100%",height:"100%"}}
                 mode="c_cpp"
                 theme="eclipse"
                 name="arduino-code"
@@ -164,6 +165,7 @@ class ArduinoPanelComponent extends React.Component {
                 readOnly
                 editorProps={{$blockScrolling: true}}
             />
+            </td></tr><tr><td>
             <div id="console-log"
                 style={{
                     marginTop: 4,
@@ -193,7 +195,7 @@ class ArduinoPanelComponent extends React.Component {
                 <Button style={{marginLeft:3}} onClick={this.consoleSend}>{Blockly.Msg.SEND}</Button>
                 <Button style={{marginLeft:2}} onClick={this.consoleClear}>Clear</Button>
             </form>
-
+            </td></tr></table>
             </div>
         );
     }

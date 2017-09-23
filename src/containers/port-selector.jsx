@@ -8,12 +8,17 @@ import Blockly from "scratch-blocks";
 const { Navbar,Nav,NavItem,ButtonGroup,Button,DropdownButton,FormControl,MenuItem,SplitButton  } = require('react-bootstrap');
 
 const {Icon} = require('react-fa');
+const langDict = {
+    "en": "English",
+    "zh-cn": "简体中文"
+};
 
 class PortSelector extends React.Component {
     constructor (props) {
         super(props);
         bindAll(this, [
         'handleTitle',
+        'changeLanguage',
         'serialDevUpdate','refreshPort','selectPort','portConnected','portClosed',"portReadLine"
         ]);
         this.state = {
@@ -26,6 +31,10 @@ class PortSelector extends React.Component {
     }
     get vm(){
         return this.props.vm
+    }
+    changeLanguage(language){
+        localStorage.language = language;
+        nw.Window.get().reload();
     }
     handleTitle(e){
         var title = e.target.value;
@@ -59,9 +68,6 @@ class PortSelector extends React.Component {
     componentDidMount () {
         this.refreshPort();
     }
-    openSetupModal(){
-        console.log("openSetupModal")
-    }
     render () {
         var portMenuItem;
         var portDropdownTxt;
@@ -84,6 +90,13 @@ class PortSelector extends React.Component {
                 ));
             portDropdownTxt = Blockly.Msg.WC_NOT_CONNECTED;
         }
+        var langItems = [];
+        for(var key in langDict){
+            langItems.push(
+                <MenuItem key={key} disabled={localStorage.language==key} eventKey={key} onSelect={this.changeLanguage}>{langDict[key]}</MenuItem>
+            );
+        }
+
         var weeecode = this.props.vm.weeecode;
         return (
         <Navbar
@@ -144,11 +157,11 @@ class PortSelector extends React.Component {
                         >Arduino</Button>
                     </NavItem>
                     <NavItem>
-                        <Button bsStyle="warning"
-                            onClick={this.openSetupModal}
-                        >
-                            <Icon name="gear"/>
-                        </Button>
+                        <ButtonGroup>
+                            <SplitButton title={langDict[localStorage.language]} bsStyle="warning" id="language">
+                                {langItems}
+                            </SplitButton>
+                        </ButtonGroup>
                     </NavItem>
                 </Nav>
         </Navbar>

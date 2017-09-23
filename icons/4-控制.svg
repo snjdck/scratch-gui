@@ -3,29 +3,42 @@
 <svg version="1.1" id="图层_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	 viewBox="0 0 36 28" style="enable-background:new 0 0 36 28;" xml:space="preserve">
 <style type="text/css">
-	.st0{fill:#BABABA;}
-	.st1{fill:#D9D9D9;}
-	.st2{fill:none;stroke:#D65CD6;stroke-width:0.75;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
-	.st3{fill:none;stroke:#FFAB19;stroke-width:0.75;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
-	.st4{fill:none;stroke:#4CBFE6;stroke-width:0.75;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
-	.st5{fill:none;stroke:#4C97FF;stroke-width:0.75;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
-	.st6{fill:none;stroke:#FF8C1A;stroke-width:0.75;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
-	.st7{fill:none;stroke:#FF6680;stroke-width:0.75;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
-	.st8{fill:none;stroke:#9966FF;stroke-width:0.75;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
-	.st9{fill:none;stroke:#9966FF;stroke-width:0.75;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1.9286,1.9286;}
-	.st10{fill:none;stroke:#FFD500;stroke-width:0.75;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
-	.st11{fill:none;stroke:#40BF4A;stroke-width:0.75;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
-	.st12{fill:none;stroke:#00B295;stroke-width:0.75;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
+	.st0{fill:#FFFFFF;}
+	.st1{fill:#BABABA;}
+	.st2{fill:#D9D9D9;}
+	.st3{fill:none;stroke:#D65CD6;stroke-width:0.75;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
+	.st4{fill:#D65CD6;}
+	.st5{fill:none;stroke:#FFAB19;stroke-width:0.75;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
+	.st6{fill:#EF8E00;}
+	.st7{fill:none;stroke:#4CBFE6;stroke-width:0.75;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
+	.st8{fill:#4CBFE6;}
+	.st9{fill:none;stroke:#4C97FF;stroke-width:0.75;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
+	.st10{fill:#4C97FF;}
+	.st11{fill:none;stroke:#FF8C1A;stroke-width:0.75;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
+	.st12{fill:#FF8C1A;}
+	.st13{fill:none;stroke:#FF6680;stroke-width:0.75;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
+	.st14{fill:#FF6680;}
+	.st15{fill:none;stroke:#9966FF;stroke-width:0.75;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
+	.st16{fill:none;stroke:#9966FF;stroke-width:0.75;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1.9286,1.9286;}
+	.st17{fill:#9966FF;}
+	.st18{fill:none;stroke:#FFD500;stroke-width:0.75;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
+	.st19{fill:#CD9A02;}
+	.st20{fill:none;stroke:#40BF4A;stroke-width:0.75;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
+	.st21{fill:#40BF4A;}
+	.st22{fill:#00B295;}
+	.st23{fill:none;stroke:#00B295;stroke-width:0.75;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
+	.st24{fill:none;stroke:#EF8E00;stroke-width:0.75;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
+	.st25{fill:none;stroke:#CD9A02;stroke-width:0.75;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
 </style>
 <g>
-	<line class="st3" x1="13.6" y1="8.9" x2="11" y2="8.9"/>
-	<line class="st3" x1="25" y1="8.9" x2="17.1" y2="8.9"/>
-	<circle class="st3" cx="15.4" cy="8.9" r="1.6"/>
-	<line class="st3" x1="13.6" y1="19.1" x2="11" y2="19.1"/>
-	<line class="st3" x1="25" y1="19.1" x2="17.1" y2="19.1"/>
-	<circle class="st3" cx="15.4" cy="19.1" r="1.6"/>
-	<line class="st3" x1="22.4" y1="14" x2="25" y2="14"/>
-	<line class="st3" x1="11" y1="14" x2="18.9" y2="14"/>
-	<circle class="st3" cx="20.6" cy="14" r="1.6"/>
+	<line class="st24" x1="13.6" y1="8.9" x2="11" y2="8.9"/>
+	<line class="st24" x1="25" y1="8.9" x2="17.1" y2="8.9"/>
+	<circle class="st24" cx="15.4" cy="8.9" r="1.6"/>
+	<line class="st24" x1="13.6" y1="19.1" x2="11" y2="19.1"/>
+	<line class="st24" x1="25" y1="19.1" x2="17.1" y2="19.1"/>
+	<circle class="st24" cx="15.4" cy="19.1" r="1.6"/>
+	<line class="st24" x1="22.4" y1="14" x2="25" y2="14"/>
+	<line class="st24" x1="11" y1="14" x2="18.9" y2="14"/>
+	<circle class="st24" cx="20.6" cy="14" r="1.6"/>
 </g>
 </svg>

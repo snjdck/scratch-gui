@@ -49,8 +49,8 @@ class MenuBar extends React.Component {
         return (
             <Box className={styles.menuBar}>
                 <PortSelector className={styles.menuItem} newProject={this.newProject} selectLoadFile={this.selectLoadFile} selectSaveFile={this.selectSaveFile} {...this.props} />
-                <input type="file" style={{display:'none'}} ref={ref => this.loadProjDialog = ref} onChange={this.loadProject} accept=".sb2,.kb"/>
-                <input type="file" style={{display:'none'}} ref={ref => this.saveProjDialog = ref} onChange={this.saveProject} accept=".sb2"/>
+                <input type="file" style={{display:'none'}} ref={ref => this.loadProjDialog = ref} onChange={this.loadProject} accept=".wc"/>
+                <input type="file" style={{display:'none'}} ref={ref => this.saveProjDialog = ref} onChange={this.saveProject} accept=".wc"/>
             </Box>
         );
     }
