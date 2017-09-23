@@ -90,19 +90,17 @@ class ProjectManager
 
 	    return projName;
 	}
-
+/*
 	loadwb (filepath) {
-	    var projName = path.basename(filepath, '.kb');
-	    projName = "Test"
 	    var fileData = fs.readFileSync(filepath, 'utf8');
 	    this.vm.loadProject(fileData);
-	    //return {"name":projName,"xml":xml};
+	    //return path.basename(filepath).split(".")[0];
 	}
 
 	savewb (filePath) {
 		var fileData = this.vm.saveProjectSb3();
 	    fs.writeFileSync(filePath, fileData);
-	}
+	}*/
 }
 
 

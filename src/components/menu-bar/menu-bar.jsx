@@ -4,6 +4,7 @@ import classNames from 'classnames';
 import React from 'react';
 
 import Box from '../box/box.jsx';
+import Blockly from 'scratch-blocks';
 
 import LanguageSelector from '../../containers/language-selector.jsx';
 
@@ -12,7 +13,7 @@ import PortSelector from '../../containers/port-selector.jsx';
 import styles from './menu-bar.css';
 import scratchLogo from './scratch-logo.svg';
 
-const emptyProjectJson = require("../../lib/empty-project.json");
+//const emptyProjectJson = require("../../lib/empty-project.json");
 
 class MenuBar extends React.Component {
     constructor (props) {
@@ -20,16 +21,31 @@ class MenuBar extends React.Component {
         bindAll(this, ["newProject", "selectLoadFile", "selectSaveFile", "loadProject", "saveProject"]);
     }
     componentDidMount(){
-        this.saveProjDialog.nwsaveas = "WeeeBot";
+        this.saveProjDialog.nwsaveas = "untitled";
+        const win = nw.Window.get();
+        win.on("close", () => {
+            if(!this.wc.needSave() || confirm(Blockly.Msg.WC_SURE_TO_QUIT)){
+                win.close(true);
+            }
+        });
+    }
+    get wc(){
+        return this.props.vm.weeecode;
     }
     selectLoadFile(){
         this.loadProjDialog.click();
     }
     selectSaveFile(){
-        this.saveProjDialog.click();
+        if(this.wc.projectPath){
+            this.wc.save();
+        }else{
+            this.saveProjDialog.click();
+        }
     }
     newProject(){
-        this.props.vm.loadProject(JSON.stringify(emptyProjectJson));
+        if(!this.wc.needSave() || confirm(Blockly.Msg.WC_SURE_TO_CREATE_NEW_PROJECT)){
+            this.wc.newProject();
+        }
     }
     /*
     loadFile(e, onLoad){
@@ -42,8 +58,7 @@ class MenuBar extends React.Component {
         this.props.vm.weeecode.loadWC(filePath)
     }
     saveProject(e){
-        var filePath = e.target.files[0].path;
-        this.props.vm.weeecode.saveWC(filePath);
+        this.wc.saveAs(e.target.files[0].path);
     }
     render () {
         return (

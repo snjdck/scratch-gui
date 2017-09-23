@@ -34,7 +34,7 @@ class PortSelector extends React.Component {
     }
     changeLanguage(language){
         localStorage.language = language;
-        nw.Window.get().reload();
+        document.location.reload(true);
     }
     handleTitle(e){
         var title = e.target.value;
@@ -116,8 +116,8 @@ class PortSelector extends React.Component {
                         <ButtonGroup>
                             <DropdownButton title={Blockly.Msg.SCRATCH_PROJECT} bsStyle="success" id="projDropdown">
                                 <MenuItem eventKey="1" onClick={this.props.newProject}>{Blockly.Msg.SCRATCH_PROJECT_NEW}</MenuItem>
-                                <MenuItem eventKey="2" onClick={this.props.selectSaveFile} >{Blockly.Msg.SCRATCH_PROJECT_SAVE}</MenuItem>
-                                <MenuItem eventKey="3" onClick={this.props.selectLoadFile} >{Blockly.Msg.SCRATCH_PROJECT_LOAD}</MenuItem>
+                                <MenuItem eventKey="2" onClick={this.props.selectLoadFile} >{Blockly.Msg.SCRATCH_PROJECT_LOAD}</MenuItem>
+                                <MenuItem eventKey="3" onClick={this.props.selectSaveFile} >{Blockly.Msg.SCRATCH_PROJECT_SAVE}</MenuItem>
                             </DropdownButton>
                         </ButtonGroup>
                     </NavItem>

@@ -718,3 +718,5 @@ Blockly.Msg.WC_RESTORE_FIRMWARE = "恢复固件";
 Blockly.Msg.WC_RESTORE_ONLINE_FIRMWARE = "恢复在线固件";
 Blockly.Msg.WC_RESTORE_FACTORY_FIRMWARE = "恢复出厂固件";
 Blockly.Msg.WC_OPEN_ARDUINO = "打开Arduino";
+Blockly.Msg.WC_SURE_TO_QUIT = "确定离开？";
+Blockly.Msg.WC_SURE_TO_CREATE_NEW_PROJECT = "当前项目尚未保存，继续新建？";

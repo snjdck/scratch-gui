@@ -14,9 +14,10 @@ class WeeeCode extends EventEmitter
 {
 	constructor(vm) {
 		super();
+		this.vm = vm;
 		this.workpath = path.resolve(process.cwd(),'workspace');
 		this.mediapath = path.resolve(process.cwd(),'media');
-		this.defaultExamples = path.resolve(process.cwd(),'examples');
+		//this.defaultExamples = path.resolve(process.cwd(),'examples');
 		this.arduinoPath = path.resolve(process.cwd(),'arduino'); // not the one where arduino ide locate
 
 
@@ -24,13 +25,21 @@ class WeeeCode extends EventEmitter
 		this.arduino = new ArduinoManager(vm);
 		this.toolbox = new Toolbox();
 		this.resourcemng = new ResourceManager();
-		this.proj = new ProjectManager(vm, this.workpath);
 
 		this.connectedPort = null;
 		this.portList = [];
 		this.resourcemng.startServer(this.workpath,this.mediapath);
 
-		this.projectName = "";
+		if(nw.App.argv.length > 0){
+			this.loadWC(nw.App.argv[0]);
+		}
+		nw.App.on("open", args => {
+			if(args.charAt(args.length - 1) != '"'){
+				return;
+			}
+			var index = args.lastIndexOf('"', args.length - 2);
+			this.loadWC(args.slice(index+1, -1));
+		});
 	}
 
 	connectPort(port,successCb,readlineCb,closeCb,onRecv) {
@@ -72,29 +81,16 @@ class WeeeCode extends EventEmitter
 	}
 
 	enumPort(callback) {
-	    var kb = this;
-	    kb.portList = [];
-	    this.serial.enumSerial(function (devices) {
-	        devices.forEach(function (dev) {
+	    this.portList = [];
+	    this.serial.enumSerial(devices => {
+	        devices.forEach(dev => {
 	            var port = {"path":dev.path,"type":'serial'};
-	            kb.portList.push(port);
+	            this.portList.push(port);
 	        });
-	        if(callback) callback(kb.portList);
+	        if(callback){
+	        	callback(this.portList);
+	        }
 	    });
-	}
-
-
-
-	loadDefaultProj() {
-	    var projfile = path.resolve(this.defaultExamples,"test.sb2");
-	    this.proj.loadsb2(projfile);
-	}
-
-	loadFirmware(inopath) {
-	    if(!inopath) {
-	        var inopath = path.resolve(this.arduinoPath, "/kb_firmware", "kb_firmware.ino")
-	    }
-	    return this.arduino.loadFactoryFirmware(inopath);
 	}
 
 	openIno(code) {
@@ -118,17 +114,12 @@ class WeeeCode extends EventEmitter
 	    this.arduino.uploadProject(code,workspaceIno,logCb,finishCb);
 	}
 
-	loadSb2(filepath) {
-	    return this.proj.loadsb2(filepath);
-	}
-
 	copyArduinoLibrary(srcpath) {
 	    if(!srcpath){
 	        srcpath = path.resolve(this.arduinoPath,'lib/')
 	    }
 	    this.arduino.copyLibrary(srcpath);
 	}
-
 
 	saveConfig() {
 	    
@@ -138,25 +129,46 @@ class WeeeCode extends EventEmitter
 	    document.location.reload(true); // reload all
 	}
 
-	loadWC(filePath) {
-	    return this.proj.loadwb(filePath);
+	updateWindowTitle(){
+		if(this.projectPath){
+			document.title = `${this.projectPath} - WeeeCode`;
+		}else{
+			document.title = "WeeeCode";
+		}
 	}
 
-	saveWC(filePath) {
-	    this.proj.savewb(filePath);
+	loadWC(filePath) {
+		var fileData = fs.readFileSync(filePath, 'utf8');
+	    this.vm.loadProject(fileData);
+	    this.projectPath = filePath;
+	    this.updateWindowTitle();
+	}
+
+	newProject(){
+		var fileData = fs.readFileSync("untitled.wc", "utf8");
+		this.vm.loadProject(fileData);
+		this.projectPath = null;
+	    this.updateWindowTitle();
+	}
+
+	save(){
+		var fileData = this.vm.saveProjectSb3();
+	    fs.writeFileSync(this.projectPath, fileData);
+	}
+
+	saveAs(filePath){
+		this.projectPath = filePath;
+	    this.updateWindowTitle();
+	    this.save();
 	}
 
 	setPluginParseLine(func) {
 	    this.arduino.pluginPareLine = func;
 	}
 
-	selectBoard(board) {
-	    this.arduino.arduinoboard = board.type;
-	    this.saveConfig();
-	}
-
-	copyResourceToWorkspace(resourceMd5) {
-	    this.resourcemng.copyToWorkspace(resourceMd5,this.mediapath,this.workpath);
+	needSave(){
+		var path = this.projectPath || "untitled.wc";
+		return fs.readFileSync(path, "utf8") != this.vm.saveProjectSb3();
 	}
 }
 

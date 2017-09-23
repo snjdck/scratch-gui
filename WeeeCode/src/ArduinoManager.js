@@ -106,11 +106,6 @@ class ArduinoManager {
         });
     }
 
-    loadFactoryFirmware(inofilepath){
-        var code = fs.readFileSync(inofilepath, 'utf8');
-        return code;
-    }
-
     openArduinoIde(code,path){
         this.checkArduinoPath();
         var arduinoPath = this.arduinopath;
