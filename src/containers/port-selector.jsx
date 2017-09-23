@@ -17,7 +17,6 @@ class PortSelector extends React.Component {
     constructor (props) {
         super(props);
         bindAll(this, [
-        'handleTitle',
         'changeLanguage',
         'serialDevUpdate','refreshPort','selectPort','portConnected','portClosed',"portReadLine"
         ]);
@@ -25,22 +24,22 @@ class PortSelector extends React.Component {
             portDev: [],
             boards:[{'name':'Arduino Uno','type':'arduino:avr:uno'}],
             connectedPort: null,
-            selectedBoard:{'name':'Arduino Uno','type':'arduino:avr:uno'},
-            projectName:""
+            selectedBoard:{'name':'Arduino Uno','type':'arduino:avr:uno'}
         };
     }
     get vm(){
-        return this.props.vm
+        return this.props.vm;
     }
     changeLanguage(language){
         localStorage.language = language;
         document.location.reload(true);
     }
+    /*
     handleTitle(e){
         var title = e.target.value;
         this.setState({projectName:title});
         this.props.vm.weeecode.projectName = title;
-    }
+    }*/
     serialDevUpdate (data) {
         this.setState({portDev: data});
     }
@@ -105,42 +104,27 @@ class PortSelector extends React.Component {
                     top: -13,
                     left: 0,
                     width: '100%',
-                    backgroundColor: '#0099CC',
+                    backgroundColor: '#0e2442',
                     backgroundImage: 'url()',
                     height: '40px'
                 }}
                 fluid
             >
         <Nav>
-                    <NavItem>
-                        <ButtonGroup>
-                            <DropdownButton title={Blockly.Msg.SCRATCH_PROJECT} bsStyle="success" id="projDropdown">
-                                <MenuItem eventKey="1" onClick={this.props.newProject}>{Blockly.Msg.SCRATCH_PROJECT_NEW}</MenuItem>
-                                <MenuItem eventKey="2" onClick={this.props.selectLoadFile} >{Blockly.Msg.SCRATCH_PROJECT_LOAD}</MenuItem>
-                                <MenuItem eventKey="3" onClick={this.props.selectSaveFile} >{Blockly.Msg.SCRATCH_PROJECT_SAVE}</MenuItem>
-                            </DropdownButton>
-                        </ButtonGroup>
-                    </NavItem>
-            <NavItem>
-                <FormControl
-                    type="text"
-                    placeholder={Blockly.Msg.SCRATCH_PROJECT_TITLE}
-                    style={{
-                        width: '200px',
-                        backgroundColor: '#0b6684',
-                        border: '0px',
-                        color: '#FFFFFF'
-                    }}
-                    value={weeecode.projectName}
-                    onChange={this.handleTitle}
-                />
-            </NavItem>
-            
+                <NavItem>
+                    <ButtonGroup>
+                        <DropdownButton title={Blockly.Msg.SCRATCH_PROJECT} bsStyle="info" id="projDropdown">
+                            <MenuItem eventKey="1" onClick={this.props.newProject}>{Blockly.Msg.SCRATCH_PROJECT_NEW}</MenuItem>
+                            <MenuItem eventKey="2" onClick={this.props.selectLoadFile}>{Blockly.Msg.SCRATCH_PROJECT_LOAD}</MenuItem>
+                            <MenuItem eventKey="3" onClick={this.props.selectSaveFile}>{Blockly.Msg.SCRATCH_PROJECT_SAVE}</MenuItem>
+                        </DropdownButton>
+                    </ButtonGroup>
+                </NavItem>
             </Nav>
                 <Nav pullRight>
                     <NavItem>
                         <ButtonGroup>
-                            <DropdownButton title={portDropdownTxt} bsStyle="warning"
+                            <DropdownButton title={portDropdownTxt} bsStyle="info"
                                             onClick={this.refreshPort}
                                             onSelect={this.selectPort}
                                             id="portDropdown"
@@ -151,14 +135,14 @@ class PortSelector extends React.Component {
                         </ButtonGroup>
                     </NavItem>
                     <NavItem>
-                        <Button bsStyle="warning"
-                        		active={this.props.isArduinoMode}
+                        <Button bsStyle="info"
+                        		active ={this.props.isArduinoMode}
                                 onClick={this.props.toggleArduinoMode}
                         >Arduino</Button>
                     </NavItem>
                     <NavItem>
                         <ButtonGroup>
-                            <SplitButton title={langDict[localStorage.language]} bsStyle="warning" id="language">
+                            <SplitButton title={langDict[localStorage.language]} bsStyle="info" id="language">
                                 {langItems}
                             </SplitButton>
                         </ButtonGroup>
@@ -174,3 +158,19 @@ PortSelector.propTypes = {
 };
 
 module.exports = PortSelector;
+/*
+<NavItem>
+                <FormControl
+                    type="text"
+                    placeholder={Blockly.Msg.SCRATCH_PROJECT_TITLE}
+                    style={{
+                        width: '200px',
+                        backgroundColor: '#0b6684',
+                        border: '0px',
+                        color: '#FFFFFF'
+                    }}
+                    value={weeecode.projectName}
+                    onChange={this.handleTitle}
+                />
+            </NavItem>
+*/
