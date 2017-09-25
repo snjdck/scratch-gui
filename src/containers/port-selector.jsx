@@ -66,8 +66,8 @@ class PortSelector extends React.Component {
 
     componentDidMount () {
         this.refreshPort();
-        this.wc.on("reconnect_serial", port => {
-            this.portConnected(port);
+    	this.props.vm.weeecode.on("reconnect_serial", port => {
+            this.selectPort(port);
         });
     }
     render () {
