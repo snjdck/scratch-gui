@@ -1418,8 +1418,25 @@ module.exports =
 	Blockly.Blocks.control_repeat={init:function(){this.jsonInit({id:"control_repeat",message0:Blockly.Msg.CONTROL_REPEAT,message1:"%1",message2:"%1",lastDummyAlign2:"RIGHT",args0:[{type:"input_value",name:"TIMES"}],args1:[{type:"input_statement",name:"SUBSTACK"}],args2:[{type:"field_image",src:Blockly.mainWorkspace.options.pathToMedia+"/repeat.svg",width:24,height:24,alt:"*",flip_rtl:!0}],category:Blockly.Categories.control,extensions:["colours_control","shape_statement"]})}};
 	Blockly.Blocks.control_if={init:function(){this.jsonInit({type:"control_if",message0:Blockly.Msg.CONTROL_IFTHEN,message1:"%1",args0:[{type:"input_value",name:"CONDITION",check:"Boolean"}],args1:[{type:"input_statement",name:"SUBSTACK"}],category:Blockly.Categories.control,extensions:["colours_control","shape_statement"]})}};
 	Blockly.Blocks.control_if_else={init:function(){this.jsonInit({type:"control_if_else",message0:Blockly.Msg.CONTROL_IFTHEN,message1:"%1",message2:Blockly.Msg.CONTROL_ELSE,message3:"%1",args0:[{type:"input_value",name:"CONDITION",check:"Boolean"}],args1:[{type:"input_statement",name:"SUBSTACK"}],args3:[{type:"input_statement",name:"SUBSTACK2"}],category:Blockly.Categories.control,extensions:["colours_control","shape_statement"]})}};
-	Blockly.Blocks.control_stop={init:function(){var a=new Blockly.FieldDropdown(function(){return this.sourceBlock_&&this.sourceBlock_.nextConnection&&this.sourceBlock_.nextConnection.isConnected()?[["other scripts in sprite","other scripts in sprite"]]:[["all","all"],["this script","this script"],["other scripts in sprite","other scripts in sprite"]]},function(a){this.sourceBlock_.setNextStatement("other scripts in sprite"==a)});this.appendDummyInput().appendField("stop").appendField(a,"STOP_OPTION");
-	this.setCategory(Blockly.Categories.control);this.setColour(Blockly.Colours.control.primary,Blockly.Colours.control.secondary,Blockly.Colours.control.tertiary);this.setPreviousStatement(!0)},mutationToDom:function(){var a=document.createElement("mutation"),b="other scripts in sprite"==this.getFieldValue("STOP_OPTION");a.setAttribute("hasnext",b);return a},domToMutation:function(a){a="true"==a.getAttribute("hasnext");this.setNextStatement(a)}};
+	Blockly.Blocks.control_stop={init:function(){
+		var a=new Blockly.FieldDropdown(function(){
+			return this.sourceBlock_&&this.sourceBlock_.nextConnection&&this.sourceBlock_.nextConnection.isConnected()?[
+			[Blockly.Msg.CONTROL_STOP_OTHER_SCRIPTS,"other scripts in sprite"]]:[[Blockly.Msg.CONTROL_STOP_ALL,"all"],[Blockly.Msg.CONTROL_STOP_THIS_SCRIPT,"this script"],[Blockly.Msg.CONTROL_STOP_OTHER_SCRIPTS,"other scripts in sprite"]]
+		},function(a){
+				this.sourceBlock_.setNextStatement("other scripts in sprite"==a)
+		});
+		this.appendDummyInput().appendField(Blockly.Msg.CONTROL_STOP).appendField(a,"STOP_OPTION");
+		this.setCategory(Blockly.Categories.control);
+		this.setColour(Blockly.Colours.control.primary,Blockly.Colours.control.secondary,Blockly.Colours.control.tertiary);
+		this.setPreviousStatement(true)
+	},mutationToDom:function(){
+		var a=document.createElement("mutation");
+		var b="other scripts in sprite"==this.getFieldValue("STOP_OPTION");
+		a.setAttribute("hasnext",b);
+		return a
+	},domToMutation:function(a){
+		this.setNextStatement("true"==a.getAttribute("hasnext"))
+	}};
 	Blockly.Blocks.control_wait={init:function(){this.jsonInit({id:"control_wait",message0:Blockly.Msg.CONTROL_WAITSECS,args0:[{type:"input_value",name:"DURATION"}],category:Blockly.Categories.control,extensions:["colours_control","shape_statement"]})}};
 	Blockly.Blocks.control_wait_until={init:function(){this.jsonInit({message0:Blockly.Msg.CONTROL_WAITUNTIL,args0:[{type:"input_value",name:"CONDITION",check:"Boolean"}],category:Blockly.Categories.control,extensions:["colours_control","shape_statement"]})}};
 	Blockly.Blocks.control_repeat_until={init:function(){this.jsonInit({message0:Blockly.Msg.CONTROL_REPEATUNTIL,message1:"%1",message2:"%1",lastDummyAlign2:"RIGHT",args0:[{type:"input_value",name:"CONDITION",check:"Boolean"}],args1:[{type:"input_statement",name:"SUBSTACK"}],args2:[{type:"field_image",src:Blockly.mainWorkspace.options.pathToMedia+"/repeat.svg",width:24,height:24,alt:"*",flip_rtl:!0}],category:Blockly.Categories.control,extensions:["colours_control","shape_statement"]})}};
@@ -1432,8 +1449,8 @@ module.exports =
 	Blockly.Constants={};
 	Blockly.Constants.Data={};
 	Blockly.Blocks.data_variable={init:function(){this.jsonInit({message0:"%1",lastDummyAlign0:"CENTRE",args0:[{type:"field_variable_getter",text:"",name:"VARIABLE"}],category:Blockly.Categories.data,checkboxInFlyout:!0,extensions:["contextMenu_getVariableBlock","colours_data","output_string"]})}};
-	Blockly.Blocks.data_setvariableto={init:function(){this.jsonInit({message0:Blockly.Msg.DATA_SETPENSIZETO,args0:[{type:"field_variable",name:"VARIABLE"},{type:"input_value",name:"VALUE"}],category:Blockly.Categories.data,extensions:["colours_data","shape_statement"]})}};
-	Blockly.Blocks.data_changevariableby={init:function(){this.jsonInit({message0:"change %1 by %2",args0:[{type:"field_variable",name:"VARIABLE"},{type:"input_value",name:"VALUE"}],category:Blockly.Categories.data,extensions:["colours_data","shape_statement"]})}};
+	Blockly.Blocks.data_setvariableto={init:function(){this.jsonInit({message0:Blockly.Msg.DATA_SET_TO,args0:[{type:"field_variable",name:"VARIABLE"},{type:"input_value",name:"VALUE"}],category:Blockly.Categories.data,extensions:["colours_data","shape_statement"]})}};
+	Blockly.Blocks.data_changevariableby={init:function(){this.jsonInit({message0:Blockly.Msg.DATA_CHANGE_BY,args0:[{type:"field_variable",name:"VARIABLE"},{type:"input_value",name:"VALUE"}],category:Blockly.Categories.data,extensions:["colours_data","shape_statement"]})}};
 	Blockly.Blocks.data_listcontents={init:function(){this.jsonInit({message0:"%1",args0:[{type:"field_variable_getter",text:"",name:"LIST",variableTypes:["list"]}],category:Blockly.Categories.data,extensions:["colours_data","output_string"],checkboxInFlyout:!0})}};
 	Blockly.Blocks.data_listindexall={init:function(){this.jsonInit({message0:"%1",args0:[{type:"field_numberdropdown",name:"INDEX",value:"1",min:1,precision:1,options:[["1","1"],["last","last"],["all","all"]]}],category:Blockly.Categories.data,extensions:["colours_textfield","output_string"]})}};
 	Blockly.Blocks.data_listindexrandom={init:function(){this.jsonInit({message0:"%1",args0:[{type:"field_numberdropdown",name:"INDEX",value:"1",min:1,precision:1,options:[["1","1"],["last","last"],["random","random"]]}],category:Blockly.Categories.data,extensions:["colours_textfield","output_string"]})}};
@@ -1459,8 +1476,18 @@ module.exports =
 	Blockly.Blocks.event_broadcast_menu={init:function(){this.jsonInit({message0:"%1",args0:[{type:"field_dropdown",name:"BROADCAST_OPTION",options:[["message1","message1"],["message2","message2"],["new message","new message"]]}],colour:Blockly.Colours.event.secondary,colourSecondary:Blockly.Colours.event.secondary,colourTertiary:Blockly.Colours.event.tertiary,extensions:["output_string"]})}};
 	Blockly.Blocks.event_broadcast={init:function(){this.jsonInit({id:"event_broadcast",message0:Blockly.Msg.EVENTS_BROADCAST,args0:[{type:"input_value",name:"BROADCAST_OPTION"}],category:Blockly.Categories.event,extensions:["colours_event","shape_statement"]})}};
 	Blockly.Blocks.event_broadcastandwait={init:function(){this.jsonInit({message0:Blockly.Msg.EVENTS_BROADCASTANDWAIT,args0:[{type:"input_value",name:"BROADCAST_OPTION"}],category:Blockly.Categories.event,extensions:["colours_event","shape_statement"]})}};
-	Blockly.Blocks.event_whenkeypressed={init:function(){this.jsonInit({id:"event_whenkeypressed",message0:Blockly.Msg.EVENTS_WHENKEYPRESSED,args0:[{type:"field_dropdown",name:"KEY_OPTION",options:[["space","space"],["left arrow","left arrow"],["right arrow","right arrow"],["down arrow","down arrow"],["up arrow","up arrow"],["any","any"],["a","a"],["b","b"],["c","c"],["d","d"],["e","e"],["f","f"],["g","g"],["h","h"],["i","i"],["j","j"],["k","k"],["l","l"],["m","m"],["n","n"],["o","o"],["p","p"],["q","q"],["r","r"],
-	["s","s"],["t","t"],["u","u"],["v","v"],["w","w"],["x","x"],["y","y"],["z","z"],["0","0"],["1","1"],["2","2"],["3","3"],["4","4"],["5","5"],["6","6"],["7","7"],["8","8"],["9","9"]]}],category:Blockly.Categories.event,extensions:["colours_event","shape_hat"]})}};
+	Blockly.Blocks.event_whenkeypressed={init:function(){
+		this.jsonInit({id:"event_whenkeypressed",message0:Blockly.Msg.EVENTS_WHENKEYPRESSED,args0:[{type:"field_dropdown",name:"KEY_OPTION",options:[
+		[Blockly.Msg.SENSING_KEY_SPACE,"space"],
+		[Blockly.Msg.SENSING_KEY_LEFT_ARROW,"left arrow"],
+		[Blockly.Msg.SENSING_KEY_RIGHT_ARROW,"right arrow"],
+		[Blockly.Msg.SENSING_KEY_DOWN_ARROW,"down arrow"],
+		[Blockly.Msg.SENSING_KEY_UP_ARROW,"up arrow"],
+		[Blockly.Msg.SENSING_KEY_ANY,"any"],
+		["a","a"],["b","b"],["c","c"],["d","d"],["e","e"],["f","f"],["g","g"],["h","h"],["i","i"],["j","j"],["k","k"],["l","l"],["m","m"],["n","n"],["o","o"],["p","p"],["q","q"],["r","r"],["s","s"],["t","t"],["u","u"],["v","v"],["w","w"],["x","x"],["y","y"],["z","z"],["0","0"],["1","1"],["2","2"],["3","3"],["4","4"],["5","5"],["6","6"],["7","7"],["8","8"],["9","9"]]}],
+		category:Blockly.Categories.event,
+		extensions:["colours_event","shape_hat"]})}
+	};
 	Blockly.Blocks.looks={};
 	Blockly.Blocks.looks_sayforsecs={init:function(){this.jsonInit({message0:Blockly.Msg.LOOKS_SAYFORSECS,args0:[{type:"input_value",name:"MESSAGE"},{type:"input_value",name:"SECS"}],category:Blockly.Categories.looks,extensions:["colours_looks","shape_statement"]})}};
 	Blockly.Blocks.looks_say={init:function(){this.jsonInit({message0:Blockly.Msg.LOOKS_SAY,args0:[{type:"input_value",name:"MESSAGE"}],category:Blockly.Categories.looks,extensions:["colours_looks","shape_statement"]})}};
@@ -1568,8 +1595,15 @@ module.exports =
 	Blockly.Blocks.sensing_askandwait={init:function(){this.jsonInit({message0:Blockly.Msg.SENSING_ASKANDWAIT,args0:[{type:"input_value",name:"QUESTION"}],category:Blockly.Categories.sensing,extensions:["colours_sensing","shape_statement"]})}};
 	Blockly.Blocks.sensing_answer={init:function(){this.jsonInit({message0:Blockly.Msg.SENSING_ANSWER,category:Blockly.Categories.sensing,checkboxInFlyout:!0,extensions:["colours_sensing","output_number"]})}};
 	Blockly.Blocks.sensing_keypressed={init:function(){this.jsonInit({message0:Blockly.Msg.SENSING_KEYPRESSED,args0:[{type:"input_value",name:"KEY_OPTION"}],category:Blockly.Categories.sensing,extensions:["colours_sensing","output_boolean"]})}};
-	Blockly.Blocks.sensing_keyoptions={init:function(){this.jsonInit({message0:"%1",args0:[{type:"field_dropdown",name:"KEY_OPTION",options:[["space","space"],["left arrow","left arrow"],["right arrow","right arrow"],["down arrow","down arrow"],["up arrow","up arrow"],["any","any"],["a","a"],["b","b"],["c","c"],["d","d"],["e","e"],["f","f"],["g","g"],["h","h"],["i","i"],["j","j"],["k","k"],["l","l"],["m","m"],["n","n"],["o","o"],["p","p"],["q","q"],["r","r"],["s","s"],["t","t"],["u","u"],["v","v"],["w",
-	"w"],["x","x"],["y","y"],["z","z"],["0","0"],["1","1"],["2","2"],["3","3"],["4","4"],["5","5"],["6","6"],["7","7"],["8","8"],["9","9"]]}],extensions:["colours_sensing","output_string"]})}};
+	Blockly.Blocks.sensing_keyoptions={init:function(){this.jsonInit({message0:"%1",args0:[{type:"field_dropdown",name:"KEY_OPTION",options:[
+		[Blockly.Msg.SENSING_KEY_SPACE,"space"],
+		[Blockly.Msg.SENSING_KEY_LEFT_ARROW,"left arrow"],
+		[Blockly.Msg.SENSING_KEY_RIGHT_ARROW,"right arrow"],
+		[Blockly.Msg.SENSING_KEY_DOWN_ARROW,"down arrow"],
+		[Blockly.Msg.SENSING_KEY_UP_ARROW,"up arrow"],
+		[Blockly.Msg.SENSING_KEY_ANY,"any"],
+		["a","a"],["b","b"],["c","c"],["d","d"],["e","e"],["f","f"],["g","g"],["h","h"],["i","i"],["j","j"],["k","k"],["l","l"],["m","m"],["n","n"],["o","o"],["p","p"],["q","q"],["r","r"],["s","s"],["t","t"],["u","u"],["v","v"],["w","w"],["x","x"],["y","y"],["z","z"],["0","0"],["1","1"],["2","2"],["3","3"],["4","4"],["5","5"],["6","6"],["7","7"],["8","8"],["9","9"]
+		]}],extensions:["colours_sensing","output_string"]})}};
 	Blockly.Blocks.sensing_mousedown={init:function(){this.jsonInit({message0:Blockly.Msg.SENSING_MOUSEDOWN,category:Blockly.Categories.sensing,extensions:["colours_sensing","output_boolean"]})}};
 	Blockly.Blocks.sensing_mousex={init:function(){this.jsonInit({message0:Blockly.Msg.SENSING_MOUSEX,category:Blockly.Categories.sensing,extensions:["colours_sensing","output_number"]})}};
 	Blockly.Blocks.sensing_mousey={init:function(){this.jsonInit({message0:Blockly.Msg.SENSING_MOUSEY,category:Blockly.Categories.sensing,extensions:["colours_sensing","output_number"]})}};
@@ -1582,11 +1616,29 @@ module.exports =
 	Blockly.Blocks.sensing_setvideotransparency={init:function(){this.jsonInit({message0:Blockly.Msg.SENSING_SETVIDEOTRANSPARENCYTO,args0:[{type:"input_value",name:"TRANSPARENCY"}],category:Blockly.Categories.sensing,extensions:["colours_sensing","shape_statement"]})}};
 	Blockly.Blocks.sensing_timer={init:function(){this.jsonInit({message0:Blockly.Msg.SENSING_TIMER,category:Blockly.Categories.sensing,checkboxInFlyout:!0,extensions:["colours_sensing","output_number"]})}};
 	Blockly.Blocks.sensing_resettimer={init:function(){this.jsonInit({message0:Blockly.Msg.SENSING_RESETTIMER,category:Blockly.Categories.sensing,extensions:["colours_sensing","shape_statement"]})}};
-	Blockly.Blocks.sensing_of_property_menu={init:function(){this.jsonInit({message0:"%1",args0:[{type:"field_dropdown",name:"PROPERTY",options:[["x position","x position"],["y position","y position"],["direction","direction"],["costume #","costume #"],["costume name","costume name"],["size","size"],["volume","volume"],["backdrop #","backdrop #"],["backdrop name","backdrop name"]]}],extensions:["colours_sensing","output_string"]})}};
+	Blockly.Blocks.sensing_of_property_menu={init:function(){this.jsonInit({message0:"%1",args0:[{type:"field_dropdown",name:"PROPERTY",options:[
+		["x position","x position"],
+		["y position","y position"],
+		["direction","direction"],
+		["costume #","costume #"],
+		["costume name","costume name"],
+		["size","size"],
+		["volume","volume"],
+		["backdrop #","backdrop #"],
+		["backdrop name","backdrop name"]
+	]}],extensions:["colours_sensing","output_string"]})}};
 	Blockly.Blocks.sensing_of_object_menu={init:function(){this.jsonInit({message0:"%1",args0:[{type:"field_dropdown",name:"OBJECT",options:[["Sprite1","Sprite1"],["Stage","_stage_"]]}],extensions:["colours_sensing","output_string"]})}};
 	Blockly.Blocks.sensing_of={init:function(){this.jsonInit({message0:Blockly.Msg.SENSING_OF,args0:[{type:"input_value",name:"PROPERTY"},{type:"input_value",name:"OBJECT"}],output:!0,category:Blockly.Categories.sensing,outputShape:Blockly.OUTPUT_SHAPE_ROUND,checkboxInFlyout:!0,extensions:["colours_sensing"]})}};
 	Blockly.Blocks.sensing_current={init:function(){this.jsonInit({message0:Blockly.Msg.SENSING_CURRENT,args0:[{type:"input_value",name:"CURRENTMENU"}],category:Blockly.Categories.sensing,checkboxInFlyout:!0,extensions:["colours_sensing","output_number"]})}};
-	Blockly.Blocks.sensing_currentmenu={init:function(){this.jsonInit({message0:"%1",args0:[{type:"field_dropdown",name:"CURRENTMENU",options:[["year","YEAR"],["month","MONTH"],["date","DATE"],["day of week","DAYOFWEEK"],["hour","HOUR"],["minute","MINUTE"],["second","SECOND"]]}],extensions:["colours_sensing","output_string"]})}};
+	Blockly.Blocks.sensing_currentmenu={init:function(){this.jsonInit({message0:"%1",args0:[{type:"field_dropdown",name:"CURRENTMENU",options:[
+		[Blockly.Msg.SENSING_OPTION_YEAR,"YEAR"],
+		[Blockly.Msg.SENSING_OPTION_MONTH,"MONTH"],
+		[Blockly.Msg.SENSING_OPTION_DATE,"DATE"],
+		[Blockly.Msg.SENSING_OPTION_DAY,"DAYOFWEEK"],
+		[Blockly.Msg.SENSING_OPTION_HOUR,"HOUR"],
+		[Blockly.Msg.SENSING_OPTION_MINUTE,"MINUTE"],
+		[Blockly.Msg.SENSING_OPTION_SECOND,"SECOND"]
+	]}],extensions:["colours_sensing","output_string"]})}};
 	Blockly.Blocks.sensing_dayssince2000={init:function(){this.jsonInit({message0:Blockly.Msg.SENSING_DAYSSINCE2000,category:Blockly.Categories.sensing,extensions:["colours_sensing","output_number"]})}};
 	Blockly.Blocks.sensing_username={init:function(){this.jsonInit({message0:Blockly.Msg.SENSING_USERNAME,category:Blockly.Categories.sensing,checkboxInFlyout:!0,extensions:["colours_sensing","output_number"]})}};
 
