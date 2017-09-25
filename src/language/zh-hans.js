@@ -530,6 +530,8 @@ Blockly.Msg.DATA_LENGTHOF = "链表%1的长度";
 Blockly.Msg.DATA_CONTAINS = "%1包含%2?";
 Blockly.Msg.DATA_SHOWLIST = "显示链表%1";
 Blockly.Msg.DATA_HIDELIST = "隐藏链表%1";
+Blockly.Msg.DATA_SET_TO = "将 %1 设定为 %2";
+Blockly.Msg.DATA_CHANGE_BY = "将 %1 增加 %2";
 
 Blockly.Msg.EVENTS = "事件";
 Blockly.Msg.EVENTS_WHENCLICKED = "当%1被点击";
@@ -552,6 +554,10 @@ Blockly.Msg.CONTROL_REPEATUNTIL = "重复执行直到%1";
 Blockly.Msg.CONTROL_WHENISTARTASACLONE = "当作为克隆体启动时";
 Blockly.Msg.CONTROL_CREATECLONEOF = "克隆%1";
 Blockly.Msg.CONTROL_DELETETHISCLONE = "删除本克隆体";
+Blockly.Msg.CONTROL_STOP = "停止";
+Blockly.Msg.CONTROL_STOP_ALL = "全部脚本";
+Blockly.Msg.CONTROL_STOP_THIS_SCRIPT = "当前脚本";
+Blockly.Msg.CONTROL_STOP_OTHER_SCRIPTS = "角色的其它脚本";
 
 Blockly.Msg.SENSING = "侦测";
 Blockly.Msg.SENSING_TOUCHING = "碰到%1?"
@@ -574,6 +580,21 @@ Blockly.Msg.SENSING_OF = "获取%1属于%2"
 Blockly.Msg.SENSING_CURRENT = "当前时间%1"
 Blockly.Msg.SENSING_DAYSSINCE2000 = "2000年之后的天数"
 Blockly.Msg.SENSING_USERNAME = "用户名"
+
+Blockly.Msg.SENSING_KEY_SPACE = "空格"
+Blockly.Msg.SENSING_KEY_LEFT_ARROW = "左箭头"
+Blockly.Msg.SENSING_KEY_RIGHT_ARROW = "右箭头"
+Blockly.Msg.SENSING_KEY_DOWN_ARROW = "下箭头"
+Blockly.Msg.SENSING_KEY_UP_ARROW = "上箭头"
+Blockly.Msg.SENSING_KEY_ANY = "任意"
+
+Blockly.Msg.SENSING_OPTION_YEAR = "年"
+Blockly.Msg.SENSING_OPTION_MONTH = "月"
+Blockly.Msg.SENSING_OPTION_DATE = "日期"
+Blockly.Msg.SENSING_OPTION_DAY = "星期"
+Blockly.Msg.SENSING_OPTION_HOUR = "时"
+Blockly.Msg.SENSING_OPTION_MINUTE = "分"
+Blockly.Msg.SENSING_OPTION_SECOND = "秒"
 
 Blockly.Msg.OPERATORS = "运算符";
 Blockly.Msg.OPERATORS_PICKRANDOMTO = "在%1到%2间随机选一个数"
@@ -641,7 +662,7 @@ Blockly.Msg.WB_ENCODER_MOVE = "编码电机 %1 速度 %2 距离 %3 厘米";
 Blockly.Msg.WB_STEPPER_MOVE = "步进电机 %1 速度 %2 距离 %3 厘米";
 Blockly.Msg.WB_STOP_MOTOR = "停止所有直流电机";
 Blockly.Msg.WB_RGB1 = "RGB 管脚 %1 像素 %2 颜色 %3";
-Blockly.Msg.WB_RGB2 = "RGB 管脚 %1 像素 %2 红 %3 绿 %4 蓝 %5";
+Blockly.Msg.WB_RGB2 = "RGB 管脚 %1 像素 %2 红 %3 % 绿 %4 % 蓝 %5 %";
 Blockly.Msg.WB_LIGHT = "光线传感器 %1";
 Blockly.Msg.WB_TEMPERATURE = "温度传感器 %1";
 Blockly.Msg.WB_SOUND = "声音传感器 %1";

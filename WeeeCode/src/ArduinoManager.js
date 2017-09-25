@@ -175,7 +175,7 @@ class ArduinoManager {
             this.vm.postIOData('serial', { slot: "M204", report: ret });
         }*/
     }
-
+/*
     queryData(data){
         if(data.type == 'D'){
             if(this.digitalQuery[data.pin]){
@@ -196,7 +196,7 @@ class ArduinoManager {
         }
 
     }
-
+*/
     stopAll(){
         this.digitalQuery = {};
         this.analogQuery = {};

@@ -32,7 +32,7 @@ class PortSelector extends React.Component {
     }
     changeLanguage(language){
         localStorage.language = language;
-        document.location.reload(true);
+        nw.Window.get().reload();
     }
     /*
     handleTitle(e){
@@ -66,6 +66,9 @@ class PortSelector extends React.Component {
 
     componentDidMount () {
         this.refreshPort();
+        this.wc.on("reconnect_serial", port => {
+            this.portConnected(port);
+        });
     }
     render () {
         var portMenuItem;

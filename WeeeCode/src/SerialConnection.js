@@ -56,6 +56,7 @@ class SerialConnection {
             var line = this.lineBuffer.substr(0, index + 1);
             this.onReadLine.dispatch(line);
             this.lineBuffer = this.lineBuffer.substr(index + 1);
+            console.log("serial recv:", line)
         }
 
     }
@@ -106,6 +107,7 @@ class SerialConnection {
 
     send(msg){
         this.sendbuf(str2ab(msg));
+        console.log("serial send:", msg);
     }
 
     sendbuf(buffer){

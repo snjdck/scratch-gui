@@ -19,7 +19,7 @@ WB_ENCODER_MOVE,Encoder Motor %1 speed %2 distance %3 cm,±àÂëµç»ú %1 ËÙ¶È %2 ¾àÀ
 WB_STEPPER_MOVE,Stepper %1 speed %2 distance %3 cm,²½½øµç»ú %1 ËÙ¶È %2 ¾àÀë %3 ÀåÃ×,
 WB_STOP_MOTOR,Stop DC motors,Í£Ö¹ËùÓĞÖ±Á÷µç»ú,
 WB_RGB1,rgb pin %1 pixel %2 color %3,RGB ¹Ü½Å %1 ÏñËØ %2 ÑÕÉ« %3,
-WB_RGB2,RGB pin %1 pixel %2 R%3%  G%4%  B%5%,RGB ¹Ü½Å %1 ÏñËØ %2 ºì %3 ÂÌ %4 À¶ %5,
+WB_RGB2,RGB pin %1 pixel %2 R%3%  G%4%  B%5%,RGB ¹Ü½Å %1 ÏñËØ %2 ºì %3 % ÂÌ %4 % À¶ %5 %,
 WB_LIGHT,light sensor %1,¹âÏß´«¸ĞÆ÷ %1,
 WB_TEMPERATURE,temperature sensor %1,ÎÂ¶È´«¸ĞÆ÷ %1,
 WB_SOUND,sound sensor %1,ÉùÒô´«¸ĞÆ÷ %1,

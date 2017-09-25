@@ -83,9 +83,9 @@ function weeebot_rgb3(argValues, util) {
     var r = argValues.R;
     var g = argValues.G;
     var b = argValues.B;
-    r = 2.55 * Math.max(0, Math.min(100, r));
-    g = 2.55 * Math.max(0, Math.min(100, g));
-    b = 2.55 * Math.max(0, Math.min(100, b));
+    r = Math.round(2.55 * Math.max(0, Math.min(100, r)));
+    g = Math.round(2.55 * Math.max(0, Math.min(100, g)));
+    b = Math.round(2.55 * Math.max(0, Math.min(100, b)));
     var cmd = createCMD(9, pin, pix, r, g, b);
     //var cmd = "M9 "+ pin + " " + pix + " " + r + " " + g + " " + b;
     return new Promise(resolve => {

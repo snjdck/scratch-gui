@@ -6,7 +6,7 @@ var EventEmitter = require('events');
 var SerialConnection = require('./SerialConnection');
 var ArduinoManager = require('./ArduinoManager');
 var Toolbox = require('./Toolbox');
-var ResourceManager = require('./ResourceManager');
+//var ResourceManager = require('./ResourceManager');
 
 var ProjectManager = require('./ProjectManager');
 
@@ -24,11 +24,11 @@ class WeeeCode extends EventEmitter
 		this.serial = new SerialConnection();
 		this.arduino = new ArduinoManager(vm);
 		this.toolbox = new Toolbox();
-		this.resourcemng = new ResourceManager();
+		//this.resourcemng = new ResourceManager();
 
 		this.connectedPort = null;
 		this.portList = [];
-		this.resourcemng.startServer(this.workpath,this.mediapath);
+		//this.resourcemng.startServer(this.workpath,this.mediapath);
 
 		if(nw.App.argv.length > 0){
 			this.loadWC(nw.App.argv[0]);
@@ -105,13 +105,23 @@ class WeeeCode extends EventEmitter
 	uploadProject(code,logCb,finishCb) {
 	    var workspaceFolder = path.resolve(this.workpath,"/project");
 	    var workspaceIno = path.resolve(this.workpath,"/project","project.ino");
+	    var needReconnect = false;
 	    if(this.serial.connectionId != -1){
 	        this.serial.disconnect();
+	        needReconnect = true;
+	        var port = this.connectedPort;
 	    }
 	    if (!fs.existsSync(workspaceFolder)){
 	        fs.mkdirSync(workspaceFolder);
 	    }
-	    this.arduino.uploadProject(code,workspaceIno,logCb,finishCb);
+	    this.arduino.uploadProject(code,workspaceIno,logCb,(err)=>{
+	    	if(finishCb){
+	    		finishCb(err)
+	    	}
+	    	if(needReconnect){
+	    		this.emit("reconnect_serial", port);
+	    	}
+	    });
 	}
 
 	copyArduinoLibrary(srcpath) {

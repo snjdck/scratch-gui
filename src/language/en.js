@@ -530,6 +530,8 @@ Blockly.Msg.DATA_LENGTHOF = "length of %1";
 Blockly.Msg.DATA_CONTAINS = "%1 contains %2?";
 Blockly.Msg.DATA_SHOWLIST = "show list %1";
 Blockly.Msg.DATA_HIDELIST = "hide list %1";
+Blockly.Msg.DATA_SET_TO = "set %1 to %2";
+Blockly.Msg.DATA_CHANGE_BY = "change %1 by %2";
 
 Blockly.Msg.EVENTS = "Events";
 Blockly.Msg.EVENTS_WHENCLICKED = "when %1 clicked";
@@ -552,6 +554,10 @@ Blockly.Msg.CONTROL_REPEATUNTIL = "repeat until %1";
 Blockly.Msg.CONTROL_WHENISTARTASACLONE = "when I start as a clone";
 Blockly.Msg.CONTROL_CREATECLONEOF = "create clone of %1";
 Blockly.Msg.CONTROL_DELETETHISCLONE = "delete this clone";
+Blockly.Msg.CONTROL_STOP = "stop";
+Blockly.Msg.CONTROL_STOP_ALL = "all";
+Blockly.Msg.CONTROL_STOP_THIS_SCRIPT = "this script";
+Blockly.Msg.CONTROL_STOP_OTHER_SCRIPTS = "other scripts in sprite";
 
 Blockly.Msg.SENSING = "Sensing";
 Blockly.Msg.SENSING_TOUCHING = "touching %1?"
@@ -574,6 +580,21 @@ Blockly.Msg.SENSING_OF = "%1 of %2"
 Blockly.Msg.SENSING_CURRENT = "current %1"
 Blockly.Msg.SENSING_DAYSSINCE2000 = "days since 2000"
 Blockly.Msg.SENSING_USERNAME = "username"
+
+Blockly.Msg.SENSING_KEY_SPACE = "space"
+Blockly.Msg.SENSING_KEY_LEFT_ARROW = "left arrow"
+Blockly.Msg.SENSING_KEY_RIGHT_ARROW = "right arrow"
+Blockly.Msg.SENSING_KEY_DOWN_ARROW = "down arrow"
+Blockly.Msg.SENSING_KEY_UP_ARROW = "up arrow"
+Blockly.Msg.SENSING_KEY_ANY = "any"
+
+Blockly.Msg.SENSING_OPTION_YEAR = "year"
+Blockly.Msg.SENSING_OPTION_MONTH = "month"
+Blockly.Msg.SENSING_OPTION_DATE = "date"
+Blockly.Msg.SENSING_OPTION_DAY = "day of week"
+Blockly.Msg.SENSING_OPTION_HOUR = "hour"
+Blockly.Msg.SENSING_OPTION_MINUTE = "minute"
+Blockly.Msg.SENSING_OPTION_SECOND = "second"
 
 Blockly.Msg.OPERATORS = "Operators";
 Blockly.Msg.OPERATORS_PICKRANDOMTO = "pick random %1 to %2"
