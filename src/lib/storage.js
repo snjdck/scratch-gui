@@ -21,10 +21,6 @@ class FileHelper {
     				reject(err);
     				return;
     			}
-				var ab = new Uint8Array(new ArrayBuffer(data.length));
-				for(var i=0, n=data.length; i<n; ++i){
-					ab[i] = data[i];
-				}
 				const asset = new ScratchStorage.Asset(assetType, assetId, dataFormat);
 				asset.setData(data, dataFormat);
         		fulfill(asset);
