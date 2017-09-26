@@ -13,6 +13,19 @@ function getExecPath(background=false){
     }
     return "arduino.exe";
 }
+
+const decoder = new TextDecoder("gb2312");
+function listenTextEvent(target, callback)
+{
+    var textBuffer = Buffer.alloc(0);
+    var text = "";
+    target.on("data", data => {
+        textBuffer = Buffer.concat([textBuffer, data]);
+        var newText = decoder.decode(textBuffer);
+        callback(newText.slice(text.length));
+        text = newText;
+    });
+}
 /*
 function buildUploadCommand(inofile,cmdType,arduinoboard,arduinopath,uploadPort){
 	var builtpath = process.cwd()+"/workspace/build/";
@@ -267,13 +280,14 @@ class ArduinoManager {
 			`--pref build.path=${builtpath}`,
 			path
 			].join(" "),{
-			encoding: "utf8",
+			encoding: "buffer",
             cwd: this.arduinopath
         });
-        
-        spawn.stdout.on('data', data => logCb && logCb(data));
+        if(logCb){
+            listenTextEvent(spawn.stdout, logCb);
+            listenTextEvent(spawn.stderr, logCb);
+        }
         spawn.stdout.on('end' , code => finishCb && finishCb(0));
-        spawn.stderr.on('data', data => logCb && logCb(data));
     }
 
     uploadProject(code,path,logCb,finishCb){
