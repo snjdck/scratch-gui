@@ -5,5 +5,5 @@ node "node_modules/webpack/bin/webpack.js"
 cd WeeeCode
 node "node_modules/webpack/bin/webpack.js"
 cd ..
-taskkill /f /im "nw.exe"
-"build/nw.exe"
+taskkill /f /im "WeeeCode.exe"
+"build/WeeeCode.exe"
