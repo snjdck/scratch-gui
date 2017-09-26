@@ -149,8 +149,8 @@ class ArduinoPanelComponent extends React.Component {
             <table width="100%" height="100%"><tr><td>
             <div className="group" id="code-buttons">
                 <DropdownButton title={Blockly.Msg.WC_RESTORE_FIRMWARE} id="restore_firmware" onSelect={this.restoreFirmware}>
-                  <MenuItem eventKey="ebot_factory_firmware">{Blockly.Msg.WC_RESTORE_FACTORY_FIRMWARE}</MenuItem>
-                  <MenuItem eventKey="ebot_firmware">{Blockly.Msg.WC_RESTORE_ONLINE_FIRMWARE}</MenuItem>
+                  <MenuItem eventKey="weeebot_factory_firmware">{Blockly.Msg.WC_RESTORE_FACTORY_FIRMWARE}</MenuItem>
+                  <MenuItem eventKey="weeebot_firmware">{Blockly.Msg.WC_RESTORE_ONLINE_FIRMWARE}</MenuItem>
                 </DropdownButton>
                 <Button onClick={this.uploadProject}>{<Icon name="arrow-up"/>}{Blockly.Msg.UPLOAD}</Button>
                 <Button style={{"float":"right"}} onClick={this.openArduino}>{<img style={{height: 20}} src={arduinoIcon}/>}{Blockly.Msg.WC_OPEN_ARDUINO}</Button>

@@ -3431,6 +3431,49 @@
         }
     },
     {
+        "name": "Waterpipe1",
+        "md5": "waterpipe1.png",
+        "type": "sprite",
+        "tags": [
+            "bitmap"
+        ],
+        "info": [
+            0,
+            1,
+            1
+        ],
+        "json": {
+            "objName": "Waterpipe1",
+            "sounds": [{
+                    "soundName": "pop",
+                    "soundID": -1,
+                    "md5": "83a9787d4cb6f3b7632b4ddfebf74367.wav",
+                    "sampleCount": 258,
+                    "rate": 11025,
+                    "format": ""
+                }],
+            "costumes": [{
+                    "costumeName": "waterpipe1",
+                    "baseLayerID": -1,
+                    "baseLayerMD5": "waterpipe1.png",
+                    "bitmapResolution": 2,
+                    "rotationCenterX": 126,
+                    "rotationCenterY": 360
+                }],
+            "currentCostumeIndex": 0,
+            "scratchX": 0,
+            "scratchY": 0,
+            "scale": 1.5,
+            "direction": 90,
+            "rotationStyle": "normal",
+            "isDraggable": false,
+            "indexInLibrary": 100000,
+            "visible": true,
+            "spriteInfo": {
+            }
+        }
+    },
+    {
         "name": "Catherine Dance",
         "md5": "7f7684029e9726376aaaae1158439f3e.png",
         "type": "sprite",

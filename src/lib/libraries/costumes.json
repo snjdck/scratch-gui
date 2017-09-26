@@ -2272,6 +2272,19 @@
     },
     {
         "info": [
+            126,
+            360,
+            2
+        ],
+        "md5": "waterpipe1.png",
+        "type": "costume",
+        "name": "waterpipe1",
+        "tags": [
+            "bitmap"
+        ]
+    },
+    {
+        "info": [
             84,
             123,
             2
