@@ -3262,6 +3262,175 @@
         }
     },
     {
+        "name": "Cat4",
+        "md5": "cat4-a.svg",
+        "type": "sprite",
+        "tags": [
+            "animals",
+            "drawing",
+            "vector"
+        ],
+        "info": [
+            0,
+            2,
+            1
+        ],
+        "json": {
+            "objName": "Cat4",
+            "sounds": [
+                {
+                    "soundName": "meow2",
+                    "soundID": -1,
+                    "md5": "cf51a0c4088942d95bcc20af13202710.wav",
+                    "sampleCount": 6512,
+                    "rate": 11025,
+                    "format": ""
+                }
+            ],
+            "costumes": [
+                {
+                    "costumeName": "cat4-a",
+                    "baseLayerID": -1,
+                    "baseLayerMD5": "cat4-a.svg",
+                    "bitmapResolution": 1,
+                    "rotationCenterX": 50,
+                    "rotationCenterY": 46
+                },
+                {
+                    "costumeName": "cat4-b",
+                    "baseLayerID": -1,
+                    "baseLayerMD5": "cat4-b.svg",
+                    "bitmapResolution": 1,
+                    "rotationCenterX": 50,
+                    "rotationCenterY": 46
+                }
+            ],
+            "currentCostumeIndex": 0,
+            "scratchX": 0,
+            "scratchY": 0,
+            "scale": 1,
+            "direction": 90,
+            "rotationStyle": "normal",
+            "isDraggable": false,
+            "indexInLibrary": 100000,
+            "visible": true,
+            "spriteInfo": {}
+        }
+    },
+    {
+        "name": "Cat5",
+        "md5": "cat5-a.svg",
+        "type": "sprite",
+        "tags": [
+            "animals",
+            "drawing",
+            "vector"
+        ],
+        "info": [
+            0,
+            2,
+            1
+        ],
+        "json": {
+            "objName": "Cat5",
+            "sounds": [
+                {
+                    "soundName": "meow2",
+                    "soundID": -1,
+                    "md5": "cf51a0c4088942d95bcc20af13202710.wav",
+                    "sampleCount": 6512,
+                    "rate": 11025,
+                    "format": ""
+                }
+            ],
+            "costumes": [
+                {
+                    "costumeName": "cat5-a",
+                    "baseLayerID": -1,
+                    "baseLayerMD5": "cat5-a.svg",
+                    "bitmapResolution": 1,
+                    "rotationCenterX": 50,
+                    "rotationCenterY": 46
+                },
+                {
+                    "costumeName": "cat5-b",
+                    "baseLayerID": -1,
+                    "baseLayerMD5": "cat5-b.svg",
+                    "bitmapResolution": 1,
+                    "rotationCenterX": 50,
+                    "rotationCenterY": 46
+                }
+            ],
+            "currentCostumeIndex": 0,
+            "scratchX": 0,
+            "scratchY": 0,
+            "scale": 1,
+            "direction": 90,
+            "rotationStyle": "normal",
+            "isDraggable": false,
+            "indexInLibrary": 100000,
+            "visible": true,
+            "spriteInfo": {}
+        }
+    },
+    {
+        "name": "Elephant2",
+        "md5": "elephant2-a.svg",
+        "type": "sprite",
+        "tags": [
+            "animals",
+            "drawing",
+            "nature",
+            "vector"
+        ],
+        "info": [
+            0,
+            2,
+            1
+        ],
+        "json": {
+            "objName": "Elephant2",
+            "sounds": [
+                {
+                    "soundName": "pop",
+                    "soundID": -1,
+                    "md5": "83a9787d4cb6f3b7632b4ddfebf74367.wav",
+                    "sampleCount": 258,
+                    "rate": 11025,
+                    "format": ""
+                }
+            ],
+            "costumes": [
+                {
+                    "costumeName": "elephant2-a",
+                    "baseLayerID": -1,
+                    "baseLayerMD5": "elephant2-a.svg",
+                    "bitmapResolution": 1,
+                    "rotationCenterX": 50,
+                    "rotationCenterY": 60
+                },
+                {
+                    "costumeName": "elephant2-b",
+                    "baseLayerID": -1,
+                    "baseLayerMD5": "elephant2-b.svg",
+                    "bitmapResolution": 1,
+                    "rotationCenterX": 50,
+                    "rotationCenterY": 60
+                }
+            ],
+            "currentCostumeIndex": 0,
+            "scratchX": 0,
+            "scratchY": 0,
+            "scale": 1,
+            "direction": 90,
+            "rotationStyle": "normal",
+            "isDraggable": false,
+            "indexInLibrary": 100000,
+            "visible": true,
+            "spriteInfo": {}
+        }
+    },
+    {
         "name": "Catherine Dance",
         "md5": "7f7684029e9726376aaaae1158439f3e.png",
         "type": "sprite",

@@ -2188,6 +2188,90 @@
     },
     {
         "info": [
+            50,
+            46
+        ],
+        "md5": "cat4-a.svg",
+        "type": "costume",
+        "name": "cat4-a",
+        "tags": [
+            "animals",
+            "drawing",
+            "vector"
+        ]
+    },
+    {
+        "info": [
+            50,
+            46
+        ],
+        "md5": "cat4-b.svg",
+        "type": "costume",
+        "name": "cat4-b",
+        "tags": [
+            "animals",
+            "drawing",
+            "vector"
+        ]
+    },
+    {
+        "info": [
+            50,
+            46
+        ],
+        "md5": "cat5-a.svg",
+        "type": "costume",
+        "name": "cat5-a",
+        "tags": [
+            "animals",
+            "drawing",
+            "vector"
+        ]
+    },
+    {
+        "info": [
+            50,
+            46
+        ],
+        "md5": "cat5-b.svg",
+        "type": "costume",
+        "name": "cat5-b",
+        "tags": [
+            "animals",
+            "drawing",
+            "vector"
+        ]
+    },
+    {
+        "info": [
+            50,
+            60
+        ],
+        "md5": "elephant2-a.svg",
+        "type": "costume",
+        "name": "elephant2-a",
+        "tags": [
+            "animals",
+            "drawing",
+            "vector"
+        ]
+    },
+    {
+        "info": [
+            50,
+            60
+        ],
+        "md5": "elephant2-b.svg",
+        "type": "costume",
+        "name": "elephant2-b",
+        "tags": [
+            "animals",
+            "drawing",
+            "vector"
+        ]
+    },
+    {
+        "info": [
             84,
             123,
             2
