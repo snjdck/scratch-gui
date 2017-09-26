@@ -423,6 +423,9 @@ void parseMcode(char *cmd)
 		Serial.write(cmd, strlen(cmd));
 	}
 	handler(cmd);
+	if(!queryFlag){
+		Serial.println("OK");
+	}
 }
 
 void parseCmd(char *cmd)
@@ -435,7 +438,6 @@ void parseCmd(char *cmd)
 		case 'G':
 			break;
 	}
-	Serial.println("OK");
 }
 
 void onSetup()
