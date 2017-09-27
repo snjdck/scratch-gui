@@ -270,14 +270,11 @@ class ArduinoManager {
         if(this.arduinoboard.indexOf('arduino')>-1){
             uploadPort = this.lastSerialPort;
         }
-        //var cmd = buildUploadCommand(path,"upload",this.arduinoboard,this.arduinopath,uploadPort); // temporary project folder
-        var builtpath = process.cwd()+"/workspace/build/";
         var cmd = [
         	getExecPath(true),
 			"--upload",
 			`--board ${this.arduinoboard}`,
 			`--port ${uploadPort}`,
-			`--pref build.path="${builtpath}"`,
 			`"${path}"`
 			].join(" ");
         var spawn = exec(cmd,{

@@ -17,6 +17,9 @@ Name: "{commondesktop}\WeeeCode"; Filename: "{app}\WeeeCode.exe"
 [Tasks]
 Name: desktopicon; Description: "Create a &desktop icon"
 
+[Dirs]
+Name: "{app}\workspace\build"
+
 [Files]
 Source: "nwjs-v0.24.4-win-x64\*"; DestDir: "{app}";           Flags: recursesubdirs createallsubdirs
 Source: "build\Arduino\*";        DestDir: "{app}\Arduino";   Flags: recursesubdirs createallsubdirs
