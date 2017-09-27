@@ -53,12 +53,18 @@ class ArduinoPanelComponent extends React.Component {
         this.wc.openIno(this.state.code);
     }
     consoleClear(){
-        console.log("consoleClear:");
-        console.log(this.arduinolog);
+        if(this.logs.length <= 0){
+            return;
+        }
+        this.logs = [];
+        this.setState({logs:this.logs});
     }
     consoleSend(){
-        var txt = ReactDOM.findDOMNode(this.refs.consoleInput).value;
-        this.props.consoleSend(txt);
+        var dom = ReactDOM.findDOMNode(this.refs.consoleInput);
+        var txt = dom.value;
+        dom.value = "";
+        this.appendLog(txt);
+        this.wc.sendCmd(txt);
     }
     consoleEnter(e){
         e.preventDefault();
@@ -67,12 +73,6 @@ class ArduinoPanelComponent extends React.Component {
     componentDidMount(){
         this.wc.arduino.appendLog = this.appendLog.bind(this);
         this.timerID = setInterval(this.updateCodeView, 1000);
-        //this.wc.on("stage_stop_drag", this.onStageStopDrag);
-        /*
-        fs.readdir("firmwares", (err, files) => {
-            this.setState({firmwares:files.map(item => ({name:item, path:`firmwares/${item}/${item}.ino`}))});
-        });
-        */
     }
     componentWillUnmount(){
         clearInterval(this.timerID);
@@ -109,7 +109,7 @@ class ArduinoPanelComponent extends React.Component {
             this.setState({code:code});
         }
     }
-    appendLog(info, color){
+    appendLog(info, color="white"){
         this.logs.push({msg:info, color:color});
         this.setState({logs:this.logs});
     }
@@ -171,7 +171,8 @@ class ArduinoPanelComponent extends React.Component {
                     marginTop: 4,
                     marginBottom: 4,
                     height:256,
-                    overflowY: 'scroll',
+                    width:482,
+                    overflow: 'auto',
                     backgroundColor: '#000000',
                     color: '#008000',
                     fontSize:18
@@ -193,7 +194,7 @@ class ArduinoPanelComponent extends React.Component {
                     ref="consoleInput"
                 />
                 <Button style={{marginLeft:3}} onClick={this.consoleSend}>{Blockly.Msg.SEND}</Button>
-                <Button style={{marginLeft:2}} onClick={this.consoleClear}>Clear</Button>
+                <Button style={{marginLeft:2}} onClick={this.consoleClear}>{Blockly.Msg.CLEAR}</Button>
             </form>
             </td></tr></table>
             </div>
