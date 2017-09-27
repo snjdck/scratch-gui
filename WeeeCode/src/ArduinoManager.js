@@ -272,14 +272,15 @@ class ArduinoManager {
         }
         //var cmd = buildUploadCommand(path,"upload",this.arduinoboard,this.arduinopath,uploadPort); // temporary project folder
         var builtpath = process.cwd()+"/workspace/build/";
-        var spawn = exec([
+        var cmd = [
         	getExecPath(true),
 			"--upload",
 			`--board ${this.arduinoboard}`,
 			`--port ${uploadPort}`,
-			`--pref build.path=${builtpath}`,
-			path
-			].join(" "),{
+			`--pref build.path="${builtpath}"`,
+			`"${path}"`
+			].join(" ");
+        var spawn = exec(cmd,{
 			encoding: "buffer",
             cwd: this.arduinopath
         });
