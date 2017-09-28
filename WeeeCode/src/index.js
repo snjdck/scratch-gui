@@ -136,7 +136,11 @@ class WeeeCode extends EventEmitter
 	}
 
 	reloadApp() {
-	    document.location.reload(true); // reload all
+		this.serial.disconnect();
+		nw.App.removeAllListeners("open");
+		var win = nw.Window.get();
+		win.removeAllListeners("close");
+		win.reload();
 	}
 
 	updateWindowTitle(){

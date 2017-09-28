@@ -9,7 +9,7 @@ AlwaysShowDirOnReadyPage=yes
 DisableDirPage=no
 
 [Run]
-Filename: "{app}\drivers\Driver_for_Windows.exe"; Description: "Arduino Board Driver"; Flags: postinstall nowait
+Filename: "{app}\drivers\CH34x_Install_Windows_v3_4.EXE"; Description: "WeeeMake Board Driver"; Flags: postinstall nowait
 
 [Icons]
 Name: "{commondesktop}\WeeeCode"; Filename: "{app}\WeeeCode.exe"

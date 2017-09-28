@@ -32,7 +32,7 @@ class PortSelector extends React.Component {
     }
     changeLanguage(language){
         localStorage.language = language;
-        nw.Window.get().reload();
+        this.props.vm.weeecode.reloadApp();
     }
     /*
     handleTitle(e){
