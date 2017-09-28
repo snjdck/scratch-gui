@@ -6,19 +6,13 @@ var EventEmitter = require('events');
 var SerialConnection = require('./SerialConnection');
 var ArduinoManager = require('./ArduinoManager');
 var Toolbox = require('./Toolbox');
-//var ResourceManager = require('./ResourceManager');
-
-var ProjectManager = require('./ProjectManager');
 
 class WeeeCode extends EventEmitter
 {
 	constructor(vm) {
 		super();
 		this.vm = vm;
-		this.workpath = path.resolve(process.cwd(),'workspace');
-		this.mediapath = path.resolve(process.cwd(),'media');
-		//this.defaultExamples = path.resolve(process.cwd(),'examples');
-		this.arduinoPath = path.resolve(process.cwd(),'arduino'); // not the one where arduino ide locate
+		this.inoPath = "workspace/project/project.ino";
 
 
 		this.serial = new SerialConnection();
@@ -94,27 +88,17 @@ class WeeeCode extends EventEmitter
 	}
 
 	openIno(code) {
-	    var workspaceFolder = path.resolve(this.workpath,"/project");
-	    var workspaceIno = path.resolve(this.workpath,"/project","project.ino");
-	    if (!fs.existsSync(workspaceFolder)){
-	        fs.mkdirSync(workspaceFolder);
-	    }
-	    this.arduino.openArduinoIde(code,workspaceIno);
+	    this.arduino.openArduinoIde(code, this.inoPath);
 	}
 
 	uploadProject(code,logCb,finishCb) {
-	    var workspaceFolder = path.resolve(this.workpath,"/project");
-	    var workspaceIno = path.resolve(this.workpath,"/project","project.ino");
 	    var needReconnect = false;
 	    if(this.serial.connectionId != -1){
 	        this.serial.disconnect();
 	        needReconnect = true;
 	        var port = this.connectedPort;
 	    }
-	    if (!fs.existsSync(workspaceFolder)){
-	        fs.mkdirSync(workspaceFolder);
-	    }
-	    this.arduino.uploadProject(code,workspaceIno,logCb,(err)=>{
+	    this.arduino.uploadProject(code, this.inoPath, logCb, err => {
 	    	if(finishCb){
 	    		finishCb(err)
 	    	}
@@ -124,16 +108,7 @@ class WeeeCode extends EventEmitter
 	    });
 	}
 
-	copyArduinoLibrary(srcpath) {
-	    if(!srcpath){
-	        srcpath = path.resolve(this.arduinoPath,'lib/')
-	    }
-	    this.arduino.copyLibrary(srcpath);
-	}
-
-	saveConfig() {
-	    
-	}
+	saveConfig(){}
 
 	reloadApp() {
 		this.serial.disconnect();

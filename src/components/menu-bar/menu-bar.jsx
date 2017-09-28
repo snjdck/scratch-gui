@@ -18,7 +18,7 @@ import scratchLogo from './scratch-logo.svg';
 class MenuBar extends React.Component {
     constructor (props) {
         super(props);
-        bindAll(this, ["newProject", "selectLoadFile", "selectSaveFile", "loadProject", "saveProject"]);
+        bindAll(this, ["newProject", "selectLoadFile", "selectSaveFile", "loadProject", "saveProject", "selectSaveFileAs"]);
     }
     componentDidMount(){
         this.saveProjDialog.nwsaveas = "untitled";
@@ -41,6 +41,9 @@ class MenuBar extends React.Component {
         }else{
             this.saveProjDialog.click();
         }
+    }
+    selectSaveFileAs(){
+        this.saveProjDialog.click();
     }
     newProject(){
         if(!this.wc.needSave() || confirm(Blockly.Msg.WC_SURE_TO_CREATE_NEW_PROJECT)){

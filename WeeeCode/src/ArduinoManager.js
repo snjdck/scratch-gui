@@ -77,20 +77,6 @@ class ArduinoManager {
         this.pluginPareLine = null;
     }
 
-    checkArduinoPath(callback){
-        fs.access(this.arduinopath, fs.F_OK, err => {
-            if (err) {
-                if(callback){
-                    callback(err);
-                }
-                throw err;
-            }else{
-                if(callback) {
-                    callback(0);
-                }
-            }
-        });
-    }
 
     sb2cpp(){
         try {
@@ -120,7 +106,6 @@ class ArduinoManager {
     }
 
     openArduinoIde(code,path){
-        this.checkArduinoPath();
         var arduinoPath = this.arduinopath;
         fs.writeFile(path, code, function(err) {
             if(err) {
@@ -226,7 +211,6 @@ class ArduinoManager {
     compileCode(path,callback,errCallback){
         var errorcode = null;
         var arduinopath = this.arduinopath;
-        this.checkArduinoPath();
 
         var cmd = buildUploadCommand(path,"verify",this.arduinoboard,this.arduinopath);
 
@@ -266,7 +250,6 @@ class ArduinoManager {
     }
 */
     uploadCode(path,logCb,finishCb,uploadPort){
-        this.checkArduinoPath();
         if(this.arduinoboard.indexOf('arduino')>-1){
             uploadPort = this.lastSerialPort;
         }
@@ -298,12 +281,6 @@ class ArduinoManager {
                 this.uploadCode(path,logCb,finishCb);
             }
         });
-    }
-
-    tick(){
-        if(this.autotranslate){
-            this.sb2cpp();
-        }
     }
 }
 

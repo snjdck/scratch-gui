@@ -34,11 +34,9 @@ class SerialConnection {
 
 
     enumSerial(callback){
-        this.getDevices(ports => callback && callback(ports));
-    }
-
-    getDevices(callback) {
-        chrome.serial.getDevices(callback);
+        if(callback){
+            chrome.serial.getDevices(callback);
+        }
     }
 
     onReceive(receiveInfo) {

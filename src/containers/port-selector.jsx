@@ -117,9 +117,10 @@ class PortSelector extends React.Component {
                 <NavItem>
                     <ButtonGroup>
                         <DropdownButton title={Blockly.Msg.SCRATCH_PROJECT} bsStyle="info" id="projDropdown">
-                            <MenuItem eventKey="1" onClick={this.props.newProject}>{Blockly.Msg.SCRATCH_PROJECT_NEW}</MenuItem>
-                            <MenuItem eventKey="2" onClick={this.props.selectLoadFile}>{Blockly.Msg.SCRATCH_PROJECT_LOAD}</MenuItem>
-                            <MenuItem eventKey="3" onClick={this.props.selectSaveFile}>{Blockly.Msg.SCRATCH_PROJECT_SAVE}</MenuItem>
+                            <MenuItem onClick={this.props.newProject}>{Blockly.Msg.SCRATCH_PROJECT_NEW}</MenuItem>
+                            <MenuItem onClick={this.props.selectLoadFile}>{Blockly.Msg.SCRATCH_PROJECT_LOAD}</MenuItem>
+                            <MenuItem onClick={this.props.selectSaveFile}>{Blockly.Msg.SCRATCH_PROJECT_SAVE}</MenuItem>
+                            <MenuItem onClick={this.props.selectSaveFileAs}>{Blockly.Msg.SCRATCH_PROJECT_SAVE_AS}</MenuItem>
                         </DropdownButton>
                     </ButtonGroup>
                 </NavItem>

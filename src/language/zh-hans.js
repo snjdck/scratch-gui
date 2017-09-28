@@ -744,3 +744,4 @@ Blockly.Msg.WC_SURE_TO_QUIT = "确定离开？";
 Blockly.Msg.WC_SURE_TO_CREATE_NEW_PROJECT = "当前项目尚未保存，继续新建？";
 Blockly.Msg.WC_UPLOAD_SUCCESS = "上传成功";
 Blockly.Msg.WC_UPLOAD_FAILED = "上传失败";
+Blockly.Msg.SCRATCH_PROJECT_SAVE_AS = "另存为";
