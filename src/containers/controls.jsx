@@ -45,6 +45,7 @@ class Controls extends React.Component {
     handleStopAllClick (e) {
         e.preventDefault();
         this.props.vm.stopAll();
+        this.props.vm.emit("stop-all-flag-clicked");
     }
     render () {
         const {

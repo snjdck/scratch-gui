@@ -17,6 +17,7 @@ int servo_pins[]={0,0,0,0,0,0};
 
 uint8_t IR_VALUE = 0;
 
+const uint8_t MSG_ID_STOP_ALL = 99;
 const uint8_t MSG_ID_BOARD_RGB = 9;
 const uint8_t MSG_ID_BOARD_BUTTON = 0;
 const uint8_t MSG_ID_BOARD_BUZZER = 10;
@@ -349,6 +350,11 @@ void doLedMatrixShowBitmap(char *cmd)
 	delete [] data;
 }
 
+void doStopAll(char *cmd)
+{
+	doDcStop(0);
+}
+
 void parseMcode(char *cmd)
 {
 	bool queryFlag = false;
@@ -415,6 +421,9 @@ void parseMcode(char *cmd)
 			break;
 		case MSG_ID_LED_MATRIX_BITMAP:
 			handler = doLedMatrixShowBitmap;
+			break;
+		case MSG_ID_STOP_ALL:
+			handler = doStopAll;
 			break;
 		default:
 			return;
