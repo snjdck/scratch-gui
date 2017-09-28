@@ -200,28 +200,23 @@ Blockly.Arduino['control_forever'] = function (block) {
     }
     return code;
 };
-Blockly.Arduino.control_if=function(a){
-	var b=Blockly.Arduino.valueToCode(a,"CONDITION",Blockly.Arduino.ORDER_NONE)||"false",
-	c=Blockly.Arduino.statementToCode(a,"SUBSTACK"),
-	c=Blockly.Arduino.addLoopTrap(c,a.id);
-	a=Blockly.Arduino.tab()+"if("+b+"){\n";
-	//Blockly.Arduino.tabPos++;
-	//Blockly.Arduino.tabPos--;
-	return a+c+(Blockly.Arduino.tab()+"}\n")
+Blockly.Arduino.control_if=function(block){
+	var condition = Blockly.Arduino.valueToCode(block, "CONDITION",Blockly.Arduino.ORDER_NONE) || "false";
+	var case1 = Blockly.Arduino.statementToCode(block,"SUBSTACK");
+	case1 = Blockly.Arduino.addLoopTrap(case1, block.id);
+	return Blockly.Arduino.tab() + "if(" + condition + "){\n"
+    + case1
+    + Blockly.Arduino.tab() + "}\n";
 };
-Blockly.Arduino.control_if_else=function(a){
-	var b=Blockly.Arduino.valueToCode(a,"CONDITION",Blockly.Arduino.ORDER_NONE)||"false",
-	c=Blockly.Arduino.statementToCode(a,"SUBSTACK"),
-	c=Blockly.Arduino.addLoopTrap(c,a.id);
-	Blockly.Arduino.statementToCode(a,"SUBSTACK2");
-	a=Blockly.Arduino.addLoopTrap(c,a.id);
-	b=Blockly.Arduino.tab()+"if("+b+"){\n";
-	//Blockly.Arduino.tabPos++;
-	//Blockly.Arduino.tabPos--;
-	b += c+(Blockly.Arduino.tab()+"}else{\n");
-	//Blockly.Arduino.tabPos++;
-	//Blockly.Arduino.tabPos--;
-	return b+a+(Blockly.Arduino.tab()+"}\n")
+Blockly.Arduino.control_if_else=function(block){
+	var condition = Blockly.Arduino.valueToCode(block, "CONDITION",Blockly.Arduino.ORDER_NONE) || "false";
+	var case1 = Blockly.Arduino.statementToCode(block,"SUBSTACK");
+	case1=Blockly.Arduino.addLoopTrap(case1, block.id);
+	var case2 = Blockly.Arduino.statementToCode(block,"SUBSTACK2");
+	case2=Blockly.Arduino.addLoopTrap(case2, block.id);
+	return Blockly.Arduino.tab() + "if(" + condition + "){\n"
+	+ case1 + Blockly.Arduino.tab() + "}else{\n"
+    + case2 + Blockly.Arduino.tab() + "}\n";
 };
 Blockly.Arduino.looks_say=function(a){
 	a=Blockly.Arduino.valueToCode(a,"MESSAGE",Blockly.Arduino.ORDER_ATOMIC);
