@@ -47,7 +47,13 @@ class ArduinoPanelComponent extends React.Component {
         this.uploadCode(this.state.code);
     }
     uploadCode(code){
-        this.wc.uploadProject(code, msg => this.appendLog(msg, "white"), code => this.appendLog("upload finished!~", "#00FF00"));
+        this.wc.uploadProject(code, msg => this.appendLog(msg, "white"), code => {
+        	if(code == 0){
+        		this.appendLog(Blockly.Msg.WC_UPLOAD_SUCCESS, "#00FF00")
+        	}else{
+        		this.appendLog(Blockly.Msg.WC_UPLOAD_FAILED, "#FF0000")
+        	}
+        });
     }
     openArduino(){
         this.wc.openIno(this.state.code);

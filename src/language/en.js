@@ -742,3 +742,5 @@ Blockly.Msg.WC_RESTORE_FACTORY_FIRMWARE = "Restore Factory Firmware";
 Blockly.Msg.WC_OPEN_ARDUINO = "Open Arduino";
 Blockly.Msg.WC_SURE_TO_QUIT = "Are you sure to leave?";
 Blockly.Msg.WC_SURE_TO_CREATE_NEW_PROJECT = "Current project has changed, do you want to continue?";
+Blockly.Msg.WC_UPLOAD_SUCCESS = "Upload success";
+Blockly.Msg.WC_UPLOAD_FAILED = "Upload failed";

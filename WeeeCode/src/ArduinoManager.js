@@ -273,6 +273,7 @@ class ArduinoManager {
         var cmd = [
         	getExecPath(true),
 			"--upload",
+			"--verbose-upload",
 			`--board ${this.arduinoboard}`,
 			`--port ${uploadPort}`,
 			`"${path}"`
@@ -285,7 +286,7 @@ class ArduinoManager {
             listenTextEvent(spawn.stdout, logCb);
             listenTextEvent(spawn.stderr, logCb);
         }
-        spawn.stdout.on('end' , code => finishCb && finishCb(0));
+        spawn.on('close' , code => finishCb && finishCb(code));
     }
 
     uploadProject(code,path,logCb,finishCb){
