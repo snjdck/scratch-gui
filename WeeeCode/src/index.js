@@ -88,17 +88,19 @@ class WeeeCode extends EventEmitter
 	}
 
 	openIno(code) {
-	    this.arduino.openArduinoIde(code, this.inoPath);
+		fs.writeFileSync(this.inoPath, code);
+	    this.arduino.openArduinoIde(code, "../" + this.inoPath);
 	}
 
 	uploadProject(code,logCb,finishCb) {
+		fs.writeFileSync(this.inoPath, code);
 	    var needReconnect = false;
 	    if(this.serial.connectionId != -1){
 	        this.serial.disconnect();
 	        needReconnect = true;
 	        var port = this.connectedPort;
 	    }
-	    this.arduino.uploadProject(code, this.inoPath, logCb, err => {
+	    this.arduino.uploadProject("../" + this.inoPath, logCb, err => {
 	    	if(finishCb){
 	    		finishCb(err)
 	    	}

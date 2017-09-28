@@ -106,16 +106,9 @@ class ArduinoManager {
     }
 
     openArduinoIde(code,path){
-        var arduinoPath = this.arduinopath;
-        fs.writeFile(path, code, function(err) {
-            if(err) {
-                throw err;
-            }else{
-                execFile(getExecPath(), [path],{
-                    encoding: 'ascii',
-                    cwd: arduinoPath
-                });
-            }
+        execFile(getExecPath(), [path],{
+            encoding: 'ascii',
+            cwd: this.arduinopath
         });
     }
 
@@ -249,7 +242,7 @@ class ArduinoManager {
 
     }
 */
-    uploadCode(path,logCb,finishCb,uploadPort){
+    uploadProject(path,logCb,finishCb,uploadPort){
         if(this.arduinoboard.indexOf('arduino')>-1){
             uploadPort = this.lastSerialPort;
         }
@@ -270,17 +263,6 @@ class ArduinoManager {
             listenTextEvent(spawn.stderr, logCb);
         }
         spawn.on('close' , code => finishCb && finishCb(code));
-    }
-
-    uploadProject(code,path,logCb,finishCb){
-        fs.writeFile(path, code, err => {
-            if(err) {
-                console.log("Save error "+err);
-                if(finishCb) finishCb(err);
-            }else{
-                this.uploadCode(path,logCb,finishCb);
-            }
-        });
     }
 }
 
