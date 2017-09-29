@@ -11,16 +11,11 @@ export default function WeeeBot(vm) {
         "secondary": "#FF4D6A",
         "tertiary": "#FF3355"
     };
-    vm.on("stop-all-flag-clicked", ()=>{
-    	this.wc.sendCmd("M99");
-    });
+    vm.on("stop-all-flag-clicked", () => this.wc.sendCmd("M99"));
 }
 import toolbox from "./Toolbox"
 
-
 WeeeBot.prototype.getBlocks = require("./Blocks");
 WeeeBot.prototype.getPrimitives = require("./Primitives");
-WeeeBot.prototype.getToolbox = function(){
-    return toolbox;
-}
-WeeeBot.prototype.getHats = function(){};
+WeeeBot.prototype.getToolbox = ()=>toolbox;
+WeeeBot.prototype.getHats = ()=>{};

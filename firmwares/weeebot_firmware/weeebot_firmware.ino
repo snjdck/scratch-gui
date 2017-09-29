@@ -1,5 +1,9 @@
 #include <WeELFPort.h>
 
+const uint8_t sensor_port[4] = {PORT_A,PORT_B,PORT_C,PORT_D};
+uint8_t sensor_slot[4] = {0};
+WeOneWire portDetect;
+
 const uint8_t ON_BOARD_PIN_RGB_GROUP = 13;
 const uint8_t ON_BOARD_PINS[] = {0, PORT_1, PORT_2, PORT_3, PORT_4, PORT_5, PORT_6, ON_BOARD_PIN_RGB_GROUP};
 
@@ -13,7 +17,7 @@ WeBuzzer buzzer;
 WeInfraredReceiver ir(PORT_2);
 
 Servo servos[6];
-int servo_pins[]={0,0,0,0,0,0};
+uint8_t servo_pins[6]={0};
 
 uint8_t IR_VALUE = 0;
 
@@ -352,7 +356,27 @@ void doLedMatrixShowBitmap(char *cmd)
 
 void doStopAll(char *cmd)
 {
+	//stop motor
 	doDcStop(0);
+	//stop board RGB_LED
+	led.reset(OnBoard_RGB);
+	led.setColor(0,0,0,0);
+	led.show();
+	//stop RJ11 sensors
+	for(int i=0; i<sizeof(sensor_slot);++i){
+		if(!sensor_slot[i]){
+			continue;
+		}
+		if(1 == sensor_slot[i]){
+			ultraSensor.reset(sensor_port[i]);
+			ultraSensor.setColor1(0,0,0);
+			ultraSensor.setColor2(0,0,0);
+			ultraSensor.RGBShow();
+		}else if(3 == sensor_slot[i]){
+			ledPanel.reset(sensor_port[i]);
+			ledPanel.clearScreen();
+		}
+	}
 }
 
 void parseMcode(char *cmd)
@@ -451,6 +475,10 @@ void parseCmd(char *cmd)
 
 void onSetup()
 {
+	pinMode(PORT_A, INPUT);
+	pinMode(PORT_B, INPUT);
+	pinMode(PORT_C, INPUT);
+	pinMode(PORT_D, INPUT);
 	ir.begin();
 }
 
@@ -464,6 +492,7 @@ void loop()
 {
 	loopIR();
 	loopSerial();
+	loopSensor();
 }
 
 void loopIR()
@@ -497,5 +526,23 @@ void loopSerial()
 			buffer[buffer_index] = nextChar;
 			buffer_index = (buffer_index + 1) % buffer_len;
 		}
+	}
+}
+
+void loopSensor()
+{
+	for(int i=0; i<sizeof(sensor_slot);++i){
+		if(sensor_slot[i] > 0 == digitalRead(sensor_port[i])){
+			continue;
+		}
+		if(sensor_slot[i] > 0){
+			sensor_slot[i] = 0;
+			continue;
+		}
+		portDetect.reset(sensor_port[i]);
+		portDetect.reset();
+		portDetect.write_byte(0x01);
+		portDetect.respond();
+		sensor_slot[i] = portDetect.read_byte();
 	}
 }
