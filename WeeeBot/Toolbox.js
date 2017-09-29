@@ -57,7 +57,7 @@ const toolbox = newXML("category", {"name":"WeeeBot", "key":"WeeeBot", "colour":
             newNumberValue("SPEED", 120)
         ]),
         newBlock("weeebot_stop"),
-        newBlock("weeebot_steppermove", [
+        /*newBlock("weeebot_steppermove", [
             newDropdownValue("MOTOR_PORT", 3),
             newNumberValue("SPEED", 3000),
             newNumberValue("DISTANCE", 1000)
@@ -66,7 +66,7 @@ const toolbox = newXML("category", {"name":"WeeeBot", "key":"WeeeBot", "colour":
             newDropdownValue("MOTOR_PORT", 3),
             newNumberValue("SPEED", 100),
             newNumberValue("DISTANCE", 1000)
-        ]),
+        ]),*/
         newBlock("on_board_servo", [
             newDropdownValue("BOARD_PORT", 1),
             newNumberValue("ANGLE", 90)

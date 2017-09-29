@@ -97,7 +97,12 @@ class ArduinoPanelComponent extends React.Component {
             var arduino = Blockly.Arduino;
             arduino.init(Blockly.getMainWorkspace())
             var d=item;
-			var e=arduino.blockToCode(d);
+            try{
+			 var e=arduino.blockToCode(d);
+            }catch(error){
+                //this.appendLog(`Please remove`);
+                return;
+            }
 			Array.isArray(e)&&(e=e[0]);
 			if(e){
 				if(d.outputConnection && arduino.scrubNakedValue){
@@ -110,6 +115,7 @@ class ArduinoPanelComponent extends React.Component {
 			b=b.replace(/^\s+\n/,"");
 			b=b.replace(/\n\s+$/,"\n");
 			code = b.replace(/[ \t]+\n/g,"\n");
+            break;
         }
         if(code != this.state.code){
             this.setState({code:code});
@@ -188,19 +194,20 @@ class ArduinoPanelComponent extends React.Component {
             </div>
             <form className="form-inline" id="console-input"
                   onSubmit={this.consoleEnter}
-            >
+            ><table><tr><td width="100%">
                 <FormControl
                     type="text"
                     style={{
-                        width: '70%',
+                        width: "100%",
                         backgroundColor: '#FFFFFF',
                         border: '0px',
                         color: '#000000'
                     }}
                     ref="consoleInput"
                 />
-                <Button style={{marginLeft:3}} onClick={this.consoleSend}>{Blockly.Msg.SEND}</Button>
-                <Button style={{marginLeft:2}} onClick={this.consoleClear}>{Blockly.Msg.CLEAR}</Button>
+                </td><td><Button style={{marginLeft:3}} onClick={this.consoleSend}>{Blockly.Msg.SEND}</Button>
+                </td><td><Button style={{marginLeft:2}} onClick={this.consoleClear}>{Blockly.Msg.CLEAR}</Button>
+                </td></tr></table>
             </form>
             </td></tr></table>
             </div>

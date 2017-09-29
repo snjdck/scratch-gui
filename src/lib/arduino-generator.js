@@ -23,6 +23,398 @@ Blockly.Arduino.INDENT="\t";
 Blockly.Arduino.END=";\n";
 Blockly.Arduino.Header="#include <Arduino.h>\n";
 
+Blockly.Arduino["motion_movesteps"] = function(block){
+    return "";
+}
+Blockly.Arduino["motion_turnright"] = function(block){
+    return "";
+}
+Blockly.Arduino["motion_turnleft"] = function(block){
+    return "";
+}
+Blockly.Arduino["motion_pointindirection"] = function(block){
+    return "";
+}
+Blockly.Arduino["motion_pointtowards"] = function(block){
+    return "";
+}
+Blockly.Arduino["motion_gotoxy"] = function(block){
+    return "";
+}
+Blockly.Arduino["motion_goto"] = function(block){
+    return "";
+}
+Blockly.Arduino["motion_glidesecstoxy"] = function(block){
+    return "";
+}
+Blockly.Arduino["motion_glideto"] = function(block){
+    return "";
+}
+Blockly.Arduino["motion_changexby"] = function(block){
+    return "";
+}
+Blockly.Arduino["motion_setx"] = function(block){
+    return "";
+}
+Blockly.Arduino["motion_changeyby"] = function(block){
+    return "";
+}
+Blockly.Arduino["motion_sety"] = function(block){
+    return "";
+}
+Blockly.Arduino["motion_ifonedgebounce"] = function(block){
+    return "";
+}
+Blockly.Arduino["motion_setrotationstyle"] = function(block){
+    return "";
+}
+Blockly.Arduino["motion_xposition"] = function(block){
+    return "";
+}
+Blockly.Arduino["motion_yposition"] = function(block){
+    return "";
+}
+Blockly.Arduino["motion_direction"] = function(block){
+    return "";
+}
+Blockly.Arduino["looks_sayforsecs"] = function(block){
+    return "";
+}
+Blockly.Arduino["looks_say"] = function(block){
+    return "";
+}
+Blockly.Arduino["looks_thinkforsecs"] = function(block){
+    return "";
+}
+Blockly.Arduino["looks_think"] = function(block){
+    return "";
+}
+Blockly.Arduino["looks_show"] = function(block){
+    return "";
+}
+Blockly.Arduino["looks_hide"] = function(block){
+    return "";
+}
+Blockly.Arduino["looks_switchcostumeto"] = function(block){
+    return "";
+}
+Blockly.Arduino["looks_nextcostume"] = function(block){
+    return "";
+}
+Blockly.Arduino["looks_nextbackdrop"] = function(block){
+    return "";
+}
+Blockly.Arduino["looks_switchbackdropto"] = function(block){
+    return "";
+}
+Blockly.Arduino["looks_switchbackdroptoandwait"] = function(block){
+    return "";
+}
+Blockly.Arduino["looks_changeeffectby"] = function(block){
+    return "";
+}
+Blockly.Arduino["looks_seteffectto"] = function(block){
+    return "";
+}
+Blockly.Arduino["looks_cleargraphiceffects"] = function(block){
+    return "";
+}
+Blockly.Arduino["looks_changesizeby"] = function(block){
+    return "";
+}
+Blockly.Arduino["looks_setsizeto"] = function(block){
+    return "";
+}
+Blockly.Arduino["looks_gotofront"] = function(block){
+    return "";
+}
+Blockly.Arduino["looks_gobacklayers"] = function(block){
+    return "";
+}
+Blockly.Arduino["looks_costumeorder"] = function(block){
+    return ["0", Blockly.Arduino.ORDER_NONE];
+}
+Blockly.Arduino["looks_backdroporder"] = function(block){
+    return ["0", Blockly.Arduino.ORDER_NONE];
+}
+Blockly.Arduino["looks_backdropname"] = function(block){
+    return ["0", Blockly.Arduino.ORDER_NONE];
+}
+Blockly.Arduino["looks_size"] = function(block){
+    return ["0", Blockly.Arduino.ORDER_NONE];
+}
+Blockly.Arduino["sound_play"] = function(block){
+    return "";
+}
+Blockly.Arduino["sound_playuntildone"] = function(block){
+    return "";
+}
+Blockly.Arduino["sound_stopallsounds"] = function(block){
+    return "";
+}
+Blockly.Arduino["sound_playdrumforbeats"] = function(block){
+    return "";
+}
+Blockly.Arduino["sound_restforbeats"] = function(block){
+    return "";
+}
+Blockly.Arduino["sound_playnoteforbeats"] = function(block){
+    return "";
+}
+Blockly.Arduino["sound_setinstrumentto"] = function(block){
+    return "";
+}
+Blockly.Arduino["sound_changeeffectby"] = function(block){
+    return "";
+}
+Blockly.Arduino["sound_seteffectto"] = function(block){
+    return "";
+}
+Blockly.Arduino["sound_cleareffects"] = function(block){
+    return "";
+}
+Blockly.Arduino["sound_changevolumeby"] = function(block){
+    return "";
+}
+Blockly.Arduino["sound_setvolumeto"] = function(block){
+    return "";
+}
+Blockly.Arduino["sound_volume"] = function(block){
+    return ["0", Blockly.Arduino.ORDER_NONE];
+}
+Blockly.Arduino["sound_changetempoby"] = function(block){
+    return "";
+}
+Blockly.Arduino["sound_settempotobpm"] = function(block){
+    return "";
+}
+Blockly.Arduino["sound_tempo"] = function(block){
+    return ["0", Blockly.Arduino.ORDER_NONE];
+}
+Blockly.Arduino["event_whenflagclicked"] = function(block){
+    return "";
+}
+Blockly.Arduino["event_whenkeypressed"] = function(block){
+    return "";
+}
+Blockly.Arduino["event_whenthisspriteclicked"] = function(block){
+    return "";
+}
+Blockly.Arduino["event_whenbackdropswitchesto"] = function(block){
+    return "";
+}
+Blockly.Arduino["event_whengreaterthan"] = function(block){
+    return "";
+}
+Blockly.Arduino["event_whenbroadcastreceived"] = function(block){
+    return "";
+}
+Blockly.Arduino["event_broadcast"] = function(block){
+    return "";
+}
+Blockly.Arduino["event_broadcastandwait"] = function(block){
+    return "";
+}
+Blockly.Arduino["control_wait"] = function(block){
+}
+Blockly.Arduino["control_repeat"] = function(block){
+}
+Blockly.Arduino["control_forever"] = function(block){
+}
+Blockly.Arduino["control_if"] = function(block){
+}
+Blockly.Arduino["control_if_else"] = function(block){
+}
+Blockly.Arduino["control_wait_until"] = function(block){
+	var condition = Blockly.Arduino.valueToCode(block, "CONDITION", Blockly.Arduino.ORDER_NONE);
+	var code = condition ? `while(!(${condition}))` : "while(0)";
+	return Blockly.Arduino.tab() + code + Blockly.Arduino.END;
+}
+Blockly.Arduino["control_repeat_until"] = function(block){
+	var condition = Blockly.Arduino.valueToCode(block, "CONDITION", Blockly.Arduino.ORDER_NONE);
+	var code = condition ? `while(!(${condition}))` : "while(0)";
+	var case1 = Blockly.Arduino.statementToCode(block, "SUBSTACK");
+	case1 = Blockly.Arduino.addLoopTrap(case1, block.id);
+	return Blockly.Arduino.tab() + code + "{\n"
+	+ case1
+	+ Blockly.Arduino.tab() + "}\n";
+}
+Blockly.Arduino["control_stop"] = function(block){
+    return "";
+}
+Blockly.Arduino["control_start_as_clone"] = function(block){
+    return "";
+}
+Blockly.Arduino["control_create_clone_of"] = function(block){
+    return "";
+}
+Blockly.Arduino["control_delete_this_clone"] = function(block){
+    return "";
+}
+Blockly.Arduino["sensing_touchingobject"] = function(block){
+    return ["0", Blockly.Arduino.ORDER_NONE];
+}
+Blockly.Arduino["sensing_touchingcolor"] = function(block){
+    return ["0", Blockly.Arduino.ORDER_NONE];
+}
+Blockly.Arduino["sensing_coloristouchingcolor"] = function(block){
+    return ["0", Blockly.Arduino.ORDER_NONE];
+}
+Blockly.Arduino["sensing_distanceto"] = function(block){
+    return ["0", Blockly.Arduino.ORDER_NONE];
+}
+Blockly.Arduino["sensing_keypressed"] = function(block){
+    return ["0", Blockly.Arduino.ORDER_NONE];
+}
+Blockly.Arduino["sensing_mousedown"] = function(block){
+    return ["0", Blockly.Arduino.ORDER_NONE];
+}
+Blockly.Arduino["sensing_mousex"] = function(block){
+    return ["0", Blockly.Arduino.ORDER_NONE];
+}
+Blockly.Arduino["sensing_mousey"] = function(block){
+    return ["0", Blockly.Arduino.ORDER_NONE];
+}
+Blockly.Arduino["sensing_loudness"] = function(block){
+    return ["0", Blockly.Arduino.ORDER_NONE];
+}
+Blockly.Arduino["sensing_timer"] = function(block){
+    return ["0", Blockly.Arduino.ORDER_NONE];
+}
+Blockly.Arduino["sensing_resettimer"] = function(block){
+    return "";
+}
+Blockly.Arduino["sensing_of"] = function(block){
+    return ["0", Blockly.Arduino.ORDER_NONE];
+}
+Blockly.Arduino["sensing_current"] = function(block){
+    return ["0", Blockly.Arduino.ORDER_NONE];
+}
+Blockly.Arduino["sensing_dayssince2000"] = function(block){
+    return ["0", Blockly.Arduino.ORDER_NONE];
+}
+Blockly.Arduino["pen_clear"] = function(block){
+    return "";
+}
+Blockly.Arduino["pen_stamp"] = function(block){
+    return "";
+}
+Blockly.Arduino["pen_pendown"] = function(block){
+    return "";
+}
+Blockly.Arduino["pen_penup"] = function(block){
+    return "";
+}
+Blockly.Arduino["pen_setpencolortocolor"] = function(block){
+    return "";
+}
+Blockly.Arduino["pen_changepencolorby"] = function(block){
+    return "";
+}
+Blockly.Arduino["pen_setpencolortonum"] = function(block){
+    return "";
+}
+Blockly.Arduino["pen_changepenshadeby"] = function(block){
+    return "";
+}
+Blockly.Arduino["pen_setpenshadeto"] = function(block){
+    return "";
+}
+Blockly.Arduino["pen_changepensizeby"] = function(block){
+    return "";
+}
+Blockly.Arduino["pen_setpensizeto"] = function(block){
+    return "";
+}
+Blockly.Arduino["operator_add"] = function(block){
+}
+Blockly.Arduino["operator_subtract"] = function(block){
+}
+Blockly.Arduino["operator_multiply"] = function(block){
+}
+Blockly.Arduino["operator_divide"] = function(block){
+}
+Blockly.Arduino["operator_random"] = function(block){
+}
+Blockly.Arduino["operator_lt"] = function(block){
+}
+Blockly.Arduino["operator_equals"] = function(block){
+}
+Blockly.Arduino["operator_gt"] = function(block){
+}
+Blockly.Arduino["operator_and"] = function(block){
+	var order = Blockly.Arduino.ORDER_HIGH;
+	var a=Blockly.Arduino.valueToCode(block,"OPERAND1", order) || "0";
+	var b=Blockly.Arduino.valueToCode(block,"OPERAND2", order) || "0";
+	return [`${a} && ${b}`, Blockly.Arduino.ORDER_AND];
+}
+Blockly.Arduino["operator_or"] = function(block){
+	var order = Blockly.Arduino.ORDER_HIGH;
+	var a=Blockly.Arduino.valueToCode(block,"OPERAND1", order) || "0";
+	var b=Blockly.Arduino.valueToCode(block,"OPERAND2", order) || "0";
+	return [`${a} || ${b}`, Blockly.Arduino.ORDER_OR];
+}
+Blockly.Arduino["operator_not"] = function(block){
+	var order = Blockly.Arduino.ORDER_HIGH;
+	var a=Blockly.Arduino.valueToCode(block,"OPERAND", order) || "0";
+	return [`!${a}`, Blockly.Arduino.ORDER_UNARY];
+}
+Blockly.Arduino["operator_join"] = function(block){
+	return ["0", Blockly.Arduino.ORDER_NONE];
+}
+Blockly.Arduino["operator_letter_of"] = function(block){
+	return ["0", Blockly.Arduino.ORDER_NONE];
+}
+Blockly.Arduino["operator_length"] = function(block){
+	return ["0", Blockly.Arduino.ORDER_NONE];
+}
+Blockly.Arduino["operator_contains"] = function(block){
+	return ["0", Blockly.Arduino.ORDER_NONE];
+}
+Blockly.Arduino["operator_mod"] = function(block){
+	var order = Blockly.Arduino.ORDER_HIGH;
+	var a=Blockly.Arduino.valueToCode(block,"NUM1", order) || "0";
+	var b=Blockly.Arduino.valueToCode(block,"NUM2", order) || "0";
+	return [`fmod(${a}, ${b})`, Blockly.Arduino.ORDER_NONE];
+}
+Blockly.Arduino["operator_round"] = function(block){
+	var order = Blockly.Arduino.ORDER_HIGH;
+	var a=Blockly.Arduino.valueToCode(block,"NUM", order) || "0";
+	return [`round(${a})`, Blockly.Arduino.ORDER_NONE];
+}
+Blockly.Arduino["operator_mathop"] = function(block){
+}
+Blockly.Arduino["data_listcontents"] = function(block){
+    return "";
+}
+Blockly.Arduino["data_addtolist"] = function(block){
+    return "";
+}
+Blockly.Arduino["data_deleteoflist"] = function(block){
+    return "";
+}
+Blockly.Arduino["data_insertatlist"] = function(block){
+    return "";
+}
+Blockly.Arduino["data_replaceitemoflist"] = function(block){
+    return "";
+}
+Blockly.Arduino["data_itemoflist"] = function(block){
+    return ["0", Blockly.Arduino.ORDER_NONE];
+}
+Blockly.Arduino["data_lengthoflist"] = function(block){
+    return ["0", Blockly.Arduino.ORDER_NONE];
+}
+Blockly.Arduino["data_listcontainsitem"] = function(block){
+    return ["0", Blockly.Arduino.ORDER_NONE];
+}
+Blockly.Arduino["data_showlist"] = function(block){
+    return "";
+}
+Blockly.Arduino["data_hidelist"] = function(block){
+    return "";
+}
+
 Blockly.Arduino.init=function(workspace){
 	Blockly.Arduino.definitions_=Object.create(null);
 	Blockly.Arduino.includes_=Object.create(null);
@@ -236,7 +628,7 @@ Blockly.Arduino.text=function(a){
 Blockly.Arduino.operator_random=function(a){
 	var b=Blockly.Arduino.valueToCode(a,"FROM",Blockly.Arduino.ORDER_HIGH)||"0";
 	a=Blockly.Arduino.valueToCode(a,"TO",Blockly.Arduino.ORDER_HIGH)||"0";
-	return["random("+b+","+a+")",Blockly.Arduino.ORDER_HIGH]
+	return["random("+b+","+a+"+1)",Blockly.Arduino.ORDER_HIGH]
 };
 Blockly.Arduino.operator_compare=function(a){
 	var b=Blockly.Arduino.valueToCode(a,"OPERAND1",Blockly.Arduino.ORDER_HIGH)||"0",
@@ -342,11 +734,23 @@ Blockly.Arduino["data_changevariableby"] = function (block) {
 };
 
 Blockly.Arduino["operator_mathop"] = function (block) {
-    var order = Blockly.Arduino.ORDER_NONE;
+    var order = Blockly.Arduino.ORDER_HIGH;
     var op = Blockly.Arduino.valueToCode(block, 'OPERATOR', order);
     var v = Blockly.Arduino.valueToCode(block, 'NUM', order);
-    var code = op + "(" + v + ")";
-    return [code, order];
+    switch(op){
+    	case "ceiling": return [`ceil(${v})`, order];
+    	case "ln": return [`log(${v})`, order];
+    	case "log": return [`log10(${v})`, order];
+    	case "e ^": return [`exp(${v})`, order];
+    	case "10 ^": return [`pow(10,${v})`, order];
+    	case "sin":
+    	case "cos":
+    	case "tan": return [`${op}(${v}*PI/180.0)`, order];
+    	case "asin":
+    	case "acos":
+    	case "atan": return [`(${op}(${v})/PI*180.0)`, order];
+    }
+    return [`${op}(${v})`, order];
 };
 
 Blockly.Arduino["operator_mathop_menu"] = function (block) {
