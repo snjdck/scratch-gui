@@ -477,6 +477,7 @@ Blockly.Msg.LOOKS_SWITCHBACKDROP = "switch backdrop to %1";
 Blockly.Msg.LOOKS_GOTOFRONT = "go to front";
 Blockly.Msg.LOOKS_GOBACKLAYERS = "go back %1 layers";
 Blockly.Msg.LOOKS_BACKDROPNAME = "backdrop name";
+Blockly.Msg.LOOKS_COSTUMENAME = "costume name";
 Blockly.Msg.LOOKS_COSTUME = "costume #";
 Blockly.Msg.LOOKS_BACKDROPORDER = "backdrop #";
 Blockly.Msg.LOOKS_SWITCHBACKDROPTOANDWAIT = "switch backdrop to %1 and wait";

@@ -1617,15 +1617,15 @@ module.exports =
 	Blockly.Blocks.sensing_timer={init:function(){this.jsonInit({message0:Blockly.Msg.SENSING_TIMER,category:Blockly.Categories.sensing,checkboxInFlyout:!0,extensions:["colours_sensing","output_number"]})}};
 	Blockly.Blocks.sensing_resettimer={init:function(){this.jsonInit({message0:Blockly.Msg.SENSING_RESETTIMER,category:Blockly.Categories.sensing,extensions:["colours_sensing","shape_statement"]})}};
 	Blockly.Blocks.sensing_of_property_menu={init:function(){this.jsonInit({message0:"%1",args0:[{type:"field_dropdown",name:"PROPERTY",options:[
-		["x position","x position"],
-		["y position","y position"],
-		["direction","direction"],
-		["costume #","costume #"],
-		["costume name","costume name"],
-		["size","size"],
-		["volume","volume"],
-		["backdrop #","backdrop #"],
-		["backdrop name","backdrop name"]
+		[Blockly.Msg.MOTION_XPOSITION,"x position"],
+		[Blockly.Msg.MOTION_YPOSITION,"y position"],
+		[Blockly.Msg.MOTION_DIRECTION,"direction"],
+		[Blockly.Msg.LOOKS_COSTUME,"costume #"],
+		[Blockly.Msg.LOOKS_COSTUMENAME,"costume name"],
+		[Blockly.Msg.LOOKS_SIZE,"size"],
+		[Blockly.Msg.SOUND_VOLUME,"volume"],
+		[Blockly.Msg.LOOKS_BACKDROPORDER,"backdrop #"],
+		[Blockly.Msg.LOOKS_BACKDROPNAME,"backdrop name"]
 	]}],extensions:["colours_sensing","output_string"]})}};
 	Blockly.Blocks.sensing_of_object_menu={init:function(){this.jsonInit({message0:"%1",args0:[{type:"field_dropdown",name:"OBJECT",options:[["Sprite1","Sprite1"],["Stage","_stage_"]]}],extensions:["colours_sensing","output_string"]})}};
 	Blockly.Blocks.sensing_of={init:function(){this.jsonInit({message0:Blockly.Msg.SENSING_OF,args0:[{type:"input_value",name:"PROPERTY"},{type:"input_value",name:"OBJECT"}],output:!0,category:Blockly.Categories.sensing,outputShape:Blockly.OUTPUT_SHAPE_ROUND,checkboxInFlyout:!0,extensions:["colours_sensing"]})}};

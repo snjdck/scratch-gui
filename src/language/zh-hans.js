@@ -477,6 +477,7 @@ Blockly.Msg.LOOKS_SWITCHBACKDROP = "将背景切换为 %1";
 Blockly.Msg.LOOKS_GOTOFRONT = "移至最上层";
 Blockly.Msg.LOOKS_GOBACKLAYERS = "下移 %1 层";
 Blockly.Msg.LOOKS_BACKDROPNAME = "背景名称";
+Blockly.Msg.LOOKS_COSTUMENAME = "造型名称";
 Blockly.Msg.LOOKS_COSTUME = "造型编号 #";
 Blockly.Msg.LOOKS_BACKDROPORDER = "背景编号 #";
 Blockly.Msg.LOOKS_SWITCHBACKDROPTOANDWAIT = "将背景切换为 %1 并等待";
