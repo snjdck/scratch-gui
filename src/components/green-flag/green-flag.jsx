@@ -1,6 +1,7 @@
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
+import Blockly from 'scratch-blocks';
 
 import greenFlagIcon from './icon--green-flag.svg';
 import styles from './green-flag.css';
@@ -23,7 +24,7 @@ const GreenFlagComponent = function (props) {
                 }
             )}
             src={greenFlagIcon}
-            title={title}
+            title={Blockly.Msg.SCRATCH_GO}
             onClick={onClick}
             {...componentProps}
         />

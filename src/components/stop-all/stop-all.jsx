@@ -1,6 +1,7 @@
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
+import Blockly from 'scratch-blocks';
 
 import stopAllIcon from './icon--stop-all.svg';
 import styles from './stop-all.css';
@@ -23,7 +24,7 @@ const StopAllComponent = function (props) {
                 }
             )}
             src={stopAllIcon}
-            title={title}
+            title={Blockly.Msg.WC_SOUND_STOP}
             onClick={onClick}
             {...componentProps}
         />

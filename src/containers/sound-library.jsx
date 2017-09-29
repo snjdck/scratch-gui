@@ -4,7 +4,7 @@ import React from 'react';
 import VM from 'scratch-vm';
 import AudioEngine from 'scratch-audio';
 import LibraryComponent from '../components/library/library.jsx';
-
+import Blockly from 'scratch-blocks';
 import soundIcon from '../components/asset-panel/icon--sound.svg';
 
 import soundLibraryContent from '../lib/libraries/sounds.json';
@@ -74,7 +74,7 @@ class SoundLibrary extends React.PureComponent {
         return (
             <LibraryComponent
                 data={soundLibraryThumbnailData}
-                title="Sound Library"
+                title={Blockly.Msg.SCRATCH_SOUND_LIBRARY}
                 onItemMouseEnter={this.handleItemMouseEnter}
                 onItemMouseLeave={this.handleItemMouseLeave}
                 onItemSelected={this.handleItemSelected}

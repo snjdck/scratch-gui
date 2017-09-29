@@ -109,7 +109,7 @@ const SoundEditor = props => (
                 {props.playhead ? (
                     <button
                         className={classNames(styles.button, styles.stopButtonn)}
-                        title={props.intl.formatMessage(messages.stop)}
+                        title={Blockly.Msg.WC_SOUND_STOP}
                         onClick={props.onStop}
                     >
                         <img src={stopIcon} />
@@ -117,7 +117,7 @@ const SoundEditor = props => (
                 ) : (
                     <button
                         className={classNames(styles.button, styles.playButton)}
-                        title={props.intl.formatMessage(messages.play)}
+                        title={Blockly.Msg.WC_SOUND_PLAY}
                         onClick={props.onPlay}
                     >
                         <img src={playIcon} />
@@ -125,7 +125,7 @@ const SoundEditor = props => (
                 )}
             </div>
             <div className={styles.inputGroup}>
-                <Label text={props.intl.formatMessage(messages.sound)}>
+                <Label text={Blockly.Msg.WC_SOUND_SOUND}>
                     <BufferedInput
                         tabIndex="1"
                         type="text"
@@ -139,25 +139,17 @@ const SoundEditor = props => (
                     className={classNames(styles.button, styles.trimButton, {
                         [styles.trimButtonActive]: props.trimStart !== null
                     })}
-                    title={props.trimStart === null ? (
-                        props.intl.formatMessage(messages.trim)
-                    ) : (
-                        props.intl.formatMessage(messages.save)
-                    )}
+                    title={props.trimStart === null ? Blockly.Msg.WC_SOUND_TRIM : Blockly.Msg.SCRATCH_PROJECT_SAVE}
                     onClick={props.onActivateTrim}
                 >
                     <img src={trimIcon} />
-                    {props.trimStart === null ? (
-                        <FormattedMessage {...messages.trim} />
-                    ) : (
-                        <FormattedMessage {...messages.save} />
-                    )}
+                    {props.trimStart === null ? Blockly.Msg.WC_SOUND_TRIM : Blockly.Msg.SCRATCH_PROJECT_SAVE}
                 </button>
                 <div className={styles.buttonGroup}>
                     <button
                         className={styles.button}
                         disabled={!props.canUndo}
-                        title={props.intl.formatMessage(messages.undo)}
+                        title={Blockly.Msg.WC_SOUND_UNDO}
                         onClick={props.onUndo}
                     >
                         <img src={undoIcon} />
@@ -165,7 +157,7 @@ const SoundEditor = props => (
                     <button
                         className={styles.button}
                         disabled={!props.canRedo}
-                        title={props.intl.formatMessage(messages.redo)}
+                        title={Blockly.Msg.WC_SOUND_REDO}
                         onClick={props.onRedo}
                     >
                         <img src={redoIcon} />
