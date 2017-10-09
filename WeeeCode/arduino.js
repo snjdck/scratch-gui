@@ -1,8 +1,3 @@
-/**
- * Created by Riven on 7/8/2016.
- */
-
-
 
 export default class ArduinoBlocks{
     constructor(runtime){

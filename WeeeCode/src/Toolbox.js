@@ -169,6 +169,7 @@ var Toolbox = function(){
 Toolbox.prototype.getDefalutToolBox = function () {
     //const Msg = Blockly.Msg;
     return toolbox;
+    /*
     var ret =
     '<xml id="toolbox-categories" style="display: none">' +
     '<category name="' + Msg.MOTION + '" colour="#4C97FF" secondaryColour="#3373CC">' +
@@ -1018,6 +1019,7 @@ Toolbox.prototype.getDefalutToolBox = function () {
     '</category>' +
     '</xml>';
     return ret;
+    */
 };
 
 module.exports = Toolbox;

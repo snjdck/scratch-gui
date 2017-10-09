@@ -12,7 +12,13 @@ class WeeeCode extends EventEmitter
 	constructor(vm) {
 		super();
 		this.vm = vm;
-		this.inoPath = "workspace/project/project.ino";
+		this.inoPath = nw.App.dataPath + "/workspace/project/project.ino";
+		if(!fs.existsSync(nw.App.dataPath + "/workspace")){
+			fs.mkdirSync(nw.App.dataPath + "/workspace");
+		}
+		if(!fs.existsSync(nw.App.dataPath + "/workspace/project")){
+			fs.mkdirSync(nw.App.dataPath + "/workspace/project");
+		}
 
 
 		this.serial = new SerialConnection();
@@ -89,7 +95,7 @@ class WeeeCode extends EventEmitter
 
 	openIno(code) {
 		fs.writeFileSync(this.inoPath, code);
-	    this.arduino.openArduinoIde(code, "../" + this.inoPath);
+	    this.arduino.openArduinoIde(code, this.inoPath);
 	}
 
 	uploadProject(code,logCb,finishCb) {
@@ -100,7 +106,7 @@ class WeeeCode extends EventEmitter
 	        needReconnect = true;
 	        var port = this.connectedPort;
 	    }
-	    this.arduino.uploadProject("../" + this.inoPath, logCb, err => {
+	    this.arduino.uploadProject(this.inoPath, logCb, err => {
 	    	if(finishCb){
 	    		finishCb(err)
 	    	}

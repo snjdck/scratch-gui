@@ -1,3 +1,10 @@
+[Languages]
+Name: "en"; MessagesFile: "compiler:Default.isl"
+Name: "zh_cn"; MessagesFile: "compiler:Languages\ChineseSimplified.isl"
+
+[InstallDelete]
+Type: files; Name: "{app}\*.dll"
+
 [Setup]
 AppName=WeeeCode
 AppVersion=0.1
@@ -15,13 +22,13 @@ Filename: "{app}\drivers\CH34x_Install_Windows_v3_4.EXE"; Description: "WeeeMake
 Name: "{commondesktop}\WeeeCode"; Filename: "{app}\WeeeCode.exe"
 
 [Tasks]
-Name: desktopicon; Description: "Create a &desktop icon"
+Name: desktopicon; Description: {cm:CreateDesktopIcon}
 
-[Dirs]
-Name: "{app}\workspace\project"
+;[Dirs]
+;Name: "{app}\workspace\project"
 
 [Files]
-Source: "nwjs-v0.24.4-win-x64\*"; DestDir: "{app}";           Flags: recursesubdirs createallsubdirs
+Source: "nwjs-v0.25.4-win-ia32\*"; DestDir: "{app}";           Flags: recursesubdirs createallsubdirs
 Source: "build\Arduino\*";        DestDir: "{app}\Arduino";   Flags: recursesubdirs createallsubdirs
 Source: "build\static\*";         DestDir: "{app}\static";    Flags: recursesubdirs createallsubdirs
 Source: "build\firmwares\*";      DestDir: "{app}\firmwares"; Flags: recursesubdirs createallsubdirs

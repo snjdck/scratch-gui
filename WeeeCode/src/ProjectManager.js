@@ -1,6 +1,4 @@
-/**
- * Created by Riven on 2016/12/17.
- */
+
 const fs = require('fs');
 const path = require('path');
 const crypt = require('crypto');

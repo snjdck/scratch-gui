@@ -1,7 +1,3 @@
-/**
- * Created by Riven on 2016/12/15.
- */
-
 
 var path = require('path');
 var http = require('http');
