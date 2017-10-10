@@ -124,6 +124,7 @@ class Stage extends React.Component {
         });
         if (this.state.isDragging) {
             this.onStopDrag();
+            this.props.vm.postIOData('mouse', {isDown:false});
         } else {
             const data = {
                 isDown: false,

@@ -69,7 +69,7 @@ module.exports = function(){
 
         arduino.includes_["weeebot"] = '#include <WeELFPort.h>';
         arduino.definitions_["buzzer"] = "WeBuzzer buzzer;";
-        return arduino.tab() + "buzzer.tone(" + note + "," + hz + ")" + arduino.END;
+        return arduino.tab() + "buzzer.tone2(" + note + "," + hz + ")" + arduino.END;
     };
     arduino.on_board_servo = function(block){
         var b = arduino.ORDER_NONE;
