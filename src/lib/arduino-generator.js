@@ -418,7 +418,9 @@ Blockly.Arduino["data_hidelist"] = function(block){
 Blockly.Arduino.init=function(workspace){
 	Blockly.Arduino.definitions_=Object.create(null);
 	Blockly.Arduino.includes_=Object.create(null);
-	Blockly.Arduino.setupCodes_ = Object.create(null);
+    Blockly.Arduino.setupCodes_ = Object.create(null);
+    Blockly.Arduino.updateCodes_ = Object.create(null);
+	Blockly.Arduino.funcDefs_ = Object.create(null);
 	Blockly.Arduino.codeStage=Blockly.Arduino.Setup;
 	Blockly.Arduino.tabPos=1;
 	if(Blockly.Arduino.variableDB_){
@@ -470,12 +472,17 @@ Blockly.Arduino.finish = function (code) {
         ret += "\nvoid loop(){\r\n}\n";
     }
 
+    for(var name in Blockly.Arduino.funcDefs_){
+        ret += Blockly.Arduino.funcDefs_[name] + "\r\n";
+    }
+
     // Clean up temporary data.
     delete Blockly.Arduino.definitions_;
     delete Blockly.Arduino.includes_;
     delete Blockly.Arduino.setupCodes_;
+    delete Blockly.Arduino.updateCodes_;
+    delete Blockly.Arduino.funcDefs_;
     delete Blockly.Arduino.codeStage;
-    delete Blockly.Arduino.ir_enabled;
     Blockly.Arduino.variableDB_.reset();
 
     return ret;
@@ -577,6 +584,9 @@ Blockly.Arduino['control_forever'] = function (block) {
         Blockly.Arduino.tabPos = 0;
         //var order = Blockly.Arduino.ORDER_HIGH;
         var branch = Blockly.Arduino.statementToCode(block, 'SUBSTACK');
+        for(var key in Blockly.Arduino.updateCodes_){
+            branch = "\t" + Blockly.Arduino.updateCodes_[key] + "\r\n" + branch;
+        }
         branch = Blockly.Arduino.addLoopTrap(branch, block.id);
         code = "\n}\n"; // finish up setup
         code += "\nvoid loop(){\n";

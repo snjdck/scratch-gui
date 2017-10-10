@@ -210,9 +210,21 @@ module.exports = function(){
 
         arduino.includes_["weeebot"] = '#include <WeELFPort.h>';
         arduino.definitions_["ir"] = "WeInfraredReceiver ir(" + pin + ");";
+        arduino.definitions_["ir_v"] = "uint8_t IR_VALUE = 0;"
         arduino.setupCodes_["ir"] = "ir.begin();";
+        arduino.updateCodes_["ir"] = "loopIR();";
+        arduino.funcDefs_["ir"] = `void loopIR()
+{
+    static unsigned long timestamp = 0;
+    if(ir.decode()){
+        timestamp = millis();
+        IR_VALUE = (ir.value >> 16) & 0xFF;
+    }else if(millis() - timestamp > 200){
+        IR_VALUE = 0;
+    }
+}`;
 
-        var code = "(ir.decode() && (ir.value >> 16) & 0xFF == " + code + ")";
+        var code = "(IR_VALUE == " + code + ")";
         return [code, order]
         /*
         arduino.includes_["IRremote"] = '#include <IRremote.h>';
