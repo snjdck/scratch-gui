@@ -37,15 +37,27 @@ const ArduinoPanel = require('../../containers/arduino-panel.jsx');
 class GUIComponent extends React.Component {
     constructor(props){
         super(props);
-        bindAll(this, ["toggleArduinoMode", "stageSay"]);
+        bindAll(this, ["toggleArduinoMode", "stageSay", "clearStageSay"]);
         this.props.vm.runtime.stageSay = this.stageSay;
         this.state = {
             isArduinoMode:false,
             sayInfo:{msg:"",show:false,x:0,y:0}
         };
     }
+
+    componentDidMount(){
+        this.props.vm.on("green-flag-clicked", this.clearStageSay);
+        this.props.vm.on("stop-all-flag-clicked", this.clearStageSay);
+    }
+    componentWillUnmount(){
+        this.props.vm.removeListener("green-flag-clicked", this.clearStageSay);
+        this.props.vm.removeListener("stop-all-flag-clicked", this.clearStageSay);
+    }
     toggleArduinoMode(){
         this.setState((prevState, props) => ({isArduinoMode:!prevState.isArduinoMode}));
+    }
+    clearStageSay(){
+        this.setState({sayInfo:{x:0,y:0,msg:"",show:false}});
     }
     stageSay(msg, show, x, y) {
         let vm = this.props.vm;

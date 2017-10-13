@@ -40,6 +40,7 @@ class Controls extends React.Component {
             this.props.vm.setTurboMode(!this.state.turbo);
         } else {
             this.props.vm.greenFlag();
+            this.props.vm.emit("green-flag-clicked");
         }
     }
     handleStopAllClick (e) {
