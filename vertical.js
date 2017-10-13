@@ -2675,8 +2675,24 @@ module.exports =
 	Blockly.VariableModel=function(a,b,c,d){this.workspace=a;this.name=b;this.type=c||"";this.id_=d||Blockly.utils.genUid();Blockly.Events.fire(new Blockly.Events.VarCreate(this))};Blockly.VariableModel.prototype.getId=function(){return this.id_};Blockly.VariableModel.compareByName=function(a,b){return goog.string.caseInsensitiveCompare(a.name,b.name)};Blockly.VariableMap=function(a){this.variableMap_={};this.workspace=a};Blockly.VariableMap.prototype.clear=function(){this.variableMap_=Object(null)};
 	Blockly.VariableMap.prototype.renameVariable=function(a,b){var c=this.getVariable(b);var d=-1,e=-1,f="";if(a||c)f=(a||c).type;var g=this.getVariablesOfType(f);a&&(d=g.indexOf(a));c&&(e=g.indexOf(c));-1==d&&-1==e?(this.createVariable(b,""),console.log("Tried to rename an non-existent variable.")):d==e||-1!=d&&-1==e?(c=this.variableMap_[f][d],Blockly.Events.fire(new Blockly.Events.VarRename(c,b)),c.name=b):-1!=d&&-1!=e&&(c=this.variableMap_[f][e],Blockly.Events.fire(new Blockly.Events.VarRename(c,b)),
 	Blockly.Events.fire(new Blockly.Events.VarDelete(this.variableMap_[f][d])),c.name=b,this.variableMap_[f].splice(d,1))};
-	Blockly.VariableMap.prototype.createVariable=function(a,b,c){var d=this.getVariable(a);if(d){if(b&&d.type!=b)throw Error('Variable "'+a+'" is already in use and its type is "'+d.type+'" which conflicts with the passed in type, "'+b+'".');if(c&&d.getId()!=c)throw Error('Variable "'+a+'" is already in use and its id is "'+d.getId()+'" which conflicts with the passed in id, "'+c+'".');return d}if(c&&this.getVariableById(c))throw Error('Variable id, "'+c+'", is already in use.');c=c||Blockly.utils.genUid();
-	b=b||"";d=new Blockly.VariableModel(this.workspace,a,b,c);this.variableMap_[b]?this.variableMap_[b].push(d):this.variableMap_[b]=[d];return d};Blockly.VariableMap.prototype.deleteVariable=function(a){for(var b=this.variableMap_[a.type],c=0,d;d=b[c];c++)if(d.getId()==a.getId()){b.splice(c,1);Blockly.Events.fire(new Blockly.Events.VarDelete(a));break}};
+	Blockly.VariableMap.prototype.createVariable=function(a,b,c){
+		var d=this.getVariable(a);
+		if(d){
+			if(b&&d.type!=b)
+				throw Error('Variable "'+a+'" is already in use and its type is "'+d.type+'" which conflicts with the passed in type, "'+b+'".');
+			if(c&&d.getId()!=c)
+				throw Error('Variable "'+a+'" is already in use and its id is "'+d.getId()+'" which conflicts with the passed in id, "'+c+'".');
+			return d
+		}
+		if(c&&this.getVariableById(c))
+			throw Error('Variable id, "'+c+'", is already in use.');
+		c=c||Blockly.utils.genUid();
+		b=b||"";
+		d=new Blockly.VariableModel(this.workspace,a,b,c);
+		this.variableMap_[b]?this.variableMap_[b].push(d):this.variableMap_[b]=[d];
+		return d
+	};
+	Blockly.VariableMap.prototype.deleteVariable=function(a){for(var b=this.variableMap_[a.type],c=0,d;d=b[c];c++)if(d.getId()==a.getId()){b.splice(c,1);Blockly.Events.fire(new Blockly.Events.VarDelete(a));break}};
 	Blockly.VariableMap.prototype.getVariable=function(a){for(var b=Object.keys(this.variableMap_),c=0;c<b.length;c++)for(var d=b[c],e=0,f;f=this.variableMap_[d][e];e++)if(Blockly.Names.equals(f.name,a))return f;return null};Blockly.VariableMap.prototype.getVariableById=function(a){for(var b=Object.keys(this.variableMap_),c=0;c<b.length;c++)for(var d=b[c],e=0,f;f=this.variableMap_[d][e];e++)if(f.getId()==a)return f;return null};
 	Blockly.VariableMap.prototype.getVariablesOfType=function(a){return(a=this.variableMap_[a||""])?a.slice():[]};Blockly.VariableMap.prototype.getVariableTypes=function(){return Object.keys(this.variableMap_)};Blockly.VariableMap.prototype.getAllVariables=function(){for(var a=[],b=Object.keys(this.variableMap_),c=0;c<b.length;c++)a=a.concat(this.variableMap_[b[c]]);return a};
 	// Copyright 2012 Google Inc.  Apache License 2.0
@@ -2686,7 +2702,11 @@ module.exports =
 	Blockly.Workspace.prototype.getAllBlocks=function(){for(var a=this.getTopBlocks(!1),b=0;b<a.length;b++)a.push.apply(a,a[b].getChildren());return a};Blockly.Workspace.prototype.clear=function(){var a=Blockly.Events.getGroup();for(a||Blockly.Events.setGroup(!0);this.topBlocks_.length;)this.topBlocks_[0].dispose();a||Blockly.Events.setGroup(!1);this.variableMap_.clear();Blockly.DropDownDiv&&Blockly.DropDownDiv.hideWithoutAnimation();Blockly.WidgetDiv&&Blockly.WidgetDiv.hide(!0)};
 	Blockly.Workspace.prototype.updateVariableStore=function(a){if(!this.isFlyout){for(var b=Blockly.Variables.allUsedVariables(this),c=[],d=0,e;e=b[d];d++){var f=this.getVariable(e);f?c.push({name:f.name,type:f.type,id:f.getId()}):c.push({name:e,type:null,id:null})}a&&this.variableMap_.clear();for(d=0;a=c[d];d++)this.getVariable(a.name)||this.createVariable(a.name,a.type,a.id)}};
 	Blockly.Workspace.prototype.renameVariableInternal_=function(a,b){var c=this.getVariable(b);if(a&&c&&a.type!=c.type)throw Error('Variable "'+a.name+'" is type "'+a.type+'" and variable "'+b+'" is type "'+c.type+'". Both must be the same type.');if(c&&c.name!=b)var d=c.name;Blockly.Events.setGroup(!0);c=this.getAllBlocks();for(var e=0;e<c.length;e++)c[e].renameVar(a.name,b),d&&c[e].renameVar(d,b);this.variableMap_.renameVariable(a,b);Blockly.Events.setGroup(!1)};
-	Blockly.Workspace.prototype.renameVariable=function(a,b){var c=this.getVariable(a);this.renameVariableInternal_(c,b)};Blockly.Workspace.prototype.renameVariableById=function(a,b){var c=this.getVariableById(a);this.renameVariableInternal_(c,b)};Blockly.Workspace.prototype.createVariable=function(a,b,c){if(a.toLowerCase()!=Blockly.Variables.noVariableText())return this.variableMap_.createVariable(a,b,c)};
+	Blockly.Workspace.prototype.renameVariable=function(a,b){var c=this.getVariable(a);this.renameVariableInternal_(c,b)};Blockly.Workspace.prototype.renameVariableById=function(a,b){var c=this.getVariableById(a);this.renameVariableInternal_(c,b)};
+	Blockly.Workspace.prototype.createVariable=function(a,b,c){
+		if(a.toLowerCase()!=Blockly.Variables.noVariableText())
+			return this.variableMap_.createVariable(a,b,c)
+	};
 	Blockly.Workspace.prototype.getVariableUses=function(a){for(var b=[],c=this.getAllBlocks(),d=0;d<c.length;d++){var e=c[d].getVars();if(e)for(var f=0;f<e.length;f++){var g=e[f];g&&a&&Blockly.Names.equals(g,a)&&b.push(c[d])}}return b};
 	Blockly.Workspace.prototype.deleteVariable=function(a){for(var b=this.getVariableUses(a),c=0,d;d=b[c];c++)if("procedures_defnoreturn"==d.type||"procedures_defreturn"==d.type){b=d.getFieldValue("NAME");Blockly.alert(Blockly.Msg.CANNOT_DELETE_VARIABLE_PROCEDURE.replace("%1",a).replace("%2",b));return}var e=this,f=e.getVariable(a);1<b.length?Blockly.confirm(Blockly.Msg.DELETE_VARIABLE_CONFIRMATION.replace("%1",b.length).replace("%2",a),function(a){a&&e.deleteVariableInternal_(f)}):this.deleteVariableInternal_(f)};
 	Blockly.Workspace.prototype.deleteVariableById=function(a){var b=this.getVariableById(a);b?this.deleteVariableInternal_(b):console.warn("Can't delete non-existant variable: "+a)};Blockly.Workspace.prototype.deleteVariableInternal_=function(a){var b=this.getVariableUses(a.name);Blockly.Events.setGroup(!0);for(var c=0;c<b.length;c++)b[c].dispose(!0,!1);this.variableMap_.deleteVariable(a);Blockly.Events.setGroup(!1)};
@@ -2996,7 +3016,18 @@ module.exports =
 	Blockly.Xml.appendDomToWorkspace=function(a,b){if(b.hasOwnProperty("scale")){var c=Blockly.BlockSvg.TAB_WIDTH;try{Blockly.BlockSvg.TAB_WIDTH=0;var d=b.getBlocksBoundingBox()}finally{Blockly.BlockSvg.TAB_WIDTH=c}}c=Blockly.Xml.domToWorkspace(a,b);if(d&&d.height){var e=d.y+d.height;var f=d.x;var g=Infinity,h=Infinity;for(d=0;d<c.length;d++){var k=b.getBlockById(c[d]).getRelativeToSurfaceXY();k.y<h&&(h=k.y);k.x<g&&(g=k.x)}e=e-h+Blockly.BlockSvg.SEP_SPACE_Y;f-=g;var m;b.RTL&&(m=b.getWidth());for(d=0;d<
 	c.length;d++)b.getBlockById(c[d]).moveBy(b.RTL?m-f:f,e)}return c};
 	Blockly.Xml.domToBlock=function(a,b){if(a instanceof Blockly.Workspace){var c=a;a=b;b=c;console.warn("Deprecated call to Blockly.Xml.domToBlock, swap the arguments.")}Blockly.Events.disable();try{var d=Blockly.Xml.domToBlockHeadless_(a,b);if(b.rendered){d.setConnectionsHidden(!0);for(var e=d.getDescendants(),f=e.length-1;0<=f;f--)e[f].initSvg();for(f=e.length-1;0<=f;f--)e[f].render(!1);b.isFlyout?setTimeout(function(){d.workspace&&(goog.userAgent.IE||goog.userAgent.EDGE)&&d.render()},1):setTimeout(function(){d.workspace&&
-	(d.setConnectionsHidden(!1),(goog.userAgent.IE||goog.userAgent.EDGE)&&d.render())},1);d.updateDisabled();b.resizeContents()}}finally{Blockly.Events.enable()}Blockly.Events.isEnabled()&&Blockly.Events.fire(new Blockly.Events.BlockCreate(d));return d};Blockly.Xml.domToVariables=function(a,b){for(var c=0,d;d=a.children[c];c++){var e=d.getAttribute("type"),f=d.getAttribute("id");d=d.textContent;if(null===e)throw Error("Variable with id, "+f+" is without a type");b.createVariable(d,e,f)}};
+	(d.setConnectionsHidden(!1),(goog.userAgent.IE||goog.userAgent.EDGE)&&d.render())},1);d.updateDisabled();b.resizeContents()}}finally{Blockly.Events.enable()}Blockly.Events.isEnabled()&&Blockly.Events.fire(new Blockly.Events.BlockCreate(d));return d};
+	Blockly.Xml.domToVariables=function(a,b){
+		for(var c=0,d;d=a.children[c];c++){
+			var e=d.getAttribute("type"),f=d.getAttribute("id");
+			d=d.textContent;
+			if(null===e)
+				throw Error("Variable with id, "+f+" is without a type");
+			if(d == "undefined")
+				continue;
+			b.createVariable(d,e,f)
+		}
+	};
 	Blockly.Xml.domToBlockHeadless_=function(a,b){var c=null,d=a.getAttribute("type");goog.asserts.assert(d,"Block type unspecified: %s",a.outerHTML);var e=a.getAttribute("id");c=b.newBlock(d,e);for(var f=null,g=0,h;h=a.childNodes[g];g++)if(3!=h.nodeType){var k=null,m=null;f=0;for(var l;l=h.childNodes[f];f++)1==l.nodeType&&("block"==l.nodeName.toLowerCase()?k=l:"shadow"==l.nodeName.toLowerCase()&&(m=l));!k&&m&&(k=m);f=h.getAttribute("name");switch(h.nodeName.toLowerCase()){case "mutation":c.domToMutation&&
 	(c.domToMutation(h),c.initSvg&&c.initSvg());break;case "comment":c.setCommentText(h.textContent);var n=h.getAttribute("pinned");n&&!c.isInFlyout&&setTimeout(function(){c.comment&&c.comment.setVisible&&c.comment.setVisible("true"==n)},1);f=parseInt(h.getAttribute("w"),10);h=parseInt(h.getAttribute("h"),10);!isNaN(f)&&!isNaN(h)&&c.comment&&c.comment.setVisible&&c.comment.setBubbleSize(f,h);break;case "data":c.data=h.textContent;break;case "title":case "field":k=c.getField(f);m=h.textContent;if(k instanceof
 	Blockly.FieldVariable||k instanceof Blockly.FieldVariableGetter){l=h.getAttribute("variableType")||"";var p=b.getVariable(m);p||(p=b.createVariable(m,l,h.getAttribute(e)));if(null!==l&&l!==p.type)throw Error("Serialized variable type with id '"+p.getId()+"' had type "+p.type+", and does not match variable field that references it: "+Blockly.Xml.domToText(h)+".");}if(!k){console.warn("Ignoring non-existent field "+f+" in block "+d);break}k.setValue(m);break;case "value":case "statement":h=c.getInput(f);
@@ -3075,7 +3106,12 @@ module.exports =
 	Blockly.WorkspaceSvg.prototype.paste=function(a){if(this.rendered){this.currentGesture_&&this.currentGesture_.cancel();Blockly.Events.disable();try{var b=Blockly.Xml.domToBlock(a,this);Blockly.utils.changeObscuredShadowIds(b);for(var c=b.getDescendants(),d=c.length-1;0<=d;d--){var e=c[d];(goog.userAgent.IE||goog.userAgent.EDGE)&&e.render(!1)}var f=parseInt(a.getAttribute("x"),10),g=parseInt(a.getAttribute("y"),10);if(!isNaN(f)&&!isNaN(g)){this.RTL&&(f=-f);do{var h=!1;var k=this.getAllBlocks();d=0;
 	for(var m;m=k[d];d++){var l=m.getRelativeToSurfaceXY();if(1>=Math.abs(f-l.x)&&1>=Math.abs(g-l.y)){h=!0;break}}if(!h){var n=b.getConnections_(!1);d=0;for(var p;p=n[d];d++)if(p.closest(Blockly.SNAP_RADIUS,new goog.math.Coordinate(f,g)).connection){h=!0;break}}h&&(f=this.RTL?f-Blockly.SNAP_RADIUS:f+Blockly.SNAP_RADIUS,g+=2*Blockly.SNAP_RADIUS)}while(h);b.moveBy(f,g)}}finally{Blockly.Events.enable()}Blockly.Events.isEnabled()&&!b.isShadow()&&Blockly.Events.fire(new Blockly.Events.BlockCreate(b));b.select()}};
 	Blockly.WorkspaceSvg.prototype.refreshToolboxSelection_=function(){this.toolbox_&&this.toolbox_.flyout_&&!this.currentGesture_&&this.toolbox_.refreshSelection()};Blockly.WorkspaceSvg.prototype.renameVariable=function(a,b){Blockly.WorkspaceSvg.superClass_.renameVariable.call(this,a,b);this.refreshToolboxSelection_()};Blockly.WorkspaceSvg.prototype.renameVariableById=function(a,b){Blockly.WorkspaceSvg.superClass_.renameVariableById.call(this,a,b);this.refreshToolboxSelection_()};
-	Blockly.WorkspaceSvg.prototype.deleteVariable=function(a){Blockly.WorkspaceSvg.superClass_.deleteVariable.call(this,a);this.refreshToolboxSelection_()};Blockly.WorkspaceSvg.prototype.deleteVariableById=function(a){Blockly.WorkspaceSvg.superClass_.deleteVariableById.call(this,a);this.refreshToolboxSelection_()};Blockly.WorkspaceSvg.prototype.createVariable=function(a,b,c){a=Blockly.WorkspaceSvg.superClass_.createVariable.call(this,a,b,c);this.refreshToolboxSelection_();return a};
+	Blockly.WorkspaceSvg.prototype.deleteVariable=function(a){Blockly.WorkspaceSvg.superClass_.deleteVariable.call(this,a);this.refreshToolboxSelection_()};Blockly.WorkspaceSvg.prototype.deleteVariableById=function(a){Blockly.WorkspaceSvg.superClass_.deleteVariableById.call(this,a);this.refreshToolboxSelection_()};
+	Blockly.WorkspaceSvg.prototype.createVariable=function(a,b,c){
+		a=Blockly.WorkspaceSvg.superClass_.createVariable.call(this,a,b,c);
+		this.refreshToolboxSelection_();
+		return a
+	};
 	Blockly.WorkspaceSvg.prototype.recordDeleteAreas=function(){this.deleteAreaTrash_=this.trashcan?this.trashcan.getClientRect():null;this.deleteAreaToolbox_=this.flyout_?this.flyout_.getClientRect():this.toolbox_?this.toolbox_.getClientRect():null};
 	Blockly.WorkspaceSvg.prototype.isDeleteArea=function(a){a=new goog.math.Coordinate(a.clientX,a.clientY);return this.deleteAreaTrash_&&this.deleteAreaTrash_.contains(a)?Blockly.DELETE_AREA_TRASH:this.deleteAreaToolbox_&&this.deleteAreaToolbox_.contains(a)?Blockly.DELETE_AREA_TOOLBOX:Blockly.DELETE_AREA_NONE};Blockly.WorkspaceSvg.prototype.onMouseDown_=function(a){var b=this.getGesture(a);b&&b.handleWsStart(a,this)};
 	Blockly.WorkspaceSvg.prototype.startDrag=function(a,b){var c=Blockly.utils.mouseToSvg(a,this.getParentSvg(),this.getInverseScreenCTM());c.x/=this.scale;c.y/=this.scale;this.dragDeltaXY_=goog.math.Coordinate.difference(b,c)};Blockly.WorkspaceSvg.prototype.moveDrag=function(a){a=Blockly.utils.mouseToSvg(a,this.getParentSvg(),this.getInverseScreenCTM());a.x/=this.scale;a.y/=this.scale;return goog.math.Coordinate.sum(this.dragDeltaXY_,a)};
@@ -3649,10 +3685,47 @@ FieldLedMatrix.bigBoxGap = 2;
 	Blockly.FieldVariable.prototype.onItemSelected=function(a,b){var c=b.getValue();if(this.sourceBlock_&&this.sourceBlock_.workspace){var d=this.sourceBlock_.workspace,e=d.getVariableById(c);if(e)var f=e.name;else{if(c==Blockly.RENAME_VARIABLE_ID){c=this.getText();e=d.getVariable(c);Blockly.Variables.renameVariable(d,e);return}if(c==Blockly.DELETE_VARIABLE_ID){d.deleteVariable(this.getText());return}}f=this.callValidator(f)}null!==f&&this.setValue(f)};Blockly.Generator=function(a){this.name_=a;this.FUNCTION_NAME_PLACEHOLDER_REGEXP_=new RegExp(this.FUNCTION_NAME_PLACEHOLDER_,"g")};Blockly.Generator.NAME_TYPE="generated_function";Blockly.Generator.prototype.INFINITE_LOOP_TRAP=null;Blockly.Generator.prototype.STATEMENT_PREFIX=null;Blockly.Generator.prototype.INDENT="  ";Blockly.Generator.prototype.COMMENT_WRAP=60;Blockly.Generator.prototype.ORDER_OVERRIDES=[];
 	Blockly.Generator.prototype.workspaceToCode=function(a){a||(console.warn("No workspace specified in workspaceToCode call.  Guessing."),a=Blockly.getMainWorkspace());var b=[];this.init(a);a=a.getTopBlocks(!0);for(var c=0,d;d=a[c];c++){var e=this.blockToCode(d);goog.isArray(e)&&(e=e[0]);e&&(d.outputConnection&&this.scrubNakedValue&&(e=this.scrubNakedValue(e)),b.push(e))}b=b.join("\n");b=this.finish(b);b=b.replace(/^\s+\n/,"");b=b.replace(/\n\s+$/,"\n");return b=b.replace(/[ \t]+\n/g,"\n")};
 	Blockly.Generator.prototype.prefixLines=function(a,b){return b+a.replace(/(?!\n$)\n/g,"\n"+b)};Blockly.Generator.prototype.allNestedComments=function(a){var b=[];a=a.getDescendants();for(var c=0;c<a.length;c++){var d=a[c].getCommentText();d&&b.push(d)}b.length&&b.push("");return b.join("\n")};
-	Blockly.Generator.prototype.blockToCode=function(a){if(!a)return"";if(a.disabled)return this.blockToCode(a.getNextBlock());var b=this[a.type];goog.asserts.assertFunction(b,'Language "%s" does not know how to generate code for block type "%s".',this.name_,a.type);b=b.call(a,a);if(goog.isArray(b))return goog.asserts.assert(a.outputConnection,'Expecting string from statement block "%s".',a.type),[this.scrub_(a,b[0]),b[1]];if(goog.isString(b)){var c=a.id.replace(/\$/g,"$$$$");this.STATEMENT_PREFIX&&(b=
-	this.STATEMENT_PREFIX.replace(/%1/g,"'"+c+"'")+b);return this.scrub_(a,b)}if(null===b)return"";goog.asserts.fail("Invalid code generated: %s",b)};
-	Blockly.Generator.prototype.valueToCode=function(a,b,c){isNaN(c)&&goog.asserts.fail('Expecting valid order from block "%s".',a.type);var d=a.getInputTargetBlock(b);if(!d)return"";b=this.blockToCode(d);if(""===b)return"";goog.asserts.assertArray(b,'Expecting tuple from value block "%s".',d.type);a=b[0];b=b[1];isNaN(b)&&goog.asserts.fail('Expecting valid order from value block "%s".',d.type);if(!a)return"";d=!1;var e=Math.floor(c),f=Math.floor(b);if(e<=f&&(e!=f||0!=e&&99!=e))for(d=!0,e=0;e<this.ORDER_OVERRIDES.length;e++)if(this.ORDER_OVERRIDES[e][0]==
-	c&&this.ORDER_OVERRIDES[e][1]==b){d=!1;break}d&&(a="("+a+")");return a};Blockly.Generator.prototype.statementToCode=function(a,b){var c=a.getInputTargetBlock(b),d=this.blockToCode(c);goog.asserts.assertString(d,'Expecting code from statement block "%s".',c&&c.type);d&&(d=this.prefixLines(d,this.INDENT));return d};
+	Blockly.Generator.prototype.blockToCode=function(a){
+		if(!a)return"";
+		if(a.disabled)
+			return this.blockToCode(a.getNextBlock());
+		var b=this[a.type];
+		goog.asserts.assertFunction(b,'Language "%s" does not know how to generate code for block type "%s".',this.name_,a.type);
+		b=b.call(a,a);
+		if(goog.isArray(b))
+			return goog.asserts.assert(a.outputConnection,'Expecting string from statement block "%s".',a.type),[this.scrub_(a,b[0]),b[1]];
+		if(goog.isString(b)){
+			var c=a.id.replace(/\$/g,"$$$$");
+			this.STATEMENT_PREFIX&&(b=this.STATEMENT_PREFIX.replace(/%1/g,"'"+c+"'")+b);
+			return this.scrub_(a,b)
+		}
+		if(null===b)
+			return"";
+		goog.asserts.fail("Invalid code generated: %s",b)
+	};
+	Blockly.Generator.prototype.valueToCode=function(a,b,c){
+		isNaN(c)&&goog.asserts.fail('Expecting valid order from block "%s".',a.type);
+		var d=a.getInputTargetBlock(b);
+		if(!d)return"";
+		b=this.blockToCode(d);
+		if(""===b)return"";
+		goog.asserts.assertArray(b,'Expecting tuple from value block "%s".',d.type);
+		a=b[0];
+		b=b[1];
+		isNaN(b)&&goog.asserts.fail('Expecting valid order from value block "%s".',d.type);
+		if(!a)return"";
+		d=!1;
+		var e=Math.floor(c),f=Math.floor(b);
+		if(e<=f&&(e!=f||0!=e&&99!=e))
+			for(d=!0,e=0;e<this.ORDER_OVERRIDES.length;e++)
+				if(this.ORDER_OVERRIDES[e][0]==c&&this.ORDER_OVERRIDES[e][1]==b){
+					d=!1;
+					break
+				}
+		d&&(a="("+a+")");
+		return a
+	};
+	Blockly.Generator.prototype.statementToCode=function(a,b){var c=a.getInputTargetBlock(b),d=this.blockToCode(c);goog.asserts.assertString(d,'Expecting code from statement block "%s".',c&&c.type);d&&(d=this.prefixLines(d,this.INDENT));return d};
 	Blockly.Generator.prototype.addLoopTrap=function(a,b){b=b.replace(/\$/g,"$$$$");this.INFINITE_LOOP_TRAP&&(a=this.INFINITE_LOOP_TRAP.replace(/%1/g,"'"+b+"'")+a);this.STATEMENT_PREFIX&&(a+=this.prefixLines(this.STATEMENT_PREFIX.replace(/%1/g,"'"+b+"'"),this.INDENT));return a};Blockly.Generator.prototype.RESERVED_WORDS_="";Blockly.Generator.prototype.addReservedWords=function(a){this.RESERVED_WORDS_+=a+","};Blockly.Generator.prototype.FUNCTION_NAME_PLACEHOLDER_="{leCUI8hutHZI4480Dc}";
 	Blockly.Generator.prototype.provideFunction_=function(a,b){if(!this.definitions_[a]){var c=this.variableDB_.getDistinctName(a,Blockly.Procedures.NAME_TYPE);this.functionNames_[a]=c;c=b.join("\n").replace(this.FUNCTION_NAME_PLACEHOLDER_REGEXP_,c);for(var d;d!=c;)d=c,c=c.replace(/^(( {2})*) {2}/gm,"$1\x00");c=c.replace(/\0/g,this.INDENT);this.definitions_[a]=c}return this.functionNames_[a]};Blockly.Generator.prototype.init=void 0;Blockly.Generator.prototype.scrub_=void 0;
 	Blockly.Generator.prototype.finish=void 0;Blockly.Generator.prototype.scrubNakedValue=void 0;Blockly.Names=function(a,b){this.variablePrefix_=b||"";this.reservedDict_=Object.create(null);if(a)for(var c=a.split(","),d=0;d<c.length;d++)this.reservedDict_[c[d]]=!0;this.reset()};Blockly.Names.prototype.reset=function(){this.db_=Object.create(null);this.dbReverse_=Object.create(null)};

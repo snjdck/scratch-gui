@@ -3,7 +3,7 @@ Name: "en"; MessagesFile: "compiler:Default.isl"
 Name: "zh_cn"; MessagesFile: "compiler:Languages\ChineseSimplified.isl"
 
 [InstallDelete]
-Type: files; Name: "{app}\*.dll"
+Type: filesandordirs; Name: "{app}"
 
 [Setup]
 AppName=WeeeCode
@@ -20,6 +20,7 @@ Filename: "{app}\drivers\CH34x_Install_Windows_v3_4.EXE"; Description: "WeeeMake
 
 [Icons]
 Name: "{commondesktop}\WeeeCode"; Filename: "{app}\WeeeCode.exe"
+Name: "{commondesktop}\Arduino";  Filename: "{app}\Arduino\Arduino.exe"
 
 [Tasks]
 Name: desktopicon; Description: {cm:CreateDesktopIcon}

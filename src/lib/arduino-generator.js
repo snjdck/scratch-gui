@@ -415,6 +415,25 @@ Blockly.Arduino["data_hidelist"] = function(block){
     return "";
 }
 
+Blockly.Arduino.castVarName = function(varName){
+    return varName.split("").map((val, index) => {
+        var charCode = val.charCodeAt();
+        if(val == "_"){
+            return val;
+        }
+        if("a".charCodeAt() <= charCode && charCode <= "z".charCodeAt()){
+            return val;
+        }
+        if("A".charCodeAt() <= charCode && charCode <= "Z".charCodeAt()){
+            return val;
+        }
+        if(index > 0 && "0".charCodeAt() <= charCode && charCode <= "9".charCodeAt()){
+            return val;
+        }
+        return "_" + charCode.toString(36) + "_";
+    }).join("");
+}
+
 Blockly.Arduino.init=function(workspace){
 	Blockly.Arduino.definitions_=Object.create(null);
 	Blockly.Arduino.includes_=Object.create(null);
@@ -429,7 +448,8 @@ Blockly.Arduino.init=function(workspace){
 		Blockly.Arduino.variableDB_ = new Blockly.Names(Blockly.Arduino.RESERVED_WORDS_);
 	}
 	for(var v of workspace.variableMap_.getAllVariables()){
-		Blockly.Arduino.definitions_[v] = `float ${v.name};`;
+        var varName = Blockly.Arduino.castVarName(v.name);
+		Blockly.Arduino.definitions_[varName] = `float ${varName};`;
 	}
 	/*
 	var variables = workspace.variableList;
@@ -562,7 +582,7 @@ Blockly.Arduino.arduino_pin_mode_option=Blockly.Arduino.arduino_menu_option;
 Blockly.Arduino.arduino_pwm_option=Blockly.Arduino.arduino_menu_option;
 Blockly.Arduino.arduino_level_option=Blockly.Arduino.arduino_menu_option;
 Blockly.Arduino.arduino_analog_in_option=Blockly.Arduino.arduino_menu_option;
-Blockly.Arduino.control={};
+//Blockly.Arduino.control={};
 Blockly.Arduino.control_wait=function(a){
 	a=Blockly.Arduino.valueToCode(a,"DURATION",Blockly.Arduino.ORDER_HIGH)+"*1000";
 	return Blockly.Arduino.tab()+"delay("+a+")"+Blockly.Arduino.END
@@ -624,7 +644,7 @@ Blockly.Arduino.looks_say=function(a){
 	a=Blockly.Arduino.valueToCode(a,"MESSAGE",Blockly.Arduino.ORDER_ATOMIC);
 	return Blockly.Arduino.tab()+"Serial.println(String('"+a+"'));\n"
 };
-Blockly.Arduino.event={};
+//Blockly.Arduino.event={};
 Blockly.Arduino.event_whenflagclicked=function(a){
 	return""
 };
@@ -722,24 +742,28 @@ Blockly.Arduino["event_arduinobegin"] = function (block) {
 /* generator for variables */
 Blockly.Arduino["data_variable"] = function (block) {
     var order = Blockly.Arduino.ORDER_NONE;
-    var code = Blockly.Arduino.valueToCode(block, 'VARIABLE', order);
-    return code;
+    var varName = block.inputList[0].fieldRow[0].text_;
+    varName = Blockly.Arduino.castVarName(varName);
+    //var code = Blockly.Arduino.valueToCode(block, 'VARIABLE', order);
+    return [varName, order];
 };
 
 Blockly.Arduino["data_setvariableto"] = function (block) {
     var order = Blockly.Arduino.ORDER_NONE;
-    var n = Blockly.Arduino.valueToCode(block, 'VARIABLE', order);
+    var varName = block.inputList[0].fieldRow[1].text_;
+    varName = Blockly.Arduino.castVarName(varName);
     var v = Blockly.Arduino.valueToCode(block, 'VALUE', order);
 
-    var code = Blockly.Arduino.tab() + n + " = " + v + Blockly.Arduino.END;
+    var code = Blockly.Arduino.tab() + varName + " = " + v + Blockly.Arduino.END;
     return code;
 };
 
 Blockly.Arduino["data_changevariableby"] = function (block) {
     var order = Blockly.Arduino.ORDER_NONE;
-    var n = Blockly.Arduino.valueToCode(block, 'VARIABLE', order);
+    var varName = block.inputList[0].fieldRow[1].text_;
+    varName = Blockly.Arduino.castVarName(varName);
     var v = Blockly.Arduino.valueToCode(block, 'VALUE', order);
-    var code = Blockly.Arduino.tab() + n + " += " + v + Blockly.Arduino.END;
+    var code = Blockly.Arduino.tab() + varName + " += " + v + Blockly.Arduino.END;
     return code;
 };
 
