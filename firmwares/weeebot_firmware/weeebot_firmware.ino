@@ -452,9 +452,7 @@ void parseMcode(char *cmd)
 		default:
 			return;
 	}
-	if(queryFlag){
-		Serial.write(cmd, strlen(cmd));
-	}
+	Serial.write(cmd, strlen(cmd));
 	handler(cmd);
 	if(!queryFlag){
 		Serial.println("OK");
