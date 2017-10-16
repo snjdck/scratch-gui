@@ -679,6 +679,7 @@ Blockly.Msg.WB_LED_MATRIX_STRING = "表情面板 %1 x:%2 y:%3 显示字符 %4";
 Blockly.Msg.WB_LED_MATRIX_BITMAP = "表情面板 %1 x:%2 y:%3 显示图像 %4";
 Blockly.Msg.WB_LED_MATRIX_PIXEL_SHOW = "表情面板 %1 显示像素 x:%2 y:%3";
 Blockly.Msg.WB_LED_MATRIX_PIXEL_HIDE = "表情面板 %1 隐藏像素 x:%2 y:%3";
+Blockly.Msg.WB_LED_MATRIX_CLEAR = "表情面板 %1 清空屏幕";
 Blockly.Msg.WB_Forward = "前";
 Blockly.Msg.WB_Backward = "后";
 Blockly.Msg.WB_Left = "左";

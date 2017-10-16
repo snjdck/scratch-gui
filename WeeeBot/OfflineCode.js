@@ -391,6 +391,18 @@ module.exports = function(){
     }
     arduino["weeebot_led_matrix_pixel_show"] = block => weeebot_led_matrix_pixel(block, "turnOnDot");
     arduino["weeebot_led_matrix_pixel_hide"] = block => weeebot_led_matrix_pixel(block, "turnOffDot");
+    arduino["weeebot_led_matrix_clear"] = function(block){
+        var order = arduino.ORDER_NONE;
+
+        var port = arduino.valueToCode(block, "SENSOR_PORT", order);
+
+        arduino.includes_["weeebot"] = '#include <WeELFPort.h>';
+        arduino.definitions_["ledPanel"] = "WeLEDPanelModuleMatrix7_21 ledPanel;";
+
+        var code = arduino.tab() + `ledPanel.reset(${port})`  + arduino.END;
+        code +=    arduino.tab() + `ledPanel.clearScreen()` + arduino.END;
+        return code;
+    }
     
 /*
     arduino["weeebot_lcd"] = function (block) {

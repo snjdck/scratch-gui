@@ -63,6 +63,9 @@ void WeLEDPanelModuleMatrix7_21::showBitmap(int x, int y, uint8_t *data)
 {
   const int w = 21;
   const int h = 7;
+  for(int i=0; i<w; ++i){
+    Display_Buffer[i] = 0;
+  }
   if(x <= -w || x >= w || y <= -h || y >= h){
     clearScreen();
     return;
@@ -79,6 +82,7 @@ void WeLEDPanelModuleMatrix7_21::showBitmap(int x, int y, uint8_t *data)
         value = data[i] >> -y;
       }
     }
+    Display_Buffer[i] = value;
     _WeLEDPanel.write_byte(value);
   }
 }

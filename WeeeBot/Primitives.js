@@ -184,6 +184,11 @@ function weeebot_led_matrix_pixel_hide(argValues, util){
     return createPromise(util, 2, port, x, y);
 }
 
+function weeebot_led_matrix_clear(argValues, util){
+    var port = argValues.SENSOR_PORT;
+    return createPromise(util, 3, port);
+}
+
 module.exports = function(){
     return {
         weeebot_motor_dc,
@@ -208,6 +213,7 @@ module.exports = function(){
         weeebot_led_matrix_string,
         weeebot_led_matrix_bitmap,
         weeebot_led_matrix_pixel_show,
-        weeebot_led_matrix_pixel_hide
+        weeebot_led_matrix_pixel_hide,
+        weeebot_led_matrix_clear
     };
 };

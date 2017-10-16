@@ -679,6 +679,7 @@ Blockly.Msg.WB_LED_MATRIX_STRING = "led matrix %1 x:%2 y:%3 show string %4";
 Blockly.Msg.WB_LED_MATRIX_BITMAP = "led matrix %1 x %2 y %3 show bitmap %4";
 Blockly.Msg.WB_LED_MATRIX_PIXEL_SHOW = "led matrix %1 show pixel x %2 y %3";
 Blockly.Msg.WB_LED_MATRIX_PIXEL_HIDE = "led matrix %1 hide pixel x %2 y %3";
+Blockly.Msg.WB_LED_MATRIX_CLEAR = "led matrix %1 clear screen";
 Blockly.Msg.WB_Forward = "Forward";
 Blockly.Msg.WB_Backward = "Backward";
 Blockly.Msg.WB_Left = "Left";

@@ -216,5 +216,6 @@ module.exports = function (){
     regBlock("weeebot_led_matrix_bitmap", Translation.WB_LED_MATRIX_BITMAP, ["SENSOR_PORT", "X", "Y", "LED_MATRIX_DATA"]);
     regBlock("weeebot_led_matrix_pixel_show", Translation.WB_LED_MATRIX_PIXEL_SHOW, ["SENSOR_PORT", "X", "Y"]);
     regBlock("weeebot_led_matrix_pixel_hide", Translation.WB_LED_MATRIX_PIXEL_HIDE, ["SENSOR_PORT", "X", "Y"]);
+    regBlock("weeebot_led_matrix_clear", Translation.WB_LED_MATRIX_CLEAR, ["SENSOR_PORT"]);
     return result;
 };

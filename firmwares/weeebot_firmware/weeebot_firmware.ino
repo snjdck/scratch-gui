@@ -43,6 +43,7 @@ const uint8_t MSG_ID_LED_MATRIX_STRING = 114;
 const uint8_t MSG_ID_LED_MATRIX_BITMAP = 115;
 const uint8_t MSG_ID_LED_MATRIX_PIXEL_SHOW = 1;
 const uint8_t MSG_ID_LED_MATRIX_PIXEL_HIDE = 2;
+const uint8_t MSG_ID_LED_MATRIX_CLEAR = 3;
 
 int searchServoPin(int pin){
 	for(int i=0;i<6;i++){
@@ -374,6 +375,13 @@ void doLedMatrixHidePixel(char *cmd)
 	ledPanel.turnOffDot(x,y);
 }
 
+void doLedMatrixClear(char *cmd)
+{
+	int port = nextInt(&cmd);
+	ledPanel.reset(port);
+	ledPanel.clearScreen();
+}
+
 void doStopAll(char *cmd)
 {
 	//stop motor
@@ -474,6 +482,9 @@ void parseMcode(char *cmd)
 			break;
 		case MSG_ID_LED_MATRIX_PIXEL_HIDE:
 			handler = doLedMatrixHidePixel;
+			break;
+		case MSG_ID_LED_MATRIX_CLEAR:
+			handler = doLedMatrixClear;
 			break;
 		default:
 			return;
