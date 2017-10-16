@@ -41,6 +41,8 @@ const uint8_t MSG_ID_LED_MATRIX_NUMBER = 112;
 const uint8_t MSG_ID_LED_MATRIX_TIME = 113;
 const uint8_t MSG_ID_LED_MATRIX_STRING = 114;
 const uint8_t MSG_ID_LED_MATRIX_BITMAP = 115;
+const uint8_t MSG_ID_LED_MATRIX_PIXEL_SHOW = 1;
+const uint8_t MSG_ID_LED_MATRIX_PIXEL_HIDE = 2;
 
 int searchServoPin(int pin){
 	for(int i=0;i<6;i++){
@@ -354,6 +356,24 @@ void doLedMatrixShowBitmap(char *cmd)
 	delete [] data;
 }
 
+void doLedMatrixShowPixel(char *cmd)
+{
+	int port = nextInt(&cmd);
+	int x = nextInt(&cmd);
+	int y = nextInt(&cmd);
+	ledPanel.reset(port);
+	ledPanel.turnOnDot(x,y);
+}
+
+void doLedMatrixHidePixel(char *cmd)
+{
+	int port = nextInt(&cmd);
+	int x = nextInt(&cmd);
+	int y = nextInt(&cmd);
+	ledPanel.reset(port);
+	ledPanel.turnOffDot(x,y);
+}
+
 void doStopAll(char *cmd)
 {
 	//stop motor
@@ -448,6 +468,12 @@ void parseMcode(char *cmd)
 			break;
 		case MSG_ID_STOP_ALL:
 			handler = doStopAll;
+			break;
+		case MSG_ID_LED_MATRIX_PIXEL_SHOW:
+			handler = doLedMatrixShowPixel;
+			break;
+		case MSG_ID_LED_MATRIX_PIXEL_HIDE:
+			handler = doLedMatrixHidePixel;
 			break;
 		default:
 			return;
