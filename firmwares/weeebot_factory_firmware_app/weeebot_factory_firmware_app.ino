@@ -644,6 +644,9 @@ void parseCmd(char *cmd)
 			ir_timestamp = millis();
 		}
 		replyOK();
+	}else if(cmd[0] == 'V' && cmd[1] == 'E' && cmd[2] == 'R'){
+		Serial.write(cmd, strlen(cmd));
+		Serial.println("weeebot_A_1");
 	}
 }
 
