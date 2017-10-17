@@ -3,7 +3,8 @@ Name: "en"; MessagesFile: "compiler:Default.isl"
 Name: "zh_cn"; MessagesFile: "compiler:Languages\ChineseSimplified.isl"
 
 [InstallDelete]
-Type: filesandordirs; Name: "{app}"
+Type: filesandordirs; Name: "{app}\Arduino\libraries\Weeemake"
+Type: files; Name: "{app}\*.dll"
 
 [Setup]
 AppName=WeeeCode
@@ -29,11 +30,12 @@ Name: desktopicon; Description: {cm:CreateDesktopIcon}
 ;Name: "{app}\workspace\project"
 
 [Files]
-Source: "nwjs-v0.25.4-win-ia32\*"; DestDir: "{app}";           Flags: recursesubdirs createallsubdirs
-Source: "build\Arduino\*";        DestDir: "{app}\Arduino";   Flags: recursesubdirs createallsubdirs
-Source: "build\static\*";         DestDir: "{app}\static";    Flags: recursesubdirs createallsubdirs
-Source: "build\firmwares\*";      DestDir: "{app}\firmwares"; Flags: recursesubdirs createallsubdirs
-Source: "build\css\*";            DestDir: "{app}\css";       Flags: recursesubdirs createallsubdirs
+Source: "nwjs-v0.25.4-win-ia32\*";DestDir: "{app}";            Flags: recursesubdirs createallsubdirs
+Source: "build\Arduino\*";        DestDir: "{app}\Arduino";    Flags: recursesubdirs createallsubdirs
+Source: "build\static\*";         DestDir: "{app}\static";     Flags: recursesubdirs createallsubdirs
+Source: "build\firmwares\*";      DestDir: "{app}\firmwares";  Flags: recursesubdirs createallsubdirs
+Source: "build\css\*";            DestDir: "{app}\css";        Flags: recursesubdirs createallsubdirs
+Source: "build\sound-files\*";    DestDir: "{app}\sound-files";Flags: recursesubdirs createallsubdirs
 Source: "build\media\*";          DestDir: "{app}\media"
 Source: "build\drivers\*";        DestDir: "{app}\drivers"
 Source: "build\main.html";        DestDir: "{app}"
