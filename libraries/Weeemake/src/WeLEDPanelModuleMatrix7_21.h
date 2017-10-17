@@ -19,7 +19,6 @@ public:
   void setBrightness(uint8_t Bright);
   void clearScreen(void);
   void writePanelData(void);
-  void showPanel(void);
   void showLine(uint8_t x,uint8_t buffer);
   void turnOnDot(uint8_t x,uint8_t y);
   void turnOffDot(uint8_t x,uint8_t y);
