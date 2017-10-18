@@ -337,8 +337,9 @@ void setup()
    delay(20);   
  }
   buzzer.tone(NTD6, 600); 
-  Serial.begin(9600);
-  ir.begin(); 
+  Serial.begin(115200);
+  ir.begin();
+  loopSensor();
   ultraSensor.setColor1(0, 0, 0);
   ultraSensor.setColor2(0, 0, 0);
   ledPanel.setBrightness(7); 
@@ -366,8 +367,44 @@ void setup()
   ledPanel.showLine(20,0x41); 
 }
 
+const uint8_t sensor_port[4] = {PORT_A,PORT_B,PORT_C,PORT_D};
+uint8_t sensor_slot[4] = {0};
+WeOneWire portDetect;
+
+void loopSensor()
+{
+  for(int i=0; i<sizeof(sensor_slot);++i){
+    if(sensor_slot[i] > 0 == digitalRead(sensor_port[i])){
+      continue;
+    }
+    if(sensor_slot[i] > 0){
+      sensor_slot[i] = 0;
+      continue;
+    }
+    delay(400);
+    portDetect.reset(sensor_port[i]);
+    portDetect.reset();
+    portDetect.write_byte(0x01);
+    portDetect.respond();
+    sensor_slot[i] = portDetect.read_byte();
+
+    switch(sensor_slot[i]){
+      case 1:
+        ultraSensor.reset(sensor_port[i]);
+      break;
+      case 2:
+        lineFollower.reset(sensor_port[i]);
+      break;
+      case 3:
+        ledPanel.reset(sensor_port[i]);
+      break;
+    }
+  }
+}
+
 void loop()
 {
+    loopSensor();
     get_ir_command();
 
     switch (mode)

@@ -348,13 +348,12 @@ void doLedMatrixShowBitmap(char *cmd)
 	int port = nextInt(&cmd);
 	int x = nextInt(&cmd);
 	int y = nextInt(&cmd);
-	byte* data = new byte[21];
+	byte data[21];
 	for(int i=0; i<21; ++i){
 		data[i] = nextInt(&cmd);
 	}
 	ledPanel.reset(port);
 	ledPanel.showBitmap(x,y,data);
-	delete [] data;
 }
 
 void doLedMatrixShowPixel(char *cmd)
@@ -574,6 +573,7 @@ void loopSensor()
 			sensor_slot[i] = 0;
 			continue;
 		}
+		delay(400);
 		portDetect.reset(sensor_port[i]);
 		portDetect.reset();
 		portDetect.write_byte(0x01);
