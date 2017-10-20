@@ -3,9 +3,10 @@
 WeRGBLed rgb(OnBoard_RGB);
 WeInfraredReceiver ir(PORT_2);
 WeBuzzer buzzer(OnBoard_Buzzer);
-WeUltrasonicSensor ultraSensor(PORT_B);
-WeLineFollower lineFollower(PORT_A);
-WeLEDPanelModuleMatrix7_21 ledPanel(PORT_C);
+
+WeUltrasonicSensor ultraSensor;
+WeLineFollower lineFollower;
+WeLEDPanelModuleMatrix7_21 ledPanel;
 
 WeDCMotor MotorL(M2);
 WeDCMotor MotorR(M1);
@@ -162,56 +163,62 @@ void setMoveSpeed(uint16_t frequency, int level)
 void SetDestSpeed(int value)
 {
 	const int speedStep = 100;
-	while(speedSetLeft - value > speedStep){
-		speedSetLeft -= speedStep;
-		speedSetRight = speedSetLeft;
-		doRun();
-		delay(120);
+	const int sleepTime = 120;
+	for(;;){
+		int lspeed = speedStep + speedSetLeft;
+		int rspeed = speedStep + speedSetRight;
+		
+		if(lspeed < value && rspeed < value){
+			doRun(lspeed, rspeed);
+			delay(sleepTime);
+		}else if(lspeed < value){
+			doRun(lspeed, value);
+			delay(sleepTime);
+		}else if(rspeed < value){
+			doRun(value, rspeed);
+			delay(sleepTime);
+		}else{
+			doRun(value, value);
+			break;
+		}
 	}
-	speedSetLeft = speedSetRight = value;
-	doRun();
 }
 
 void Forward()
 {   
 	if(speed_flag){
-		speedSetLeft = speedSetRight = -moveSpeed;
-		doRun();
+		doRun(moveSpeed, moveSpeed);
 	}else{
-		SetDestSpeed(-moveSpeed);
+		SetDestSpeed(moveSpeed);
 	}
 }
 
 void Backward()
 {
-   speedSetLeft = speedSetRight = moveSpeed;
-   doRun();
+   doRun(-moveSpeed, -moveSpeed);
 }
 void TurnLeft()
 {
-   speedSetLeft = 0;
-   speedSetRight = -moveSpeed;
-   doRun();
+   doRun(0, moveSpeed);
 }
 void TurnRight()
 {
-   speedSetLeft = -moveSpeed;
-   speedSetRight = 0;
-   doRun();
+   doRun(moveSpeed, 0);
 }
 void Stop()
 {
 	if(speed_flag){
-		speedSetLeft = speedSetRight = 0;
-		doRun();
+		doRun(0, 0);
 	}else{
 		SetDestSpeed(0);
 	}
 }
 
-void doRun()
+void doRun(int lspeed, int rspeed)
 {
-	motor_run(-speedSetLeft, -speedSetRight);
+	speedSetLeft = lspeed;
+	speedSetRight = rspeed;
+	motor_run(lspeed, rspeed);
 }
 
 void modeA()
@@ -242,14 +249,14 @@ void setup()
 
 	for(int i=0;i<10;i++){
 		rgb.setColorAt(0, i, 0, 0);  // led number, red, green, blue,
-		rgb.show();  
-		delay(20);   
+		rgb.show();
+		delay(20);
 	}
-	buzzer.tone(NTD1, 500); 
+	buzzer.tone(NTD1, 500);
 	for(int i=0;i<15;i++){
 		rgb.setColorAt(0, 0, i, 0);  // led number, red, green, blue,
 		rgb.show();
-		delay(20);   
+		delay(20);
 	}
 	buzzer.tone(NTD1, 500); 
 	for(int i=0;i<15;i++){
@@ -264,14 +271,15 @@ void setup()
 		delay(20);   
 	}
 	buzzer.tone(NTD6, 600);
-	ir.begin();
+	
 	loopSensor();
 	ultraSensor.setColor1(0, 0, 0);
 	ultraSensor.setColor2(0, 0, 0);
-	ledPanel.setBrightness(7); 
-	ledPanel.clearScreen();
+	ledPanel.setBrightness(7);
 	uint8_t bitmap[] = {0x41,0x42,0x04,0x08,0x10,0x20,0x40,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x40,0x20,0x10,0x08,0x04,0x42,0x41};
 	ledPanel.showBitmap(0, 0, bitmap);
+
+	ir.begin();
 }
 
 void loopSensor()
@@ -313,18 +321,10 @@ void loop()
 {
 	get_ir_command();
 	switch(mode){
-	case MODE_A:
-		modeA();
-		break;
-	case MODE_B:
-		modeB();
-		break;
-	case MODE_C:
-		modeC();
-		break;
-	case MODE_F:
-		modeF();
-		break;
+	case MODE_A: modeA(); break;
+	case MODE_B: modeB(); break;
+	case MODE_C: modeC(); break;
+	case MODE_F: modeF(); break;
 	}
 	if(RGBUlt_flag){
 		mode_RGBult();
