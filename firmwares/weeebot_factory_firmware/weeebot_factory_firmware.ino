@@ -4,9 +4,9 @@ WeRGBLed rgb(OnBoard_RGB);
 WeInfraredReceiver ir(PORT_2);
 WeBuzzer buzzer(OnBoard_Buzzer);
 
-WeUltrasonicSensor ultraSensor;
-WeLineFollower lineFollower;
-WeLEDPanelModuleMatrix7_21 ledPanel;
+WeUltrasonicSensor ultraSensor(NC);
+WeLineFollower lineFollower(NC);
+WeLEDPanelModuleMatrix7_21 ledPanel(NC);
 
 WeDCMotor MotorL(M2);
 WeDCMotor MotorR(M1);
@@ -224,21 +224,11 @@ void doRun(int lspeed, int rspeed)
 void modeA()
 {
 	switch(motor_sta){
-	case RUN_F:
-		Forward();
-		break;
-	case RUN_B:
-		Backward();
-		break;
-	case RUN_L:
-		TurnLeft();
-		break;
-	case RUN_R:
-		TurnRight();
-		break;
-	case STOP:
-		Stop();
-		break;
+	case RUN_F:	Forward();	break;
+	case RUN_B:	Backward();	break;
+	case RUN_L:	TurnLeft();	break;
+	case RUN_R:	TurnRight();break;
+	case STOP:	Stop();		break;
 	}
 }
 
@@ -300,8 +290,6 @@ void bindSensor(uint8_t sensorType, uint8_t port)
 void loopSensor()
 {
 	const uint8_t sensor_port[] = {PORT_A, PORT_B, PORT_C, PORT_D};
-	int sensor_slot[] = {-1, -1, -1, -1};
-	bool use_info[] = {0, 0, 0, 0};
 	WeOneWire portDetect;
 
 	for(int i=0; i<4; ++i){
@@ -316,25 +304,7 @@ void loopSensor()
 		portDetect.respond();
 
 		uint8_t sensorType = portDetect.read_byte();
-		sensor_slot[sensorType] = i;
 		bindSensor(sensorType, port);
-	}
-	for(int i=1; i<4; ++i){
-		int index = sensor_slot[i];
-		if(index >= 0)
-			use_info[index] = true;
-	}
-	for(int i=1; i<4; ++i){
-		int index = sensor_slot[i];
-		if(index >= 0)
-			continue;
-		for(int j=0; j<4; ++j){
-			if(use_info[j])
-				continue;
-			use_info[j] = true;
-			bindSensor(i, sensor_port[j]);
-			break;
-		}
 	}
 }
 
