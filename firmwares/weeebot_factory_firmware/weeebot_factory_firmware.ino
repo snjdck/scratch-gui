@@ -282,36 +282,57 @@ void setup()
 	ir.begin();
 }
 
+void bindSensor(uint8_t sensorType, uint8_t port)
+{
+	switch(sensorType){
+	case 1:
+		ultraSensor.reset(port);
+		break;
+	case 2:
+		lineFollower.reset(port);
+		break;
+	case 3:
+		ledPanel.reset(port);
+		break;
+	}
+}
+
 void loopSensor()
 {
-	const uint8_t sensor_port[4] = {PORT_A, PORT_B, PORT_C, PORT_D};
-	static uint8_t sensor_slot[4] = {0};
-	static WeOneWire portDetect;
+	const uint8_t sensor_port[] = {PORT_A, PORT_B, PORT_C, PORT_D};
+	int sensor_slot[] = {-1, -1, -1, -1};
+	bool use_info[] = {0, 0, 0, 0};
+	WeOneWire portDetect;
 
-	for(int i=0; i<sizeof(sensor_slot); ++i){
-		if(sensor_slot[i] > 0 == digitalRead(sensor_port[i])){
-			continue;
-		}
-		if(sensor_slot[i] > 0){
-			sensor_slot[i] = 0;
+	for(int i=0; i<4; ++i){
+		uint8_t port = sensor_port[i];
+		if(!digitalRead(port)){
 			continue;
 		}
 		//delay(400);
-		portDetect.reset(sensor_port[i]);
+		portDetect.reset(port);
 		portDetect.reset();
 		portDetect.write_byte(0x01);
 		portDetect.respond();
-		sensor_slot[i] = portDetect.read_byte();
 
-		switch(sensor_slot[i]){
-		case 1:
-			ultraSensor.reset(sensor_port[i]);
-			break;
-		case 2:
-			lineFollower.reset(sensor_port[i]);
-			break;
-		case 3:
-			ledPanel.reset(sensor_port[i]);
+		uint8_t sensorType = portDetect.read_byte();
+		sensor_slot[sensorType] = i;
+		bindSensor(sensorType, port);
+	}
+	for(int i=1; i<4; ++i){
+		int index = sensor_slot[i];
+		if(index >= 0)
+			use_info[index] = true;
+	}
+	for(int i=1; i<4; ++i){
+		int index = sensor_slot[i];
+		if(index >= 0)
+			continue;
+		for(int j=0; j<4; ++j){
+			if(use_info[j])
+				continue;
+			use_info[j] = true;
+			bindSensor(i, sensor_port[j]);
 			break;
 		}
 	}
