@@ -6,7 +6,7 @@ const toolbox = '<xml id="toolbox-categories" style="display: none">'+
     '<block type="looks_sayforsecs">' +
     '<value name="MESSAGE">' +
     '<shadow type="text">' +
-    '<field name="TEXT">Hello!</field>' +
+    '<field name="TEXT">Hi</field>' +
     '</shadow>' +
     '</value>' +
     '<value name="SECS">' +
@@ -18,7 +18,7 @@ const toolbox = '<xml id="toolbox-categories" style="display: none">'+
     '<block type="looks_say">' +
     '<value name="MESSAGE">' +
     '<shadow type="text">' +
-    '<field name="TEXT">Hello!</field>' +
+    '<field name="TEXT">Hi</field>' +
     '</shadow>' +
     '</value>' +
     '</block>' +
@@ -97,64 +97,9 @@ const toolbox = '<xml id="toolbox-categories" style="display: none">'+
     '</shadow>' +
     '</value>' +
     '</block>' +
-    '</category><category name="Data" colour="#FF8C1A" secondaryColour="#DB6E00" custom="VARIABLE"></category><category name="List" colour="#FF8C1A" secondaryColour="#DB6E00">' +
-    '<block type="data_listcontents"></block>' +
-    '<block type="data_addtolist">' +
-    '<value name="ITEM">' +
-    '<shadow type="text">' +
-    '<field name="TEXT">thing</field>' +
-    '</shadow>' +
-    '</value>' +
-    '</block>' +
-    '<block type="data_deleteoflist">' +
-    '<value name="INDEX">' +
-    '<shadow type="data_listindexall">' +
-    '<field name="INDEX">1</field>' +
-    '</shadow>' +
-    '</value>' +
-    '</block>' +
-    '<block type="data_insertatlist">' +
-    '<value name="INDEX">' +
-    '<shadow type="data_listindexrandom">' +
-    '<field name="INDEX">1</field>' +
-    '</shadow>' +
-    '</value>' +
-    '<value name="ITEM">' +
-    '<shadow type="text">' +
-    '<field name="TEXT">thing</field>' +
-    '</shadow>' +
-    '</value>' +
-    '</block>' +
-    '<block type="data_replaceitemoflist">' +
-    '<value name="INDEX">' +
-    '<shadow type="data_listindexrandom">' +
-    '<field name="INDEX">1</field>' +
-    '</shadow>' +
-    '</value>' +
-    '<value name="ITEM">' +
-    '<shadow type="text">' +
-    '<field name="TEXT">thing</field>' +
-    '</shadow>' +
-    '</value>' +
-    '</block>' +
-    '<block type="data_itemoflist">' +
-    '<value name="INDEX">' +
-    '<shadow type="data_listindexrandom">' +
-    '<field name="INDEX">1</field>' +
-    '</shadow>' +
-    '</value>' +
-    '</block>' +
-    '<block type="data_lengthoflist"></block>' +
-    '<block type="data_listcontainsitem">' +
-    '<value name="ITEM">' +
-    '<shadow type="text">' +
-    '<field name="TEXT">thing</field>' +
-    '</shadow>' +
-    '</value>' +
-    '</block>' +
-    '<block type="data_showlist"></block>' +
-    '<block type="data_hidelist"></block>' +
-    '</category>' +
+    '</category>' + 
+    '<category name="Data" colour="#FF8C1A" secondaryColour="#DB6E00" custom="VARIABLE"></category>' +
+    '<category name="List" colour="#FF8C1A" secondaryColour="#DB6E00" custom="LIST"></category>' +
     '</xml>';
 
 var Toolbox = function(){
