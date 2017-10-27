@@ -32,7 +32,7 @@ function createVM(){
             }
         }
     }
-    
+    window.vm = vm;
     return vm;
 }
 //*/

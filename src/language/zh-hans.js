@@ -642,6 +642,8 @@ Blockly.Msg.SHOW = "显示";
 Blockly.Msg.DRAGGABLE = "拖拽";
 Blockly.Msg.ROTATION = "旋转";
 
+Blockly.Msg.NEW_LIST = "新建列表";
+
 
 Blockly.Msg.KB_DCMOTOR = "直流电机 %1 速度 %2";
 Blockly.Msg.KB_MOTOR_MOVE = "电机移动 %1";
