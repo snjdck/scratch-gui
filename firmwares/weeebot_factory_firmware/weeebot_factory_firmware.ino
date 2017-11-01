@@ -51,106 +51,105 @@ uint8_t mode = MODE_A;
 bool speed_flag = false;
 bool RGBUlt_flag = false;
 
-void get_ir_command()
+long command_timestamp = 0;
+uint8_t prev_mode = mode;
+bool prev_RGBUlt_flag = RGBUlt_flag;
+int prev_moveSpeed = moveSpeed;
+bool bluetoothMode = false;
+
+void handle_command(uint8_t value)
 {
-	static long time = millis();
-	if(ir.decode()){
-		uint32_t value = ir.value;
-		time = millis();
-		switch(value >> 16 & 0xff)
-		{
-		case IR_CONTROLLER_A:
-			speed_flag = false;
-			moveSpeed = 150;
-			mode = MODE_A;
-			Stop();
-			buzzer.tone2(NTD1, 300);
-			rgb.setColor(0,10,0,0);
-			rgb.show();
-			break;
-		case IR_CONTROLLER_B:
-			moveSpeed = 100;
-			mode = MODE_B;
-			Stop();
-			buzzer.tone2(NTD2, 300);
-			rgb.setColor(0,0,10,0);
-			rgb.show();
-			break;     
-		case IR_CONTROLLER_C:
-			mode = MODE_C;
-			moveSpeed = 100;
-			Stop();
-			buzzer.tone2(NTD3, 300);
-			rgb.setColor(0,0,0,10);
-			rgb.show();
-			break;
-		case IR_CONTROLLER_D:
-			speed_flag = true;
-			moveSpeed = 200;
-			buzzer.tone2(NTD4, 300);
-			rgb.setColor(0,10,10,0);
-			rgb.show();
-			break;
-		case IR_CONTROLLER_E:   
-			speed_flag = true;
-			moveSpeed = 255;
-			buzzer.tone2(NTD5, 300);
-			break;       
-		case IR_CONTROLLER_F:
-			mode = MODE_F;
-			moveSpeed = 100;
-			Stop();
-			buzzer.tone2(NTD6, 300);
-			rgb.setColor(0,0,10,10);
-			rgb.show();
-			break;
-		case IR_CONTROLLER_OK:
-			RGBUlt_flag = !RGBUlt_flag;
-			buzzer.tone2(NTD6, 300);
-			break;
-		case IR_CONTROLLER_UP:
-			motor_sta = RUN_F;
-			break;
-		case IR_CONTROLLER_DOWN:
-			motor_sta = RUN_B;  
-			break;
-		case IR_CONTROLLER_RIGHT:
-			motor_sta = RUN_R;
-			break;
-		case IR_CONTROLLER_LEFT:
-			motor_sta = RUN_L;
-			break;
-		case IR_CONTROLLER_9:
-			setMoveSpeed(NTDH2, 9);
-			break;
-		case IR_CONTROLLER_8:
-			setMoveSpeed(NTDH1, 8);
-			break;
-		case IR_CONTROLLER_7:
-			setMoveSpeed(NTD7, 7);
-			break;
-		case IR_CONTROLLER_6:
-			setMoveSpeed(NTD6, 6);
-			break;
-		case IR_CONTROLLER_5:
-			setMoveSpeed(NTD5, 5);
-			break;
-		case IR_CONTROLLER_4:
-			setMoveSpeed(NTD4, 4);
-			break;
-		case IR_CONTROLLER_3:
-			setMoveSpeed(NTD3, 3);
-			break;
-		case IR_CONTROLLER_2:
-			setMoveSpeed(NTD2, 2);
-			break;
-		case IR_CONTROLLER_1:
-			setMoveSpeed(NTD1, 0);
-			break;
-		}
-	}else if(millis() - time > 120){
-		motor_sta = STOP;
-		time = millis();
+	command_timestamp = millis();
+	switch(value)
+	{
+	case IR_CONTROLLER_A:
+		speed_flag = false;
+		moveSpeed = 150;
+		mode = MODE_A;
+		Stop();
+		buzzer.tone2(NTD1, 300);
+		rgb.setColor(0,10,0,0);
+		rgb.show();
+		break;
+	case IR_CONTROLLER_B:
+		moveSpeed = 100;
+		mode = MODE_B;
+		Stop();
+		buzzer.tone2(NTD2, 300);
+		rgb.setColor(0,0,10,0);
+		rgb.show();
+		break;     
+	case IR_CONTROLLER_C:
+		mode = MODE_C;
+		moveSpeed = 100;
+		Stop();
+		buzzer.tone2(NTD3, 300);
+		rgb.setColor(0,0,0,10);
+		rgb.show();
+		break;
+	case IR_CONTROLLER_D:
+		speed_flag = true;
+		moveSpeed = 200;
+		buzzer.tone2(NTD4, 300);
+		rgb.setColor(0,10,10,0);
+		rgb.show();
+		break;
+	case IR_CONTROLLER_E:   
+		speed_flag = true;
+		moveSpeed = 255;
+		buzzer.tone2(NTD5, 300);
+		break;       
+	case IR_CONTROLLER_F:
+		mode = MODE_F;
+		moveSpeed = 100;
+		Stop();
+		buzzer.tone2(NTD6, 300);
+		rgb.setColor(0,0,10,10);
+		rgb.show();
+		break;
+	case IR_CONTROLLER_OK:
+		RGBUlt_flag = !RGBUlt_flag;
+		buzzer.tone2(NTD6, 300);
+		break;
+	case IR_CONTROLLER_UP:
+		motor_sta = RUN_F;
+		break;
+	case IR_CONTROLLER_DOWN:
+		motor_sta = RUN_B;  
+		break;
+	case IR_CONTROLLER_RIGHT:
+		motor_sta = RUN_R;
+		break;
+	case IR_CONTROLLER_LEFT:
+		motor_sta = RUN_L;
+		break;
+	case IR_CONTROLLER_9:
+		setMoveSpeed(NTDH2, 9);
+		break;
+	case IR_CONTROLLER_8:
+		setMoveSpeed(NTDH1, 8);
+		break;
+	case IR_CONTROLLER_7:
+		setMoveSpeed(NTD7, 7);
+		break;
+	case IR_CONTROLLER_6:
+		setMoveSpeed(NTD6, 6);
+		break;
+	case IR_CONTROLLER_5:
+		setMoveSpeed(NTD5, 5);
+		break;
+	case IR_CONTROLLER_4:
+		setMoveSpeed(NTD4, 4);
+		break;
+	case IR_CONTROLLER_3:
+		setMoveSpeed(NTD3, 3);
+		break;
+	case IR_CONTROLLER_2:
+		setMoveSpeed(NTD2, 2);
+		break;
+	case IR_CONTROLLER_1:
+		setMoveSpeed(NTD1, 0);
+		break;
 	}
 }
 
@@ -270,6 +269,7 @@ void setup()
 	ledPanel.showBitmap(0, 0, bitmap);
 
 	ir.begin();
+	Serial.begin(115200);
 }
 
 void bindSensor(uint8_t sensorType, uint8_t port)
@@ -310,7 +310,17 @@ void loopSensor()
 
 void loop()
 {
-	get_ir_command();
+	if(bluetoothMode){
+		get_serial_command();
+	}else if(Serial.available()){
+		bluetoothMode = true;
+	}else if(ir.decode()){
+		handle_command(ir.value >> 16 & 0xFF);
+	}
+	if(millis() - command_timestamp > 120){
+		command_timestamp = millis();
+		motor_sta = STOP;
+	}
 	switch(mode){
 	case MODE_A: modeA(); break;
 	case MODE_B: modeB(); break;
@@ -453,4 +463,100 @@ void motor_run(int lspeed, int rspeed)
 {
 	MotorL.run(lspeed);
 	MotorR.run(rspeed);
+}
+
+void get_serial_command()
+{
+	const int buffer_len = 128;
+	static char buffer[buffer_len];
+	static int buffer_index = 0;
+
+	while(Serial.available())
+	{
+		char nextChar = Serial.read();
+		if(nextChar == '\n'){
+			while(buffer[--buffer_index] == '\r');
+			buffer[buffer_index+1] = ' ';
+			buffer[buffer_index+2] = 0;
+			buffer_index = 0;
+			handle_serial_command(buffer);
+			memset(buffer, 0, buffer_len);
+		}else{
+			buffer[buffer_index] = nextChar;
+			buffer_index = (buffer_index + 1) % buffer_len;
+		}
+	}
+}
+
+int nextInt(char **cmd)
+{
+	while(' ' != *(*cmd)++);
+	return atoi(*cmd);
+}
+
+bool isCmd(char *buffer, char *cmd)
+{
+	while(*cmd){
+		if(*buffer != *cmd){
+			return false;
+		}
+		++buffer;
+		++cmd;
+	}
+	return true;
+}
+
+void serial_reply(char *buffer, char *info)
+{
+	Serial.write(buffer, strlen(buffer));
+	Serial.println(info);
+}
+
+void handle_serial_command(char *cmd)
+{
+	if(isCmd(cmd, "VER")){
+		serial_reply(cmd, "weeebot_A_1");
+		return;
+	}
+	if(isCmd(cmd, "LFA")){
+		serial_reply(cmd, "OK");
+		ledPanel.clearScreen();
+		return;
+	}
+	if(isCmd(cmd, "LF")){
+		serial_reply(cmd, "OK");
+		int x = nextInt(&cmd);
+		int y = nextInt(&cmd);
+		ledPanel.turnOffDot(x, y);
+		return;
+	}
+	if(isCmd(cmd, "LO")){
+		serial_reply(cmd, "OK");
+		int x = nextInt(&cmd);
+		int y = nextInt(&cmd);
+		ledPanel.turnOnDot(x, y);
+		return;
+	}
+	if(isCmd(cmd, "IR")){
+		serial_reply(cmd, "OK");
+		uint8_t code = atoi(cmd + 2);
+		if(code == 1){
+			mode = prev_mode;
+			moveSpeed = prev_moveSpeed;
+			RGBUlt_flag = prev_RGBUlt_flag;
+			buzzer.tone2(NTD1, 300);
+		}else if(code == 2){
+			prev_RGBUlt_flag = RGBUlt_flag;
+			prev_moveSpeed = moveSpeed;
+			prev_mode = mode;
+
+			mode = MODE_A;
+			RGBUlt_flag = false;
+			motor_run(0, 0);
+			buzzer.tone2(NTD1, 300);
+		}else{
+			handle_command(code);
+		}
+		return;
+	}
 }
