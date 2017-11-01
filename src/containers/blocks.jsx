@@ -48,6 +48,14 @@ class Blocks extends React.Component {
         };
         this.onTargetsUpdate = debounce(this.onTargetsUpdate, 100);
     }
+     setToolboxSelectedItemByName (name) {
+        const categories = this.workspace.toolbox_.categoryMenu_.categories_;
+        for (let i = 0; i < categories.length; i++) {
+            if (categories[i].name_ === name) {
+                this.workspace.toolbox_.setSelectedItem(categories[i]);
+            }
+        }
+    }
     componentDidMount () {
         if(this.props.vm.weeecode.plugin.getBlocks) {
             var blocks = this.props.vm.weeecode.plugin.getBlocks();
@@ -60,9 +68,12 @@ class Blocks extends React.Component {
         toolbox = toolbox.replace(/category name="(\w+)"/g, (str, name) => str.replace(name, Blockly.Msg[name.toUpperCase()]) + ` key="${name}"`);
         var pluginToolbox = this.props.vm.weeecode.plugin.getToolbox();
         Blockly.Blocks.defaultToolbox = toolbox.replace("</xml>", pluginToolbox + "</xml>");
+        //this.props.toolboxXML = Blockly.Blocks.defaultToolbox;
         
         const workspaceConfig = defaultsDeep({}, Blocks.defaultOptions, this.props.options);
         this.workspace = this.ScratchBlocks.inject(this.blocks, workspaceConfig);
+
+         this.workspace.updateToolbox(Blockly.Blocks.defaultToolbox);
 
         // @todo change this when blockly supports UI events
         addFunctionListener(this.workspace, 'translate', this.onWorkspaceMetricsChange);
@@ -71,9 +82,21 @@ class Blocks extends React.Component {
         this.attachVM();
     }
     shouldComponentUpdate (nextProps, nextState) {
+        return (
+            this.state.prompt !== nextState.prompt ||
+            this.props.isVisible !== nextProps.isVisible ||
+            this.props.toolboxXML !== nextProps.toolboxXML
+        );
         return this.state.prompt !== nextState.prompt || this.props.isVisible !== nextProps.isVisible;
     }
     componentDidUpdate (prevProps) {
+        if (prevProps.toolboxXML !== this.props.toolboxXML) {
+            const selectedCategoryName = this.workspace.toolbox_.getSelectedItem().name_;
+            this.workspace.updateToolbox(this.props.toolboxXML);
+            // Blockly throws if we don't select a category after updating the toolbox.
+            /** @TODO Find a way to avoid the exception without accessing private properties. */
+            this.setToolboxSelectedItemByName(selectedCategoryName);
+        }
         if (this.props.isVisible === prevProps.isVisible) {
             return;
         }
@@ -250,7 +273,7 @@ class Blocks extends React.Component {
                     <Prompt
                         label={this.state.prompt.message}
                         placeholder={this.state.prompt.defaultValue}
-                        title="New Variable" // @todo the only prompt is for new variables
+                        title={Blockly.Msg.NEW_VARIABLE_TITLE}
                         onCancel={this.handlePromptClose}
                         onOk={this.handlePromptCallback}
                     />
