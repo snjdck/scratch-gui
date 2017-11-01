@@ -1,16 +1,5 @@
 #include <WeELFPort.h>
 
-WeRGBLed rgb(OnBoard_RGB);
-WeInfraredReceiver ir(PORT_2);
-WeBuzzer buzzer(OnBoard_Buzzer);
-
-WeUltrasonicSensor ultraSensor(NC);
-WeLineFollower lineFollower(NC);
-WeLEDPanelModuleMatrix7_21 ledPanel(NC);
-
-WeDCMotor MotorL(M2);
-WeDCMotor MotorR(M1);
-
 #define NTD1 294
 #define NTD2 330
 #define NTD3 350
@@ -33,21 +22,28 @@ WeDCMotor MotorR(M1);
 #define NTDH6 990
 #define NTDH7 112
 
-#define RUN_F 0x01
-#define RUN_B 0x02
-#define RUN_L 0x04
-#define RUN_R 0x08
-#define STOP 0
+WeRGBLed rgb(OnBoard_RGB);
+WeInfraredReceiver ir(PORT_2);
+WeBuzzer buzzer(OnBoard_Buzzer);
+
+WeUltrasonicSensor ultraSensor(NC);
+WeLineFollower lineFollower(NC);
+WeLEDPanelModuleMatrix7_21 ledPanel(NC);
+
+WeDCMotor MotorL(M2);
+WeDCMotor MotorR(M1);
 
 enum{MODE_A, MODE_B, MODE_C, MODE_D, MODE_E, MODE_F};
+byte mode = MODE_A;
+
+enum{STOP, RUN_F, RUN_B, RUN_L, RUN_R}
+motor_sta = STOP;
 
 int moveSpeed = 150;
 
 int speedSetLeft = 0;
 int speedSetRight = 0;
 
-uint8_t motor_sta = STOP;
-uint8_t mode = MODE_A;
 bool speed_flag = false;
 bool RGBUlt_flag = false;
 
