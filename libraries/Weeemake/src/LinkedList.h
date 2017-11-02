@@ -4,6 +4,7 @@
 
 class LinkedList
 {
+public:
 	LinkedList();
 	~LinkedList();
 
