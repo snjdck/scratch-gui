@@ -24,7 +24,7 @@
 #include "WeInfraredReceiver.h"
 #include "WeTemperature.h"
 
-
+#include "LinkedList.h"
 
 
 #define PORT_A  (9)
