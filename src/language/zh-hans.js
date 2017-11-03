@@ -519,7 +519,7 @@ Blockly.Msg.PEN_CHANGEPENSIZEBY = "将画笔的大小增加%1";
 Blockly.Msg.PEN_SETPENSIZETO = "讲画笔的大小设定为%1";
 
 Blockly.Msg.DATA = "数据";
-Blockly.Msg.LIST = "列表";
+Blockly.Msg.LIST = "链表";
 Blockly.Msg.DATA_SETPENSIZETO = "将%1设定为%2";
 Blockly.Msg.DATA_SHOWVARIABLE = "显示变量%1";
 Blockly.Msg.DATA_HIDEVARIABLE = "隐藏变量%1";
@@ -642,7 +642,7 @@ Blockly.Msg.SHOW = "显示";
 Blockly.Msg.DRAGGABLE = "拖拽";
 Blockly.Msg.ROTATION = "旋转";
 
-Blockly.Msg.NEW_LIST = "新建列表";
+Blockly.Msg.NEW_LIST = "新建链表";
 
 
 Blockly.Msg.KB_DCMOTOR = "直流电机 %1 速度 %2";

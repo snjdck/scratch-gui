@@ -388,25 +388,67 @@ Blockly.Arduino["data_listcontents"] = function(block){
     return "";
 }
 Blockly.Arduino["data_addtolist"] = function(block){
-    return "";
+	var order = Blockly.Arduino.ORDER_NONE;
+	var item = Blockly.Arduino.valueToCode(block, 'ITEM', order);
+	var varName = block.inputList[1].fieldRow[1].text_;
+	varName = Blockly.Arduino.castVarName(varName);
+	return Blockly.Arduino.tab() + `${varName}.push(${item})` + Blockly.Arduino.END;
 }
+
+function calcArg(block, index=0){
+	var child = block.childBlocks_[index];
+	return Blockly.Arduino[child.type](child)[0];
+}
+Blockly.Arduino["math_integer"] = function(block){
+	return [block.inputList[0].fieldRow[0].text_, Blockly.Arduino.ORDER_NONE];
+}
+
 Blockly.Arduino["data_deleteoflist"] = function(block){
-    return "";
+	var order = Blockly.Arduino.ORDER_NONE;
+	var index = calcArg(block);
+	index = `((${index})-1)`;
+	var varName = block.inputList[1].fieldRow[1].text_;
+	varName = Blockly.Arduino.castVarName(varName);
+	return Blockly.Arduino.tab() + `${varName}.removeAt(${index})` + Blockly.Arduino.END;
 }
 Blockly.Arduino["data_insertatlist"] = function(block){
-    return "";
+	var order = Blockly.Arduino.ORDER_NONE;
+	var item = Blockly.Arduino.valueToCode(block, 'ITEM', order);
+	var index = Blockly.Arduino.valueToCode(block, 'INDEX', order);
+	index = `((${index})-1)`;
+	var varName = block.inputList[2].fieldRow[1].text_;
+	varName = Blockly.Arduino.castVarName(varName);
+	return Blockly.Arduino.tab() + `${varName}.insertAt(${index}, ${item})` + Blockly.Arduino.END;
 }
 Blockly.Arduino["data_replaceitemoflist"] = function(block){
-    return "";
+	var order = Blockly.Arduino.ORDER_NONE;
+	var item = Blockly.Arduino.valueToCode(block, 'ITEM', order);
+	var index = Blockly.Arduino.valueToCode(block, 'INDEX', order);
+	index = `((${index})-1)`;
+	var varName = block.inputList[1].fieldRow[1].text_;
+	varName = Blockly.Arduino.castVarName(varName);
+	return Blockly.Arduino.tab() + `${varName}.replaceAt(${index}, ${item})` + Blockly.Arduino.END;
 }
 Blockly.Arduino["data_itemoflist"] = function(block){
-    return ["0", Blockly.Arduino.ORDER_NONE];
+	var order = Blockly.Arduino.ORDER_NONE;
+	var index = Blockly.Arduino.valueToCode(block, 'INDEX', order);
+	index = `((${index})-1)`;
+	var varName = block.inputList[1].fieldRow[1].text_;
+	varName = Blockly.Arduino.castVarName(varName);
+	return [`${varName}.getValueAt(${index})`, order];
 }
 Blockly.Arduino["data_lengthoflist"] = function(block){
-    return ["0", Blockly.Arduino.ORDER_NONE];
+	var order = Blockly.Arduino.ORDER_NONE;
+	var varName = block.inputList[0].fieldRow[1].text_;
+	varName = Blockly.Arduino.castVarName(varName);
+	return [`${varName}.getLength()`, order];
 }
 Blockly.Arduino["data_listcontainsitem"] = function(block){
-    return ["0", Blockly.Arduino.ORDER_NONE];
+	var order = Blockly.Arduino.ORDER_NONE;
+	var item = Blockly.Arduino.valueToCode(block, 'ITEM', order);
+	var varName = block.inputList[0].fieldRow[0].text_;
+	varName = Blockly.Arduino.castVarName(varName);
+	return [`${varName}.include(${item})`, order];
 }
 Blockly.Arduino["data_showlist"] = function(block){
     return "";
@@ -448,8 +490,9 @@ Blockly.Arduino.init=function(workspace){
 		Blockly.Arduino.variableDB_ = new Blockly.Names(Blockly.Arduino.RESERVED_WORDS_);
 	}
 	for(var v of workspace.variableMap_.getAllVariables()){
-        var varName = Blockly.Arduino.castVarName(v.name);
-		Blockly.Arduino.definitions_[varName] = `float ${varName};`;
+		var varType = v.type == "list" ? "LinkedList" : "float";
+		var varName = Blockly.Arduino.castVarName(v.name);
+		Blockly.Arduino.definitions_[varName] = `${varType} ${varName};`;
 	}
 	/*
 	var variables = workspace.variableList;
@@ -591,7 +634,7 @@ Blockly.Arduino.control_repeat=function(a){
 	var b=Blockly.Arduino.valueToCode(a,"TIMES",Blockly.Arduino.ORDER_HIGH),
 	c=Blockly.Arduino.statementToCode(a,"SUBSTACK"),
 	c=Blockly.Arduino.addLoopTrap(c,a.id);
-	a=Blockly.Arduino.tab()+"for(int i=0;i<"+b+";i++){\n";
+	a=Blockly.Arduino.tab()+"for(int _for_index_=0;_for_index_<"+b+";_for_index_++){\n";
 	//Blockly.Arduino.tabPos++;
 	//Blockly.Arduino.tabPos--;
 	return a+c+(Blockly.Arduino.tab()+"}\n")
@@ -612,7 +655,7 @@ Blockly.Arduino['control_forever'] = function (block) {
         code += "\nvoid loop(){\n";
         code += branch;
     } else {
-        code = Blockly.Arduino.tab() + "while(1){\n";
+        code = Blockly.Arduino.tab() + "while(true){\n";
         Blockly.Arduino.tabPos++;
         var branch = Blockly.Arduino.statementToCode(block, 'SUBSTACK');
         branch = Blockly.Arduino.addLoopTrap(branch, block.id);
