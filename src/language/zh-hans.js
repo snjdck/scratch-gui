@@ -287,6 +287,7 @@ Blockly.Msg.NEW = "新建";
 Blockly.Msg.NEW_PROJECT = "新建项目";
 Blockly.Msg.NEW_VARIABLE = "新建变量";
 Blockly.Msg.NEW_VARIABLE_TITLE = "新变量的名称：";
+Blockly.Msg.NEW_LIST_TITLE = "新链表的名称：";
 Blockly.Msg.ORDINAL_NUMBER_SUFFIX = "空白";
 Blockly.Msg.PLUGIN = "插件";
 Blockly.Msg.PROCEDURES_ALLOW_STATEMENTS = "允许声明";

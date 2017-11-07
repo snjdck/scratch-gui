@@ -273,7 +273,7 @@ class Blocks extends React.Component {
                     <Prompt
                         label={this.state.prompt.message}
                         placeholder={this.state.prompt.defaultValue}
-                        title={Blockly.Msg.NEW_VARIABLE_TITLE}
+                        title={this.state.prompt.message}
                         onCancel={this.handlePromptClose}
                         onOk={this.handlePromptCallback}
                     />

@@ -290,6 +290,7 @@ Blockly.Msg.NEW_PROJECT = "New Project";
 Blockly.Msg.NEW_VARIABLE = "Create variable";
 Blockly.Msg.NEW_LIST = "Create list";
 Blockly.Msg.NEW_VARIABLE_TITLE = "New variable name:";
+Blockly.Msg.NEW_LIST_TITLE = "New list name:";
 Blockly.Msg.ORDINAL_NUMBER_SUFFIX = "";
 Blockly.Msg.PLUGIN = "Plug in";
 Blockly.Msg.PROCEDURES_ALLOW_STATEMENTS = "allow statements";
