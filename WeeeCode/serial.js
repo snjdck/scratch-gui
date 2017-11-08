@@ -1,4 +1,12 @@
 
+function castValue(data){
+    switch(data){
+    case "true": return true;
+    case "false":return false;
+    }
+    return Number(data);
+}
+
 export default class Serial {
     constructor (vm) {
         this.weeecode = vm.weeecode;
@@ -11,7 +19,7 @@ export default class Serial {
         var report = data.report;
         if(slot in this._resolves){
             if(report != null){
-                this._resolves[slot](report);
+                this._resolves[slot](castValue(report));
             }else{
                 this._resolves[slot]();
             }

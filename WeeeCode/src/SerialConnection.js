@@ -34,9 +34,12 @@ class SerialConnection {
 
 
     enumSerial(callback){
-        if(callback){
-            chrome.serial.getDevices(callback);
+        if(typeof callback != "function"){
+            return;
         }
+        chrome.serial.getDevices(ports => {
+            callback(ports.filter(port => /^USB/.test(port.displayName)));
+        });
     }
 
     onReceive(receiveInfo) {
