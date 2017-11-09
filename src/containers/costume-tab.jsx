@@ -2,7 +2,6 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import bindAll from 'lodash.bindall';
 import {FormattedMessage} from 'react-intl';
-import VM from 'scratch-vm';
 
 import AssetPanel from '../components/asset-panel/asset-panel.jsx';
 import addCostumeIcon from '../components/asset-panel/icon--add-costume-lib.svg';
@@ -111,8 +110,7 @@ CostumeTab.propTypes = {
         sounds: PropTypes.arrayOf(PropTypes.shape({
             name: PropTypes.string.isRequired
         }))
-    }),
-    vm: PropTypes.instanceOf(VM)
+    })
 };
 
 const mapStateToProps = state => ({

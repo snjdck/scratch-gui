@@ -2,8 +2,6 @@ import bindAll from 'lodash.bindall';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import VM from 'scratch-vm';
-
 import GreenFlagComponent from '../components/green-flag/green-flag.jsx';
 
 class GreenFlag extends React.Component {
@@ -52,9 +50,5 @@ class GreenFlag extends React.Component {
         );
     }
 }
-
-GreenFlag.propTypes = {
-    vm: PropTypes.instanceOf(VM)
-};
 
 export default GreenFlag;

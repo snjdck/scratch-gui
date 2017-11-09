@@ -1,8 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import VM from 'scratch-vm';
-
 import BackdropLibrary from '../../containers/backdrop-library.jsx';
 import CostumeLibrary from '../../containers/costume-library.jsx';
 import SoundLibrary from '../../containers/sound-library.jsx';
@@ -140,8 +138,7 @@ TargetPane.propTypes = {
     soundLibraryVisible: PropTypes.bool,
     spriteLibraryVisible: PropTypes.bool,
     sprites: PropTypes.objectOf(spriteShape),
-    stage: spriteShape,
-    vm: PropTypes.instanceOf(VM)
+    stage: spriteShape
 };
 
 export default TargetPane;

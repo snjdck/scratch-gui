@@ -1,7 +1,6 @@
 import bindAll from 'lodash.bindall';
 import PropTypes from 'prop-types';
 import React from 'react';
-import VM from 'scratch-vm';
 
 import StopAllComponent from '../components/stop-all/stop-all.jsx';
 
@@ -47,9 +46,5 @@ class StopAll extends React.Component {
         );
     }
 }
-
-StopAll.propTypes = {
-    vm: PropTypes.instanceOf(VM)
-};
 
 export default StopAll;

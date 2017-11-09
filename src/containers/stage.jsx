@@ -2,7 +2,6 @@ import bindAll from 'lodash.bindall';
 import PropTypes from 'prop-types';
 import React from 'react';
 import Renderer from 'scratch-render';
-import VM from 'scratch-vm';
 import {getEventXY} from '../lib/touch-utils';
 
 import StageComponent from '../components/stage/stage.jsx';
@@ -207,7 +206,6 @@ class Stage extends React.Component {
 
 Stage.propTypes = {
     height: PropTypes.number,
-    vm: PropTypes.instanceOf(VM).isRequired,
     width: PropTypes.number
 };
 

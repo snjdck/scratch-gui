@@ -4,7 +4,6 @@ import defaultsDeep from 'lodash.defaultsdeep';
 import PropTypes from 'prop-types';
 import React from 'react';
 import VMScratchBlocks from '../lib/blocks';
-import VM from 'scratch-vm';
 import Prompt from './prompt.jsx';
 import BlocksComponent from '../components/blocks/blocks.jsx';
 
@@ -305,8 +304,7 @@ Blocks.propTypes = {
             dragShadowOpacity: PropTypes.number
         }),
         comments: PropTypes.bool
-    }),
-    vm: PropTypes.instanceOf(VM).isRequired
+    })
 };
 
 Blocks.defaultOptions = {

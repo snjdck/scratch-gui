@@ -2,7 +2,6 @@ import bindAll from 'lodash.bindall';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import VM from "scratch-vm";
 import Blockly from "scratch-blocks";
 
 const { Navbar,Nav,NavItem,ButtonGroup,Button,DropdownButton,FormControl,MenuItem,SplitButton  } = require('react-bootstrap');
@@ -156,10 +155,6 @@ class PortSelector extends React.Component {
         );
     }
 }
-
-PortSelector.propTypes = {
-    vm: PropTypes.instanceOf(VM)
-};
 
 module.exports = PortSelector;
 /*

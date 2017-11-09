@@ -1,7 +1,6 @@
 import bindAll from 'lodash.bindall';
 import PropTypes from 'prop-types';
 import React from 'react';
-import VM from 'scratch-vm';
 
 import {connect} from 'react-redux';
 
@@ -89,8 +88,7 @@ const vmListenerHOC = function (WrappedComponent) {
         onKeyDown: PropTypes.func,
         onKeyUp: PropTypes.func,
         onMonitorsUpdate: PropTypes.func,
-        onTargetsUpdate: PropTypes.func,
-        vm: PropTypes.instanceOf(VM).isRequired
+        onTargetsUpdate: PropTypes.func
     };
     VMListener.defaultProps = {
         attachKeyboardEvents: true

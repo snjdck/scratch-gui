@@ -2,7 +2,6 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import bindAll from 'lodash.bindall';
 import {FormattedMessage} from 'react-intl';
-import VM from 'scratch-vm';
 import Blockly from 'scratch-blocks';
 
 import AssetPanel from '../components/asset-panel/asset-panel.jsx';
@@ -134,8 +133,7 @@ SoundTab.propTypes = {
         sounds: PropTypes.arrayOf(PropTypes.shape({
             name: PropTypes.string.isRequired
         }))
-    }),
-    vm: PropTypes.instanceOf(VM).isRequired
+    })
 };
 
 const mapStateToProps = state => ({

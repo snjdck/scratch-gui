@@ -5,7 +5,6 @@ import {Tab, Tabs, TabList, TabPanel} from 'react-tabs';
 import {Popover} from "react-bootstrap";
 import MediaQuery from 'react-responsive';
 import tabStyles from 'react-tabs/style/react-tabs.css';
-import VM from 'scratch-vm';
 import Blockly from "scratch-blocks";
 
 import Blocks from '../../containers/blocks.jsx';
@@ -159,8 +158,7 @@ GUIComponent.propTypes = {
     basePath: PropTypes.string,
     children: PropTypes.node,
     onTabSelect: PropTypes.func,
-    tabIndex: PropTypes.number,
-    vm: PropTypes.instanceOf(VM).isRequired
+    tabIndex: PropTypes.number
 };
 GUIComponent.defaultProps = {
     basePath: './'

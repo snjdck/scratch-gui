@@ -1,7 +1,6 @@
 import AudioEngine from 'scratch-audio';
 import PropTypes from 'prop-types';
 import React from 'react';
-import VM from 'scratch-vm';
 import bindAll from 'lodash.bindall';
 
 import vmListenerHOC from '../lib/vm-listener-hoc.jsx';
@@ -56,8 +55,7 @@ class GUI extends React.Component {
 
 GUI.propTypes = {
     ...GUIComponent.propTypes,
-    projectData: PropTypes.string,
-    vm: PropTypes.instanceOf(VM)
+    projectData: PropTypes.string
 };
 
 GUI.defaultProps = GUIComponent.defaultProps;

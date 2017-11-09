@@ -1,7 +1,6 @@
 import bindAll from 'lodash.bindall';
 import PropTypes from 'prop-types';
 import React from 'react';
-import VM from 'scratch-vm';
 import Blockly from 'scratch-blocks';
 
 import backdropLibraryContent from '../lib/libraries/backdrops.json';
@@ -38,8 +37,7 @@ class BackdropLibrary extends React.Component {
 }
 
 BackdropLibrary.propTypes = {
-    onRequestClose: PropTypes.func,
-    vm: PropTypes.instanceOf(VM).isRequired
+    onRequestClose: PropTypes.func
 };
 
 export default BackdropLibrary;

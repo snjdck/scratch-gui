@@ -1,7 +1,6 @@
 import bindAll from 'lodash.bindall';
 import PropTypes from 'prop-types';
 import React from 'react';
-import VM from 'scratch-vm';
 
 import ControlsComponent from '../components/controls/controls.jsx';
 
@@ -64,9 +63,5 @@ class Controls extends React.Component {
         );
     }
 }
-
-Controls.propTypes = {
-    vm: PropTypes.instanceOf(VM)
-};
 
 export default Controls;

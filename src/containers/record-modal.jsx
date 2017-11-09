@@ -1,7 +1,6 @@
 import bindAll from 'lodash.bindall';
 import PropTypes from 'prop-types';
 import React from 'react';
-import VM from 'scratch-vm';
 import WavEncoder from 'wav-encoder';
 import {connect} from 'react-redux';
 
@@ -125,8 +124,7 @@ class RecordModal extends React.Component {
 }
 
 RecordModal.propTypes = {
-    onClose: PropTypes.func,
-    vm: PropTypes.instanceOf(VM)
+    onClose: PropTypes.func
 };
 
 const mapStateToProps = state => ({
