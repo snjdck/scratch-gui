@@ -27,19 +27,8 @@ export default class Serial {
         }
     }
 
-    sendBuff(data){
-        console.log("sendBuff");
-    }
-
     sendMsg(data){
         this.weeecode.sendCmd(data);
-    }
-
-    queryData(data){
-        if(this.query){
-            return this.query(data);
-        }
-        return null;
     }
 
     regResolve(data){

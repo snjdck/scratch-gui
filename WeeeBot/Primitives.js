@@ -33,7 +33,7 @@ function weeebot_motor_move(argValues, util) {
     var spd = argValues.SPEED;
     var dir = argValues.MOVE_DIRECTION;
     var speeds;
-    switch(dir){
+    switch(Number(dir)){
     	case 2: speeds = [-spd,-spd];break;
     	case 3: speeds = [-spd,spd];break;
     	case 4: speeds = [spd,-spd];break;
