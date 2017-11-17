@@ -74,7 +74,7 @@ class PortSelector extends React.Component {
         var portDropdownTxt;
 
         if(this.state.connectedPort!=null) {
-            portDropdownTxt = this.state.connectedPort;
+            portDropdownTxt = this.state.connectedPort.replace("/dev/tty.", "");
             portMenuItem =
                 <MenuItem eventKey={{
                     'path': this.state.connectedPort,
@@ -87,7 +87,7 @@ class PortSelector extends React.Component {
                     <MenuItem eventKey={{
                         'path': dev.path,
                         'type': dev.type
-                    }} key={dev.path}>{dev.path}</MenuItem>
+                    }} key={dev.path}>{dev.path.replace("/dev/tty.", "")}</MenuItem>
                 ));
             portDropdownTxt = Blockly.Msg.WC_NOT_CONNECTED;
         }
