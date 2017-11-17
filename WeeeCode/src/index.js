@@ -3,6 +3,7 @@
 var path = require('path');
 var fs = require('fs');
 var EventEmitter = require('events');
+const {execFile} = require('child_process');
 var SerialConnection = require('./SerialConnection');
 var ArduinoManager = require('./ArduinoManager');
 var Toolbox = require('./Toolbox');
@@ -40,6 +41,7 @@ class WeeeCode extends EventEmitter
 			var index = args.lastIndexOf('"', args.length - 2);
 			this.loadWC(args.slice(index+1, -1));
 		});
+		createMacMenu();
 	}
 
 	connectPort(port,successCb,readlineCb,closeCb,onRecv) {
@@ -167,6 +169,27 @@ class WeeeCode extends EventEmitter
 		var path = this.projectPath || "untitled.wc";
 		return fs.readFileSync(path, "utf8") != this.vm.saveProjectSb3();
 	}
+}
+
+function createMacMenu(){
+	if(process.platform != "darwin"){
+		return;
+	}
+	let isCN = localStorage.language && localStorage.language == "zh-cn";
+	let submenu = new nw.Menu({type:"menubar"});
+	submenu.append(new nw.MenuItem({
+		label: isCN ? "安装主板驱动" : "Install Board Driver",
+		click(){
+			execFile("open", ["../drivers/CH34x_Install_V1.3.pkg"]);
+		}
+	}));
+	let mb = new nw.Menu({type:"menubar"});
+	mb.createMacBuiltin("WeeeCode", {hideEdit:true,hideWindow:true});
+	mb.append(new nw.MenuItem({
+		label: isCN ? "驱动" : "Driver",
+		submenu
+	}));
+	nw.Window.get().menu = mb;
 }
 
 module.exports = WeeeCode;

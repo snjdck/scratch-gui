@@ -1,17 +1,18 @@
 
 
 const fs = require('fs');
-const {execFile, exec} = require('child_process');
+const {exec, execFile} = require('child_process');
 const ncp = require('ncp').ncp;
 
 function getExecPath(background=false){
     if(process.platform=="darwin"){
-        return "Arduino.app/Contents/MacOS/Arduino";
+        let path = "../Arduino.app/Contents/MacOS/Arduino";
+        return background ? `"${path}"` : path;
     }
     if(background){
-    	return "arduino_debug.exe";
+    	return '"../Arduino/arduino_debug.exe"';
     }
-    return "arduino.exe";
+    return "../Arduino/arduino.exe";
 }
 
 const decoder = new TextDecoder("gb2312");
@@ -63,7 +64,6 @@ class ArduinoManager {
         this.sendCmdEvent = new chrome.Event();
         this.baudrate = 115200;
         this.editor = null;
-        this.arduinopath = "Arduino";
         this.arduinoboard = "arduino:avr:uno";
         this.boardlist = [{"name":"Arduino UNO","type":"uno"},
             {"name":"Arduino NANO","type":"nano:cpu=atmega328"}];
@@ -90,7 +90,7 @@ class ArduinoManager {
             this.appendLog(e.message,"#E77471");
         }
     }
-
+/*
     copyLibrary(src,callback){
         var dst = this.arduinopath+"/libraries";
         if(process.platform=="darwin"){
@@ -104,11 +104,10 @@ class ArduinoManager {
             if(callback) callback(0);
         });
     }
-
+*/
     openArduinoIde(code,path){
-        execFile(getExecPath(), [path],{
-            encoding: 'ascii',
-            cwd: this.arduinopath
+        execFile(getExecPath(), [path], {
+            encoding: 'ascii'
         });
     }
 
@@ -214,8 +213,7 @@ class ArduinoManager {
 			`"${path}"`
 			].join(" ");
         var spawn = exec(cmd,{
-			encoding: "buffer",
-            cwd: this.arduinopath
+			encoding: "buffer"
         });
         if(logCb){
             listenTextEvent(spawn.stdout, logCb);
