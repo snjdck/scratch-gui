@@ -760,3 +760,4 @@ Blockly.Msg.WC_SOUND_TRIM = "剪裁";
 Blockly.Msg.WC_SOUND_UNDO = "撤销";
 Blockly.Msg.WC_SOUND_REDO = "重做";
 Blockly.Msg.SCRATCH_GO = "开始";
+Blockly.Msg.SCRATCH_NEW_MESSAGE = "新建消息";

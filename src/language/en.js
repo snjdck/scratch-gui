@@ -746,3 +746,4 @@ Blockly.Msg.WC_SOUND_TRIM = "Trim";
 Blockly.Msg.WC_SOUND_UNDO = "Undo";
 Blockly.Msg.WC_SOUND_REDO = "Redo";
 Blockly.Msg.SCRATCH_GO = "Go";
+Blockly.Msg.SCRATCH_NEW_MESSAGE = "New Message";
