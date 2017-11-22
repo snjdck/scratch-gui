@@ -41,6 +41,7 @@ class WeeeCode extends EventEmitter
 			var index = args.lastIndexOf('"', args.length - 2);
 			this.loadWC(args.slice(index+1, -1));
 		});
+		this.updateWindowTitle();
 		createMacMenu();
 	}
 
@@ -129,11 +130,12 @@ class WeeeCode extends EventEmitter
 	}
 
 	updateWindowTitle(){
+		let version = nw.App.manifest.version;
+		let title = `WeeeCode V${version}`;
 		if(this.projectPath){
-			document.title = `${this.projectPath} - WeeeCode`;
-		}else{
-			document.title = "WeeeCode";
+			title = `${this.projectPath} - ${title}`;
 		}
+		document.title = title;
 	}
 
 	loadWC(filePath) {
