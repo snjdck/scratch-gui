@@ -1,4 +1,5 @@
 import VM from 'scratch-vm';
+import Blockly from 'scratch-blocks';
 import Storage from '../lib/storage';
 //*
 import Serial from "../../WeeeCode/serial";
@@ -33,6 +34,9 @@ function createVM(){
         }
     }
     window.vm = vm;
+    vm.weeecode.on("reset_project", () => {
+        Blockly.ResetUserData();
+    });
     return vm;
 }
 //*/

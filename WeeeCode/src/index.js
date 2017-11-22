@@ -137,6 +137,7 @@ class WeeeCode extends EventEmitter
 	}
 
 	loadWC(filePath) {
+		this.emit("reset_project");
 		var fileData = fs.readFileSync(filePath, 'utf8');
 	    this.vm.loadProject(fileData);
 	    this.projectPath = filePath;
@@ -144,6 +145,7 @@ class WeeeCode extends EventEmitter
 	}
 
 	newProject(){
+		this.emit("reset_project");
 		var fileData = fs.readFileSync("untitled.wc", "utf8");
 		this.vm.loadProject(fileData);
 		this.projectPath = null;
