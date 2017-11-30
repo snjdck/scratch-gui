@@ -284,10 +284,10 @@ module.exports = function(){
         
         var code = "";
         if(index & 1){
-            code += arduino.tab() + `${key}.setColor1(${color.r}, ${color.r}, ${color.b})`  + arduino.END;
+            code += arduino.tab() + `${key}.setColor1(${color.r}, ${color.g}, ${color.b})`  + arduino.END;
         }
         if(index & 2){
-             code += arduino.tab() + `${key}.setColor2(${color.r}, ${color.r}, ${color.b})`  + arduino.END;
+             code += arduino.tab() + `${key}.setColor2(${color.r}, ${color.g}, ${color.b})`  + arduino.END;
         }
         code += arduino.tab() + `${key}.RGBShow()` + arduino.END;
         return code;
