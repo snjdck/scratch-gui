@@ -36,33 +36,18 @@ const ArduinoPanel = require('../../containers/arduino-panel.jsx');
 class GUIComponent extends React.Component {
     constructor(props){
         super(props);
-        bindAll(this, ["toggleArduinoMode", "stageSay", "clearStageSay"]);
-        this.props.vm.runtime.stageSay = this.stageSay;
+        bindAll(this, ["toggleArduinoMode"]);
         this.state = {
-            isArduinoMode:false,
-            sayInfo:{msg:"",show:false,x:0,y:0}
+            isArduinoMode:false
         };
     }
 
     componentDidMount(){
-        this.props.vm.on("green-flag-clicked", this.clearStageSay);
-        this.props.vm.on("stop-all-flag-clicked", this.clearStageSay);
     }
     componentWillUnmount(){
-        this.props.vm.removeListener("green-flag-clicked", this.clearStageSay);
-        this.props.vm.removeListener("stop-all-flag-clicked", this.clearStageSay);
     }
     toggleArduinoMode(){
         this.setState((prevState, props) => ({isArduinoMode:!prevState.isArduinoMode}));
-    }
-    clearStageSay(){
-        this.setState({sayInfo:{x:0,y:0,msg:"",show:false}});
-    }
-    stageSay(msg, show, x, y) {
-        let vm = this.props.vm;
-        x += vm.stageCanvasCenter.x;
-        y  = vm.stageCanvasCenter.y - y - 36;
-        this.setState({sayInfo:{x,y,msg,show}});
     }
 render(){
     const {
@@ -76,8 +61,6 @@ render(){
     if (children) {
         return <Box {...componentProps}>{children}</Box>;
     }
-
-    const sayInfo = this.state.sayInfo;
 
     return (
         <Box
@@ -142,14 +125,6 @@ render(){
                     </Box>
                 </Box>
             </Box>
-            <Popover
-            id="sprite-say"
-            placement='top'
-            positionLeft={sayInfo.x}
-            positionTop={sayInfo.y}
-            style={{"display":sayInfo.show?'block':'none'}}>
-                {sayInfo.msg}
-            </Popover>
         </Box>
     );
 }
