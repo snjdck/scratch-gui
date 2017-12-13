@@ -30,6 +30,7 @@ class SerialConnection {
         this.onReadLine = new chrome.Event();
         this.onDisconnect = new chrome.Event();
         this.pluginRecv = null;
+        this.msgQueue = [];
     }
 
 
@@ -116,10 +117,24 @@ class SerialConnection {
     }
 
     sendbuf(buffer){
-        if(this.connectionId < 0)
-            return;
-        chrome.serial.send(this.connectionId, buffer, ()=>{});
-    }
+            if(this.connectionId < 0)
+                return;
+            let isSending = this.msgQueue.length > 0;
+            this.msgQueue.push(buffer);
+            if(!isSending){
+                this.doSend();
+            }
+        }
+
+        doSend(){
+            if(this.msgQueue.length <= 0){
+                return;
+            }
+            chrome.serial.send(this.connectionId, this.msgQueue[0], info => {
+                this.msgQueue.shift();
+                this.doSend();
+            });
+        }
 }
 
 
