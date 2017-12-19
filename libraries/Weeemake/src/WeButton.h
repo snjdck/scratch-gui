@@ -2,19 +2,13 @@
 #ifndef WeButton_H
 #define WeButton_H
 
-#include <stdint.h>
-#include <stdbool.h>
-#include <Arduino.h>
-
-#include "WeELFPort.h"
-
+#include "WePort.h"
 
 class WeButton
 {
 public:
 
-  WeButton(void);
-  WeButton(uint8_t port);
+  WeButton(uint8_t port=0);
 
   int16_t read(void);
   

@@ -8,11 +8,10 @@
 #include "WeConfig.h"
 
 
-
 class TempOneWire
 {
 public:
-
+	
   TempOneWire(void);
   TempOneWire(uint8_t pin);
   bool readIO(void);
@@ -33,8 +32,8 @@ public:
   
   
  private:
-	 MeIO_REG_TYPE   bitmask;
-  	 volatile MeIO_REG_TYPE *baseReg;
+	 WeIO_REG_TYPE   bitmask;
+  	 volatile WeIO_REG_TYPE *baseReg;
 
  	 uint8_t ROM_NO[8];
    	 uint8_t LastDiscrepancy;

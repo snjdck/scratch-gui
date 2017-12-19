@@ -1,14 +1,11 @@
 #include "WeBuzzer.h"
 #include <avr/wdt.h>
 
-WeBuzzer::WeBuzzer(void)
-{
-  buzzer_pin = 11;
-}
+uint8_t buzzer_pin;
 
 WeBuzzer::WeBuzzer(uint8_t port)
 {
-  buzzer_pin=port;
+  buzzer_pin=WeonePort[port];
 }
 
 
@@ -25,13 +22,11 @@ void WeBuzzer::tone(uint16_t frequency, uint32_t duration)
     delayMicroseconds(pulse);
     wdt_reset();
   }
-
 }
-
 void WeBuzzer::tone2(uint16_t frequency, uint32_t duration)
 {
   cli();
-  tone(frequency, duration);
+  tone(frequency,duration);
   sei();
 }
 

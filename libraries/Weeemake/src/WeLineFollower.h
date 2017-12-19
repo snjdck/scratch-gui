@@ -2,25 +2,16 @@
 #ifndef WeLineFollower_H
 #define WeLineFollower_H
 
-#include <stdint.h>
-#include <stdbool.h>
-#include <Arduino.h>
-
-#include "WeELFPort.h"
-
-
+#include "WePort.h"
 
 class WeLineFollower
 {
 public:
 
-  WeLineFollower(void);
-  WeLineFollower(uint8_t port);
-
-  void reset(uint8_t);
+  WeLineFollower(uint8_t port=0);
+  void reset(uint8_t port=0);
 
   void startRead(void);
-  uint8_t startRead(uint8_t);
   uint8_t readSensor1(void);
   uint8_t readSensor2(void);
 

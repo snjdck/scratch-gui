@@ -3,38 +3,37 @@
 
 TempOneWire::TempOneWire(void)
 {
-
 }
 
 TempOneWire::TempOneWire(uint8_t pin)
 {
-   bitmask = MePIN_TO_BITMASK(pin);
-   baseReg = MePIN_TO_BASEREG(pin);
+   bitmask = WePIN_TO_BITMASK(pin);
+   baseReg = WePIN_TO_BASEREG(pin);
 }
 void TempOneWire::reset(uint8_t pin)
 {
-  bitmask = MePIN_TO_BITMASK(pin);
-  baseReg = MePIN_TO_BASEREG(pin);
+  bitmask = WePIN_TO_BITMASK(pin);
+  baseReg = WePIN_TO_BASEREG(pin);
 }
 bool TempOneWire::readIO(void)
 {
-  MeIO_REG_TYPE           mask = bitmask;
-  volatile MeIO_REG_TYPE *reg MeIO_REG_ASM = baseReg;
+  WeIO_REG_TYPE           mask = bitmask;
+  volatile WeIO_REG_TYPE *reg WeIO_REG_ASM = baseReg;
   uint8_t r;
-  MeDIRECT_MODE_INPUT(reg, mask);    // allow it to float
+  WeDIRECT_MODE_INPUT(reg, mask);    // allow it to float
   delayMicroseconds(10);
-  r = MeDIRECT_READ(reg, mask);
+  r = WeDIRECT_READ(reg, mask);
   return(r);
 }
 uint8_t TempOneWire::reset(void)
 {
-  MeIO_REG_TYPE mask = bitmask;
-  volatile MeIO_REG_TYPE *reg MeIO_REG_ASM = baseReg;
+  WeIO_REG_TYPE mask = bitmask;
+  volatile WeIO_REG_TYPE *reg WeIO_REG_ASM = baseReg;
   uint8_t r;
   uint8_t retries = 125;
 
   noInterrupts();
-  MeDIRECT_MODE_INPUT(reg, mask);
+  WeDIRECT_MODE_INPUT(reg, mask);
   interrupts();
   /* wait until the wire is high... just in case */
   do
@@ -45,60 +44,60 @@ uint8_t TempOneWire::reset(void)
     }
     delayMicroseconds(2);
   }
-  while (!MeDIRECT_READ(reg, mask));
+  while (!WeDIRECT_READ(reg, mask));
 
   noInterrupts();
-  MeDIRECT_WRITE_LOW(reg, mask);
-  MeDIRECT_MODE_OUTPUT(reg, mask);        /* drive output low */
+  WeDIRECT_WRITE_LOW(reg, mask);
+  WeDIRECT_MODE_OUTPUT(reg, mask);        /* drive output low */
   interrupts();
   delayMicroseconds(480);
   noInterrupts();
-  MeDIRECT_MODE_INPUT(reg, mask);         /* allow it to float */
+  WeDIRECT_MODE_INPUT(reg, mask);         /* allow it to float */
   delayMicroseconds(70);
-  r = !MeDIRECT_READ(reg, mask);
+  r = !WeDIRECT_READ(reg, mask);
   interrupts();
   delayMicroseconds(410);
   return(r);
 }
 void TempOneWire::write_bit(uint8_t v)
 {
-  MeIO_REG_TYPE mask = bitmask;
-  volatile MeIO_REG_TYPE *reg MeIO_REG_ASM = baseReg;
+  WeIO_REG_TYPE mask = bitmask;
+  volatile WeIO_REG_TYPE *reg WeIO_REG_ASM = baseReg;
 
   if (v & 1)
   {
     noInterrupts();
-    MeDIRECT_WRITE_LOW(reg, mask);
-    MeDIRECT_MODE_OUTPUT(reg, mask);        /* drive output low */
+    WeDIRECT_WRITE_LOW(reg, mask);
+    WeDIRECT_MODE_OUTPUT(reg, mask);        /* drive output low */
     delayMicroseconds(10);
-    MeDIRECT_WRITE_HIGH(reg, mask);         /* drive output high */
+    WeDIRECT_WRITE_HIGH(reg, mask);         /* drive output high */
     interrupts();
     delayMicroseconds(55);
   }
   else
   {
     noInterrupts();
-    MeDIRECT_WRITE_LOW(reg, mask);
-    MeDIRECT_MODE_OUTPUT(reg, mask);        /* drive output low */
+    WeDIRECT_WRITE_LOW(reg, mask);
+    WeDIRECT_MODE_OUTPUT(reg, mask);        /* drive output low */
     delayMicroseconds(65);
-    MeDIRECT_WRITE_HIGH(reg, mask);         /* drive output high */
+    WeDIRECT_WRITE_HIGH(reg, mask);         /* drive output high */
     interrupts();
     delayMicroseconds(5);
   }
 }
 uint8_t TempOneWire::read_bit(void)
 {
-  MeIO_REG_TYPE mask = bitmask;
-  volatile MeIO_REG_TYPE *reg MeIO_REG_ASM = baseReg;
+  WeIO_REG_TYPE mask = bitmask;
+  volatile WeIO_REG_TYPE *reg WeIO_REG_ASM = baseReg;
   uint8_t r;
 
   noInterrupts();
-  MeDIRECT_MODE_OUTPUT(reg, mask);
-  MeDIRECT_WRITE_LOW(reg, mask);
+  WeDIRECT_MODE_OUTPUT(reg, mask);
+  WeDIRECT_WRITE_LOW(reg, mask);
   delayMicroseconds(3);
-  MeDIRECT_MODE_INPUT(reg, mask); /* let pin float, pull up will raise */
+  WeDIRECT_MODE_INPUT(reg, mask); /* let pin float, pull up will raise */
   delayMicroseconds(10);
-  r = MeDIRECT_READ(reg, mask);
+  r = WeDIRECT_READ(reg, mask);
   interrupts();
   delayMicroseconds(53);
   return(r);
@@ -114,8 +113,8 @@ void TempOneWire::write(uint8_t v, uint8_t power)
   if (!power)
   {
     noInterrupts();
-    MeDIRECT_MODE_INPUT(baseReg, bitmask);
-    MeDIRECT_WRITE_LOW(baseReg, bitmask);
+    WeDIRECT_MODE_INPUT(baseReg, bitmask);
+    WeDIRECT_WRITE_LOW(baseReg, bitmask);
     interrupts();
   }
 }
@@ -128,8 +127,8 @@ void TempOneWire::write_bytes(const uint8_t *buf, uint16_t count, bool power)
   if (!power)
   {
     noInterrupts();
-    MeDIRECT_MODE_INPUT(baseReg, bitmask);
-    MeDIRECT_WRITE_LOW(baseReg, bitmask);
+    WeDIRECT_MODE_INPUT(baseReg, bitmask);
+    WeDIRECT_WRITE_LOW(baseReg, bitmask);
     interrupts();
   }
 }
@@ -172,7 +171,7 @@ void TempOneWire::skip(void)
 void TempOneWire::depower(void)
 {
   noInterrupts();
-  MeDIRECT_MODE_INPUT(baseReg, bitmask);
+  WeDIRECT_MODE_INPUT(baseReg, bitmask);
   interrupts();
 }
 void TempOneWire::reset_search(void)

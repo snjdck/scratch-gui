@@ -2,11 +2,8 @@
 #ifndef WeInfraredReceiver_H
 #define WeInfraredReceiver_H
 
-#include <stdint.h>
-#include <stdbool.h>
-#include <Arduino.h>
 
-#include "WeELFPort.h"
+#include "WePort.h"
 
 /* NEC Code table */
 #define IR_CONTROLLER_A         (0x45)
@@ -117,15 +114,14 @@ class WeInfraredReceiver
 {
 public:
 
-  WeInfraredReceiver(void);
-  WeInfraredReceiver(uint8_t port);
-  void reset(uint8_t port);
+  WeInfraredReceiver(uint8_t port=0);
+  void reset(uint8_t port=0);
   
   int8_t decode_type; // NEC, SONY, RC5, UNKNOWN
-	unsigned long value; // Decoded value
-	uint8_t bits; // Number of bits in decoded value
-	volatile uint8_t *rawbuf; // Raw intervals in .5 us ticks
-	int rawlen; // Number of records in rawbuf.
+  unsigned long value; // Decoded value
+  uint8_t bits; // Number of bits in decoded value
+  volatile uint8_t *rawbuf; // Raw intervals in .5 us ticks
+  int rawlen; // Number of records in rawbuf.
 
   ErrorStatus decode();
   void begin(void);  

@@ -2,20 +2,14 @@
 #ifndef WeSoundSensor_H
 #define WeSoundSensor_H
 
-#include <stdint.h>
-#include <stdbool.h>
-#include <Arduino.h>
-
-#include "WeELFPort.h"
-
+#include "WePort.h"
 
 
 class WeSoundSensor
 {
 public:
 
-  WeSoundSensor(void);
-  WeSoundSensor(uint8_t port);
+  WeSoundSensor(uint8_t port=0);
 
   int16_t read(void);
   

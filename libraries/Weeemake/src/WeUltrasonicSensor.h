@@ -2,27 +2,21 @@
 #ifndef WeUltrasonicSensor_H
 #define WeUltrasonicSensor_H
 
-#include <stdint.h>
-#include <stdbool.h>
-#include <Arduino.h>
 
-#include "WeELFPort.h"
-
+#include "WePort.h"
 
 
 class WeUltrasonicSensor
 {
 public:
 
-  WeUltrasonicSensor(void);
-  WeUltrasonicSensor(uint8_t port);
+  WeUltrasonicSensor(uint8_t port=0);
+  void reset(uint8_t port=0);
 
   double distanceCm(void);
   void setColor1(uint8_t red, uint8_t green, uint8_t blue);
   void setColor2(uint8_t red, uint8_t green, uint8_t blue);
   void RGBShow(void);
-
-  void reset(uint8_t);
 
 
 

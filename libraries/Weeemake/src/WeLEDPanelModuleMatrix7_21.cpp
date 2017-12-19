@@ -1,102 +1,63 @@
 #include "WeLEDPanelModuleMatrix7_21.h"
 
 
-WeLEDPanelModuleMatrix7_21::WeLEDPanelModuleMatrix7_21(void)
-{
-}
-
 WeLEDPanelModuleMatrix7_21::WeLEDPanelModuleMatrix7_21(uint8_t port)
 {
- 	_WeLEDPanel.reset(port);
+  _WeLEDPanel.reset(WeonePort[port]);
 }
-
 void WeLEDPanelModuleMatrix7_21::reset(uint8_t port)
 {
- 	_WeLEDPanel.reset(port);
+  _WeLEDPanel.reset(WeonePort[port]);
 }
 
 void WeLEDPanelModuleMatrix7_21::setBrightness(uint8_t Bright)
 {
-	if((uint8_t)Bright>7){
-		Bright = 0x07;
-	}
+    if((uint8_t)Bright>7)
+    {
+        Bright = 0x07;
+    }
 
-	if((uint8_t)Bright >=0)
-	{
-		Bright = 0x88 | (uint8_t)Bright; 
-	}
+    if((uint8_t)Bright >=0)
+    {
+        Bright = 0x88 | (uint8_t)Bright; 
+    }
 
-	if(_WeLEDPanel.reset()==0)
-	{
-		_WeLEDPanel.write_byte(0x06); 
-		_WeLEDPanel.reset();
-		_WeLEDPanel.write_byte(Bright);
-		delayMicroseconds(3000);
-	}
+    if(_WeLEDPanel.reset()!=0)
+    return;
+     _WeLEDPanel.write_byte(0x06); 
+     _WeLEDPanel.reset();
+     _WeLEDPanel.write_byte(Bright);
+     delayMicroseconds(3000);
 }
 
 void WeLEDPanelModuleMatrix7_21::clearScreen(void)
 {
-	uint8_t i;
-	for (i=0;i<21;i++)
-	{
-		Display_Buffer[i]=0;
-	}
-	if(_WeLEDPanel.reset()!=0)
-		return;
-	_WeLEDPanel.write_byte(0x05);
-	delayMicroseconds(5000);
+  uint8_t i;
+  for (i=0;i<21;i++)
+  {
+  	 Display_Buffer[i]=0;
+  }
+   if(_WeLEDPanel.reset()!=0)
+   return;
+  _WeLEDPanel.write_byte(0x05);
+  delayMicroseconds(5000);
 }
-
 void WeLEDPanelModuleMatrix7_21::writePanelData(void)
 {
-	uint8_t i;
-	if(_WeLEDPanel.reset()!=0)
-		return;
-	_WeLEDPanel.write_byte(0x02);
-	if(_WeLEDPanel.reset()!=0)
-	{
-		delayMicroseconds(3000);
-		return;
-	}
-	for(i=0;i<21;i++)
-	{
-		_WeLEDPanel.write_byte(Display_Buffer[i]);
-	}
-	delayMicroseconds(3000);
-}
-
-void WeLEDPanelModuleMatrix7_21::showBitmap(int x, int y, uint8_t *data)
-{
-	const int w = 21;
-	const int h = 7;
-	for(int i=0; i<w; ++i){
-		Display_Buffer[i] = 0;
-	}
-	if(x <= -w || x >= w || y <= -h || y >= h){
-		clearScreen();
-		return;
-	}
-	if(_WeLEDPanel.reset() != 0)
-		return;
-	_WeLEDPanel.write_byte(0x02);
-	if(_WeLEDPanel.reset() != 0)
-	{
-		delayMicroseconds(3000);
-		return;
-	}
-	for(int i=-x; i<w-x; i++){
-		uint8_t value = 0;
-		if(0 <= i && i < w){
-			if(y >= 0){
-				value = data[i] << y;
-			}else{
-				value = data[i] >> -y;
-			}
-		}
-		Display_Buffer[i] = value;
-		_WeLEDPanel.write_byte(value);
-	}
+  uint8_t i;
+   if(_WeLEDPanel.reset()!=0)
+   return;
+  _WeLEDPanel.write_byte(0x02);
+  if(_WeLEDPanel.reset()!=0)
+  {
+     delayMicroseconds(3000);
+     return;
+  }
+  for (i=0;i<21;i++)
+  {
+    _WeLEDPanel.write_byte(Display_Buffer[i]);
+  }
+  delayMicroseconds(3000);
 }
 /*
 void WeLEDPanelModuleMatrix7_21::showPanel(void)
@@ -106,37 +67,61 @@ void WeLEDPanelModuleMatrix7_21::showPanel(void)
   delayMicroseconds(3000);
 }
 */
+void WeLEDPanelModuleMatrix7_21::showBitmap(int8_t x, int8_t y, uint8_t *data)
+	{
+	  const int w = 21;
+	  const int h = 7;
+	  if(x <= -w || x >= w || y <= -h || y >= h){
+		clearScreen();
+		return;
+	  }
+	  _WeLEDPanel.reset();
+	  _WeLEDPanel.write_byte(0x02);
+	  _WeLEDPanel.reset();
+	  for(int i=-x; i<w-x; i++){
+		uint8_t value = 0;
+		if(0 <= i && i < w){
+		  if(y >= 0){
+			value = data[i] << y;
+		  }else{
+			value = data[i] >> -y;
+		  }
+		}
+		_WeLEDPanel.write_byte(value);
+	  }
+	}
+
 void WeLEDPanelModuleMatrix7_21::showLine(uint8_t x,uint8_t buffer)
 {
-	if(x >= 21)
-		return;
-	if(_WeLEDPanel.reset()!=0)
-		return;
-	_WeLEDPanel.write_byte(0x03);
-	if(_WeLEDPanel.reset()!=0)
-		return;
-	_WeLEDPanel.write_byte(x);
-	_WeLEDPanel.write_byte(buffer);
+  if(_WeLEDPanel.reset()!=0)
+   return;
+  _WeLEDPanel.write_byte(0x03);
+  if (_WeLEDPanel.reset()!=0)
+   return;
+  _WeLEDPanel.write_byte(x);
+  _WeLEDPanel.write_byte(buffer);
  // Display_Buffer[x]=buffer;
- // delayMicroseconds(3000);
+//  delayMicroseconds(1000);
 }
 void WeLEDPanelModuleMatrix7_21::turnOnDot(uint8_t x,uint8_t y)
 { 
-	if(x >= 21 || y >= 7)
-		return;
-	Display_Buffer[x] |= 1 << y;
-	showLine(x, Display_Buffer[x]);
+   if(x>20||y>6)
+   	return;
+   Display_Buffer[x]=Display_Buffer[x]|(0x01<<(y));   
+   showLine(x,Display_Buffer[x]);
+
 }
 
 void WeLEDPanelModuleMatrix7_21::turnOffDot(uint8_t x,uint8_t y)
 { 
-	if(x >= 21 || y >= 7)
-		return;
-	Display_Buffer[x] &= ~(1 << y);
-	showLine(x, Display_Buffer[x]);
+   if(x>20||y>6)
+   return;
+   Display_Buffer[x]=Display_Buffer[x]&(~(0x01<<(y)));
+   showLine(x,Display_Buffer[x]);
+
 }
 
-void WeLEDPanelModuleMatrix7_21::showChar(char X_position,char Y_position,const char *str)
+void WeLEDPanelModuleMatrix7_21::showChar(int8_t X_position,int8_t Y_position,const char *str)
 {
   uint8_t number_of_Str,display_Buffer[20]={0},X_Digits=0;
   
@@ -171,7 +156,7 @@ void WeLEDPanelModuleMatrix7_21::showChar(char X_position,char Y_position,const 
       {
 	    break;
       }
-	  writeChar(X_position+i*6,0,3);
+	  writeChar(X_position+i*6,0,3);     //清除后面不显示的字段
 	  
     }
     else
@@ -184,7 +169,7 @@ void WeLEDPanelModuleMatrix7_21::showChar(char X_position,char Y_position,const 
    	}
 	i++;
   }
-  while(X_position>0)
+  while(X_position>0)                //清除前面不显示的字段
   {
     showLine(X_position-1,0x00);
 	X_position--;
@@ -193,22 +178,31 @@ void WeLEDPanelModuleMatrix7_21::showChar(char X_position,char Y_position,const 
 
 void WeLEDPanelModuleMatrix7_21::showClock(uint8_t hour, uint8_t minute, bool point_flag)
 {
-	writeChar(-1, 0, hour / 10 + 15);
-	writeChar(4,  0, hour % 10 + 15);
-	writeChar(11, 0, minute / 10 + 15);
-	writeChar(16, 0, minute % 10 + 15);
-	showLine(10, point_flag ? 0x14 : 0x00);
+
+   writeChar(-1,0,hour/10+15);
+   writeChar(4,0,hour%10+15); 
+   writeChar(11,0,minute/10+15);   
+   writeChar(16,0,minute%10+15);
+
+   if(point_flag==1)
+  {
+	showLine(10,0x14);
+  }
+  else
+  {
+	showLine(10,0x00);
+  }
 }
 
-void WeLEDPanelModuleMatrix7_21::writeChar(char X_position,char Y_position,uint8_t buffer)
+void WeLEDPanelModuleMatrix7_21::writeChar(int8_t X_position,int8_t Y_position,uint8_t buffer)
 {
-	if(_WeLEDPanel.reset()!=0)
-		return;
-	_WeLEDPanel.write_byte(0x07);
-	if(_WeLEDPanel.reset()!=0)
-		return;
-	_WeLEDPanel.write_byte(X_position);
-	_WeLEDPanel.write_byte(Y_position);
+     if(_WeLEDPanel.reset()!=0)
+     return;
+    _WeLEDPanel.write_byte(0x07);
+     if(_WeLEDPanel.reset()!=0)
+     return;
+    _WeLEDPanel.write_byte(X_position);
+    _WeLEDPanel.write_byte(Y_position);
 	_WeLEDPanel.write_byte(buffer);
 	delayMicroseconds(3000);
 }

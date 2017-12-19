@@ -1,17 +1,10 @@
 #include "WeButton.h"
 
 
-WeButton::WeButton(void)
-{
-
-}
-
 WeButton::WeButton(uint8_t port)
 {
-  _Sensorpin=port;
+  _Sensorpin=WeonePort[port];
 }
-
-
 
 int16_t WeButton::read(void)
 {

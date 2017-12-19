@@ -1,14 +1,10 @@
 #include "WeOneWire.h"
 
-
-
- 
-
 WeOneWire::WeOneWire(uint8_t pin)
 {
   WePIN=pin;
-  bitmask = MePIN_TO_BITMASK(pin);
-  baseReg = MePIN_TO_BASEREG(pin);
+  bitmask = WePIN_TO_BITMASK(pin);
+  baseReg = WePIN_TO_BASEREG(pin);
 }
 
 WeOneWire::WeOneWire(void)
@@ -19,38 +15,23 @@ WeOneWire::WeOneWire(void)
 void WeOneWire::reset(uint8_t pin)
 {
   WePIN=pin;
-  bitmask = MePIN_TO_BITMASK(pin);
-  baseReg = MePIN_TO_BASEREG(pin);
+  bitmask = WePIN_TO_BITMASK(pin);
+  baseReg = WePIN_TO_BASEREG(pin);
 }
 
 uint8_t WeOneWire::reset(void)
 { 
-	MeIO_REG_TYPE mask = bitmask;
-	 volatile MeIO_REG_TYPE *reg MeIO_REG_ASM = baseReg;
+	WeIO_REG_TYPE mask = bitmask;
+	volatile WeIO_REG_TYPE *reg WeIO_REG_ASM = baseReg;
 
   uint8_t r;
-//  noInterrupts();
-//  digitalWrite(WePIN,LOW);
-//  pinMode(WePIN,OUTPUT);
 
-  MeDIRECT_MODE_OUTPUT(reg, mask);
- MeDIRECT_WRITE_LOW(reg, mask);
-
- // interrupts();
-//  delayMicroseconds(480);
- delayMicroseconds(480);
-
- // noInterrupts();
-//  pinMode(WePIN,INPUT);
-  MeDIRECT_MODE_INPUT(reg, mask);
-  
-//  delayMicroseconds(140);
+  WeDIRECT_MODE_OUTPUT(reg, mask);
+  WeDIRECT_WRITE_LOW(reg, mask);
+  delayMicroseconds(480);
+  pinMode(WePIN,INPUT);
   delayMicroseconds(50);
-
-//  r=digitalRead(WePIN);
-  r=MeDIRECT_READ(reg, mask);
-//  interrupts();
-//  delayMicroseconds(140);
+  r=WeDIRECT_READ(reg, mask);
   delayMicroseconds(100);
 
   return(r);
@@ -58,34 +39,22 @@ uint8_t WeOneWire::reset(void)
 
 uint8_t WeOneWire::respond(void)
 { 
-	MeIO_REG_TYPE mask = bitmask;
-	 volatile MeIO_REG_TYPE *reg MeIO_REG_ASM = baseReg;
+	WeIO_REG_TYPE mask = bitmask;
+	 volatile WeIO_REG_TYPE *reg WeIO_REG_ASM = baseReg;
 
   unsigned long time;
   time = millis();
-  MeDIRECT_MODE_INPUT(reg, mask);
-  while(MeDIRECT_READ(reg, mask)==1)
+  WeDIRECT_MODE_INPUT(reg, mask);
+  while(WeDIRECT_READ(reg, mask)==1)
   {
   	if((millis()-time)>100)
 	return 0;
   }
-//  pinMode(WePIN,INPUT);
-
-
-  while(MeDIRECT_READ(reg, mask)==0);
- // delayMicroseconds(450);
-//  noInterrupts();
-//  digitalWrite(WePIN,LOW);
-  MeDIRECT_MODE_OUTPUT(reg, mask);
-
-  MeDIRECT_WRITE_LOW(reg, mask);
- // pinMode(WePIN,OUTPUT);
-  //interrupts();
- // delayMicroseconds(460);
-// delayMicroseconds(300);
+  while(WeDIRECT_READ(reg, mask)==0);
+  WeDIRECT_MODE_OUTPUT(reg, mask);
+  WeDIRECT_WRITE_LOW(reg, mask);
   delayMicroseconds(30);
-//  pinMode(WePIN,INPUT);
-  MeDIRECT_MODE_INPUT(reg, mask);
+  pinMode(WePIN,INPUT);
   return 1;
 }
 
@@ -117,27 +86,21 @@ uint8_t WeOneWire::read_bit(void)
 {
   uint8_t r;
   unsigned long time;
-  MeIO_REG_TYPE mask = bitmask;
-  volatile uint8_t *reg MeIO_REG_ASM = baseReg;
+  WeIO_REG_TYPE mask = bitmask;
+  volatile uint8_t *reg WeIO_REG_ASM = baseReg;
   time = millis();
  
-  while(MeDIRECT_READ(reg, mask)==1)
+  while(WeDIRECT_READ(reg, mask)==1)
   {
   	if((millis()-time)>3)
 	break;
   }
- //while(MeDIRECT_READ(reg, mask)==0);
- // delayMicroseconds(45);
   noInterrupts();
   delayMicroseconds(30);
- //noInterrupts();
-
- // r=digitalRead(WePIN);
-  r = MeDIRECT_READ(reg, mask);
+  r = WeDIRECT_READ(reg, mask);
   interrupts();
 
   delayMicroseconds(40);
- // while(MeDIRECT_READ(reg, mask)==0);
   return(r);
 }
 

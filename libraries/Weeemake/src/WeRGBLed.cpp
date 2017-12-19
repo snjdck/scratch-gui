@@ -1,38 +1,28 @@
 #include "WeRGBLed.h"
 
 
-WeRGBLed::WeRGBLed(void):pixels(0)
-{
 
-}
-
-WeRGBLed::WeRGBLed(uint8_t port):pixels(0)
+WeRGBLed::WeRGBLed(uint8_t port)
 {
-  pinMask       = digitalPinToBitMask(port);
-  ws2812_port   = portOutputRegister(digitalPinToPort(port));
+  pinMask       = digitalPinToBitMask(WeonePort[port]);
+  ws2812_port   = portOutputRegister(digitalPinToPort(WeonePort[port]));
   
-  pinMode(port, OUTPUT);
+  pinMode(WeonePort[port], OUTPUT);
   setNumber(DEFAULT_MAX_LED_NUMBER);
 
 }
 
 void WeRGBLed::reset(uint8_t port)
 {
-  pinMask       = digitalPinToBitMask(port);
-  ws2812_port   = portOutputRegister(digitalPinToPort(port));
+  pinMask       = digitalPinToBitMask(WeonePort[port]);
+  ws2812_port   = portOutputRegister(digitalPinToPort(WeonePort[port]));
   
-  pinMode(port, OUTPUT);
+  pinMode(WeonePort[port], OUTPUT);
   setNumber(DEFAULT_MAX_LED_NUMBER);
 }
 
 void WeRGBLed::setNumber(uint8_t num_leds)
 {
-  if(pixels){
-    if(count_led == num_leds){
-      return;
-    }
-    free(pixels);
-  }
   count_led = num_leds;
   pixels    = (uint8_t*)malloc(count_led * 3);
   if(!pixels)

@@ -1,9 +1,6 @@
 #ifndef WeOneWire_H
 #define WeOneWire_H
 
-#include <stdint.h>
-#include <stdbool.h>
-#include <Arduino.h>
 #include <WeConfig.h>
 
 
@@ -11,12 +8,11 @@ class WeOneWire
 {
 private:
 	uint8_t WePIN;
-	  uint8_t   bitmask;
-  volatile MeIO_REG_TYPE *baseReg;
-//  MeIO_REG_TYPE mask = bitmask;
-//  volatile MeIO_REG_TYPE *reg MeIO_REG_ASM = baseReg;
+	uint8_t   bitmask;
+    volatile WeIO_REG_TYPE *baseReg;
+
 public:
-   WeOneWire(uint8_t pin);
+    WeOneWire(uint8_t pin);
     WeOneWire();
    void reset(uint8_t pin);
    

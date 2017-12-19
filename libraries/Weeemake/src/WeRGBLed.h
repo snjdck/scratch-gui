@@ -2,11 +2,7 @@
 #ifndef WeRGBLed_H
 #define WeRGBLed_H
 
-#include <stdint.h>
-#include <stdbool.h>
-#include <Arduino.h>
-
-#include "WeELFPort.h"
+#include "WePort.h"
 
 #define DEFAULT_MAX_LED_NUMBER  (32)
 
@@ -22,8 +18,7 @@ class WeRGBLed
 {
 public:
 
-  WeRGBLed(void);
-  WeRGBLed(uint8_t port);
+  WeRGBLed(uint8_t port=0);
   ~WeRGBLed(void);
 
   void setNumber(uint8_t num_led);
@@ -33,7 +28,7 @@ public:
   
   bool setColor(uint8_t index, long value);
   void show(void);
-  void reset(uint8_t);
+  void reset(uint8_t port=0);
 
 
 

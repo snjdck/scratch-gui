@@ -1,14 +1,10 @@
 #include "WeSoundSensor.h"
 
 
-WeSoundSensor::WeSoundSensor(void)
-{
-
-}
 
 WeSoundSensor::WeSoundSensor(uint8_t port)
 {
-  _Sensorpin=port;
+  _Sensorpin=WeonePort[port];
 }
 
 

@@ -74,26 +74,22 @@ ISR(TIMER_INTR_NAME)
 		  // irparams.lastTime = new_time;
 }
 
-WeInfraredReceiver::WeInfraredReceiver(void)
-{
-
-}
-
 WeInfraredReceiver::WeInfraredReceiver(uint8_t port)
 {
-  _RxPin=port;
+  _RxPin=WeonePort[port];
   pinMode(_RxPin,INPUT);
   irparams.recvpin = _RxPin;
 }
 
 void WeInfraredReceiver::reset(uint8_t port)
 {
-  if(_RxPin == port)
+  if(_RxPin == WeonePort[port])
     return;
-  _RxPin=port;
+  _RxPin=WeonePort[port];
   pinMode(_RxPin,INPUT);
   irparams.recvpin = _RxPin;
 }
+
 
 void WeInfraredReceiver::begin(void)
 {

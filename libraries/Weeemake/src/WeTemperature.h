@@ -2,13 +2,8 @@
 #ifndef WeTemperature_H
 #define WeTemperature_H
 
-#include <stdint.h>
-#include <stdbool.h>
-#include <Arduino.h>
-#include "WeConfig.h"
 #include "TempOneWire.h"
-
-#include "WeELFPort.h"
+#include "WePort.h"
 
 /* DS18B20 commands */
 #define STARTCONVO       0x44    // Tells device to take a temperature reading and put it on the scratchpad
@@ -25,9 +20,8 @@ class WeTemperature
 {
 public:
 
-  WeTemperature(void);
-  WeTemperature(uint8_t port);
-  void reset(uint8_t port);
+  WeTemperature(uint8_t port=0);
+  void reset(uint8_t port=0);
   float temperature(void);
   private:
 	  TempOneWire _ts;

@@ -1,19 +1,15 @@
 #include "WeTemperature.h"
 
-WeTemperature::WeTemperature(void)
-{
-
-}
 
 WeTemperature::WeTemperature(uint8_t port)
 {
-  _DataPin=port;
-  _ts.reset(port);
+  _DataPin=WeonePort[port];
+  _ts.reset(WeonePort[port]);
 }
 
 void WeTemperature::reset(uint8_t port)
 {
-  _ts.reset(port);
+  _ts.reset(WeonePort[port]);
 }
 
 float WeTemperature::temperature(void)

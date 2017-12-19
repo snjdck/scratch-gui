@@ -2,20 +2,13 @@
 #ifndef WeLightSensor_H
 #define WeLightSensor_H
 
-#include <stdint.h>
-#include <stdbool.h>
-#include <Arduino.h>
-
-#include "WeELFPort.h"
-
-
+#include "WePort.h"
 
 class WeLightSensor
 {
 public:
 
-  WeLightSensor(void);
-  WeLightSensor(uint8_t port);
+  WeLightSensor(uint8_t port=0);
 
   int16_t read(void);
   

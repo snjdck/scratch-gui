@@ -1,14 +1,8 @@
 #include "WeLightSensor.h"
 
-
-WeLightSensor::WeLightSensor(void)
-{
-
-}
-
 WeLightSensor::WeLightSensor(uint8_t port)
 {
-  _Sensorpin=port;
+  _Sensorpin=WeonePort[port];
 }
 
 

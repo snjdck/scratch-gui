@@ -1,25 +1,21 @@
 #include "WeUltrasonicSensor.h"
 
 
-WeUltrasonicSensor::WeUltrasonicSensor(void)
-{
-}
-
 WeUltrasonicSensor::WeUltrasonicSensor(uint8_t port)
 {
-  _WeUltrasonicSensor.reset(port);
+  _WeUltrasonicSensor.reset(WeonePort[port]);
 }
-
 void WeUltrasonicSensor::reset(uint8_t port)
 {
-  _WeUltrasonicSensor.reset(port);
+  _WeUltrasonicSensor.reset(WeonePort[port]);
 }
 
 
 double WeUltrasonicSensor::distanceCm(void)
 {
 	uint16_t distance=0;
-   _WeUltrasonicSensor.reset();
+   if (_WeUltrasonicSensor.reset()!=0)
+   	return 500;
    _WeUltrasonicSensor.write_byte(0x02);
    _WeUltrasonicSensor.respond();
    _Sensor_data1=_WeUltrasonicSensor.read_byte();
@@ -47,9 +43,11 @@ void WeUltrasonicSensor::setColor2(uint8_t red, uint8_t green, uint8_t blue)
 }
 void WeUltrasonicSensor::RGBShow(void)
 {
-  _WeUltrasonicSensor.reset();
+   if (_WeUltrasonicSensor.reset()!=0)
+   	return;
   _WeUltrasonicSensor.write_byte(0x03);
-  _WeUltrasonicSensor.reset();
+  if (_WeUltrasonicSensor.reset()!=0)
+   	return;
   _WeUltrasonicSensor.write_byte(_RGB1_data[0]);
   _WeUltrasonicSensor.write_byte(_RGB1_data[1]);
   _WeUltrasonicSensor.write_byte(_RGB1_data[2]);
