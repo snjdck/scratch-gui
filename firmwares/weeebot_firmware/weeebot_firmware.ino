@@ -1,23 +1,34 @@
-#include <WeELFPort.h>
+#include <WeELF328P.h>
+
+#ifdef _WeELF328P_H
+#define MAX_SERVO_COUNT 10
+#define LED_MATRIX_WIDTH 21
+#define DEFAULT_IR_PIN PORT_2
+#endif
+
+#ifdef _WeELFMini_H
+#define MAX_SERVO_COUNT 4
+#define LED_MATRIX_WIDTH 14
+#define DEFAULT_IR_PIN OnBoard_IR
+#endif
 
 const uint8_t sensor_port[4] = {PORT_A,PORT_B,PORT_C,PORT_D};
 uint8_t sensor_slot[4] = {0};
 WeOneWire portDetect;
 
-const uint8_t ON_BOARD_PIN_RGB_GROUP = 13;
-const uint8_t ON_BOARD_PINS[] = {0, PORT_1, PORT_2, PORT_3, PORT_4, PORT_5, PORT_6, ON_BOARD_PIN_RGB_GROUP};
-
+WeIRAvoidSensor IRAvoid;
+WeSingleLineFollower singleLF;
 WeUltrasonicSensor ultraSensor;
 WeLineFollower lineFollower;
 WeLEDPanelModuleMatrix7_21 ledPanel;
 WeDCMotor dc;
 WeTemperature ts;
 WeRGBLed led;
-WeBuzzer buzzer;
-WeInfraredReceiver ir(PORT_2);
+WeBuzzer buzzer(OnBoard_Buzzer);
+WeInfraredReceiver ir(DEFAULT_IR_PIN);
 
-Servo servos[6];
-uint8_t servo_pins[6]={0};
+Servo servos[MAX_SERVO_COUNT];
+uint8_t servo_pins[MAX_SERVO_COUNT]={0};
 
 uint8_t IR_VALUE = 0;
 
@@ -44,9 +55,11 @@ const uint8_t MSG_ID_LED_MATRIX_BITMAP = 115;
 const uint8_t MSG_ID_LED_MATRIX_PIXEL_SHOW = 1;
 const uint8_t MSG_ID_LED_MATRIX_PIXEL_HIDE = 2;
 const uint8_t MSG_ID_LED_MATRIX_CLEAR = 3;
+const uint8_t MSG_ID_SINGLE_LINE_FOLLOWER = 116;
+const uint8_t MSG_ID_IR_AVOID = 117;
 
 int searchServoPin(int pin){
-	for(int i=0;i<6;i++){
+	for(int i=0;i<MAX_SERVO_COUNT;i++){
 		if(servo_pins[i] == pin){
 			return i;
 		}
@@ -94,7 +107,7 @@ void parsePinVal(char * cmd, int * pin, int * v0, int * v1, int * v2, int * v3) 
     sscanf(cmd, "%d %d %d %d %d\n", pin, v0, v1, v2, v3);
   }
 }
-
+/*
 // parse left or right value
 void parseLR(char * cmd, int * lvalue, int * rvalue){
   char * tmp;
@@ -139,28 +152,8 @@ void parseLR(char * cmd, int * lvalue, int * rvalue, int * lspd, int * rspd) {
   }
 
 }
-
-
-/*
-void readUltrasonicSensor(char *cmd)
-{
-	int port = nextInt(&cmd);
-	if(us.getPort() != port){
-		us.reset(port);
-	}
-	float value = (float)us.distanceCm();
-	Serial.println(value);
-}
-
-void readLineFollower(char *cmd)
-{
-	MePort port(nextInt(&cmd));
-	pinMode(port.pin1(), INPUT);
-	pinMode(port.pin2(), INPUT);
-	int value = (port.dRead1() << 1) + port.dRead2();
-	Serial.println(value);
-}
 */
+
 void nextStr(char **cmd)
 {
 	while(' ' != *(*cmd)++);
@@ -179,17 +172,6 @@ void nextCharInt(char **cmd, char *c, int *i)
 	*i = atoi(*cmd+1);
 }
 
-uint8_t port_to_pin(uint8_t port, uint8_t defaultPin=0)
-{
-	uint8_t pin = ON_BOARD_PINS[port];
-	return port > 0 ? pin : defaultPin;
-}
-
-uint8_t nextPin(char **cmd, uint8_t defaultPin=0)
-{
-	return port_to_pin(nextInt(cmd), defaultPin);
-}
-
 
 
 
@@ -198,8 +180,7 @@ void doRgb(char * cmd)
 	nextStr(&cmd);
 	int port, pix, r, g, b;
 	parsePinVal(cmd, &port, &pix, &r, &g, &b);
-	uint8_t pin = port_to_pin(port, OnBoard_RGB);
-	led.reset(pin);
+	led.reset(port);
 	led.setColor(pix, r >> 4, g >> 4, b >> 4);
 	led.show();
 }
@@ -212,7 +193,7 @@ void doDcSpeed(char *cmd)
 
 void doServo(char *cmd)
 {
-	int pin = nextPin(&cmd);
+	int pin = nextInt(&cmd);
 	int v = nextInt(&cmd);
 	Servo sv = servos[searchServoPin(pin)];
 	if(v >= 0 && v <= 180)
@@ -243,19 +224,21 @@ void doDcStop(char *cmd)
 
 void getLightSensor(char *cmd)
 {
-	uint8_t pin = nextPin(&cmd);
+	uint8_t pin = nextInt(&cmd);
 	pinMode(pin, INPUT);
 	Serial.println(analogRead(pin));
 }
 
 void getSound(char *cmd)
 {
-	getLightSensor(cmd);
+	uint8_t pin = nextInt(&cmd);
+	pinMode(pin, INPUT);
+	Serial.println(analogRead(pin));
 }
 
 void getIR(char *cmd)
 {
-	uint8_t pin = nextPin(&cmd);
+	uint8_t pin = nextInt(&cmd);
 	ir.reset(pin);
 	int code = nextInt(&cmd);
 	Serial.println(IR_VALUE == code ? "true" : "false");
@@ -263,15 +246,15 @@ void getIR(char *cmd)
 
 void getTemperature(char *cmd)
 {
-	uint8_t pin = nextPin(&cmd);
+	uint8_t pin = nextInt(&cmd);
 	ts.reset(pin);
 	float value = ts.temperature();
 	Serial.println(value);
 }
 
-void getOnBoardButton(char *cmd)
+void getButton(char *cmd)
 {
-	uint8_t pin = nextPin(&cmd, OnBoard_Button);
+	uint8_t pin = nextInt(&cmd);
 	pinMode(pin, INPUT);
 	boolean pressed = digitalRead(pin) == 0;
 	Serial.println(pressed ? "true" : "false");
@@ -289,6 +272,20 @@ void getUltrasonic(char *cmd)
 	int port = nextInt(&cmd);
 	ultraSensor.reset(port);
 	Serial.println(ultraSensor.distanceCm());
+}
+
+void getIRAvoid(char *cmd)
+{
+	int port = nextInt(&cmd);
+	IRAvoid.reset(port);
+	Serial.println(IRAvoid.isObstacle() ? "true" : "false");
+}
+
+void getSingleLineFollower(char *cmd)
+{
+	int port = nextInt(&cmd);
+	singleLF.reset(port);
+	Serial.println(singleLF.read());
 }
 
 void doUltrasonicLed(char *cmd)
@@ -348,8 +345,8 @@ void doLedMatrixShowBitmap(char *cmd)
 	int port = nextInt(&cmd);
 	int x = nextInt(&cmd);
 	int y = nextInt(&cmd);
-	byte data[21];
-	for(int i=0; i<21; ++i){
+	byte data[LED_MATRIX_WIDTH];
+	for(int i=0; i<LED_MATRIX_WIDTH; ++i){
 		data[i] = nextInt(&cmd);
 	}
 	ledPanel.reset(port);
@@ -385,10 +382,11 @@ void doStopAll(char *cmd)
 {
 	//stop motor
 	doDcStop(0);
-	//stop board RGB_LED
+#ifdef OnBoard_RGB
 	led.reset(OnBoard_RGB);
 	led.setColor(0,0,0,0);
 	led.show();
+#endif
 	//stop RJ11 sensors
 	for(int i=0; i<sizeof(sensor_slot);++i){
 		if(!sensor_slot[i]){
@@ -426,7 +424,7 @@ void parseMcode(char *cmd)
 			break;
 		case MSG_ID_BOARD_BUTTON:
 			queryFlag = true;
-			handler = getOnBoardButton;
+			handler = getButton;
 			break;
 		case MSG_ID_BOARD_LIGHT:
 			queryFlag = true;
@@ -485,6 +483,14 @@ void parseMcode(char *cmd)
 		case MSG_ID_LED_MATRIX_CLEAR:
 			handler = doLedMatrixClear;
 			break;
+		case MSG_ID_SINGLE_LINE_FOLLOWER:
+			queryFlag = true;
+			handler = getSingleLineFollower;
+			break;
+		case MSG_ID_IR_AVOID:
+			queryFlag = true;
+			handler = getIRAvoid;
+			break;
 		default:
 			return;
 	}
@@ -497,13 +503,8 @@ void parseMcode(char *cmd)
 
 void parseCmd(char *cmd)
 {
-	switch(cmd[0])
-	{
-		case 'M':
-			parseMcode(cmd);
-			break;
-		case 'G':
-			break;
+	if(cmd[0] == 'M'){
+		parseMcode(cmd);
 	}
 }
 
@@ -555,7 +556,6 @@ void loopSerial()
 			buffer[buffer_index+2] = 0;
 			buffer_index = 0;
 			parseCmd(buffer);
-			memset(buffer, 0, buffer_len);
 		}else{
 			buffer[buffer_index] = nextChar;
 			buffer_index = (buffer_index + 1) % buffer_len;
