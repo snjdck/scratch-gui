@@ -33,7 +33,32 @@
 #include "WeTiltSwitch.h"
 #include "WePIRSensor.h"
 
+#define PORT_1  (0x01)
+#define PORT_2  (0x02)
+#define PORT_3  (0x03)
+#define PORT_4  (0x04)
+#define PORT_5  (0x05)
+#define PORT_6  (0x06)
+#define PORT_A  (0x07)
+#define PORT_B  (0x08)
+#define PORT_C  (0x09)
+#define PORT_D  (0x0a)
 
+#define OnBoard_RGB           (0x0b)
+#define OnBoard_Button        (0x0c)
+#define OnBoard_Buzzer        (0x0d)
+
+
+#define M1      (0x01)
+#define M2      (0x02)
+#define M3      (0x03)
+#define M4      (0x04)
+#define M5      (0x05)
+#define M6      (0x06)
+#define M7      (0x07)
+#define M8      (0x08)
+#define M9      (0x09)
+#define M10     (0x0A)
 
 
 uint8_t WeonePort[17]=

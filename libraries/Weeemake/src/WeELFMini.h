@@ -33,6 +33,20 @@
 #include "WePIRSensor.h"
 
 
+#define PORT_A  (0x07)
+#define PORT_B  (0x08)
+#define PORT_C  (0x09)
+#define PORT_D  (0x0a)
+
+#define OnBoard_Buzzer        (0x0d)
+#define OnBoard_IR            (0x0e)
+#define OnBoard_Light         (0x0f)
+#define OnBoard_Sound         (0x10)
+
+
+#define M1      (0x01)
+#define M2      (0x02)
+
 
 uint8_t WeonePort[17]=
 {
