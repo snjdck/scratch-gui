@@ -3,11 +3,11 @@
 
 WeSlidingPotentiomter::WeSlidingPotentiomter(uint8_t port)
 {
-  _WeSlidingPotentiomter.reset(WeonePort[port]);
+  _WeSlidingPotentiomter.reset(port);
 }
 void WeSlidingPotentiomter::reset(uint8_t port)
 {
-	_WeSlidingPotentiomter.reset(WeonePort[port]);
+	_WeSlidingPotentiomter.reset(port);
 }
 
 

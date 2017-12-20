@@ -2,11 +2,11 @@
 
 WeTouchSensor::WeTouchSensor(uint8_t port)
 {
-  _WeTouchSensor.reset(WeonePort[port]);
+  _WeTouchSensor.reset(port);
 }
 void WeTouchSensor::reset(uint8_t port)
 {
-	_WeTouchSensor.reset(WeonePort[port]);
+	_WeTouchSensor.reset(port);
 }
 
 void WeTouchSensor::setMode(uint8_t mode)

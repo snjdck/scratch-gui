@@ -3,11 +3,11 @@
 
 WeGasSensor::WeGasSensor(uint8_t port)
 {
-  _WeGasSensor.reset(WeonePort[port]);
+  _WeGasSensor.reset(port);
 }
 void WeGasSensor::reset(uint8_t port)
 {
-	_WeGasSensor.reset(WeonePort[port]);
+	_WeGasSensor.reset(port);
 }
 void WeGasSensor::CloseLED(void)
 {

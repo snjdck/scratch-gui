@@ -3,11 +3,11 @@
 
 WePotentiomter::WePotentiomter(uint8_t port)
 {
-  _WePotentiomter.reset(WeonePort[port]);
+  _WePotentiomter.reset(port);
 }
 void WePotentiomter::reset(uint8_t port)
 {
-	_WePotentiomter.reset(WeonePort[port]);
+	_WePotentiomter.reset(port);
 }
 void WePotentiomter::CloseLED(void)
 {

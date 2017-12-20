@@ -2,11 +2,11 @@
 
 WeRGBLED_RJ::WeRGBLED_RJ(uint8_t port)
 {
-  _WeRGBLED_RJ.reset(WeonePort[port]);
+  _WeRGBLED_RJ.reset(port);
 }
 void WeRGBLED_RJ::reset(uint8_t port)
 {
-  _WeRGBLED_RJ.reset(WeonePort[port]);
+  _WeRGBLED_RJ.reset(port);
 }
 
 

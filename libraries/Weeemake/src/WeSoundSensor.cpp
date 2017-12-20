@@ -4,7 +4,7 @@
 
 WeSoundSensor::WeSoundSensor(uint8_t port)
 {
-  _Sensorpin=WeonePort[port];
+  _Sensorpin=port;
 }
 
 

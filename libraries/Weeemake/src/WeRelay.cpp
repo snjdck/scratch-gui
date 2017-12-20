@@ -2,13 +2,13 @@
 
 WeRelay::WeRelay(uint8_t port)
 {
-    _WeRelay.reset(WeonePort[port]);
+    _WeRelay.reset(port);
 	
 }
 
 void WeRelay::reset(uint8_t port)
 {	
-	_WeRelay.reset(WeonePort[port]);	
+	_WeRelay.reset(port);	
 }
 
 void WeRelay::openNC(void)

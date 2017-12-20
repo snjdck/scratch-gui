@@ -3,11 +3,11 @@
 
 WeTiltSwitch::WeTiltSwitch(uint8_t port)
 {
-   _WeTiltSwitch.reset(WeonePort[port]);
+   _WeTiltSwitch.reset(port);
 }
 void WeTiltSwitch::reset(uint8_t port)
 {
-   _WeTiltSwitch.reset(WeonePort[port]);
+   _WeTiltSwitch.reset(port);
 }
 
 uint8_t WeTiltSwitch::readSensor(void)

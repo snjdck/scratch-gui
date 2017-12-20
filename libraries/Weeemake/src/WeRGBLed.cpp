@@ -4,20 +4,20 @@
 
 WeRGBLed::WeRGBLed(uint8_t port)
 {
-  pinMask       = digitalPinToBitMask(WeonePort[port]);
-  ws2812_port   = portOutputRegister(digitalPinToPort(WeonePort[port]));
+  pinMask       = digitalPinToBitMask(port);
+  ws2812_port   = portOutputRegister(digitalPinToPort(port));
   
-  pinMode(WeonePort[port], OUTPUT);
+  pinMode(port, OUTPUT);
   setNumber(DEFAULT_MAX_LED_NUMBER);
 
 }
 
 void WeRGBLed::reset(uint8_t port)
 {
-  pinMask       = digitalPinToBitMask(WeonePort[port]);
-  ws2812_port   = portOutputRegister(digitalPinToPort(WeonePort[port]));
+  pinMask       = digitalPinToBitMask(port);
+  ws2812_port   = portOutputRegister(digitalPinToPort(port));
   
-  pinMode(WeonePort[port], OUTPUT);
+  pinMode(port, OUTPUT);
   setNumber(DEFAULT_MAX_LED_NUMBER);
 }
 

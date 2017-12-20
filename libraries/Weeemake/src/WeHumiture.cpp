@@ -3,11 +3,11 @@
 
 WeHumiture::WeHumiture(uint8_t port)
 {
-  _WeHumiture.reset(WeonePort[port]);
+  _WeHumiture.reset(port);
 }
 void WeHumiture::reset(uint8_t port)
 {
-	_WeHumiture.reset(WeonePort[port]);
+	_WeHumiture.reset(port);
 }
 
 void WeHumiture::startRead(void)

@@ -2,13 +2,13 @@
 
 We130DCMotor::We130DCMotor(uint8_t port)
 {
-    _130DCMotor.reset(WeonePort[port]);
+    reset(port);
 	
 }
 
 void We130DCMotor::reset(uint8_t port)
 {	
-	_130DCMotor.reset(WeonePort[port]);	
+	_130DCMotor.reset(port);	
 	last_speed=300;
 }
 

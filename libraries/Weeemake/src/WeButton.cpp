@@ -3,7 +3,7 @@
 
 WeButton::WeButton(uint8_t port)
 {
-  _Sensorpin=WeonePort[port];
+  _Sensorpin=port;
 }
 
 int16_t WeButton::read(void)

@@ -5,7 +5,7 @@ uint8_t buzzer_pin;
 
 WeBuzzer::WeBuzzer(uint8_t port)
 {
-  buzzer_pin=WeonePort[port];
+  buzzer_pin=port;
 }
 
 

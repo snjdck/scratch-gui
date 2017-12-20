@@ -3,11 +3,11 @@
 
 We4LEDButton::We4LEDButton(uint8_t port)
 {
-  _We4LEDButton.reset(WeonePort[port]);
+  reset(port);
 }
 void We4LEDButton::reset(uint8_t port)
 {
-	_We4LEDButton.reset(WeonePort[port]);
+	_We4LEDButton.reset(port);
 }
 
 void We4LEDButton::openLED(uint8_t value)

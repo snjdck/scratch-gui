@@ -3,13 +3,13 @@
 
 WeTemperature::WeTemperature(uint8_t port)
 {
-  _DataPin=WeonePort[port];
-  _ts.reset(WeonePort[port]);
+  _DataPin=port;
+  _ts.reset(port);
 }
 
 void WeTemperature::reset(uint8_t port)
 {
-  _ts.reset(WeonePort[port]);
+  _ts.reset(port);
 }
 
 float WeTemperature::temperature(void)

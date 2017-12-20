@@ -76,16 +76,16 @@ ISR(TIMER_INTR_NAME)
 
 WeInfraredReceiver::WeInfraredReceiver(uint8_t port)
 {
-  _RxPin=WeonePort[port];
+  _RxPin=port;
   pinMode(_RxPin,INPUT);
   irparams.recvpin = _RxPin;
 }
 
 void WeInfraredReceiver::reset(uint8_t port)
 {
-  if(_RxPin == WeonePort[port])
+  if(_RxPin == port)
     return;
-  _RxPin=WeonePort[port];
+  _RxPin=port;
   pinMode(_RxPin,INPUT);
   irparams.recvpin = _RxPin;
 }

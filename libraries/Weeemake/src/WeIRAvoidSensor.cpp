@@ -3,11 +3,11 @@
 
 WeIRAvoidSensor::WeIRAvoidSensor(uint8_t port)
 {
-  _WeIRAvoidSensor.reset(WeonePort[port]);
+  _WeIRAvoidSensor.reset(port);
 }
 void WeIRAvoidSensor::reset(uint8_t port)
 {
-  _WeIRAvoidSensor.reset(WeonePort[port]);
+  _WeIRAvoidSensor.reset(port);
 }
 
 uint8_t WeIRAvoidSensor::isObstacle(void)

@@ -3,11 +3,11 @@
 
 We7SegmentDisplay::We7SegmentDisplay(uint8_t port)
 {
-  _We7SegmentDisplay.reset(WeonePort[port]);
+  reset(port);
 }
 void We7SegmentDisplay::reset(uint8_t port)
 {
-	_We7SegmentDisplay.reset(WeonePort[port]);
+	_We7SegmentDisplay.reset(port);
 }
 
 void We7SegmentDisplay::sendNumber(void)

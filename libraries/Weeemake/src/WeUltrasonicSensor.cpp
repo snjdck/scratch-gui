@@ -3,11 +3,11 @@
 
 WeUltrasonicSensor::WeUltrasonicSensor(uint8_t port)
 {
-  _WeUltrasonicSensor.reset(WeonePort[port]);
+  _WeUltrasonicSensor.reset(port);
 }
 void WeUltrasonicSensor::reset(uint8_t port)
 {
-  _WeUltrasonicSensor.reset(WeonePort[port]);
+  _WeUltrasonicSensor.reset(port);
 }
 
 

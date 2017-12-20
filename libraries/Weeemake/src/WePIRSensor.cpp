@@ -3,11 +3,11 @@
 
 WePIRSensor::WePIRSensor(uint8_t port)
 {
-   _WePIRSensor.reset(WeonePort[port]);
+   _WePIRSensor.reset(port);
 }
 void WePIRSensor::reset(uint8_t port)
 {
-   _WePIRSensor.reset(WeonePort[port]);
+   _WePIRSensor.reset(port);
 }
 
 uint8_t WePIRSensor::readSensor(void)

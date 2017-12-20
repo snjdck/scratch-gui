@@ -3,11 +3,11 @@
 
 WeLineFollower::WeLineFollower(uint8_t port)
 {
-  _WeLineFollower.reset(WeonePort[port]);
+  _WeLineFollower.reset(port);
 }
 void WeLineFollower::reset(uint8_t port)
 {
-	_WeLineFollower.reset(WeonePort[port]);
+	_WeLineFollower.reset(port);
 }
 
 void WeLineFollower::startRead(void)

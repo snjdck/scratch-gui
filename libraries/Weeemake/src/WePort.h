@@ -17,7 +17,7 @@ typedef struct
   uint8_t s2;
 } WePort_TwoSig;
 
-extern uint8_t WeonePort[17];  
+//extern uint8_t WeonePort[17];  
 extern WePort_TwoSig WetwoPort[12];  
 extern void setfastPWM();
 

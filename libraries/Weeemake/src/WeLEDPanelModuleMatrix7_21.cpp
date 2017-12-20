@@ -3,11 +3,11 @@
 
 WeLEDPanelModuleMatrix7_21::WeLEDPanelModuleMatrix7_21(uint8_t port)
 {
-  _WeLEDPanel.reset(WeonePort[port]);
+  _WeLEDPanel.reset(port);
 }
 void WeLEDPanelModuleMatrix7_21::reset(uint8_t port)
 {
-  _WeLEDPanel.reset(WeonePort[port]);
+  _WeLEDPanel.reset(port);
 }
 
 void WeLEDPanelModuleMatrix7_21::setBrightness(uint8_t Bright)
