@@ -9,6 +9,7 @@
 #include <stdint.h>
 #include <stdlib.h>
 #include "WeOneWire.h"
+#include "WeSensor.h"
 
 
 typedef struct
