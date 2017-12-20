@@ -1,5 +1,4 @@
 
-var PORTS = ["0", "A0", "A1", "A5", "A4", "A3", "A2", "13"];
 
 function hexToRgb(hex) {
     var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
@@ -38,15 +37,10 @@ module.exports = function(){
         var port = arduino.valueToCode(block, 'BOARD_PORT_RGB', order);
         var pix = arduino.valueToCode(block, 'PIXEL', order);
 
-        var pin = PORTS[port];
-        if(pin == 0){
-            pin = 3;
-        }
-
         var key = "led_" + port;
 
         arduino.definitions_[key] = `WeRGBLed ${key};`;
-        arduino.setupCodes_[key] = `${key}.reset(${pin});`;
+        arduino.setupCodes_[key] = `${key}.reset(${port});`;
         var code = arduino.tab() + `${key}.setColor(${pix}, ${color.r}, ${color.g}, ${color.b})` + arduino.END;
         code += arduino.tab() + `${key}.show()` + arduino.END;
         return code;
@@ -75,26 +69,23 @@ module.exports = function(){
         var b = arduino.ORDER_NONE;
         var port = arduino.valueToCode(block, "BOARD_PORT", b);
         var angle = arduino.valueToCode(block, "ANGLE", b);
-        var pin = PORTS[port];
 
         const key = `servo_${port}`;
 
         arduino.includes_["weeebot"] = '#include <WeELFPort.h>';
         arduino.definitions_[key] = `Servo ${key};`;
-        arduino.setupCodes_[key] = `${key}.attach(${pin});`;
+        arduino.setupCodes_[key] = `${key}.attach(${port});`;
         return arduino.tab() + `${key}.write(${angle})` + arduino.END;
     }
     arduino.board_light_sensor = function(block){
         var b = arduino.ORDER_NONE;
-        var port = arduino.valueToCode(block, "BOARD_PORT", b);
-        var pin = PORTS[port];
+        var pin = arduino.valueToCode(block, "BOARD_PORT", b);
         arduino.setupCodes_["pin_input_" + pin] = "pinMode(" + pin + ",INPUT);";
         return [`analogRead(${pin})`, b];
     };
     arduino.board_sound_sensor = function(block){
         var b = arduino.ORDER_NONE;
-        var port = arduino.valueToCode(block, "BOARD_PORT", b);
-        var pin = PORTS[port];
+        var pin = arduino.valueToCode(block, "BOARD_PORT", b);
         arduino.setupCodes_["pin_input_" + pin] = "pinMode(" + pin + ",INPUT);";
         return [`analogRead(${pin})`, b];
     };
@@ -103,23 +94,18 @@ module.exports = function(){
         arduino.includes_["weeebot"] = '#include <WeELFPort.h>';
         var b = arduino.ORDER_NONE;
         var port = arduino.valueToCode(block, "BOARD_PORT", b);
-        var pin = PORTS[port];
 
         var key = "ts_" + port;
         
         arduino.definitions_[key] = "WeTemperature " + key + ";";
-        arduino.setupCodes_[key] = key + ".reset(" + pin + ");";
+        arduino.setupCodes_[key] = key + ".reset(" + port + ");";
         return [key + ".temperature()", b];
     };
 
     arduino.weeebot_on_board_button = function(block){
         arduino.includes_["weeebot"] = '#include <WeELFPort.h>';
         var b = arduino.ORDER_NONE;
-        var port = arduino.valueToCode(block, "ON_BOARD_PORT", b);
-        var pin = PORTS[port];
-        if(pin == 0){
-            pin = 2;
-        }
+        var pin = arduino.valueToCode(block, "ON_BOARD_PORT", b);
         arduino.setupCodes_["pin_input_" + pin] = "pinMode(" + pin + ",INPUT);";
         return ["!digitalRead(" + pin + ")", b];
     };
@@ -204,9 +190,8 @@ module.exports = function(){
 */
     arduino["weeebot_infraread"] = function (block) {
         var order = arduino.ORDER_HIGH;
-        var port = arduino.valueToCode(block, 'BOARD_PORT', order);
+        var pin = arduino.valueToCode(block, 'BOARD_PORT', order);
         var code = arduino.valueToCode(block, 'IR_CODE', order);
-        var pin = PORTS[port];
 
         arduino.includes_["weeebot"] = '#include <WeELFPort.h>';
         arduino.definitions_["ir"] = "WeInfraredReceiver ir(" + pin + ");";

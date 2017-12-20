@@ -46,6 +46,9 @@ function newBlock(type, children){
     return newXML("block", {"type":type}, children);
 }
 */
+//A0 = 14
+const PORTS = [0, 14, 15, 19, 18, 17, 16];
+
 const toolbox = newXML("category", {"name":"WeeeBot", "key":"WeeeBot", "colour":"#FF6680", "secondaryColour":"#FF3355"}, [
         newBlock("weeebot_program"),
         newBlock("weeebot_motor_dc", [
@@ -68,7 +71,7 @@ const toolbox = newXML("category", {"name":"WeeeBot", "key":"WeeeBot", "colour":
             newNumberValue("DISTANCE", 1000)
         ]),*/
         newBlock("on_board_servo", [
-            newDropdownValue("BOARD_PORT", 1),
+            newDropdownValue("BOARD_PORT", PORTS[1]),
             newNumberValue("ANGLE", 90)
         ]),
         newBlock("test_tone_note", [
@@ -76,12 +79,12 @@ const toolbox = newXML("category", {"name":"WeeeBot", "key":"WeeeBot", "colour":
             newDropdownValue("TEST_TONE_NOTE_BEAT_OPTION", 500)
         ]),
         newBlock("weeebot_rgb", [
-            newDropdownValue("BOARD_PORT_RGB", 0),
+            newDropdownValue("BOARD_PORT_RGB", 3),
             newNumberValue("PIXEL", 0),
             newXML("value", {"name":"COLOR"}, [newXML("shadow", {"type":"colour_picker"})])
         ]),
         newBlock("weeebot_rgb3", [
-            newDropdownValue("BOARD_PORT_RGB", 0),
+            newDropdownValue("BOARD_PORT_RGB", 3),
             newNumberValue("PIXEL", 0),
             newNumberValue("R", 255),
             newNumberValue("G", 255),
@@ -135,19 +138,19 @@ const toolbox = newXML("category", {"name":"WeeeBot", "key":"WeeeBot", "colour":
             newDropdownValue("SENSOR_PORT", 10)
         ]),
         newBlock("board_light_sensor", [
-            newDropdownValue("BOARD_PORT", 1)
+            newDropdownValue("BOARD_PORT", PORTS[1])
         ]),
         newBlock("board_sound_sensor", [
-            newDropdownValue("BOARD_PORT", 3)
+            newDropdownValue("BOARD_PORT", PORTS[3])
         ]),
         newBlock("board_temperature_sensor", [
-            newDropdownValue("BOARD_PORT", 1)
+            newDropdownValue("BOARD_PORT", PORTS[1])
         ]),
         newBlock("weeebot_on_board_button", [
-            newDropdownValue("ON_BOARD_PORT", 0)
+            newDropdownValue("ON_BOARD_PORT", 2)
         ]),
         newBlock("weeebot_infraread", [
-            newDropdownValue("BOARD_PORT", 2),
+            newDropdownValue("BOARD_PORT", PORTS[2]),
             newDropdownValue("IR_CODE", 69)
         ])
     ]);

@@ -120,34 +120,34 @@ module.exports = function (){
         ['M1', 1],
         ['M2', 2]]);
     regOption("motor_port", "Number", [
-        [Translation.WB_Port3, 3],
-        [Translation.WB_Port4, 4],
-        [Translation.WB_Port5, 5],
-        [Translation.WB_Port6, 6]]);
+        [Translation.WB_Port3, 19],
+        [Translation.WB_Port4, 18],
+        [Translation.WB_Port5, 17],
+        [Translation.WB_Port6, 16]]);
     regOption("board_port", "Number", [
-        [Translation.WB_Port1, 1],
-        [Translation.WB_Port2, 2],
-        [Translation.WB_Port3, 3],
-        [Translation.WB_Port4, 4],
-        [Translation.WB_Port5, 5],
-        [Translation.WB_Port6, 6]]);
+        [Translation.WB_Port1, 14],
+        [Translation.WB_Port2, 15],
+        [Translation.WB_Port3, 19],
+        [Translation.WB_Port4, 18],
+        [Translation.WB_Port5, 17],
+        [Translation.WB_Port6, 16]]);
     regOption("on_board_port", "Number", [
-        [Translation.WB_OnBoard,0],
-        [Translation.WB_Port1, 1],
-        [Translation.WB_Port2, 2],
-        [Translation.WB_Port3, 3],
-        [Translation.WB_Port4, 4],
-        [Translation.WB_Port5, 5],
-        [Translation.WB_Port6, 6]]);
+        [Translation.WB_OnBoard,2],
+        [Translation.WB_Port1, 14],
+        [Translation.WB_Port2, 15],
+        [Translation.WB_Port3, 19],
+        [Translation.WB_Port4, 18],
+        [Translation.WB_Port5, 17],
+        [Translation.WB_Port6, 16]]);
     regOption("board_port_rgb", "Number", [
-        [Translation.WB_OnBoard,0],
-        ["OnBoardGroup",7],
-        [Translation.WB_Port1, 1],
-        [Translation.WB_Port2, 2],
-        [Translation.WB_Port3, 3],
-        [Translation.WB_Port4, 4],
-        [Translation.WB_Port5, 5],
-        [Translation.WB_Port6, 6]]);
+        [Translation.WB_OnBoard,3],
+        ["OnBoardGroup",13],
+        [Translation.WB_Port1, 14],
+        [Translation.WB_Port2, 15],
+        [Translation.WB_Port3, 19],
+        [Translation.WB_Port4, 18],
+        [Translation.WB_Port5, 17],
+        [Translation.WB_Port6, 16]]);
     regOption("sensor_port", "Number", [
         [Translation.WB_PortA, 9],
         [Translation.WB_PortB, 10],
