@@ -11,11 +11,11 @@ export default function WeeeBotMini(vm) {
         "secondary": "#FF4D6A",
         "tertiary": "#FF3355"
     };
-    vm.on("stop-all-flag-clicked", () => this.wc.sendCmd("M99"));
 }
 import toolbox from "./Toolbox"
 
 WeeeBotMini.prototype.getBlocks = require("./Blocks");
 WeeeBotMini.prototype.getPrimitives = require("./Primitives");
+WeeeBotMini.prototype.setupOfflineCode = require("./OfflineCode");
 WeeeBotMini.prototype.getToolbox = ()=>toolbox;
 WeeeBotMini.prototype.getHats = ()=>{};

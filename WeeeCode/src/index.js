@@ -45,6 +45,31 @@ class WeeeCode extends EventEmitter
 		createMacMenu();
 	}
 
+	get plugin(){
+		return this._plugin;
+	}
+
+	set plugin(value){
+		if(!value || this.pluginMap.get(value.name) !== value){
+			throw new Error("plugin not support!");
+		}
+		this._plugin = value;
+		value.setupOfflineCode();
+		let runtime = this.vm.runtime;
+		const packagePrimitives = value.getPrimitives();
+        for (const op in packagePrimitives) {
+            if (packagePrimitives.hasOwnProperty(op)) {
+                runtime._primitives[op] = packagePrimitives[op].bind(value);
+            }
+        }
+        const packageHats = value.getHats();
+        for (const hatName in packageHats) {
+            if (packageHats.hasOwnProperty(hatName)) {
+                runtime._hats[hatName] = packageHats[hatName];
+            }
+        }
+	}
+
 	connectPort(port,successCb,readlineCb,closeCb,onRecv) {
 	    var _this = this;
 	    if(port.type=='serial'){
