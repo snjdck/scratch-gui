@@ -105,7 +105,7 @@ function weeebot_steppermove(argValues, util) {
     //util.ioQuery('serial', 'sendMsg', [cmd]);
 }
 function weeebot_infraread(argValues, util) {
-    var port = argValues.BOARD_PORT;
+    var port = 2;
     var code = argValues.IR_CODE;
     return createPromise(util, 7, port, code);
 }

@@ -58,7 +58,7 @@ const toolbox = create(["category", {"name":"WeeeBot\nMini", "key":"WeeeBotMini"
             newNumberValue("DISTANCE", 1000)
         ]),*/
         newBlock("on_board_servo", [
-            newDropdownValue("BOARD_PORT", PORTS[1]),
+            newDropdownValue("SENSOR_PORT", PORTS[1]),
             newNumberValue("ANGLE", 90)
         ]),
         newBlock("test_tone_note", [
@@ -66,12 +66,12 @@ const toolbox = create(["category", {"name":"WeeeBot\nMini", "key":"WeeeBotMini"
             newDropdownValue("TEST_TONE_NOTE_BEAT_OPTION", 500)
         ]),
         newBlock("weeebot_rgb", [
-            newDropdownValue("BOARD_PORT_RGB", PORTS[1]),
+            newDropdownValue("SENSOR_PORT", PORTS[1]),
             newNumberValue("PIXEL", 0),
             newXML("value", {"name":"COLOR"}, [newXML("shadow", {"type":"colour_picker"})])
         ]),
         newBlock("weeebot_rgb3", [
-            newDropdownValue("BOARD_PORT_RGB", PORTS[1]),
+            newDropdownValue("SENSOR_PORT", PORTS[1]),
             newNumberValue("PIXEL", 0),
             newNumberValue("R", 255),
             newNumberValue("G", 255),
@@ -125,19 +125,18 @@ const toolbox = create(["category", {"name":"WeeeBot\nMini", "key":"WeeeBotMini"
             newDropdownValue("SENSOR_PORT", PORTS[1])
         ]),
         newBlock("board_light_sensor", [
-            newDropdownValue("BOARD_PORT", 15)
+            newDropdownValue("LIGHT_PORT", 15)
         ]),
         newBlock("board_sound_sensor", [
-            newDropdownValue("BOARD_PORT", 17)
+            newDropdownValue("SOUND_PORT", PORTS[1])
         ]),
         newBlock("board_temperature_sensor", [
-            newDropdownValue("BOARD_PORT", PORTS[1])
+            newDropdownValue("SENSOR_PORT", PORTS[1])
         ]),
         newBlock("weeebot_on_board_button", [
-            newDropdownValue("ON_BOARD_PORT", PORTS[1])
+            newDropdownValue("SENSOR_PORT", PORTS[1])
         ]),
         newBlock("weeebot_infraread", [
-            newDropdownValue("BOARD_PORT", 2),
             newDropdownValue("IR_CODE", 69)
         ])
     ]);

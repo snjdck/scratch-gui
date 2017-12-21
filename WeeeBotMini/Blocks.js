@@ -119,40 +119,22 @@ module.exports = function (){
     regOption("weeebot_dcmotor_option", "Number", [
         ['M1', 1],
         ['M2', 2]]);
-    regOption("motor_port", "Number", [
-        [Translation.WB_Port3, 3],
-        [Translation.WB_Port4, 4],
-        [Translation.WB_Port5, 5],
-        [Translation.WB_Port6, 6]]);
-    regOption("board_port", "Number", [
-        [Translation.WB_Port1, 1],
-        [Translation.WB_Port2, 2],
-        [Translation.WB_Port3, 3],
-        [Translation.WB_Port4, 4],
-        [Translation.WB_Port5, 5],
-        [Translation.WB_Port6, 6]]);
-    regOption("on_board_port", "Number", [
-        [Translation.WB_OnBoard,0],
-        [Translation.WB_Port1, 1],
-        [Translation.WB_Port2, 2],
-        [Translation.WB_Port3, 3],
-        [Translation.WB_Port4, 4],
-        [Translation.WB_Port5, 5],
-        [Translation.WB_Port6, 6]]);
-    regOption("board_port_rgb", "Number", [
-        [Translation.WB_OnBoard,0],
-        ["OnBoardGroup",7],
-        [Translation.WB_Port1, 1],
-        [Translation.WB_Port2, 2],
-        [Translation.WB_Port3, 3],
-        [Translation.WB_Port4, 4],
-        [Translation.WB_Port5, 5],
-        [Translation.WB_Port6, 6]]);
+    regOption("light_port", "Number", [
+        [Translation.WB_OnBoard,15],
+        [Translation.WB_PortA, 16],
+        [Translation.WB_PortB, 17],
+        [Translation.WB_PortC, 18],
+        [Translation.WB_PortD, 19]]);
+    regOption("sound_port", "Number", [
+        [Translation.WB_PortA, 16],
+        [Translation.WB_PortB, 17],
+        [Translation.WB_PortC, 18],
+        [Translation.WB_PortD, 19]]);
     regOption("sensor_port", "Number", [
-        [Translation.WB_PortA, 9],
-        [Translation.WB_PortB, 10],
-        [Translation.WB_PortC, 12],
-        [Translation.WB_PortD, 4]]);
+        [Translation.WB_PortA, 16],
+        [Translation.WB_PortB, 17],
+        [Translation.WB_PortC, 18],
+        [Translation.WB_PortD, 19]]);
     regOption("ir_code", "Number", [
         ["A",69],
         ["B",70],
@@ -195,18 +177,16 @@ module.exports = function (){
         ["　",0]]);
     regBlock("weeebot_motor_dc",   Translation.WB_DCMOTOR,    ["WEEEBOT_DCMOTOR_OPTION", "SPEED"]);
     regBlock("weeebot_motor_move", Translation.WB_MOTOR_MOVE, ["MOVE_DIRECTION", "SPEED"]);
-    regBlock("on_board_servo", Translation.WB_BOARD_SERVO, ["BOARD_PORT", "ANGLE"]);
+    regBlock("on_board_servo", Translation.WB_BOARD_SERVO, ["SENSOR_PORT", "ANGLE"]);
     regBlock("test_tone_note", Translation.WB_TONE, ["TEST_TONE_NOTE_NOTE_OPTION", "TEST_TONE_NOTE_BEAT_OPTION"]);
-    regBlock("weeebot_encoder_move", Translation.WB_ENCODER_MOVE, ["MOTOR_PORT", "SPEED", "DISTANCE"]);
-    regBlock("weeebot_steppermove", Translation.WB_STEPPER_MOVE, ["MOTOR_PORT", "SPEED", "DISTANCE"]);
     regBlock("weeebot_stop", Translation.WB_STOP_MOTOR, []);
-    regBlock("weeebot_rgb", Translation.WB_RGB1, ["BOARD_PORT_RGB", "PIXEL", "COLOR"]);
-    regBlock("weeebot_rgb3", Translation.WB_RGB2, ["BOARD_PORT_RGB", "PIXEL", "R", "G", "B"]);
-    regBlock("board_light_sensor", Translation.WB_LIGHT, ["BOARD_PORT"], "Number");
-    regBlock("board_temperature_sensor", Translation.WB_TEMPERATURE, ["BOARD_PORT"], "Number");
-    regBlock("board_sound_sensor", Translation.WB_SOUND, ["BOARD_PORT"], "Number");
-    regBlock("weeebot_on_board_button", Translation.WB_BOARD_BUTTON, ["ON_BOARD_PORT"], "Boolean");
-    regBlock("weeebot_infraread", Translation.WB_IR, ["BOARD_PORT", "IR_CODE"], "Boolean");
+    regBlock("weeebot_rgb", Translation.WB_RGB1, ["SENSOR_PORT", "PIXEL", "COLOR"]);
+    regBlock("weeebot_rgb3", Translation.WB_RGB2, ["SENSOR_PORT", "PIXEL", "R", "G", "B"]);
+    regBlock("board_light_sensor", Translation.WB_LIGHT, ["LIGHT_PORT"], "Number");
+    regBlock("board_temperature_sensor", Translation.WB_TEMPERATURE, ["SENSOR_PORT"], "Number");
+    regBlock("board_sound_sensor", Translation.WB_SOUND, ["SOUND_PORT"], "Number");
+    regBlock("weeebot_on_board_button", Translation.WB_BOARD_BUTTON, ["SENSOR_PORT"], "Boolean");
+    regBlock("weeebot_infraread", Translation.WB_IR, ["IR_CODE"], "Boolean");
     regBlock("line_follower", Translation.WB_LINE_FOLLOWER, ["SENSOR_PORT", "LINE_FOLLOWER_INDEX"], "Number");
     regBlock("ultrasonic", Translation.WB_ULTRASONIC, ["SENSOR_PORT"], "Number");
     regBlock("ultrasonic_led", Translation.WB_ULTRASONIC_LED, ["SENSOR_PORT", "ULTRASONIC_LED_INDEX", "COLOR"]);
