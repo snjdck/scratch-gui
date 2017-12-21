@@ -1,4 +1,7 @@
 
+function addInclude(arduino){
+    arduino.includes_["weeebot"] = "#include <WeELF328P.h>";
+}
 
 function hexToRgb(hex) {
     var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
@@ -31,7 +34,7 @@ module.exports = function(){
     arduino.move_direction = option_handler;
 
     function gen_rgb_code(block, color) {
-        arduino.includes_["weeebot"] = '#include <WeELFPort.h>';
+        addInclude(arduino);
         var order = arduino.ORDER_NONE;
 
         var port = arduino.valueToCode(block, 'BOARD_PORT_RGB', order);
@@ -53,7 +56,7 @@ module.exports = function(){
     };
     arduino.weeebot_program = function(block){
         var b = arduino.ORDER_NONE;
-        arduino.includes_["weeebot"] = '#include <WeELFPort.h>';
+        addInclude(arduino);
         return "";
     }
 	arduino.test_tone_note = function (block) {
@@ -61,8 +64,8 @@ module.exports = function(){
         var note = arduino.valueToCode(block, "TEST_TONE_NOTE_NOTE_OPTION", b);
         var hz = arduino.valueToCode(block, "TEST_TONE_NOTE_BEAT_OPTION", b);
 
-        arduino.includes_["weeebot"] = '#include <WeELFPort.h>';
-        arduino.definitions_["buzzer"] = "WeBuzzer buzzer;";
+        addInclude(arduino);
+        arduino.definitions_["buzzer"] = "WeBuzzer buzzer(OnBoard_Buzzer);";
         return arduino.tab() + "buzzer.tone(" + note + "," + hz + ")" + arduino.END;
     };
     arduino.on_board_servo = function(block){
@@ -72,7 +75,7 @@ module.exports = function(){
 
         const key = `servo_${port}`;
 
-        arduino.includes_["weeebot"] = '#include <WeELFPort.h>';
+        addInclude(arduino);
         arduino.definitions_[key] = `Servo ${key};`;
         arduino.setupCodes_[key] = `${key}.attach(${port});`;
         return arduino.tab() + `${key}.write(${angle})` + arduino.END;
@@ -91,7 +94,7 @@ module.exports = function(){
     };
 
     arduino.board_temperature_sensor = function(block){
-        arduino.includes_["weeebot"] = '#include <WeELFPort.h>';
+        addInclude(arduino);
         var b = arduino.ORDER_NONE;
         var port = arduino.valueToCode(block, "BOARD_PORT", b);
 
@@ -103,7 +106,7 @@ module.exports = function(){
     };
 
     arduino.weeebot_on_board_button = function(block){
-        arduino.includes_["weeebot"] = '#include <WeELFPort.h>';
+        addInclude(arduino);
         var b = arduino.ORDER_NONE;
         var pin = arduino.valueToCode(block, "ON_BOARD_PORT", b);
         arduino.setupCodes_["pin_input_" + pin] = "pinMode(" + pin + ",INPUT);";
@@ -112,7 +115,7 @@ module.exports = function(){
 
     arduino["weeebot_motor_dc"] = function (block) {
         var order = arduino.ORDER_NONE;
-        arduino.includes_["weeebot"] = '#include <WeELFPort.h>';
+        addInclude(arduino);
         arduino.definitions_["dc"] = "WeDCMotor dc;";
         var index = arduino.valueToCode(block, 'WEEEBOT_DCMOTOR_OPTION', order);
         var spd = arduino.valueToCode(block, 'SPEED', order);
@@ -124,7 +127,7 @@ module.exports = function(){
 
     arduino["weeebot_stop"] = function (block) {
         var order = arduino.ORDER_NONE;
-        arduino.includes_["weeebot"] = '#include <WeELFPort.h>';
+        addInclude(arduino);
         arduino.definitions_["dc"] = "WeDCMotor dc;";
 
         var code = arduino.tab() + "dc.reset(1)" + arduino.END;
@@ -136,7 +139,7 @@ module.exports = function(){
 
     arduino["weeebot_motor_move"] = function (block) {
         var order = arduino.ORDER_NONE;
-        arduino.includes_["weeebot"] = '#include <WeELFPort.h>';
+        addInclude(arduino);
         arduino.definitions_["dc"] = "WeDCMotor dc;";
         arduino.definitions_["speed"] = "int speed;";
 
@@ -193,7 +196,7 @@ module.exports = function(){
         var pin = arduino.valueToCode(block, 'BOARD_PORT', order);
         var code = arduino.valueToCode(block, 'IR_CODE', order);
 
-        arduino.includes_["weeebot"] = '#include <WeELFPort.h>';
+        addInclude(arduino);
         arduino.definitions_["ir"] = "WeInfraredReceiver ir(" + pin + ");";
         arduino.definitions_["ir_v"] = "uint8_t IR_VALUE = 0;"
         arduino.setupCodes_["ir"] = "ir.begin();";
@@ -232,7 +235,7 @@ module.exports = function(){
 
         var key = "lineFollower_" + port;
 
-        arduino.includes_["weeebot"] = '#include <WeELFPort.h>';
+        addInclude(arduino);
         arduino.definitions_[key] = "WeLineFollower "+key+"("+port+");";
 
         
@@ -247,7 +250,7 @@ module.exports = function(){
 
         var key = "ultrasonic_" + port;
 
-        arduino.includes_["weeebot"] = '#include <WeELFPort.h>';
+        addInclude(arduino);
         arduino.definitions_[key] = `WeUltrasonicSensor ${key}(${port});`;
         
         var code = key + ".distanceCm()";
@@ -264,7 +267,7 @@ module.exports = function(){
 
         var key = "ultrasonic_" + port;
 
-        arduino.includes_["weeebot"] = '#include <WeELFPort.h>';
+        addInclude(arduino);
         arduino.definitions_[key] = `WeUltrasonicSensor ${key}(${port});`;
         
         var code = "";
@@ -285,7 +288,7 @@ module.exports = function(){
         var port = arduino.valueToCode(block, "SENSOR_PORT", order);
         var num = arduino.valueToCode(block, "NUM", order);
 
-        arduino.includes_["weeebot"] = '#include <WeELFPort.h>';
+        addInclude(arduino);
         arduino.definitions_["ledPanel"] = "WeLEDPanelModuleMatrix7_21 ledPanel;";
 
         var code = arduino.tab() + `ledPanel.reset(${port})`  + arduino.END;
@@ -308,7 +311,7 @@ module.exports = function(){
         var second = arduino.valueToCode(block, "SECOND", order);
         var showColon = arduino.valueToCode(block, "SHOW_COLON", order);
 
-        arduino.includes_["weeebot"] = '#include <WeELFPort.h>';
+        addInclude(arduino);
         arduino.definitions_["ledPanel"] = "WeLEDPanelModuleMatrix7_21 ledPanel;";
 
         var code = arduino.tab() + `ledPanel.reset(${port})`  + arduino.END;
@@ -323,7 +326,7 @@ module.exports = function(){
         var y = arduino.valueToCode(block, "Y", order);
         var str = arduino.valueToCode(block, "STR", order);
 
-        arduino.includes_["weeebot"] = '#include <WeELFPort.h>';
+        addInclude(arduino);
         arduino.definitions_["ledPanel"] = "WeLEDPanelModuleMatrix7_21 ledPanel;";
 
         var code = arduino.tab() + `ledPanel.reset(${port})`  + arduino.END;
@@ -348,7 +351,7 @@ module.exports = function(){
             }
         }
 
-        arduino.includes_["weeebot"] = '#include <WeELFPort.h>';
+        addInclude(arduino);
         arduino.definitions_["ledPanel"] = "WeLEDPanelModuleMatrix7_21 ledPanel;";
         arduino.definitions_["ledPanelData"] = "uint8_t ledPanelData[21];";
 
@@ -367,7 +370,7 @@ module.exports = function(){
         var x = arduino.valueToCode(block, "X", order);
         var y = arduino.valueToCode(block, "Y", order);
 
-        arduino.includes_["weeebot"] = '#include <WeELFPort.h>';
+        addInclude(arduino);
         arduino.definitions_["ledPanel"] = "WeLEDPanelModuleMatrix7_21 ledPanel;";
 
         var code = arduino.tab() + `ledPanel.reset(${port})`  + arduino.END;
@@ -381,7 +384,7 @@ module.exports = function(){
 
         var port = arduino.valueToCode(block, "SENSOR_PORT", order);
 
-        arduino.includes_["weeebot"] = '#include <WeELFPort.h>';
+        addInclude(arduino);
         arduino.definitions_["ledPanel"] = "WeLEDPanelModuleMatrix7_21 ledPanel;";
 
         var code = arduino.tab() + `ledPanel.reset(${port})`  + arduino.END;
