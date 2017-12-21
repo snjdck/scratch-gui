@@ -138,6 +138,12 @@ const toolbox = create(["category", {"name":"WeeeBot\nMini", "key":"WeeeBotMini"
         ]),
         newBlock("weeebot_infraread", [
             newDropdownValue("IR_CODE", 69)
+        ]),
+        newBlock("weeebot_ir_avoid", [
+            newDropdownValue("SENSOR_PORT", PORTS[2])
+        ]),
+        newBlock("weeebot_single_line_follower", [
+            newDropdownValue("SENSOR_PORT", PORTS[1])
         ])
     ]);
 export default toolbox;

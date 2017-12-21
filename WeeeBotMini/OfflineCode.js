@@ -22,10 +22,10 @@ module.exports = function(){
 
 	arduino.test_tone_note_note_option = option_handler;
 	arduino.test_tone_note_beat_option = option_handler;
-	arduino.board_port = option_handler;
+	arduino.sound_port = option_handler;
 	arduino.weeebot_stepper_option = option_handler;
 	arduino.weeebot_dcmotor_option = option_handler;
-    arduino.on_board_port = option_handler;
+    arduino.light_port = option_handler;
     arduino.sensor_port = option_handler;
     arduino.board_port_rgb = option_handler;
     arduino.ir_code = option_handler;
@@ -389,6 +389,35 @@ module.exports = function(){
         var code = arduino.tab() + `ledPanel.reset(${port})`  + arduino.END;
         code +=    arduino.tab() + `ledPanel.clearScreen()` + arduino.END;
         return code;
+    }
+
+
+    arduino["weeebot_ir_avoid"] = function(block){
+        var order = arduino.ORDER_NONE;
+
+        var port = arduino.valueToCode(block, "SENSOR_PORT", order);
+
+        var key = "IRAvoid_" + port;
+
+        addInclude(arduino);
+        arduino.definitions_[key] = `WeIRAvoidSensor ${key}(${port});`;
+        
+        var code = key + ".isObstacle()";
+        return [code, order];
+    }
+
+    arduino["weeebot_single_line_follower"] = function(block){
+        var order = arduino.ORDER_NONE;
+
+        var port = arduino.valueToCode(block, "SENSOR_PORT", order);
+
+        var key = "singleLF_" + port;
+
+        addInclude(arduino);
+        arduino.definitions_[key] = `WeSingleLineFollower ${key}(${port});`;
+        
+        var code = key + ".read()";
+        return [code, order];
     }
     
 /*

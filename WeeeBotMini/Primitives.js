@@ -189,6 +189,15 @@ function weeebot_led_matrix_clear(argValues, util){
     return createPromise(util, 3, port);
 }
 
+function weeebot_ir_avoid(argValues, util){
+    var port = argValues.SENSOR_PORT;
+    return createPromise(util, 117, port);
+}
+
+function weeebot_single_line_follower(argValues, util){
+    var port = argValues.SENSOR_PORT;
+    return createPromise(util, 116, port);
+}
 module.exports = function(){
     return {
         weeebot_motor_dc,

@@ -197,5 +197,7 @@ module.exports = function (){
     regBlock("weeebot_led_matrix_pixel_show", Translation.WB_LED_MATRIX_PIXEL_SHOW, ["SENSOR_PORT", "X", "Y"]);
     regBlock("weeebot_led_matrix_pixel_hide", Translation.WB_LED_MATRIX_PIXEL_HIDE, ["SENSOR_PORT", "X", "Y"]);
     regBlock("weeebot_led_matrix_clear", Translation.WB_LED_MATRIX_CLEAR, ["SENSOR_PORT"]);
+    regBlock("weeebot_ir_avoid", "IR avoid", ["SENSOR_PORT"], "Boolean");
+    regBlock("weeebot_single_line_follower", "single line follower", ["SENSOR_PORT"], "Number");
     return result;
 };
