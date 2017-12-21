@@ -1,4 +1,4 @@
-#include <WeELFPort.h>
+#include <WeELF328P.h>
 
 #define NTD1 294
 #define NTD2 330
@@ -476,7 +476,7 @@ void get_serial_command()
 			buffer[buffer_index+2] = 0;
 			buffer_index = 0;
 			handle_serial_command(buffer);
-			memset(buffer, 0, buffer_len);
+			//memset(buffer, 0, buffer_len);
 		}else{
 			buffer[buffer_index] = nextChar;
 			buffer_index = (buffer_index + 1) % buffer_len;
