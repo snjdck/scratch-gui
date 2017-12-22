@@ -53,6 +53,9 @@ class WeeeCode extends EventEmitter
 		if(!value || this.pluginMap.get(value.name) !== value){
 			throw new Error("plugin not support!");
 		}
+		if(this._plugin === value){
+			return;
+		}
 		this._plugin = value;
 		value.setupOfflineCode();
 		let runtime = this.vm.runtime;
@@ -68,6 +71,7 @@ class WeeeCode extends EventEmitter
                 runtime._hats[hatName] = packageHats[hatName];
             }
         }
+        this.emit("pluginChanged");
 	}
 
 	connectPort(port,successCb,readlineCb,closeCb,onRecv) {

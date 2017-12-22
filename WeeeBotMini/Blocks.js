@@ -186,7 +186,7 @@ module.exports = function (){
     regBlock("board_temperature_sensor", Translation.WB_TEMPERATURE, ["SENSOR_PORT"], "Number");
     regBlock("board_sound_sensor", Translation.WB_SOUND, ["SOUND_PORT"], "Number");
     regBlock("weeebot_on_board_button", Translation.WB_BOARD_BUTTON, ["SENSOR_PORT"], "Boolean");
-    regBlock("weeebot_infraread", Translation.WB_IR, ["IR_CODE"], "Boolean");
+    regBlock("weeebot_infraread", "ir pressed %1", ["IR_CODE"], "Boolean");
     regBlock("line_follower", Translation.WB_LINE_FOLLOWER, ["SENSOR_PORT", "LINE_FOLLOWER_INDEX"], "Number");
     regBlock("ultrasonic", Translation.WB_ULTRASONIC, ["SENSOR_PORT"], "Number");
     regBlock("ultrasonic_led", Translation.WB_ULTRASONIC_LED, ["SENSOR_PORT", "ULTRASONIC_LED_INDEX", "COLOR"]);
@@ -197,7 +197,7 @@ module.exports = function (){
     regBlock("weeebot_led_matrix_pixel_show", Translation.WB_LED_MATRIX_PIXEL_SHOW, ["SENSOR_PORT", "X", "Y"]);
     regBlock("weeebot_led_matrix_pixel_hide", Translation.WB_LED_MATRIX_PIXEL_HIDE, ["SENSOR_PORT", "X", "Y"]);
     regBlock("weeebot_led_matrix_clear", Translation.WB_LED_MATRIX_CLEAR, ["SENSOR_PORT"]);
-    regBlock("weeebot_ir_avoid", "IR avoid", ["SENSOR_PORT"], "Boolean");
-    regBlock("weeebot_single_line_follower", "single line follower", ["SENSOR_PORT"], "Number");
+    regBlock("weeebot_ir_avoid", "IR avoid %1", ["SENSOR_PORT"], "Boolean");
+    regBlock("weeebot_single_line_follower", "single line follower %1", ["SENSOR_PORT"], "Number");
     return result;
 };
