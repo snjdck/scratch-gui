@@ -34,11 +34,11 @@ function weeebot_motor_move(argValues, util) {
     var dir = argValues.MOVE_DIRECTION;
     var speeds;
     switch(Number(dir)){
-    	case 2: speeds = [-spd,-spd];break;
-    	case 3: speeds = [-spd,spd];break;
-    	case 4: speeds = [spd,-spd];break;
+    	case 2: speeds = [spd,-spd];break;
+    	case 3: speeds = [spd,spd];break;
+    	case 4: speeds = [-spd,-spd];break;
     	default:
-    		speeds = [spd,spd];
+    		speeds = [-spd,spd];
     }
     return createPromise(util, 201, ...speeds);
 }

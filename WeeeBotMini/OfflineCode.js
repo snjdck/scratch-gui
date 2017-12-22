@@ -276,7 +276,6 @@ module.exports = function(){
         if(index & 2){
              code += arduino.tab() + `${key}.setColor2(${color.r}, ${color.g}, ${color.b})`  + arduino.END;
         }
-        code += arduino.tab() + `${key}.RGBShow()` + arduino.END;
         return code;
     };
 
