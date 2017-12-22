@@ -17,17 +17,22 @@ class PortSelector extends React.Component {
         super(props);
         bindAll(this, [
         'changeLanguage',
-        'serialDevUpdate','refreshPort','selectPort','portConnected','portClosed',"portReadLine"
+        'serialDevUpdate','refreshPort','selectPort','portConnected','portClosed',"portReadLine",
+        'selectBoard'
         ]);
         this.state = {
             portDev: [],
             boards:[{'name':'Arduino Uno','type':'arduino:avr:uno'}],
             connectedPort: null,
+            board:"WeeeBot",
             selectedBoard:{'name':'Arduino Uno','type':'arduino:avr:uno'}
         };
     }
     get vm(){
         return this.props.vm;
+    }
+    get weeecode(){
+        return this.vm.weeecode;
     }
     changeLanguage(language){
         localStorage.language = language;
@@ -58,9 +63,15 @@ class PortSelector extends React.Component {
         if(port.type=='disconnect'){
             this.props.vm.weeecode.disonnectPort();
         }else{
-            //var onRecv = this.props.vm.weeebot.onRecv;
             this.props.vm.weeecode.connectPort(port,this.portConnected,this.portReadLine,this.portClosed, this.portReadLine);
         }
+    }
+    selectBoard(board){
+        if(this.state.board == board){
+            return;
+        }
+        this.setState({board});
+        this.weeecode.plugin = this.weeecode.pluginMap.get(board);
     }
 
     componentDidMount () {
@@ -125,6 +136,19 @@ class PortSelector extends React.Component {
                 </NavItem>
             </Nav>
                 <Nav pullRight>
+                    <NavItem>
+                        <ButtonGroup>
+                            <DropdownButton title={this.state.board} bsStyle="info"
+                                            onSelect={this.selectBoard}
+                                            id="boardDropdown"
+                                            style={{width: '150px'}}>{
+                            Array.from(this.weeecode.pluginMap.keys()).map(
+                            	k => <MenuItem eventKey={k} key={k} disabled={k == this.state.board}>{k}</MenuItem>
+                            )
+                                            }
+                            </DropdownButton>
+                        </ButtonGroup>
+                    </NavItem>
                     <NavItem>
                         <ButtonGroup>
                             <DropdownButton title={portDropdownTxt} bsStyle="info"

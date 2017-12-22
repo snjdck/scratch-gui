@@ -40,7 +40,11 @@ class ArduinoPanelComponent extends React.Component {
             this.uploadCode(data);
         });
     }
+    get plugin(){
+        return this.props.vm.weeecode.plugin;
+    }
     restoreFirmware(name){
+        name = this.plugin.name.toLowerCase() + name;
         this.restoreFirmwareImpl(`firmwares/${name}/${name}.ino`);
     }
     uploadProject(){
@@ -117,6 +121,9 @@ class ArduinoPanelComponent extends React.Component {
 			code = b.replace(/[ \t]+\n/g,"\n");
             break;
         }
+        if(code.length == 0){
+            code = "#include <Arduino.h>\n\nvoid setup(){\n}\n\nvoid loop(){\n}";
+        }
         if(code != this.state.code){
             this.setState({code:code});
         }
@@ -161,8 +168,8 @@ class ArduinoPanelComponent extends React.Component {
             <table width="100%" height="100%"><tr><td>
             <div className="group" id="code-buttons">
                 <DropdownButton title={Blockly.Msg.WC_RESTORE_FIRMWARE} id="restore_firmware" onSelect={this.restoreFirmware}>
-                  <MenuItem eventKey="weeebot_factory_firmware">{Blockly.Msg.WC_RESTORE_FACTORY_FIRMWARE}</MenuItem>
-                  <MenuItem eventKey="weeebot_firmware">{Blockly.Msg.WC_RESTORE_ONLINE_FIRMWARE}</MenuItem>
+                  <MenuItem eventKey="_factory_firmware">{Blockly.Msg.WC_RESTORE_FACTORY_FIRMWARE}</MenuItem>
+                  <MenuItem eventKey="_firmware">{Blockly.Msg.WC_RESTORE_ONLINE_FIRMWARE}</MenuItem>
                 </DropdownButton>
                 <Button onClick={this.uploadProject}>{<Icon name="arrow-up"/>}{Blockly.Msg.UPLOAD}</Button>
                 <Button style={{"float":"right"}} onClick={this.openArduino}>{<img style={{height: 20}} src={arduinoIcon}/>}{Blockly.Msg.WC_OPEN_ARDUINO}</Button>

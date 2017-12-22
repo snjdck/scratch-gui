@@ -5,19 +5,30 @@ import Storage from '../lib/storage';
 import Serial from "../../WeeeCode/serial";
 import ArduinoBlocks from "../../WeeeCode/arduino";
 const WeeeCode = eval('require("./weeecode")');
-import WeeeBot from "../../WeeeBot";
-
 require('../lib/arduino-generator');
-require("../../WeeeBot/OfflineCode")();
+import WeeeBot from "../../WeeeBot";
+import WeeeBotMini from "../../WeeeBotMini";
+
+
+//require("../../WeeeBot/OfflineCode")();
+//require("../../WeeeBotMini/OfflineCode")();
 
 function createVM(){
     var vm = new VM();
+    vm.on("stop-all-flag-clicked", () => vm.weeecode.sendCmd("M99"));
     vm.weeecode = new WeeeCode(vm);
-    vm.weeebot = new WeeeBot(vm);
-    vm.weeecode.plugin = vm.weeebot;
+
+    let weeebot = new WeeeBot(vm);
+    let weeebotMini = new WeeeBotMini(vm);
+    
+    vm.weeecode.pluginMap = new Map();
+    vm.weeecode.pluginMap.set(weeebot.name, weeebot);
+    vm.weeecode.pluginMap.set(weeebotMini.name, weeebotMini);
+    vm.weeecode.plugin = weeebot;
+    
     vm.runtime.ioDevices.serial = new Serial(vm);
-    //var packageObject = new ArduinoBlocks(vm.runtime);
-    for (var packageObject of [new ArduinoBlocks(vm.runtime), vm.weeebot]){
+    var packageObject = new ArduinoBlocks(vm.runtime);
+    //for (var packageObject of [new ArduinoBlocks(vm.runtime), weeebot]){
 
         const packagePrimitives = packageObject.getPrimitives();
         for (const op in packagePrimitives) {
@@ -32,7 +43,7 @@ function createVM(){
                 vm.runtime._hats[hatName] = packageHats[hatName];
             }
         }
-    }
+    //}
     window.vm = vm;
     vm.weeecode.on("reset_project", () => {
         Blockly.ResetUserData();

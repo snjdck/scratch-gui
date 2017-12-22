@@ -23,6 +23,7 @@ class Blocks extends React.Component {
         super(props);
         this.ScratchBlocks = VMScratchBlocks(props.vm);
         bindAll(this, [
+            'onPluginChanged',
             'attachVM',
             'detachVM',
             'handlePromptStart',
@@ -46,7 +47,24 @@ class Blocks extends React.Component {
             prompt: null
         };
         this.onTargetsUpdate = debounce(this.onTargetsUpdate, 100);
+        this.props.vm.weeecode.on("pluginChanged", this.onPluginChanged);
     }
+    onPluginChanged(){
+        if(this.props.vm.weeecode.plugin.getBlocks) {
+            var blocks = this.props.vm.weeecode.plugin.getBlocks();
+            for (var key in blocks) {
+                Blockly.Blocks[key] = blocks[key];
+            }
+        }
+
+        var toolbox = this.props.vm.weeecode.toolbox.getDefalutToolBox();
+        toolbox = toolbox.replace(/category name="(\w+)"/g, (str, name) => str.replace(name, Blockly.Msg[name.toUpperCase()]) + ` key="${name}"`);
+        var pluginToolbox = this.props.vm.weeecode.plugin.getToolbox();
+        Blockly.Blocks.defaultToolbox = toolbox.replace("</xml>", pluginToolbox + "</xml>");
+
+        this.workspace.updateToolbox(Blockly.Blocks.defaultToolbox);
+    }
+
      setToolboxSelectedItemByName (name) {
         const categories = this.workspace.toolbox_.categoryMenu_.categories_;
         for (let i = 0; i < categories.length; i++) {
