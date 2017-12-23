@@ -95,7 +95,8 @@ module.exports = function (){
         {
           "type": "field_led",
           "name": "LED_MATRIX_DATA",
-          "data": "[0,0,0,0,0,0,0]"
+          "data": "[0,0,0,0,0,0,0]",
+          "size": "21x7"
         }
       ],
       "outputShape": 4,
