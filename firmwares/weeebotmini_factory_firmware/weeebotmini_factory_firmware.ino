@@ -187,6 +187,7 @@ void setup()
 	digitalWrite(MINI_RIGHT_YELLOW, HIGH);
 	
 	Stop();
+	loopSensor();
 
 	ledPanel.setBrightness(5); 
 	ledPanel.clearScreen();
@@ -206,7 +207,6 @@ void setup()
 	ledPanel.showLine(13,0x11);
 	buzzer.tone(NTD6, 300);
 
-	loopSensor();
 	Serial.begin(115200);
 	ir.begin();
 }
