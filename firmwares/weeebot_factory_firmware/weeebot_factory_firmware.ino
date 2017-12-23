@@ -457,7 +457,7 @@ void pre_button()
 
 void motor_run(int lspeed, int rspeed)
 {
-	MotorL.run(lspeed);
+	MotorL.run(-lspeed);
 	MotorR.run(rspeed);
 }
 
