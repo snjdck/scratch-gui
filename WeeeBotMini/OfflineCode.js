@@ -340,9 +340,11 @@ module.exports = function(){
 
         var data = JSON.parse(arduino.valueToCode(block, "LED_MATRIX_DATA", order));
         var bytes = [];
-        for(var j=0; j<21; ++j){
+
+        const w=14, h=5;
+        for(var j=0; j<w; ++j){
             bytes[j] = 0;
-            for(var i=0; i<7; ++i){
+            for(var i=0; i<h; ++i){
                 if(data[i] & (1 << j)){
                     bytes[j] |= 1 << i;
                 }
@@ -354,7 +356,7 @@ module.exports = function(){
         arduino.definitions_["ledPanelData"] = "uint8_t ledPanelData[21];";
 
         var code = arduino.tab() + `ledPanel.reset(${port})`  + arduino.END;
-        for(var i=0; i<21; i++){
+        for(var i=0; i<w; i++){
             code += arduino.tab() + `ledPanelData[${i}] = 0x${bytes[i].toString(16)}` + arduino.END;
         }
         code +=    arduino.tab() + `ledPanel.showBitmap(${x}, ${y}, ledPanelData)` + arduino.END;
@@ -418,6 +420,81 @@ module.exports = function(){
         var code = key + ".read()";
         return [code, order];
     }
+
+    arduino["ir_avoid_led"] = function (block) {
+        var order = arduino.ORDER_NONE;
+
+        var port = arduino.valueToCode(block, "SENSOR_PORT", order);
+        var index = arduino.valueToCode(block, "ULTRASONIC_LED_INDEX", order);
+        var color = arduino.valueToCode(block, "COLOR", order);
+        color = hexToRgb(color);
+
+        var key = "IRAvoid_" + port;
+
+        addInclude(arduino);
+        arduino.definitions_[key] = `WeIRAvoidSensor ${key}(${port});`;
+        
+        var code = "";
+        if(index & 1){
+            code += arduino.tab() + `${key}.setColor1(${color.r}, ${color.g}, ${color.b})`  + arduino.END;
+        }
+        if(index & 2){
+             code += arduino.tab() + `${key}.setColor2(${color.r}, ${color.g}, ${color.b})`  + arduino.END;
+        }
+        return code;
+    };
+
+    arduino["ir_avoid_led_rgb"] = function (block) {
+        var order = arduino.ORDER_NONE;
+
+        var port = arduino.valueToCode(block, "SENSOR_PORT", order);
+        var index = arduino.valueToCode(block, "ULTRASONIC_LED_INDEX", order);
+        var color = {
+            r: arduino.valueToCode(block, "R", order),
+            g: arduino.valueToCode(block, "G", order),
+            b: arduino.valueToCode(block, "B", order)
+        };
+
+        var key = "IRAvoid_" + port;
+
+        addInclude(arduino);
+        arduino.definitions_[key] = `WeIRAvoidSensor ${key}(${port});`;
+        
+        var code = "";
+        if(index & 1){
+            code += arduino.tab() + `${key}.setColor1(${color.r}, ${color.g}, ${color.b})`  + arduino.END;
+        }
+        if(index & 2){
+             code += arduino.tab() + `${key}.setColor2(${color.r}, ${color.g}, ${color.b})`  + arduino.END;
+        }
+        return code;
+    };
+
+    arduino["ultrasonic_led_rgb"] = function (block) {
+        var order = arduino.ORDER_NONE;
+
+        var port = arduino.valueToCode(block, "SENSOR_PORT", order);
+        var index = arduino.valueToCode(block, "ULTRASONIC_LED_INDEX", order);
+        var color = {
+            r: arduino.valueToCode(block, "R", order),
+            g: arduino.valueToCode(block, "G", order),
+            b: arduino.valueToCode(block, "B", order)
+        };
+
+        var key = "ultrasonic_" + port;
+
+        addInclude(arduino);
+        arduino.definitions_[key] = `WeUltrasonicSensor ${key}(${port});`;
+        
+        var code = "";
+        if(index & 1){
+            code += arduino.tab() + `${key}.setColor1(${color.r}, ${color.g}, ${color.b})`  + arduino.END;
+        }
+        if(index & 2){
+             code += arduino.tab() + `${key}.setColor2(${color.r}, ${color.g}, ${color.b})`  + arduino.END;
+        }
+        return code;
+    };
     
 /*
     arduino["weeebot_lcd"] = function (block) {

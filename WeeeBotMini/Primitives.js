@@ -1,3 +1,5 @@
+"use strict";
+
 function hexToRgb(hex) {
     var shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
     hex = hex.replace(shorthandRegex, function (m, r, g, b) {
@@ -9,6 +11,16 @@ function hexToRgb(hex) {
         g: parseInt(result[2], 16),
         b: parseInt(result[3], 16)
     } : null;
+}
+
+function fetchRGB(argValues){
+    var r = argValues.R;
+    var g = argValues.G;
+    var b = argValues.B;
+    r = Math.round(Math.max(0, Math.min(255, r)));
+    g = Math.round(Math.max(0, Math.min(255, g)));
+    b = Math.round(Math.max(0, Math.min(255, b)));
+    return {r, g, b};
 }
 
 function createCMD(...args){
@@ -64,13 +76,8 @@ function weeebot_rgb(argValues, util) {
 function weeebot_rgb3(argValues, util) {
     var pin = argValues.BOARD_PORT_RGB;
     var pix = argValues.PIXEL;
-    var r = argValues.R;
-    var g = argValues.G;
-    var b = argValues.B;
-    r = Math.round(Math.max(0, Math.min(255, r)));
-    g = Math.round(Math.max(0, Math.min(255, g)));
-    b = Math.round(Math.max(0, Math.min(255, b)));
-    return createPromise(util, 9, pin, pix, r, g, b);
+    var color = fetchRGB(argValues);
+    return createPromise(util, 9, pin, pix, color.r, color.g, color.b);
 }
 
 function board_light_sensor(argValues, util) {
@@ -159,9 +166,9 @@ function weeebot_led_matrix_bitmap(argValues, util){
     var y = argValues.Y;
     var data = JSON.parse(argValues.LED_MATRIX_DATA);
     var bytes = [];
-    for(var j=0; j<21; ++j){
+    for(var j=0; j<14; ++j){
         bytes[j] = 0;
-        for(var i=0; i<7; ++i){
+        for(var i=0; i<5; ++i){
             if(data[i] & (1 << j)){
                 bytes[j] |= 1 << i;
             }
@@ -198,6 +205,24 @@ function weeebot_single_line_follower(argValues, util){
     var port = argValues.SENSOR_PORT;
     return createPromise(util, 116, port);
 }
+function ultrasonic_led_rgb(argValues, util){
+    var port = argValues.SENSOR_PORT;
+    var index = argValues.ULTRASONIC_LED_INDEX;
+    var color = fetchRGB(argValues);
+    return createPromise(util, 109, port, index, color.r, color.g, color.b);
+}
+function ir_avoid_led(argValues, util){
+    var port = argValues.SENSOR_PORT;
+    var index = argValues.ULTRASONIC_LED_INDEX;
+    var color = hexToRgb(argValues.COLOR);
+    return createPromise(util, 118, port, index, color.r, color.g, color.b);
+}
+function ir_avoid_led_rgb(argValues, util){
+    var port = argValues.SENSOR_PORT;
+    var index = argValues.ULTRASONIC_LED_INDEX;
+    var color = fetchRGB(argValues);
+    return createPromise(util, 118, port, index, color.r, color.g, color.b);
+}
 module.exports = function(){
     return {
         weeebot_motor_dc,
@@ -225,6 +250,9 @@ module.exports = function(){
         weeebot_led_matrix_pixel_hide,
         weeebot_led_matrix_clear,
         weeebot_ir_avoid,
-        weeebot_single_line_follower
+        weeebot_single_line_follower,
+        ultrasonic_led_rgb,
+        ir_avoid_led,
+        ir_avoid_led_rgb
     };
 };

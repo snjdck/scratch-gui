@@ -95,7 +95,8 @@ module.exports = function (){
         {
           "type": "field_led",
           "name": "LED_MATRIX_DATA",
-          "data": "[0,0,0,0,0,0,0]"
+          "data": "[0,0,0,0,0]",
+          "size": "14x5"
         }
       ],
       "outputShape": 4,
@@ -186,10 +187,13 @@ module.exports = function (){
     regBlock("board_temperature_sensor", Translation.WB_TEMPERATURE, ["SENSOR_PORT"], "Number");
     regBlock("board_sound_sensor", Translation.WB_SOUND, ["SOUND_PORT"], "Number");
     regBlock("weeebot_on_board_button", Translation.WB_BOARD_BUTTON, ["SENSOR_PORT"], "Boolean");
-    regBlock("weeebot_infraread", "ir pressed %1", ["IR_CODE"], "Boolean");
+    regBlock("weeebot_infraread", "IR pressed %1", ["IR_CODE"], "Boolean");
     regBlock("line_follower", Translation.WB_LINE_FOLLOWER, ["SENSOR_PORT", "LINE_FOLLOWER_INDEX"], "Number");
     regBlock("ultrasonic", Translation.WB_ULTRASONIC, ["SENSOR_PORT"], "Number");
     regBlock("ultrasonic_led", Translation.WB_ULTRASONIC_LED, ["SENSOR_PORT", "ULTRASONIC_LED_INDEX", "COLOR"]);
+    regBlock("ultrasonic_led_rgb", "ultrasonic %1 led %2 R %3 G %4 B %5", ["SENSOR_PORT", "ULTRASONIC_LED_INDEX", "R", "G", "B"]);
+    regBlock("ir_avoid_led", "IR avoid %1 led %2 %3", ["SENSOR_PORT", "ULTRASONIC_LED_INDEX", "COLOR"]);
+    regBlock("ir_avoid_led_rgb", "IR avoid %1 led %2 R %3 G %4 B %5", ["SENSOR_PORT", "ULTRASONIC_LED_INDEX", "R", "G", "B"]);
     regBlock("weeebot_led_matrix_number", Translation.WB_LED_MATRIX_NUMBER, ["SENSOR_PORT", "NUM"]);
     regBlock("weeebot_led_matrix_time", Translation.WB_LED_MATRIX_TIME, ["SENSOR_PORT", "HOUR", "SHOW_COLON", "SECOND"]);
     regBlock("weeebot_led_matrix_string", Translation.WB_LED_MATRIX_STRING, ["SENSOR_PORT", "X", "Y", "STR"]);

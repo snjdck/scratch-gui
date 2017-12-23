@@ -81,12 +81,13 @@ const toolbox = create(["category", {"name":"WeeeBot\nMini", "key":"WeeeBotMini"
             newDropdownValue("SENSOR_PORT", PORTS[3]),
             newNumberValue("NUM", 100)
         ]),
+        /*
         newBlock("weeebot_led_matrix_time", [
             newDropdownValue("SENSOR_PORT", PORTS[3]),
             newNumberValue("HOUR", 12),
             newDropdownValue("SHOW_COLON", 1),
             newNumberValue("SECOND", 34)
-        ]),
+        ]),*/
         newBlock("weeebot_led_matrix_string", [
             newDropdownValue("SENSOR_PORT", PORTS[3]),
             newNumberValue("X", 0),
@@ -116,6 +117,25 @@ const toolbox = create(["category", {"name":"WeeeBot\nMini", "key":"WeeeBotMini"
             newDropdownValue("SENSOR_PORT", PORTS[1]),
             newDropdownValue("ULTRASONIC_LED_INDEX", 3),
             newXML("value", {"name":"COLOR"}, [newXML("shadow", {"type":"colour_picker"})])
+        ]),
+        newBlock("ultrasonic_led_rgb", [
+            newDropdownValue("SENSOR_PORT", PORTS[1]),
+            newDropdownValue("ULTRASONIC_LED_INDEX", 3),
+            newNumberValue("R", 255),
+            newNumberValue("G", 255),
+            newNumberValue("B", 255)
+        ]),
+        newBlock("ir_avoid_led", [
+            newDropdownValue("SENSOR_PORT", PORTS[2]),
+            newDropdownValue("ULTRASONIC_LED_INDEX", 3),
+            newXML("value", {"name":"COLOR"}, [newXML("shadow", {"type":"colour_picker"})])
+        ]),
+        newBlock("ir_avoid_led_rgb", [
+            newDropdownValue("SENSOR_PORT", PORTS[2]),
+            newDropdownValue("ULTRASONIC_LED_INDEX", 3),
+            newNumberValue("R", 255),
+            newNumberValue("G", 255),
+            newNumberValue("B", 255)
         ]),
         newBlock("line_follower", [
             newDropdownValue("SENSOR_PORT", PORTS[1]),
