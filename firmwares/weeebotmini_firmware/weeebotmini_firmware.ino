@@ -49,6 +49,7 @@ const uint8_t MSG_ID_LED_MATRIX_PIXEL_HIDE = 2;
 const uint8_t MSG_ID_LED_MATRIX_CLEAR = 3;
 const uint8_t MSG_ID_SINGLE_LINE_FOLLOWER = 116;
 const uint8_t MSG_ID_IR_AVOID = 117;
+const uint8_t MSG_ID_IR_AVOID_LED = 118;
 
 int searchServoPin(int pin){
 	for(int i=0;i<MAX_SERVO_COUNT;i++){
@@ -280,6 +281,22 @@ void getSingleLineFollower(char *cmd)
 	Serial.println(singleLF.read());
 }
 
+void doIRAvoidLED(char *cmd)
+{
+	int port = nextInt(&cmd);
+	int index = nextInt(&cmd);
+	IRAvoid.reset(port);
+	int r = nextInt(&cmd);
+	int g = nextInt(&cmd);
+	int b = nextInt(&cmd);
+	if(index & 1){
+		IRAvoid.setColor1(r,g,b);
+	}
+	if(index & 2){
+		IRAvoid.setColor2(r,g,b);
+	}
+}
+
 void doUltrasonicLed(char *cmd)
 {
 	int port = nextInt(&cmd);
@@ -294,7 +311,6 @@ void doUltrasonicLed(char *cmd)
 	if(index & 2){
 		ultraSensor.setColor2(r,g,b);
 	}
-	ultraSensor.RGBShow();
 }
 
 void getLineFollower(char *cmd)
@@ -474,6 +490,9 @@ void parseMcode(char *cmd)
 			break;
 		case MSG_ID_LED_MATRIX_CLEAR:
 			handler = doLedMatrixClear;
+			break;
+		case MSG_ID_IR_AVOID_LED:
+			handler = doIRAvoidLED;
 			break;
 		case MSG_ID_SINGLE_LINE_FOLLOWER:
 			queryFlag = true;
