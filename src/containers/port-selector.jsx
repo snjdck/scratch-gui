@@ -24,7 +24,7 @@ class PortSelector extends React.Component {
             portDev: [],
             boards:[{'name':'Arduino Uno','type':'arduino:avr:uno'}],
             connectedPort: null,
-            board:"WeeeBot",
+            board:this.weeecode.plugin.name,
             selectedBoard:{'name':'Arduino Uno','type':'arduino:avr:uno'}
         };
     }
