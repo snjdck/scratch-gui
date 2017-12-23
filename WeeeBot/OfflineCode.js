@@ -147,7 +147,7 @@ module.exports = function(){
         var dir = arduino.valueToCode(block, 'MOVE_DIRECTION', order).toString();
         var code = arduino.tab() + "speed = " + spd + arduino.END;
         code += arduino.tab() + "dc.reset(2)" + arduino.END;
-        code += arduino.tab() + "dc.run(" + ("14".indexOf(dir) >= 0 ? "" : "-")  + "speed)" + arduino.END;
+        code += arduino.tab() + "dc.run(" + ("14".indexOf(dir) >= 0 ? "-" : "")  + "speed)" + arduino.END;
         code += arduino.tab() + "dc.reset(1)" + arduino.END;
         code += arduino.tab() + "dc.run(" + ("13".indexOf(dir) >= 0 ? "" : "-")  + "speed)" + arduino.END;
         return code;

@@ -223,6 +223,8 @@ module.exports = function(){
         weeebot_led_matrix_bitmap,
         weeebot_led_matrix_pixel_show,
         weeebot_led_matrix_pixel_hide,
-        weeebot_led_matrix_clear
+        weeebot_led_matrix_clear,
+        weeebot_ir_avoid,
+        weeebot_single_line_follower
     };
 };

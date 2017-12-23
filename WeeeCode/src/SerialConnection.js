@@ -59,7 +59,7 @@ class SerialConnection {
         this.lineBuffer += ab2str(receiveInfo.data);
         var index;
         while ((index = this.lineBuffer.indexOf('\n')) >= 0) {
-            var line = this.lineBuffer.substr(0, index + 1);
+            var line = this.lineBuffer.substr(0, index + 1).trim().split("").filter(v => v.charCodeAt() > 0).join("");
             this.onReadLine.dispatch(line);
             this.lineBuffer = this.lineBuffer.substr(index + 1);
             console.log("serial recv:", line)
