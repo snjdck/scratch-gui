@@ -12,6 +12,7 @@ public:
   void reset(uint8_t port=0);
 
   void startRead(void);
+  uint8_t startRead(uint8_t);
   uint8_t readSensor1(void);
   uint8_t readSensor2(void);
 

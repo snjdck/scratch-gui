@@ -3,7 +3,7 @@
 
 #include <Arduino.h>
 #include "WeConfig.h"
-
+#include "LinkedList.h"
 
 #include "WeDCMotor.h"
 

@@ -10,6 +10,12 @@ void WeLineFollower::reset(uint8_t port)
 	_WeLineFollower.reset(port);
 }
 
+uint8_t WeLineFollower::startRead(uint8_t index)
+{
+  startRead();
+  return index == 2 ? _Sensor2 : _Sensor1;
+}
+
 void WeLineFollower::startRead(void)
 {
   if(_WeLineFollower.reset()!=0)
