@@ -7,7 +7,7 @@
 class WeSensor
 {
 public:
-	WeSensor(uint8_t=0);
+	WeSensor(uint8_t);
 	void reset(uint8_t);
 protected:
 	uint8_t _SensorPin;

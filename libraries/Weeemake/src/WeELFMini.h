@@ -56,7 +56,7 @@ uint8_t WeonePort[17]=
 */
 WePort_TwoSig WetwoPort[12] =
 {
-    { NC, NC }, { 5, 6 }, {  10,  9}, { NC, NC }, {  NC,  NC },
+    { NC, NC }, {  10,  9}, { 5, 6 }, { NC, NC }, {  NC,  NC },
 	{ NC, NC }, { NC, NC }, { NC, NC }, { NC, NC }, {  NC,  NC },
 	{  NC, NC }, { NC, NC },
 };
