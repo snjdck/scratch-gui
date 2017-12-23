@@ -1,16 +1,8 @@
 #include <WeELFMini.h>
 
-#ifdef _WeELF328P_H
-#define MAX_SERVO_COUNT 10
-#define LED_MATRIX_WIDTH 21
-#define DEFAULT_IR_PIN PORT_2
-#endif
-
-#ifdef _WeELFMini_H
 #define MAX_SERVO_COUNT 4
 #define LED_MATRIX_WIDTH 14
 #define DEFAULT_IR_PIN OnBoard_IR
-#endif
 
 const uint8_t sensor_port[4] = {PORT_A,PORT_B,PORT_C,PORT_D};
 uint8_t sensor_slot[4] = {0};
