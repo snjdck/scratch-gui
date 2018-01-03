@@ -9,7 +9,7 @@
 
 #include "WeLineFollower.h"
 #include "WeUltrasonicSensor.h"
-#include "WeLEDPanelModuleMatrix7_21.h"
+#include "WeLEDPanelModuleMatrix.h"
 #include "WeBuzzer.h"
 #include "WeLightSensor.h"
 #include "WeSoundSensor.h"
@@ -31,29 +31,31 @@
 #include "WeRGBLED_RJ.h"
 #include "WeTiltSwitch.h"
 #include "WePIRSensor.h"
+#include "WeFlameSensor.h"
+#include "WeJoystick.h"
+#include "WeLimitSwitch.h"
+#include "WeColorSensor.h"
+#include "WeGyroSensor.h"
 
-
-#define PORT_A  (A2)
-#define PORT_B  (A3)
-#define PORT_C  (A4)
-#define PORT_D  (A5)
+#define PORT_A  (A5)
+#define PORT_B  (A4)
+#define PORT_C  (A2)
+#define PORT_D  (A1)
 
 #define OnBoard_Buzzer        (7)
 #define OnBoard_IR            (2)
-#define OnBoard_Light         (A1)
-#define OnBoard_Sound         (0)
+#define OnBoard_Light         (A7)
+#define OnBoard_Sound         (A3)
 
+#define MINI_LIFT_RED       4
+#define MINI_RIGHT_RED      3
+#define MINI_LIFT_YELLOW   A0
+#define MINI_RIGHT_YELLOW  13
 
 #define M1      (0x01)
 #define M2      (0x02)
 
-/*
-uint8_t WeonePort[17]=
-{
-     NC, NC, NC, NC, NC, NC, NC, A2, A3, A4, A5, NC, NC, 7, 2, A1, NC
-  // NC, NC, NC, NC, NC, NC, NC, A5, A4, A2, A1, NC, NC, 7, 2, A7, A3
-};
-*/
+
 WePort_TwoSig WetwoPort[12] =
 {
     { NC, NC }, {  10,  9}, { 5, 6 }, { NC, NC }, {  NC,  NC },
@@ -71,5 +73,25 @@ void setfastPWM()
 
 }
 
+void LED_LIFT_RED(bool sig)
+{
+  pinMode(MINI_LIFT_RED, OUTPUT);
+  digitalWrite(MINI_LIFT_RED, sig);	
+}
+void LED_RIGHT_RED(bool sig)
+{
+  pinMode(MINI_RIGHT_RED, OUTPUT);
+  digitalWrite(MINI_RIGHT_RED, sig);
+}
+void LED_LIFT_YELLOW(bool sig)
+{
+  pinMode(MINI_LIFT_YELLOW, OUTPUT);
+  digitalWrite(MINI_LIFT_YELLOW, sig);
+}
+void LED_RIGHT_YELLOW(bool sig)
+{
+  pinMode(MINI_RIGHT_YELLOW, OUTPUT);
+  digitalWrite(MINI_RIGHT_YELLOW, sig);
+}
 
 #endif 

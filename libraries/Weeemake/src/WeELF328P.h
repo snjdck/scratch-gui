@@ -9,7 +9,7 @@
 
 #include "WeLineFollower.h"
 #include "WeUltrasonicSensor.h"
-#include "WeLEDPanelModuleMatrix7_21.h"
+#include "WeLEDPanelModuleMatrix.h"
 #include "WeBuzzer.h"
 #include "WeLightSensor.h"
 #include "WeSoundSensor.h"
@@ -32,6 +32,12 @@
 #include "WeRGBLED_RJ.h"
 #include "WeTiltSwitch.h"
 #include "WePIRSensor.h"
+#include "WeFlameSensor.h"
+#include "WeJoystick.h"
+#include "WeLimitSwitch.h"
+#include "WeColorSensor.h"
+#include "WeGyroSensor.h"
+#include "WeCompassSensor.h"
 
 #define PORT_1  (A0)
 #define PORT_2  (A1)
@@ -60,12 +66,7 @@
 #define M9      (0x09)
 #define M10     (0x0A)
 
-/*
-uint8_t WeonePort[17]=
-{
-     NC, A0, A1, A5, A4, A3, A2, 9, 10, 12, 4, 3, 2, 11, NC, NC, NC,
-};
-*/
+
 WePort_TwoSig WetwoPort[12] =
 {
     { NC, NC }, { 6, 7 }, {  5,  8 }, { A5, 1 }, {  A5,  2 },

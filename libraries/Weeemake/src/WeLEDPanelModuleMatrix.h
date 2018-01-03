@@ -1,16 +1,13 @@
 
-#ifndef WeLEDPanelModuleMatrix7_21_H
-#define WeLEDPanelModuleMatrix7_21_H
+#ifndef WeLEDPanelModuleMatrix_H
+#define WeLEDPanelModuleMatrix_H
 
 #include "WePort.h"
 
-
-class WeLEDPanelModuleMatrix7_21
+class WeLEDPanelModuleMatrix
 {
 public:
-
-  WeLEDPanelModuleMatrix7_21(uint8_t port=0);
-  void reset(uint8_t port=0);
+  void reset(uint8_t port);
   void setBrightness(uint8_t Bright);
   void clearScreen(void);
   void writePanelData(void);
@@ -23,9 +20,25 @@ public:
   void showNum(float value);
   void writeChar(int8_t X_position,int8_t Y_position,uint8_t buffer);
   void showBitmap(int8_t x, int8_t y, uint8_t *data);
+protected:
+  WeLEDPanelModuleMatrix(uint8_t port, uint8_t width, uint8_t height);
 private:
 	WeOneWire _WeLEDPanel;
-    volatile uint8_t  Display_Buffer[21]={0};
+  volatile uint8_t Display_Buffer[21]={0};
+	uint8_t panel_width;
+	uint8_t panel_height;
+};
+
+class WeLEDPanelModuleMatrix7_21: public WeLEDPanelModuleMatrix
+{
+public:
+  WeLEDPanelModuleMatrix7_21(uint8_t port=0);
+};
+
+class WeLEDPanelModuleMatrix5_14: public WeLEDPanelModuleMatrix
+{
+public:
+  WeLEDPanelModuleMatrix5_14(uint8_t port=0);
 };
 
 #endif

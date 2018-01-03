@@ -1,16 +1,26 @@
-#include "WeLEDPanelModuleMatrix7_21.h"
-
+#include "WeLEDPanelModuleMatrix.h"
 
 WeLEDPanelModuleMatrix7_21::WeLEDPanelModuleMatrix7_21(uint8_t port)
-{
-  _WeLEDPanel.reset(port);
-}
-void WeLEDPanelModuleMatrix7_21::reset(uint8_t port)
+:WeLEDPanelModuleMatrix(port, 21, 7)
+{}
+
+WeLEDPanelModuleMatrix5_14::WeLEDPanelModuleMatrix5_14(uint8_t port)
+:WeLEDPanelModuleMatrix(port, 14, 5)
+{}
+
+WeLEDPanelModuleMatrix::WeLEDPanelModuleMatrix(uint8_t port, uint8_t width, uint8_t height)
+:panel_width(width)
+,panel_height(height)
 {
   _WeLEDPanel.reset(port);
 }
 
-void WeLEDPanelModuleMatrix7_21::setBrightness(uint8_t Bright)
+void WeLEDPanelModuleMatrix::reset(uint8_t port)
+{
+  _WeLEDPanel.reset(port);
+}
+
+void WeLEDPanelModuleMatrix::setBrightness(uint8_t Bright)
 {
     if((uint8_t)Bright>7)
     {
@@ -30,10 +40,10 @@ void WeLEDPanelModuleMatrix7_21::setBrightness(uint8_t Bright)
      delayMicroseconds(3000);
 }
 
-void WeLEDPanelModuleMatrix7_21::clearScreen(void)
+void WeLEDPanelModuleMatrix::clearScreen(void)
 {
   uint8_t i;
-  for (i=0;i<21;i++)
+  for (i=0;i<panel_width;i++)
   {
   	 Display_Buffer[i]=0;
   }
@@ -42,7 +52,7 @@ void WeLEDPanelModuleMatrix7_21::clearScreen(void)
   _WeLEDPanel.write_byte(0x05);
   delayMicroseconds(5000);
 }
-void WeLEDPanelModuleMatrix7_21::writePanelData(void)
+void WeLEDPanelModuleMatrix::writePanelData(void)
 {
   uint8_t i;
    if(_WeLEDPanel.reset()!=0)
@@ -53,7 +63,7 @@ void WeLEDPanelModuleMatrix7_21::writePanelData(void)
      delayMicroseconds(3000);
      return;
   }
-  for (i=0;i<21;i++)
+  for (i=0;i<panel_width;i++)
   {
     _WeLEDPanel.write_byte(Display_Buffer[i]);
   }
@@ -67,10 +77,10 @@ void WeLEDPanelModuleMatrix7_21::showPanel(void)
   delayMicroseconds(3000);
 }
 */
-void WeLEDPanelModuleMatrix7_21::showBitmap(int8_t x, int8_t y, uint8_t *data)
+void WeLEDPanelModuleMatrix::showBitmap(int8_t x, int8_t y, uint8_t *data)
 	{
-	  const int w = 21;
-	  const int h = 7;
+	  const int w = panel_width;
+	  const int h = panel_height;
 	  if(x <= -w || x >= w || y <= -h || y >= h){
 		clearScreen();
 		return;
@@ -91,7 +101,7 @@ void WeLEDPanelModuleMatrix7_21::showBitmap(int8_t x, int8_t y, uint8_t *data)
 	  }
 	}
 
-void WeLEDPanelModuleMatrix7_21::showLine(uint8_t x,uint8_t buffer)
+void WeLEDPanelModuleMatrix::showLine(uint8_t x,uint8_t buffer)
 {
   if(_WeLEDPanel.reset()!=0)
    return;
@@ -103,25 +113,25 @@ void WeLEDPanelModuleMatrix7_21::showLine(uint8_t x,uint8_t buffer)
  // Display_Buffer[x]=buffer;
 //  delayMicroseconds(1000);
 }
-void WeLEDPanelModuleMatrix7_21::turnOnDot(uint8_t x,uint8_t y)
+void WeLEDPanelModuleMatrix::turnOnDot(uint8_t x,uint8_t y)
 { 
-   if(x>20||y>6)
+   if(x>(panel_width-1)||y>(panel_height-1))
    	return;
    Display_Buffer[x]=Display_Buffer[x]|(0x01<<(y));   
    showLine(x,Display_Buffer[x]);
 
 }
 
-void WeLEDPanelModuleMatrix7_21::turnOffDot(uint8_t x,uint8_t y)
+void WeLEDPanelModuleMatrix::turnOffDot(uint8_t x,uint8_t y)
 { 
-   if(x>20||y>6)
+   if(x>(panel_width-1)||y>(panel_height-1))
    return;
    Display_Buffer[x]=Display_Buffer[x]&(~(0x01<<(y)));
    showLine(x,Display_Buffer[x]);
 
 }
 
-void WeLEDPanelModuleMatrix7_21::showChar(int8_t X_position,int8_t Y_position,const char *str)
+void WeLEDPanelModuleMatrix::showChar(int8_t X_position,int8_t Y_position,const char *str)
 {
   uint8_t number_of_Str,display_Buffer[20]={0},X_Digits=0;
   
@@ -176,7 +186,7 @@ void WeLEDPanelModuleMatrix7_21::showChar(int8_t X_position,int8_t Y_position,co
   }
 }
 
-void WeLEDPanelModuleMatrix7_21::showClock(uint8_t hour, uint8_t minute, bool point_flag)
+void WeLEDPanelModuleMatrix::showClock(uint8_t hour, uint8_t minute, bool point_flag)
 {
 
    writeChar(-1,0,hour/10+15);
@@ -194,7 +204,7 @@ void WeLEDPanelModuleMatrix7_21::showClock(uint8_t hour, uint8_t minute, bool po
   }
 }
 
-void WeLEDPanelModuleMatrix7_21::writeChar(int8_t X_position,int8_t Y_position,uint8_t buffer)
+void WeLEDPanelModuleMatrix::writeChar(int8_t X_position,int8_t Y_position,uint8_t buffer)
 {
      if(_WeLEDPanel.reset()!=0)
      return;
@@ -208,7 +218,7 @@ void WeLEDPanelModuleMatrix7_21::writeChar(int8_t X_position,int8_t Y_position,u
 }
 	
 
-void WeLEDPanelModuleMatrix7_21::showNum(float value)
+void WeLEDPanelModuleMatrix::showNum(float value)
 {
   uint8_t tempBuf[10]={0};
   int buf[4]={0};
