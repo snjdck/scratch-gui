@@ -12,7 +12,7 @@ WeIRAvoidSensor IRAvoid;
 WeSingleLineFollower singleLF;
 WeUltrasonicSensor ultraSensor;
 WeLineFollower lineFollower;
-WeLEDPanelModuleMatrix7_21 ledPanel;
+WeLEDPanelModuleMatrix5_14 ledPanel;
 WeDCMotor dc;
 WeTemperature ts;
 WeRGBLed led;
@@ -50,6 +50,7 @@ const uint8_t MSG_ID_LED_MATRIX_CLEAR = 3;
 const uint8_t MSG_ID_SINGLE_LINE_FOLLOWER = 116;
 const uint8_t MSG_ID_IR_AVOID = 117;
 const uint8_t MSG_ID_IR_AVOID_LED = 118;
+const uint8_t MSG_ID_BACK_LED = 119;
 
 int searchServoPin(int pin){
 	for(int i=0;i<MAX_SERVO_COUNT;i++){
@@ -385,16 +386,16 @@ void doLedMatrixClear(char *cmd)
 	ledPanel.reset(port);
 	ledPanel.clearScreen();
 }
-
+void doBackLed(char *cmd)
+{
+	int pin = nextInt(&cmd);
+	int on = nextInt(&cmd);
+	digitalWrite(pin, on);
+}
 void doStopAll(char *cmd)
 {
 	//stop motor
 	doDcStop(0);
-#ifdef OnBoard_RGB
-	led.reset(OnBoard_RGB);
-	led.setColor(0,0,0,0);
-	led.show();
-#endif
 	//stop RJ11 sensors
 	for(int i=0; i<sizeof(sensor_slot);++i){
 		if(!sensor_slot[i]){
@@ -502,6 +503,9 @@ void parseMcode(char *cmd)
 			queryFlag = true;
 			handler = getIRAvoid;
 			break;
+		case MSG_ID_BACK_LED:
+			handler = doBackLed;
+			break;
 		default:
 			return;
 	}
@@ -525,6 +529,10 @@ void onSetup()
 	pinMode(PORT_B, INPUT);
 	pinMode(PORT_C, INPUT);
 	pinMode(PORT_D, INPUT);
+	pinMode(MINI_LIFT_RED, OUTPUT);
+	pinMode(MINI_RIGHT_RED, OUTPUT);
+	pinMode(MINI_LIFT_YELLOW, OUTPUT);
+	pinMode(MINI_RIGHT_YELLOW, OUTPUT);
 	ir.begin();
 }
 

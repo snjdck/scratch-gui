@@ -24,7 +24,7 @@
 
 WeInfraredReceiver ir(OnBoard_IR);
 WeBuzzer buzzer(OnBoard_Buzzer);
-WeLEDPanelModuleMatrix7_21 ledPanel;
+WeLEDPanelModuleMatrix5_14 ledPanel;
 WeIRAvoidSensor IRAvoid;
 WeSingleLineFollower singleLF;
 
@@ -169,22 +169,14 @@ void modeA()
 	}
 }
 
-
-#define MINI_LIFT_RED       4
-#define MINI_RIGHT_RED      3
-#define MINI_LIFT_YELLOW   A0
-#define MINI_RIGHT_YELLOW  13
 void setup()
 {
 	buzzer.tone(NTD1, 1000); 
-	pinMode(MINI_LIFT_RED, OUTPUT);
-	pinMode(MINI_RIGHT_RED, OUTPUT);
-	pinMode(MINI_LIFT_YELLOW, OUTPUT);
-	pinMode(MINI_RIGHT_YELLOW, OUTPUT);
-	digitalWrite(MINI_LIFT_RED, HIGH);
-	digitalWrite(MINI_RIGHT_RED, HIGH);
-	digitalWrite(MINI_LIFT_YELLOW, HIGH);
-	digitalWrite(MINI_RIGHT_YELLOW, HIGH);
+
+	LED_LIFT_RED(true);
+	LED_RIGHT_RED(true);
+	LED_LIFT_YELLOW(true);
+	LED_RIGHT_YELLOW(true);
 	
 	Stop();
 	loopSensor();
