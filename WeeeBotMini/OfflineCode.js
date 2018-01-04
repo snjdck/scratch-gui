@@ -32,12 +32,13 @@ module.exports = function(){
     arduino.line_follower_index = option_handler;
     arduino.ultrasonic_led_index = option_handler;
     arduino.move_direction = option_handler;
+    arduino.back_led_port = option_handler;
 
     function gen_rgb_code(block, color) {
         addInclude(arduino);
         var order = arduino.ORDER_NONE;
 
-        var port = arduino.valueToCode(block, 'BOARD_PORT_RGB', order);
+        var port = arduino.valueToCode(block, 'SENSOR_PORT', order);
         var pix = arduino.valueToCode(block, 'PIXEL', order);
 
         var key = "led_" + port;
@@ -82,13 +83,13 @@ module.exports = function(){
     }
     arduino.board_light_sensor = function(block){
         var b = arduino.ORDER_NONE;
-        var pin = arduino.valueToCode(block, "BOARD_PORT", b);
+        var pin = arduino.valueToCode(block, "LIGHT_PORT", b);
         arduino.setupCodes_["pin_input_" + pin] = "pinMode(" + pin + ",INPUT);";
         return [`analogRead(${pin})`, b];
     };
     arduino.board_sound_sensor = function(block){
         var b = arduino.ORDER_NONE;
-        var pin = arduino.valueToCode(block, "BOARD_PORT", b);
+        var pin = arduino.valueToCode(block, "SOUND_PORT", b);
         arduino.setupCodes_["pin_input_" + pin] = "pinMode(" + pin + ",INPUT);";
         return [`analogRead(${pin})`, b];
     };
@@ -287,7 +288,7 @@ module.exports = function(){
         var num = arduino.valueToCode(block, "NUM", order);
 
         addInclude(arduino);
-        arduino.definitions_["ledPanel"] = "WeLEDPanelModuleMatrix7_21 ledPanel;";
+        arduino.definitions_["ledPanel"] = "WeLEDPanelModuleMatrix5_14 ledPanel;";
 
         var code = arduino.tab() + `ledPanel.reset(${port})`  + arduino.END;
         code +=    arduino.tab() + `ledPanel.showNum(${num})` + arduino.END;
@@ -310,7 +311,7 @@ module.exports = function(){
         var showColon = arduino.valueToCode(block, "SHOW_COLON", order);
 
         addInclude(arduino);
-        arduino.definitions_["ledPanel"] = "WeLEDPanelModuleMatrix7_21 ledPanel;";
+        arduino.definitions_["ledPanel"] = "WeLEDPanelModuleMatrix5_14 ledPanel;";
 
         var code = arduino.tab() + `ledPanel.reset(${port})`  + arduino.END;
         code +=    arduino.tab() + `ledPanel.showClock(${hour}, ${second}, ${showColon})` + arduino.END;
@@ -325,7 +326,7 @@ module.exports = function(){
         var str = arduino.valueToCode(block, "STR", order);
 
         addInclude(arduino);
-        arduino.definitions_["ledPanel"] = "WeLEDPanelModuleMatrix7_21 ledPanel;";
+        arduino.definitions_["ledPanel"] = "WeLEDPanelModuleMatrix5_14 ledPanel;";
 
         var code = arduino.tab() + `ledPanel.reset(${port})`  + arduino.END;
         code +=    arduino.tab() + `ledPanel.showChar(${x}, ${y}, "${str}")` + arduino.END;
@@ -352,8 +353,8 @@ module.exports = function(){
         }
 
         addInclude(arduino);
-        arduino.definitions_["ledPanel"] = "WeLEDPanelModuleMatrix7_21 ledPanel;";
-        arduino.definitions_["ledPanelData"] = "uint8_t ledPanelData[21];";
+        arduino.definitions_["ledPanel"] = "WeLEDPanelModuleMatrix5_14 ledPanel;";
+        arduino.definitions_["ledPanelData"] = "uint8_t ledPanelData[14];";
 
         var code = arduino.tab() + `ledPanel.reset(${port})`  + arduino.END;
         for(var i=0; i<w; i++){
@@ -371,7 +372,7 @@ module.exports = function(){
         var y = arduino.valueToCode(block, "Y", order);
 
         addInclude(arduino);
-        arduino.definitions_["ledPanel"] = "WeLEDPanelModuleMatrix7_21 ledPanel;";
+        arduino.definitions_["ledPanel"] = "WeLEDPanelModuleMatrix5_14 ledPanel;";
 
         var code = arduino.tab() + `ledPanel.reset(${port})`  + arduino.END;
         code +=    arduino.tab() + `ledPanel.${method}(${x}, ${y})` + arduino.END;
@@ -385,7 +386,7 @@ module.exports = function(){
         var port = arduino.valueToCode(block, "SENSOR_PORT", order);
 
         addInclude(arduino);
-        arduino.definitions_["ledPanel"] = "WeLEDPanelModuleMatrix7_21 ledPanel;";
+        arduino.definitions_["ledPanel"] = "WeLEDPanelModuleMatrix5_14 ledPanel;";
 
         var code = arduino.tab() + `ledPanel.reset(${port})`  + arduino.END;
         code +=    arduino.tab() + `ledPanel.clearScreen()` + arduino.END;
@@ -465,7 +466,7 @@ module.exports = function(){
             code += arduino.tab() + `${key}.setColor1(${color.r}, ${color.g}, ${color.b})`  + arduino.END;
         }
         if(index & 2){
-             code += arduino.tab() + `${key}.setColor2(${color.r}, ${color.g}, ${color.b})`  + arduino.END;
+            code += arduino.tab() + `${key}.setColor2(${color.r}, ${color.g}, ${color.b})`  + arduino.END;
         }
         return code;
     };
@@ -491,57 +492,22 @@ module.exports = function(){
             code += arduino.tab() + `${key}.setColor1(${color.r}, ${color.g}, ${color.b})`  + arduino.END;
         }
         if(index & 2){
-             code += arduino.tab() + `${key}.setColor2(${color.r}, ${color.g}, ${color.b})`  + arduino.END;
+            code += arduino.tab() + `${key}.setColor2(${color.r}, ${color.g}, ${color.b})`  + arduino.END;
         }
         return code;
     };
     
-/*
-    arduino["weeebot_lcd"] = function (block) {
-        var order = arduino.ORDER_NONE;
-        arduino.includes_["LiquidCrystal_I2C"] = "#include <LiquidCrystal_I2C.h>";
-        arduino.definitions_["LiquidCrystal_I2C"] = "LiquidCrystal_I2C lcd(0x3f, 16, 2);";
-        arduino.setupCodes_["lcd_init"] = "lcd.begin();";
-        arduino.setupCodes_["lcd_backlight"] = "lcd.backlight();";
-        var txt = arduino.valueToCode(block, 'TEXT', order);
-
-        if (txt.indexOf("(") > -1) {
-            var code = arduino.tab() + "lcd.print(" + txt + ")" + arduino.END;
-        } else {
-            var code = arduino.tab() + "lcd.print(\"" + txt + "\")" + arduino.END;
+    function back_led_light(on){
+        let pinList = [];
+        return function(block){
+            let order = arduino.ORDER_NONE;
+            let pin = arduino.valueToCode(block, "BACK_LED_PORT", order);
+            let key = `back_led_${pin}`;
+            arduino.setupCodes_[key] = `pinMode(${pin}, OUTPUT);`;
+            return arduino.tab() + `digitalWrite(${pin}, ${on ? "HIGH" : "LOW"})`  + arduino.END;
         }
-        return code;
-    };
+    }
 
-    arduino["weeebot_ledattach"] = function (block) {
-        var order = arduino.ORDER_NONE;
-        arduino.includes_["LedControl"] = "#include \"LedControl.h\"";
-        arduino.definitions_["LedControl"] = "LedControl lc;";
-
-        var dio = arduino.valueToCode(block, 'DIO', order);
-        var clk = arduino.valueToCode(block, 'CLK', order);
-        var cs = arduino.valueToCode(block, 'CS', order);
-
-        arduino.setupCodes_["LedControl_attach"] = "lc.attach(" + dio + "," + clk + "," + cs + ",1);";
-        arduino.setupCodes_["LedControl_shutdown"] = "lc.shutdown(0,false);";
-        arduino.setupCodes_["LedControl_setIntensity"] = "lc.setIntensity(0,8);";
-        arduino.setupCodes_["LedControl_clearDisplay"] = "lc.clearDisplay(0);";
-
-        return "";
-    };
-
-    arduino["weeebot_leddraw"] = function (block) {
-        var order = arduino.ORDER_NONE;
-        arduino.includes_["LedControl"] = "#include \"LedControl.h\"";
-        arduino.definitions_["LedControl"] = "LedControl lc;";
-
-        var col = arduino.valueToCode(block, 'COL', order);
-        var row = arduino.valueToCode(block, 'ROW', order);
-        var v = arduino.valueToCode(block, 'VAL', order);
-
-        var code = arduino.tab() + "lc.setLed(0," + row + "," + col + "," + v + ")" + arduino.END;
-
-        return code;
-    };
-    */
+    arduino["back_led_light_on"] = back_led_light(true);
+    arduino["back_led_light_off"] = back_led_light(false);
 };

@@ -81,7 +81,7 @@ function weeebot_rgb3(argValues, util) {
 }
 
 function board_light_sensor(argValues, util) {
-    var port = argValues.BOARD_PORT;
+    var port = argValues.LIGHT_PORT;
     return createPromise(util, 8, port);
 }
 
@@ -90,7 +90,7 @@ function board_temperature_sensor(argValues, util) {
     return createPromise(util, 12, port);
 }
 function board_sound_sensor(argValues, util) {
-    var port = argValues.BOARD_PORT;
+    var port = argValues.SOUND_PORT;
     return createPromise(util, 11, port);
 }
 function weeebot_encoder_move(argValues, util) {
@@ -223,6 +223,14 @@ function ir_avoid_led_rgb(argValues, util){
     var color = fetchRGB(argValues);
     return createPromise(util, 118, port, index, color.r, color.g, color.b);
 }
+function back_led_light_on(argValues, util){
+    let pin = argValues.BACK_LED_PORT;
+    return createPromise(util, 119, pin, 1);
+}
+function back_led_light_off(argValues, util){
+    let pin = argValues.BACK_LED_PORT;
+    return createPromise(util, 119, pin, 0);
+}
 module.exports = function(){
     return {
         weeebot_motor_dc,
@@ -253,6 +261,8 @@ module.exports = function(){
         weeebot_single_line_follower,
         ultrasonic_led_rgb,
         ir_avoid_led,
-        ir_avoid_led_rgb
+        ir_avoid_led_rgb,
+        back_led_light_on,
+        back_led_light_off
     };
 };

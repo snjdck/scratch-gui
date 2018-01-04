@@ -121,21 +121,27 @@ module.exports = function (){
         ['M1', 1],
         ['M2', 2]]);
     regOption("light_port", "Number", [
-        [Translation.WB_OnBoard,15],
-        [Translation.WB_PortA, 16],
-        [Translation.WB_PortB, 17],
-        [Translation.WB_PortC, 18],
-        [Translation.WB_PortD, 19]]);
+        [Translation.WB_OnBoard,21],
+        [Translation.WB_PortA, 19],
+        [Translation.WB_PortB, 18],
+        [Translation.WB_PortC, 16],
+        [Translation.WB_PortD, 15]]);
     regOption("sound_port", "Number", [
-        [Translation.WB_PortA, 16],
-        [Translation.WB_PortB, 17],
-        [Translation.WB_PortC, 18],
-        [Translation.WB_PortD, 19]]);
+        [Translation.WB_OnBoard,17],
+        [Translation.WB_PortA, 19],
+        [Translation.WB_PortB, 18],
+        [Translation.WB_PortC, 16],
+        [Translation.WB_PortD, 15]]);
     regOption("sensor_port", "Number", [
-        [Translation.WB_PortA, 16],
-        [Translation.WB_PortB, 17],
-        [Translation.WB_PortC, 18],
-        [Translation.WB_PortD, 19]]);
+        [Translation.WB_PortA, 19],
+        [Translation.WB_PortB, 18],
+        [Translation.WB_PortC, 16],
+        [Translation.WB_PortD, 15]]);
+    regOption("back_led_port", "Number", [
+        [Translation.WB_MINI_LEFT_YELLOW, 4],
+        [Translation.WB_MINI_LEFT_RED, 3],
+        [Translation.WB_MINI_RIGHT_RED, 14],
+        [Translation.WB_MINI_RIGHT_YELLOW, 13]]);
     regOption("ir_code", "Number", [
         ["A",69],
         ["B",70],
@@ -187,13 +193,13 @@ module.exports = function (){
     regBlock("board_temperature_sensor", Translation.WB_TEMPERATURE, ["SENSOR_PORT"], "Number");
     regBlock("board_sound_sensor", Translation.WB_SOUND, ["SOUND_PORT"], "Number");
     regBlock("weeebot_on_board_button", Translation.WB_BOARD_BUTTON, ["SENSOR_PORT"], "Boolean");
-    regBlock("weeebot_infraread", "IR pressed %1", ["IR_CODE"], "Boolean");
+    regBlock("weeebot_infraread", Translation.WB_BOARD_IR_PRESSED, ["IR_CODE"], "Boolean");
     regBlock("line_follower", Translation.WB_LINE_FOLLOWER, ["SENSOR_PORT", "LINE_FOLLOWER_INDEX"], "Number");
     regBlock("ultrasonic", Translation.WB_ULTRASONIC, ["SENSOR_PORT"], "Number");
     regBlock("ultrasonic_led", Translation.WB_ULTRASONIC_LED, ["SENSOR_PORT", "ULTRASONIC_LED_INDEX", "COLOR"]);
     regBlock("ultrasonic_led_rgb", "ultrasonic %1 led %2 R %3 G %4 B %5", ["SENSOR_PORT", "ULTRASONIC_LED_INDEX", "R", "G", "B"]);
-    regBlock("ir_avoid_led", "IR avoid %1 led %2 %3", ["SENSOR_PORT", "ULTRASONIC_LED_INDEX", "COLOR"]);
-    regBlock("ir_avoid_led_rgb", "IR avoid %1 led %2 R %3 G %4 B %5", ["SENSOR_PORT", "ULTRASONIC_LED_INDEX", "R", "G", "B"]);
+    regBlock("ir_avoid_led", Translation.WB_IR_AVOID_LED, ["SENSOR_PORT", "ULTRASONIC_LED_INDEX", "COLOR"]);
+    regBlock("ir_avoid_led_rgb", Translation.WB_IR_AVOID_LED_RGB, ["SENSOR_PORT", "ULTRASONIC_LED_INDEX", "R", "G", "B"]);
     regBlock("weeebot_led_matrix_number", Translation.WB_LED_MATRIX_NUMBER, ["SENSOR_PORT", "NUM"]);
     regBlock("weeebot_led_matrix_time", Translation.WB_LED_MATRIX_TIME, ["SENSOR_PORT", "HOUR", "SHOW_COLON", "SECOND"]);
     regBlock("weeebot_led_matrix_string", Translation.WB_LED_MATRIX_STRING, ["SENSOR_PORT", "X", "Y", "STR"]);
@@ -201,7 +207,9 @@ module.exports = function (){
     regBlock("weeebot_led_matrix_pixel_show", Translation.WB_LED_MATRIX_PIXEL_SHOW, ["SENSOR_PORT", "X", "Y"]);
     regBlock("weeebot_led_matrix_pixel_hide", Translation.WB_LED_MATRIX_PIXEL_HIDE, ["SENSOR_PORT", "X", "Y"]);
     regBlock("weeebot_led_matrix_clear", Translation.WB_LED_MATRIX_CLEAR, ["SENSOR_PORT"]);
-    regBlock("weeebot_ir_avoid", "IR avoid %1", ["SENSOR_PORT"], "Boolean");
-    regBlock("weeebot_single_line_follower", "single line follower %1", ["SENSOR_PORT"], "Number");
+    regBlock("weeebot_ir_avoid", Translation.WB_IR_AVOID, ["SENSOR_PORT"], "Boolean");
+    regBlock("weeebot_single_line_follower", Translation.WB_SINGLE_LINE_FOLLOWER, ["SENSOR_PORT"], "Number");
+    regBlock("back_led_light_on",  Translation.WB_MINI_BACK_LED_ON,  ["BACK_LED_PORT"]);
+    regBlock("back_led_light_off", Translation.WB_MINI_BACK_LED_OFF, ["BACK_LED_PORT"]);
     return result;
 };
