@@ -47,7 +47,7 @@
 #define OnBoard_Light         (A7)
 #define OnBoard_Sound         (A3)
 
-#define MINI_LIFT_YELLOW   4
+#define MINI_LEFT_YELLOW   4
 #define MINI_LEFT_RED      3
 #define MINI_RIGHT_RED     A0
 #define MINI_RIGHT_YELLOW  13
@@ -73,20 +73,20 @@ void setfastPWM()
 
 }
 
-void LED_LIFT_RED(bool sig)
+void LED_LEFT_RED(bool sig)
 {
-  pinMode(MINI_LIFT_RED, OUTPUT);
-  digitalWrite(MINI_LIFT_RED, sig);	
+  pinMode(MINI_LEFT_RED, OUTPUT);
+  digitalWrite(MINI_LEFT_RED, sig);	
 }
 void LED_RIGHT_RED(bool sig)
 {
   pinMode(MINI_RIGHT_RED, OUTPUT);
   digitalWrite(MINI_RIGHT_RED, sig);
 }
-void LED_LIFT_YELLOW(bool sig)
+void LED_LEFT_YELLOW(bool sig)
 {
-  pinMode(MINI_LIFT_YELLOW, OUTPUT);
-  digitalWrite(MINI_LIFT_YELLOW, sig);
+  pinMode(MINI_LEFT_YELLOW, OUTPUT);
+  digitalWrite(MINI_LEFT_YELLOW, sig);
 }
 void LED_RIGHT_YELLOW(bool sig)
 {

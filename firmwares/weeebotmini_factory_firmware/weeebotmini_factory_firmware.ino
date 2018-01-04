@@ -173,9 +173,9 @@ void setup()
 {
 	buzzer.tone(NTD1, 1000); 
 
-	LED_LIFT_RED(true);
+	LED_LEFT_RED(true);
 	LED_RIGHT_RED(true);
-	LED_LIFT_YELLOW(true);
+	LED_LEFT_YELLOW(true);
 	LED_RIGHT_YELLOW(true);
 	
 	Stop();
