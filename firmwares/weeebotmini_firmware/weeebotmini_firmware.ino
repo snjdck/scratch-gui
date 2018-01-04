@@ -396,6 +396,11 @@ void doStopAll(char *cmd)
 {
 	//stop motor
 	doDcStop(0);
+	//stop back led
+	digitalWrite(MINI_LIFT_RED, LOW);
+	digitalWrite(MINI_LIFT_YELLOW, LOW);
+	digitalWrite(MINI_RIGHT_RED, LOW);
+	digitalWrite(MINI_RIGHT_YELLOW, LOW);
 	//stop RJ11 sensors
 	for(int i=0; i<sizeof(sensor_slot);++i){
 		if(!sensor_slot[i]){
