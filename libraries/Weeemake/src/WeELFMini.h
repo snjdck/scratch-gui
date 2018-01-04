@@ -47,9 +47,9 @@
 #define OnBoard_Light         (A7)
 #define OnBoard_Sound         (A3)
 
-#define MINI_LIFT_RED       4
-#define MINI_RIGHT_RED      3
-#define MINI_LIFT_YELLOW   A0
+#define MINI_LIFT_YELLOW   4
+#define MINI_LEFT_RED      3
+#define MINI_RIGHT_RED     A0
 #define MINI_RIGHT_YELLOW  13
 
 #define M1      (0x01)
