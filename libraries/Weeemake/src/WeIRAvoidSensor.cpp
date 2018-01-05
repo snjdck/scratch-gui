@@ -17,13 +17,8 @@ uint8_t WeIRAvoidSensor::isObstacle(void)
    _WeIRAvoidSensor.write_byte(0x02);
    _WeIRAvoidSensor.respond();
    _Sensor_data=_WeIRAvoidSensor.read_byte();	
-   delayMicroseconds(3000);  
-   delayMicroseconds(3000); 
-   delayMicroseconds(3000);
-   if (_Sensor_data==1)
-   	return 0;
-   else
-   	return 1;    
+   delayMicroseconds(9000);
+   return _Sensor_data;
 }
 
 void WeIRAvoidSensor::setColor1(uint8_t red, uint8_t green, uint8_t blue)
