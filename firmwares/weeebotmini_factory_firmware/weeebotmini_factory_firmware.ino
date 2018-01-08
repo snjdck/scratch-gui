@@ -181,6 +181,9 @@ void setup()
 	Stop();
 	loopSensor();
 
+	IRAvoid.LeftLED_ON();
+	IRAvoid.RightLED_ON();
+
 	ledPanel.setBrightness(5); 
 	ledPanel.clearScreen();
 	ledPanel.showLine(0,0x11);

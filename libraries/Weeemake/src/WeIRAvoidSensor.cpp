@@ -50,46 +50,30 @@ void WeIRAvoidSensor::RGBShow(void)
   _WeIRAvoidSensor.write_byte(_RGB2_data[2]);
 }
 
+void WeIRAvoidSensor::setLed(uint8_t value)
+{
+    if(_WeIRAvoidSensor.reset())
+      return;
+    _WeIRAvoidSensor.write_byte(0x04);
+    if(_WeIRAvoidSensor.reset())
+      return;
+    _Led_data = value;
+    _WeIRAvoidSensor.write_byte(_Led_data);
+}
+
  void WeIRAvoidSensor::RightLED_ON(void)
  {
-    _Led_data=_Led_data|0x01;
-    if (_WeIRAvoidSensor.reset()!=0)
-   	  return;
-    _WeIRAvoidSensor.write_byte(0x04);
-    if (_WeIRAvoidSensor.reset()!=0)
-      return;
-	_WeIRAvoidSensor.write_byte(_Led_data);
+    setLed(_Led_data | 1);
  }
  void WeIRAvoidSensor::RightLED_OFF(void)
  {
-    _Led_data=_Led_data&0xfe;
-    if (_WeIRAvoidSensor.reset()!=0)
-   	  return;
-    _WeIRAvoidSensor.write_byte(0x04);
-    if (_WeIRAvoidSensor.reset()!=0)
-      return;
-	_WeIRAvoidSensor.write_byte(_Led_data);
+    setLed(_Led_data & ~1);
  }
  void WeIRAvoidSensor::LeftLED_ON(void)
  {
-    _Led_data=_Led_data|0x02;
-    if (_WeIRAvoidSensor.reset()!=0)
-   	  return;
-    _WeIRAvoidSensor.write_byte(0x04);
-    if (_WeIRAvoidSensor.reset()!=0)
-      return;
-	_WeIRAvoidSensor.write_byte(_Led_data);
+    setLed(_Led_data | 2);
  }
  void WeIRAvoidSensor::LeftLED_OFF(void)
  {
-    _Led_data=_Led_data&0xfd;
-    if (_WeIRAvoidSensor.reset()!=0)
-   	  return;
-    _WeIRAvoidSensor.write_byte(0x04);
-    if (_WeIRAvoidSensor.reset()!=0)
-      return;
-	_WeIRAvoidSensor.write_byte(_Led_data);
+    setLed(_Led_data & ~2);
  }
-
-
-

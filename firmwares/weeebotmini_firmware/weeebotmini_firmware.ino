@@ -51,6 +51,7 @@ const uint8_t MSG_ID_SINGLE_LINE_FOLLOWER = 116;
 const uint8_t MSG_ID_IR_AVOID = 117;
 const uint8_t MSG_ID_IR_AVOID_LED = 118;
 const uint8_t MSG_ID_BACK_LED = 119;
+const uint8_t MSG_ID_FRONT_LED = 120;
 
 int searchServoPin(int pin){
 	for(int i=0;i<MAX_SERVO_COUNT;i++){
@@ -392,6 +393,27 @@ void doBackLed(char *cmd)
 	int on = nextInt(&cmd);
 	digitalWrite(pin, on);
 }
+void doFrontLed(char *cmd)
+{
+	int pin = nextInt(&cmd);
+	int index = nextInt(&cmd);
+	int on = nextInt(&cmd);
+	IRAvoid.reset(pin);
+	if(index & 2){
+		if(on){
+			IRAvoid.LeftLED_ON();
+		}else{
+			IRAvoid.LeftLED_OFF();
+		}
+	}
+	if(index & 1){
+		if(on){
+			IRAvoid.RightLED_ON();
+		}else{
+			IRAvoid.RightLED_OFF();
+		}
+	}
+}
 void doStopAll(char *cmd)
 {
 	//stop motor
@@ -510,6 +532,9 @@ void parseMcode(char *cmd)
 			break;
 		case MSG_ID_BACK_LED:
 			handler = doBackLed;
+			break;
+		case MSG_ID_FRONT_LED:
+			handler = doFrontLed;
 			break;
 		default:
 			return;

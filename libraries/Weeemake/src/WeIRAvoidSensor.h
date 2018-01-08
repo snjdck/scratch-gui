@@ -22,9 +22,8 @@ public:
   void RightLED_ON(void);
   void RightLED_OFF(void);
 
-
-  
 private:
+  void setLed(uint8_t);
 	WeOneWire _WeIRAvoidSensor;
     volatile uint8_t  _Sensor_data;
 	volatile uint8_t  _Led_data=0;

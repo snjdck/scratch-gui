@@ -54,7 +54,6 @@ void WeLEDPanelModuleMatrix::clearScreen(void)
 }
 void WeLEDPanelModuleMatrix::writePanelData(void)
 {
-  uint8_t i;
    if(_WeLEDPanel.reset()!=0)
    return;
   _WeLEDPanel.write_byte(0x02);
@@ -63,7 +62,7 @@ void WeLEDPanelModuleMatrix::writePanelData(void)
      delayMicroseconds(3000);
      return;
   }
-  for (i=0;i<panel_width;i++)
+  for (int i=0;i<panel_width;i++)
   {
     _WeLEDPanel.write_byte(Display_Buffer[i]);
   }
@@ -128,89 +127,50 @@ void WeLEDPanelModuleMatrix::turnOffDot(uint8_t x,uint8_t y)
    return;
    Display_Buffer[x]=Display_Buffer[x]&(~(0x01<<(y)));
    showLine(x,Display_Buffer[x]);
-
 }
 
-void WeLEDPanelModuleMatrix::showChar(int8_t X_position,int8_t Y_position,const char *str)
+void WeLEDPanelModuleMatrix::showChar(int8_t X_position, int8_t Y_position, const char *str)
 {
-  uint8_t number_of_Str,display_Buffer[20]={0},X_Digits=0;
-  
-  for(number_of_Str=0;str[number_of_Str] != '\0';number_of_Str++)
-  {
-    if(number_of_Str<20)
-    {
-      if((str[number_of_Str]>32)&&(str[number_of_Str]<127))
-      {
-         display_Buffer[number_of_Str]=str[number_of_Str];
-      }
-	  else
-	  {
-	     break;
-	  }
-    }
-	else
-	{
-	  break;
+	
+	for(int i=0;; i++){
+		int x = X_position + i * 6;
+		if(x <= -6){
+			continue;
+		}
+		if(x >= panel_width){
+			break;
+		}
+		char v = str[i];
+		if(v == 0){
+			while(x < panel_width)
+				showLine(x++, 0);
+			break;
+		}
+		if(v <= 32 || v >= 127){
+			writeChar(x, 0, 3);
+			continue;
+		}
+		writeChar(x, Y_position, v-33);
 	}
-  }
-  if(X_position<-6)
-  {
-     X_Digits=-X_position/6;
-	 X_position=X_position+X_Digits*6;
-  }
-  for(int i=0;i<5;)
-  {
-    if(display_Buffer[X_Digits+i]==0)
-    {
-      if((X_position+i*6)>21)
-      {
-	    break;
-      }
-	  writeChar(X_position+i*6,0,3);     //清除后面不显示的字段
-	  
-    }
-    else
-    {
-      if((X_position+i*6)>21)
-      {
-	    break;
-      }
-	  writeChar(X_position+i*6,Y_position,display_Buffer[X_Digits+i]-33);
-   	}
-	i++;
-  }
-  while(X_position>0)                //清除前面不显示的字段
-  {
-    showLine(X_position-1,0x00);
-	X_position--;
-  }
+	while(X_position-- > 0){
+		showLine(X_position, 0);
+	}
 }
 
 void WeLEDPanelModuleMatrix::showClock(uint8_t hour, uint8_t minute, bool point_flag)
 {
-
-   writeChar(-1,0,hour/10+15);
-   writeChar(4,0,hour%10+15); 
-   writeChar(11,0,minute/10+15);   
-   writeChar(16,0,minute%10+15);
-
-   if(point_flag==1)
-  {
-	showLine(10,0x14);
-  }
-  else
-  {
-	showLine(10,0x00);
-  }
+   writeChar(-1, 0, hour / 10 + 15);
+   writeChar( 4, 0, hour % 10 + 15); 
+   writeChar(11, 0, minute / 10 + 15);   
+   writeChar(16, 0, minute % 10 + 15);
+   showLine( 10, point_flag ? 0x14 : 0);
 }
 
 void WeLEDPanelModuleMatrix::writeChar(int8_t X_position,int8_t Y_position,uint8_t buffer)
 {
-     if(_WeLEDPanel.reset()!=0)
-     return;
+    if(_WeLEDPanel.reset())return;
     _WeLEDPanel.write_byte(0x07);
-     if(_WeLEDPanel.reset()!=0)
-     return;
+    if(_WeLEDPanel.reset())return;
     _WeLEDPanel.write_byte(X_position);
     _WeLEDPanel.write_byte(Y_position);
 	_WeLEDPanel.write_byte(buffer);
