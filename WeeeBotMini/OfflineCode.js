@@ -33,6 +33,7 @@ module.exports = function(){
     arduino.ultrasonic_led_index = option_handler;
     arduino.move_direction = option_handler;
     arduino.back_led_port = option_handler;
+    arduino.on_off = option_handler;
 
     function gen_rgb_code(block, color) {
         addInclude(arduino);
@@ -497,17 +498,31 @@ module.exports = function(){
         return code;
     };
     
-    function back_led_light(on){
-        let pinList = [];
-        return function(block){
-            let order = arduino.ORDER_NONE;
-            let pin = arduino.valueToCode(block, "BACK_LED_PORT", order);
-            let key = `back_led_${pin}`;
-            arduino.setupCodes_[key] = `pinMode(${pin}, OUTPUT);`;
-            return arduino.tab() + `digitalWrite(${pin}, ${on ? "HIGH" : "LOW"})`  + arduino.END;
-        }
+    arduino.back_led_light = function(block){
+        let order = arduino.ORDER_NONE;
+        let pin = arduino.valueToCode(block, "BACK_LED_PORT", order);
+        let on  = arduino.valueToCode(block, "ON_OFF", order);
+        let key = `back_led_${pin}`;
+        arduino.setupCodes_[key] = `pinMode(${pin}, OUTPUT);`;
+        return arduino.tab() + `digitalWrite(${pin}, ${on})`  + arduino.END;
     }
 
-    arduino["back_led_light_on"] = back_led_light(true);
-    arduino["back_led_light_off"] = back_led_light(false);
+    arduino.front_led_light = function(block){
+        let order = arduino.ORDER_NONE;
+        var port = arduino.valueToCode(block, "SENSOR_PORT", order);
+        var index = arduino.valueToCode(block, "ULTRASONIC_LED_INDEX", order);
+        var on = parseInt(arduino.valueToCode(block, "ON_OFF", order)) ? "ON" : "OFF";
+        var key = "IRAvoid_" + port;
+
+        arduino.definitions_[key] = `WeIRAvoidSensor ${key}(${port});`;
+        
+        var code = "";
+        if(index & 1){
+            code += arduino.tab() + `${key}.RightLED_${on}()`  + arduino.END;
+        }
+        if(index & 2){
+            code += arduino.tab() + `${key}.LeftLED_${on}()`  + arduino.END;
+        }
+        return code;
+    }
 };

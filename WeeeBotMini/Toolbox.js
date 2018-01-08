@@ -144,11 +144,14 @@ const toolbox = create(["category", {"name":"WeeeBot\nMini", "key":"WeeeBotMini"
             newNumberValue("G", 255),
             newNumberValue("B", 255)
         ]),
-        newBlock("back_led_light_on", [
-            newDropdownValue("BACK_LED_PORT", BACK_LED_PORTS[0])
+        newBlock("front_led_light", [
+            newDropdownValue("SENSOR_PORT", PORTS[2]),
+            newDropdownValue("ULTRASONIC_LED_INDEX", 3),
+            newDropdownValue("ON_OFF", 1)
         ]),
-        newBlock("back_led_light_off", [
-            newDropdownValue("BACK_LED_PORT", BACK_LED_PORTS[0])
+        newBlock("back_led_light", [
+            newDropdownValue("BACK_LED_PORT", BACK_LED_PORTS[0]),
+            newDropdownValue("ON_OFF", 1)
         ]),
         /*newBlock("line_follower", [
             newDropdownValue("SENSOR_PORT", PORTS[1]),

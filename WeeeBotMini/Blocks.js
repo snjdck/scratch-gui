@@ -114,12 +114,15 @@ module.exports = function (){
         ['S1', 1],
         ['S2', 2]]);
     regOption("ultrasonic_led_index", "Number", [
-        [Translation.WB_Left, 1],
-        [Translation.WB_Right, 2],
+        [Translation.WB_Left, 2],
+        [Translation.WB_Right, 1],
         [Translation.WB_Both, 3]]);
     regOption("weeebot_dcmotor_option", "Number", [
         ['M1', 1],
         ['M2', 2]]);
+    regOption("on_off", "Number", [
+        [Translation.ON , 1],
+        [Translation.OFF, 0]]);
     regOption("light_port", "Number", [
         [Translation.WB_OnBoard,21],
         [Translation.WB_PortA, 19],
@@ -209,7 +212,7 @@ module.exports = function (){
     regBlock("weeebot_led_matrix_clear", Translation.WB_LED_MATRIX_CLEAR, ["SENSOR_PORT"]);
     regBlock("weeebot_ir_avoid", Translation.WB_IR_AVOID, ["SENSOR_PORT"], "Boolean");
     regBlock("weeebot_single_line_follower", Translation.WB_SINGLE_LINE_FOLLOWER, ["SENSOR_PORT"], "Number");
-    regBlock("back_led_light_on",  Translation.WB_MINI_BACK_LED_ON,  ["BACK_LED_PORT"]);
-    regBlock("back_led_light_off", Translation.WB_MINI_BACK_LED_OFF, ["BACK_LED_PORT"]);
+    regBlock("back_led_light", Translation.WB_MINI_BACK_LED, ["BACK_LED_PORT", "ON_OFF"]);
+    regBlock("front_led_light", Translation.WB_MINI_FRONT_LED, ["SENSOR_PORT", "ULTRASONIC_LED_INDEX", "ON_OFF"]);
     return result;
 };

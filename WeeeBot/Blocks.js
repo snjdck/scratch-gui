@@ -114,8 +114,8 @@ module.exports = function (){
         ['S1', 1],
         ['S2', 2]]);
     regOption("ultrasonic_led_index", "Number", [
-        [Translation.WB_Left, 1],
-        [Translation.WB_Right, 2],
+        [Translation.WB_Left, 2],
+        [Translation.WB_Right, 1],
         [Translation.WB_Both, 3]]);
     regOption("weeebot_dcmotor_option", "Number", [
         ['M1', 1],

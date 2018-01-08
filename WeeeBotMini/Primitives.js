@@ -223,13 +223,16 @@ function ir_avoid_led_rgb(argValues, util){
     var color = fetchRGB(argValues);
     return createPromise(util, 118, port, index, color.r, color.g, color.b);
 }
-function back_led_light_on(argValues, util){
+function back_led_light(argValues, util){
     let pin = argValues.BACK_LED_PORT;
-    return createPromise(util, 119, pin, 1);
+    var on = argValues.ON_OFF;
+    return createPromise(util, 119, pin, on);
 }
-function back_led_light_off(argValues, util){
-    let pin = argValues.BACK_LED_PORT;
-    return createPromise(util, 119, pin, 0);
+function front_led_light(argValues, util){
+    var pin = argValues.SENSOR_PORT;
+    var index = argValues.ULTRASONIC_LED_INDEX;
+    var on = argValues.ON_OFF;
+    return createPromise(util, 120, pin, index, on);
 }
 module.exports = function(){
     return {
@@ -262,7 +265,7 @@ module.exports = function(){
         ultrasonic_led_rgb,
         ir_avoid_led,
         ir_avoid_led_rgb,
-        back_led_light_on,
-        back_led_light_off
+        back_led_light,
+        front_led_light
     };
 };
