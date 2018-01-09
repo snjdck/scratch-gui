@@ -160,6 +160,12 @@ int nextInt(char **cmd)
 	return atoi(*cmd);
 }
 
+float nextFloat(char **cmd)
+{
+	nextStr(cmd);
+	return atof(*cmd);
+}
+
 void nextCharInt(char **cmd, char *c, int *i)
 {
 	nextStr(cmd);
@@ -327,7 +333,7 @@ void getLineFollower(char *cmd)
 void doLedMatrixShowNumber(char *cmd)
 {
 	int port = nextInt(&cmd);
-	int value = nextInt(&cmd);
+	float value = nextFloat(&cmd);
 	ledPanel.reset(port);
 	ledPanel.showNum(value);
 }

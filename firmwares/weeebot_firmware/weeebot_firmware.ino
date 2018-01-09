@@ -165,8 +165,11 @@ void nextCharInt(char **cmd, char *c, int *i)
 	*i = atoi(*cmd+1);
 }
 
-
-
+float nextFloat(char **cmd)
+{
+	nextStr(cmd);
+	return atof(*cmd);
+}
 
 void doRgb(char * cmd)
 {
@@ -325,7 +328,7 @@ void getLineFollower(char *cmd)
 void doLedMatrixShowNumber(char *cmd)
 {
 	int port = nextInt(&cmd);
-	int value = nextInt(&cmd);
+	float value = nextFloat(&cmd);
 	ledPanel.reset(port);
 	ledPanel.showNum(value);
 }
