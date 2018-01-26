@@ -24,7 +24,12 @@ function createVM(){
     vm.weeecode.pluginMap = new Map();
     vm.weeecode.pluginMap.set(weeebot.name, weeebot);
     vm.weeecode.pluginMap.set(weeebotMini.name, weeebotMini);
-    vm.weeecode.plugin = weeebot;
+    if(localStorage.pluginName && vm.weeecode.pluginMap.has(localStorage.pluginName)){
+    	vm.weeecode.plugin = vm.weeecode.pluginMap.get(localStorage.pluginName);
+    }else{
+    	vm.weeecode.plugin = weeebotMini;
+    }
+    
     
     vm.runtime.ioDevices.serial = new Serial(vm);
     var packageObject = new ArduinoBlocks(vm.runtime);

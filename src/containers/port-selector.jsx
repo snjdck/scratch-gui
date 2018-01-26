@@ -72,6 +72,7 @@ class PortSelector extends React.Component {
         }
         this.setState({board});
         this.weeecode.plugin = this.weeecode.pluginMap.get(board);
+        localStorage.pluginName = board;
     }
 
     componentDidMount () {
