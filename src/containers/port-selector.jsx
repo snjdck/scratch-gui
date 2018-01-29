@@ -9,7 +9,8 @@ const { Navbar,Nav,NavItem,ButtonGroup,Button,DropdownButton,FormControl,MenuIte
 const {Icon} = require('react-fa');
 const langDict = {
     "en": "English",
-    "zh-cn": "简体中文"
+    "zh-cn": "简体中文",
+    "es": "español"
 };
 
 class PortSelector extends React.Component {

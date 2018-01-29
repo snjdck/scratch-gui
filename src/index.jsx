@@ -17,6 +17,9 @@ switch(localStorage.language){
 	case "zh-cn":
 		require("./language/zh-hans");
 		break;
+	case "es":
+		require("./language/es");
+		break;
 	default:
 		require("./language/en");
 }
