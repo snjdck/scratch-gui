@@ -12,8 +12,8 @@ public:
   void reset(uint8_t port=0);
 
   void startRead(void);
-  uint16_t getHumidity(void);
-  uint16_t getTemperature(void);
+  uint16_t getHumidity(bool update=false);
+  uint16_t getTemperature(bool update=false);
 
 
   

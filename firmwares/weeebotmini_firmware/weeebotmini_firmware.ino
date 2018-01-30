@@ -18,6 +18,9 @@ WeTemperature ts;
 WeRGBLed led;
 WeBuzzer buzzer(OnBoard_Buzzer);
 WeInfraredReceiver ir(DEFAULT_IR_PIN);
+WeHumiture humitureSensor;
+WeTouchSensor touchSensor;
+We7SegmentDisplay segmentDisplaySensor;
 
 Servo servos[MAX_SERVO_COUNT];
 uint8_t servo_pins[MAX_SERVO_COUNT]={0};
@@ -52,6 +55,10 @@ const uint8_t MSG_ID_IR_AVOID = 117;
 const uint8_t MSG_ID_IR_AVOID_LED = 118;
 const uint8_t MSG_ID_BACK_LED = 119;
 const uint8_t MSG_ID_FRONT_LED = 120;
+const uint8_t MSG_ID_TOUCH = 121;
+const uint8_t MSG_ID_HUMITURE = 122;
+const uint8_t MSG_ID_7SEGMENT = 123;
+const uint8_t MSG_ID_SOIL = 124;
 
 int searchServoPin(int pin){
 	for(int i=0;i<MAX_SERVO_COUNT;i++){
@@ -420,6 +427,41 @@ void doFrontLed(char *cmd)
 		}
 	}
 }
+
+void getTouch(char *cmd)
+{
+	int pin = nextInt(&cmd);
+	touchSensor.reset(pin);
+	Serial.println(touchSensor.touched() ? "true" : "false");
+}
+
+void getHumiture(char *cmd)
+{
+	int pin = nextInt(&cmd);
+	int v = nextInt(&cmd);
+	humitureSensor.reset(pin);
+	humitureSensor.startRead();
+	if(v == 0){
+		Serial.println(humitureSensor.getTemperature());
+	}else{
+		Serial.println(humitureSensor.getHumidity());
+	}
+}
+
+void getSoil(char *cmd)
+{
+	int pin = nextInt(&cmd);
+	Serial.println(analogRead(pin));
+}
+
+void do7Segment(char *cmd)
+{
+	int pin = nextInt(&cmd);
+	float v = nextFloat(&cmd);
+	segmentDisplaySensor.reset(pin);
+	segmentDisplaySensor.showNumber(v);
+}
+
 void doStopAll(char *cmd)
 {
 	//stop motor
@@ -541,6 +583,21 @@ void parseMcode(char *cmd)
 			break;
 		case MSG_ID_FRONT_LED:
 			handler = doFrontLed;
+			break;
+		case MSG_ID_TOUCH:
+			queryFlag = true;
+			handler = getTouch;
+			break;
+		case MSG_ID_HUMITURE:
+			queryFlag = true;
+			handler = getHumiture;
+			break;
+		case MSG_ID_SOIL:
+			queryFlag = true;
+			handler = getSoil;
+			break;
+		case MSG_ID_7SEGMENT:
+			handler = do7Segment;
 			break;
 		default:
 			return;

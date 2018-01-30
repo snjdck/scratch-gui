@@ -20,13 +20,14 @@ void WeHumiture::startRead(void)
   _temperature=_WeHumiture.read_byte();
 }
 
-uint16_t WeHumiture::getHumidity(void)
+uint16_t WeHumiture::getHumidity(bool update)
 {
-  
+  if(update)startRead();
   return (_humidity);
 }
-uint16_t WeHumiture::getTemperature(void)
+uint16_t WeHumiture::getTemperature(bool update)
 {
+   if(update)startRead();
   return (_temperature);
 }
 

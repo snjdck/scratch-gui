@@ -10,10 +10,10 @@ public:
 
   We7SegmentDisplay(uint8_t port=0);
   void reset(uint8_t port=0);
-  void sendNumber(void);
   void showNumber(float value);
   void showChar(uint8_t Addr, uint8_t Data);
-  
+private:
+  void sendNumber(void);
 private:
 	WeOneWire _We7SegmentDisplay;
     volatile uint8_t  _number1;
