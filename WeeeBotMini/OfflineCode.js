@@ -72,7 +72,7 @@ module.exports = function(){
     };
     arduino.on_board_servo = function(block){
         var b = arduino.ORDER_NONE;
-        var port = arduino.valueToCode(block, "BOARD_PORT", b);
+        var port = arduino.valueToCode(block, "SENSOR_PORT", b);
         var angle = arduino.valueToCode(block, "ANGLE", b);
 
         const key = `servo_${port}`;
@@ -525,4 +525,56 @@ module.exports = function(){
         }
         return code;
     }
+
+    arduino.humiture_humidity = function(block){
+        let order = arduino.ORDER_NONE;
+        var port = arduino.valueToCode(block, "SENSOR_PORT", order);
+        var key = "humiture_" + port;
+
+        arduino.definitions_[key] = `WeHumiture ${key}(${port});`;
+        
+        let code = `${key}.getHumidity(true)`;
+        return [code, order];
+    }
+
+    arduino.humiture_temperature = function(block){
+        let order = arduino.ORDER_NONE;
+        var port = arduino.valueToCode(block, "SENSOR_PORT", order);
+        var key = "humiture_" + port;
+
+        arduino.definitions_[key] = `WeHumiture ${key}(${port});`;
+        
+        let code = `${key}.getTemperature(true)`;
+        return [code, order];
+    }
+
+    arduino.touch = function(block){
+        let order = arduino.ORDER_NONE;
+        var port = arduino.valueToCode(block, "SENSOR_PORT", order);
+        var key = "touchSensor_" + port;
+
+        arduino.definitions_[key] = `WeTouchSensor ${key}(${port});`;
+        
+        let code = `${key}.touched()`;
+        return [code, order];
+    }
+
+    arduino.soil = function(block){
+        let order = arduino.ORDER_NONE;
+        var port = arduino.valueToCode(block, "SENSOR_PORT", order);
+        let code = `analogRead(${port})`;
+        return [code, order];
+    }
+
+    arduino.segment_display_7 = function(block){
+        let order = arduino.ORDER_NONE;
+        var port = arduino.valueToCode(block, "SENSOR_PORT", order);
+        var num = arduino.valueToCode(block, "NUM", order);
+        var key = "segmentDisplaySensor_" + port;
+
+        arduino.definitions_[key] = `We7SegmentDisplay ${key}(${port});`;
+        
+        return arduino.tab() + `${key}.showNumber(${num})` + arduino.END;
+    }
+    
 };

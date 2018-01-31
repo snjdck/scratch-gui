@@ -234,6 +234,27 @@ function front_led_light(argValues, util){
     var on = argValues.ON_OFF;
     return createPromise(util, 120, pin, index, on);
 }
+function humiture_humidity(argValues, util){
+    var pin = argValues.SENSOR_PORT;
+    return createPromise(util, 122, pin, 1);
+}
+function humiture_temperature(argValues, util){
+    var pin = argValues.SENSOR_PORT;
+    return createPromise(util, 122, pin, 0);
+}
+function touch(argValues, util){
+    var pin = argValues.SENSOR_PORT;
+    return createPromise(util, 121, pin);
+}
+function soil(argValues, util){
+    var pin = argValues.SENSOR_PORT;
+    return createPromise(util, 124, pin);
+}
+function segment_display_7(argValues, util){
+    var pin = argValues.SENSOR_PORT;
+    var num = argValues.NUM;
+    return createPromise(util, 123, pin, num);
+}
 module.exports = function(){
     return {
         weeebot_motor_dc,
@@ -266,6 +287,11 @@ module.exports = function(){
         ir_avoid_led,
         ir_avoid_led_rgb,
         back_led_light,
-        front_led_light
+        front_led_light,
+        humiture_temperature,
+        humiture_humidity,
+        touch,
+        soil,
+        segment_display_7
     };
 };
