@@ -1,3 +1,5 @@
+"use strict";
+
 function hexToRgb(hex) {
     var shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
     hex = hex.replace(shorthandRegex, function (m, r, g, b) {
@@ -9,6 +11,16 @@ function hexToRgb(hex) {
         g: parseInt(result[2], 16),
         b: parseInt(result[3], 16)
     } : null;
+}
+
+function fetchRGB(argValues){
+    var r = argValues.R;
+    var g = argValues.G;
+    var b = argValues.B;
+    r = Math.round(Math.max(0, Math.min(255, r)));
+    g = Math.round(Math.max(0, Math.min(255, g)));
+    b = Math.round(Math.max(0, Math.min(255, b)));
+    return {r, g, b};
 }
 
 function createCMD(...args){
@@ -128,6 +140,12 @@ function ultrasonic_led(argValues, util){
     var color = hexToRgb(argValues.COLOR);
     return createPromise(util, 109, port, index, color.r, color.g, color.b);
 }
+function ultrasonic_led_rgb(argValues, util){
+    var port = argValues.SENSOR_PORT;
+    var index = argValues.ULTRASONIC_LED_INDEX;
+    var color = fetchRGB(argValues);
+    return createPromise(util, 109, port, index, color.r, color.g, color.b);
+}
 function line_follower(argValues, util){
     var port = argValues.SENSOR_PORT;
     var index = argValues.LINE_FOLLOWER_INDEX;
@@ -207,6 +225,7 @@ module.exports = function(){
         test_tone_note,
         ultrasonic,
         ultrasonic_led,
+        ultrasonic_led_rgb,
         line_follower,
         weeebot_led_matrix_number,
         weeebot_led_matrix_time,

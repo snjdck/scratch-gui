@@ -1,3 +1,4 @@
+"use strict";
 
 function addInclude(arduino){
     arduino.includes_["weeebot"] = "#include <WeELF328P.h>";
@@ -10,6 +11,28 @@ function hexToRgb(hex) {
         g: parseInt(result[2], 16),
         b: parseInt(result[3], 16)
     } : null;
+}
+
+function genColorVar(arduino, color, index){
+    let code = "";
+    if((index & 3) == 3){
+        if(!/^\d+$/.test(color.r)){
+            arduino.definitions_["_color_r"] = `int _color_r;`;
+            code += arduino.tab() + `_color_r = ${color.r}` + arduino.END;
+            color.r = "_color_r";
+        }
+        if(!/^\d+$/.test(color.g)){
+            arduino.definitions_["_color_g"] = `int _color_g;`;
+            code += arduino.tab() + `_color_g = ${color.g}` + arduino.END;
+            color.g = "_color_g";
+        }
+        if(!/^\d+$/.test(color.b)){
+            arduino.definitions_["_color_b"] = `int _color_b;`;
+            code += arduino.tab() + `_color_b = ${color.b}` + arduino.END;
+            color.b = "_color_b";
+        }
+    }
+    return code;
 }
 
 module.exports = function(){
@@ -280,6 +303,31 @@ module.exports = function(){
         return code;
     };
 
+    arduino["ultrasonic_led_rgb"] = function (block) {
+        var order = arduino.ORDER_NONE;
+
+        var port = arduino.valueToCode(block, "SENSOR_PORT", order);
+        var index = arduino.valueToCode(block, "ULTRASONIC_LED_INDEX", order);
+        var color = {
+            r: arduino.valueToCode(block, "R", order),
+            g: arduino.valueToCode(block, "G", order),
+            b: arduino.valueToCode(block, "B", order)
+        };
+
+        var key = "ultrasonic_" + port;
+
+        addInclude(arduino);
+        arduino.definitions_[key] = `WeUltrasonicSensor ${key}(${port});`;
+        
+        var code = genColorVar(arduino, color, index);
+        if(index & 1){
+            code += arduino.tab() + `${key}.setColor1(${color.r}, ${color.g}, ${color.b})`  + arduino.END;
+        }
+        if(index & 2){
+            code += arduino.tab() + `${key}.setColor2(${color.r}, ${color.g}, ${color.b})`  + arduino.END;
+        }
+        return code;
+    };
 
     arduino["weeebot_led_matrix_number"] = function (block) {
         var order = arduino.ORDER_NONE;

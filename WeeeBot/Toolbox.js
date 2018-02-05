@@ -130,6 +130,13 @@ const toolbox = newXML("category", {"name":"WeeeBot", "key":"WeeeBot", "colour":
             newDropdownValue("ULTRASONIC_LED_INDEX", 3),
             newXML("value", {"name":"COLOR"}, [newXML("shadow", {"type":"colour_picker"})])
         ]),
+        newBlock("ultrasonic_led_rgb", [
+            newDropdownValue("SENSOR_PORT", 10),
+            newDropdownValue("ULTRASONIC_LED_INDEX", 3),
+            newNumberValue("R", 255),
+            newNumberValue("G", 255),
+            newNumberValue("B", 255)
+        ]),
         newBlock("line_follower", [
             newDropdownValue("SENSOR_PORT", 9),
             newDropdownValue("LINE_FOLLOWER_INDEX", 1)

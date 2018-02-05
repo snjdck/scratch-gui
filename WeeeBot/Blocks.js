@@ -211,6 +211,7 @@ module.exports = function (){
     regBlock("line_follower", Translation.WB_LINE_FOLLOWER, ["SENSOR_PORT", "LINE_FOLLOWER_INDEX"], "Number");
     regBlock("ultrasonic", Translation.WB_ULTRASONIC, ["SENSOR_PORT"], "Number");
     regBlock("ultrasonic_led", Translation.WB_ULTRASONIC_LED, ["SENSOR_PORT", "ULTRASONIC_LED_INDEX", "COLOR"]);
+    regBlock("ultrasonic_led_rgb", Translation.WB_ULTRASONIC_LED_RGB, ["SENSOR_PORT", "ULTRASONIC_LED_INDEX", "R", "G", "B"]);
     regBlock("weeebot_led_matrix_number", Translation.WB_LED_MATRIX_NUMBER, ["SENSOR_PORT", "NUM"]);
     regBlock("weeebot_led_matrix_time", Translation.WB_LED_MATRIX_TIME, ["SENSOR_PORT", "HOUR", "SHOW_COLON", "SECOND"]);
     regBlock("weeebot_led_matrix_string", Translation.WB_LED_MATRIX_STRING, ["SENSOR_PORT", "X", "Y", "STR"]);

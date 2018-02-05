@@ -200,7 +200,7 @@ module.exports = function (){
     regBlock("line_follower", Translation.WB_LINE_FOLLOWER, ["SENSOR_PORT", "LINE_FOLLOWER_INDEX"], "Number");
     regBlock("ultrasonic", Translation.WB_ULTRASONIC, ["SENSOR_PORT"], "Number");
     regBlock("ultrasonic_led", Translation.WB_ULTRASONIC_LED, ["SENSOR_PORT", "ULTRASONIC_LED_INDEX", "COLOR"]);
-    regBlock("ultrasonic_led_rgb", "设置超声波传感器 %1 灯 %2 R %3 G %4 B %5", ["SENSOR_PORT", "ULTRASONIC_LED_INDEX", "R", "G", "B"]);
+    regBlock("ultrasonic_led_rgb", Translation.WB_ULTRASONIC_LED_RGB, ["SENSOR_PORT", "ULTRASONIC_LED_INDEX", "R", "G", "B"]);
     regBlock("ir_avoid_led", Translation.WB_IR_AVOID_LED, ["SENSOR_PORT", "ULTRASONIC_LED_INDEX", "COLOR"]);
     regBlock("ir_avoid_led_rgb", Translation.WB_IR_AVOID_LED_RGB, ["SENSOR_PORT", "ULTRASONIC_LED_INDEX", "R", "G", "B"]);
     regBlock("weeebot_led_matrix_number", Translation.WB_LED_MATRIX_NUMBER, ["SENSOR_PORT", "NUM"]);
@@ -216,11 +216,11 @@ module.exports = function (){
     regBlock("front_led_light", Translation.WB_MINI_FRONT_LED, ["SENSOR_PORT", "ULTRASONIC_LED_INDEX", "ON_OFF"]);
     regBlock("front_led_light", Translation.WB_MINI_FRONT_LED, ["SENSOR_PORT", "ULTRASONIC_LED_INDEX", "ON_OFF"]);
 
-    regBlock("humiture_humidity", "温湿度传感器 %1 湿度", ["SENSOR_PORT"], "Number");
-    regBlock("humiture_temperature", "温湿度传感器 %1 温度", ["SENSOR_PORT"], "Number");
-    regBlock("touch", "触摸传感器 %1", ["SENSOR_PORT"], "Boolean");
-    regBlock("soil", "土壤传感器 %1", ["SENSOR_PORT"], "Number");
-    regBlock("segment_display_7", "数码管 %1 显示 %2", ["SENSOR_PORT", "NUM"]);
+    regBlock("humiture_humidity", Translation.WB_HUMITURE_HUMIDITY, ["SENSOR_PORT"], "Number");
+    regBlock("humiture_temperature", Translation.WB_HUMITURE_TEMPERATURE, ["SENSOR_PORT"], "Number");
+    regBlock("touch", Translation.WB_TOUCH, ["SENSOR_PORT"], "Boolean");
+    regBlock("soil", Translation.WB_SOIL, ["SENSOR_PORT"], "Number");
+    regBlock("segment_display_7", Translation.WB_7_SEGMENT_DISPLAY, ["SENSOR_PORT", "NUM"]);
 
     return result;
 };
