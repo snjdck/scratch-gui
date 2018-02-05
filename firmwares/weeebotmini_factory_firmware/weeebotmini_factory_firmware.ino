@@ -24,9 +24,9 @@
 
 WeInfraredReceiver ir(OnBoard_IR);
 WeBuzzer buzzer(OnBoard_Buzzer);
-WeLEDPanelModuleMatrix5_14 ledPanel;
-WeIRAvoidSensor IRAvoid;
-WeSingleLineFollower singleLF;
+WeLEDPanelModuleMatrix5_14 ledPanel(PORT_C);
+WeIRAvoidSensor IRAvoid(PORT_B);
+WeSingleLineFollower singleLF(PORT_A);
 
 WeDCMotor MotorL(M2);
 WeDCMotor MotorR(M1);
@@ -179,7 +179,6 @@ void setup()
 	LED_RIGHT_YELLOW(true);
 	
 	Stop();
-	loopSensor();
 
 	IRAvoid.LeftLED_ON();
 	IRAvoid.RightLED_ON();
@@ -204,41 +203,6 @@ void setup()
 
 	Serial.begin(115200);
 	ir.begin();
-}
-
-void bindSensor(uint8_t sensorType, uint8_t port)
-{
-	switch(sensorType){
-	case 3:
-		ledPanel.reset(port);
-		break;
-	case 12:
-		IRAvoid.reset(port);
-		break;
-	default:
-		singleLF.reset(port);
-	}
-}
-
-void loopSensor()
-{
-	const uint8_t sensor_port[] = {PORT_A, PORT_B, PORT_C, PORT_D};
-	WeOneWire portDetect;
-
-	for(int i=0; i<4; ++i){
-		uint8_t port = sensor_port[i];
-		if(!digitalRead(port)){
-			continue;
-		}
-		//delay(400);
-		portDetect.reset(port);
-		portDetect.reset();
-		portDetect.write_byte(0x01);
-		portDetect.respond();
-
-		uint8_t sensorType = portDetect.read_byte();
-		bindSensor(sensorType, port);
-	}
 }
 
 void loop()
@@ -281,43 +245,28 @@ void modeB()
 		motor_run(moveSpeed, moveSpeed);
 	}
 }
-const int lineFollowerSpeed = 100;
+
 void modeC()
 {
-	const int turnTime = 300;
+	const int lineFollowerSpeed = 100;
+	const int turnTime = 200;
 	const int threshold = 500;
-	static bool tryLeftFirst = true;
+
+	static unsigned long turnTimeEnd = 0;
+	static int tryLeftFirst = 1;
+	static int turnCount = 0;
+
 	if(singleLF.read() >= threshold){//forward
 		motor_run(lineFollowerSpeed, lineFollowerSpeed);
-		return;
-	}
-	turn(tryLeftFirst);
-	if(check(threshold, turnTime))return;
-	tryLeftFirst = !tryLeftFirst;
-	turn(tryLeftFirst);
-	check(threshold, 5000);
-}
-
-bool check(int threshold, int turnTime)
-{
-	byte value = 0;
-	unsigned long timeEnd = millis() + turnTime;
-	while(millis() < timeEnd){
-		value <<= 1;
-		value |= singleLF.read() >= threshold;
-		if((value & 3) == 3){
-			return true;
-		}
-	}
-	return false;
-}
-
-void turn(bool tryLeftFirst)
-{
-	if(tryLeftFirst){
-		motor_run(-lineFollowerSpeed, lineFollowerSpeed);
-	}else{
-		motor_run(lineFollowerSpeed, -lineFollowerSpeed);
+		turnTimeEnd = 0;
+		turnCount = 0;
+	}else if(!turnTimeEnd){
+		motor_run(-lineFollowerSpeed * tryLeftFirst, lineFollowerSpeed * tryLeftFirst);
+		turnTimeEnd = millis() + turnTime * (1 << turnCount);
+	}else if(millis() >= turnTimeEnd){
+		turnTimeEnd = 0;
+		tryLeftFirst = -tryLeftFirst;
+		turnCount++;
 	}
 }
 
