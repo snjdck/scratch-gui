@@ -1,5 +1,13 @@
 #include <WeELFMini.h>
 
+#define NTD1 294
+#define NTD2 330
+#define NTD3 350
+#define NTD4 393
+#define NTD5 441
+#define NTD6 495
+#define NTD7 556
+
 #define MAX_SERVO_COUNT 4
 #define LED_MATRIX_WIDTH 14
 #define DEFAULT_IR_PIN OnBoard_IR
@@ -631,6 +639,8 @@ void onSetup()
 
 void setup()
 {
+	buzzer.tone(NTD1, 1000);
+	buzzer.tone(NTD6, 300);
 	Serial.begin(115200);
 	onSetup();
 }
