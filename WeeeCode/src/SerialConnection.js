@@ -84,6 +84,7 @@ class SerialConnection {
         chrome.serial.onReceive.addListener(this.boundOnReceive);
         chrome.serial.onReceiveError.addListener(this.boundOnReceiveError);
         this.lineBuffer = "";
+        this.msgQueue.length = 0;
         if (callback) callback(connectionInfo);
     }
 

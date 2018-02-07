@@ -2,6 +2,7 @@ const React = require('react');
 const ReactDOM = require('react-dom');
 const bindAll = require('lodash.bindall');
 const arduinoIcon = require('./arduino.png');
+const {uploadFile} = eval('require("./uno")');
 
 import {Button,FormControl,MenuItem,ButtonGroup,DropdownButton,ButtonToolbar } from 'react-bootstrap';
 import brace from 'brace';
@@ -30,7 +31,7 @@ class ArduinoPanelComponent extends React.Component {
     /*
     translateCode(){
         this.setState({code:Blockly.Arduino.workspaceToCode()});
-    }*/
+    }
     restoreFirmwareImpl(firmware){
         fs.readFile(firmware, 'utf8', (err, data) => {
             if(err){
@@ -39,13 +40,31 @@ class ArduinoPanelComponent extends React.Component {
             }
             this.uploadCode(data);
         });
-    }
+    }*/
     get plugin(){
         return this.props.vm.weeecode.plugin;
     }
     restoreFirmware(name){
+        let {weeecode} = this.props.vm;
+        let port = weeecode.connectedPort;
+        if(port){
+            weeecode.serial.disconnect();
+        }else{
+            this.appendLog(Blockly.Msg.WC_NOT_CONNECTED, "#FF0000");
+            return;
+        }
         name = this.plugin.name.toLowerCase() + name;
-        this.restoreFirmwareImpl(`firmwares/${name}/${name}.ino`);
+        this.appendLog(`${Blockly.Msg.UPLOAD} 0%`);
+        uploadFile(port.path, `firmwares/${name}.hex`,
+            v => this.replaceLog(`${Blockly.Msg.UPLOAD} ${(v*100).toFixed(1)}%`)
+        ).then(() => {
+            this.replaceLog(Blockly.Msg.WC_UPLOAD_SUCCESS, "#00FF00");
+            if(port){
+                weeecode.emit("reconnect_serial", port);
+            }
+        }, error => {
+            this.replaceLog(Blockly.Msg.WC_UPLOAD_FAILED, "#FF0000");
+        });
     }
     uploadProject(){
         this.uploadCode(this.state.code);
@@ -129,6 +148,11 @@ class ArduinoPanelComponent extends React.Component {
         }
     }
     appendLog(info, color="white"){
+        this.logs.push({msg:info, color:color});
+        this.setState({logs:this.logs});
+    }
+    replaceLog(info, color="white"){
+        this.logs.pop();
         this.logs.push({msg:info, color:color});
         this.setState({logs:this.logs});
     }
