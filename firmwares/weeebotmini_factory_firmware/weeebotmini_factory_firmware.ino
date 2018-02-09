@@ -248,7 +248,7 @@ void modeB()
 
 void modeC()
 {
-	const int lineFollowerSpeed = 100;
+	const int lineSpeed = 100;
 	const int turnTime = 200;
 	const int threshold = 500;
 
@@ -257,11 +257,11 @@ void modeC()
 	static int turnCount = 0;
 
 	if(singleLF.read() >= threshold){//forward
-		motor_run(lineFollowerSpeed, lineFollowerSpeed);
+		motor_run(lineSpeed, lineSpeed);
 		turnTimeEnd = 0;
 		turnCount = 0;
 	}else if(!turnTimeEnd){
-		motor_run(-lineFollowerSpeed * tryLeftFirst, lineFollowerSpeed * tryLeftFirst);
+		motor_run(-lineSpeed * tryLeftFirst, lineSpeed * tryLeftFirst);
 		turnTimeEnd = millis() + turnTime * (1 << turnCount);
 	}else if(millis() >= turnTimeEnd){
 		turnTimeEnd = 0;
@@ -305,10 +305,39 @@ void mode_RGBult()
     IRAvoid.setColor2(red, green, blue);
 }
 
-void motor_run(int lspeed, int rspeed)
+void motor_run(int lSpeed, int rSpeed)
 {
-	MotorL.run(-lspeed);
-	MotorR.run(rspeed);
+	MotorL.run(-lSpeed);
+	MotorR.run( rSpeed);
+	if(lSpeed > 0 && rSpeed > 0){
+		LED_LEFT_RED(false);
+		LED_RIGHT_RED(false);
+		LED_LEFT_YELLOW(false);
+		LED_RIGHT_YELLOW(false);
+		IRAvoid.LeftLED_OFF();
+		IRAvoid.RightLED_OFF();
+	}else if(lSpeed > 0 && rSpeed <= 0){
+		LED_LEFT_RED(false);
+		LED_RIGHT_RED(false);
+		LED_LEFT_YELLOW(false);
+		LED_RIGHT_YELLOW(true);
+		IRAvoid.LeftLED_OFF();
+		IRAvoid.RightLED_ON();
+	}else if(lSpeed <= 0 && rSpeed > 0){
+		LED_LEFT_RED(false);
+		LED_RIGHT_RED(false);
+		LED_LEFT_YELLOW(true);
+		LED_RIGHT_YELLOW(false);
+		IRAvoid.LeftLED_ON();
+		IRAvoid.RightLED_OFF();
+	}else{
+		LED_LEFT_RED(true);
+		LED_RIGHT_RED(true);
+		LED_LEFT_YELLOW(false);
+		LED_RIGHT_YELLOW(false);
+		IRAvoid.LeftLED_OFF();
+		IRAvoid.RightLED_OFF();
+	}
 }
 
 void get_serial_command()
