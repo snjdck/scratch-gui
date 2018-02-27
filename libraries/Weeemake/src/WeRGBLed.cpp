@@ -23,16 +23,23 @@ void WeRGBLed::reset(uint8_t port)
 
 void WeRGBLed::setNumber(uint8_t num_leds)
 {
-  count_led = num_leds;
-  pixels    = (uint8_t*)malloc(count_led * 3);
-  if(!pixels)
-  {
-    printf("There is not enough space!\r\n");
-  }
-  for(int16_t i = 0; i < count_led * 3; i++)
-  {
-    pixels[i] = 0;
-  }
+	if(pixels){
+	  if(count_led == num_leds){
+		return;
+	  }
+	  free(pixels);
+	}
+	count_led = num_leds;
+	pixels	  = (uint8_t*)malloc(count_led * 3);
+	if(!pixels)
+	{
+	  printf("There is not enough space!\r\n");
+	}
+	for(int16_t i = 0; i < count_led * 3; i++)
+	{
+	  pixels[i] = 0;
+	}
+
 }
 bool WeRGBLed::setColorAt(uint8_t index, uint8_t red, uint8_t green, uint8_t blue)
 {
