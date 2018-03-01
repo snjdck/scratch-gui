@@ -35,6 +35,22 @@ void WeIRAvoidSensor::setColor2(uint8_t red, uint8_t green, uint8_t blue)
   _RGB2_data[2]=blue;
   RGBShow();
 }
+void WeIRAvoidSensor::setColor(uint8_t index, uint8_t red, uint8_t green, uint8_t blue)
+{
+  if(index & 1){
+    _RGB1_data[0]=red;
+    _RGB1_data[1]=green;
+    _RGB1_data[2]=blue;
+  }
+  if(index & 2){
+    _RGB2_data[0]=red;
+    _RGB2_data[1]=green;
+    _RGB2_data[2]=blue;
+  }
+  if(index & 3){
+    RGBShow();
+  }
+}
 void WeIRAvoidSensor::RGBShow(void)
 {
    if (_WeIRAvoidSensor.reset()!=0)

@@ -16,6 +16,7 @@ public:
   uint8_t isObstacle(void);
   void setColor1(uint8_t red, uint8_t green, uint8_t blue);
   void setColor2(uint8_t red, uint8_t green, uint8_t blue);
+  void setColor(uint8_t index, uint8_t red, uint8_t green, uint8_t blue);
   void RGBShow(void);
   void LeftLED_ON(void);
   void LeftLED_OFF(void);
