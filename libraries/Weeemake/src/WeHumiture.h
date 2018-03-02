@@ -14,7 +14,7 @@ public:
   void startRead(void);
   uint16_t getHumidity(bool update=false);
   uint16_t getTemperature(bool update=false);
-
+  uint16_t getValue(uint8_t type, bool update=true);
 
   
 private:

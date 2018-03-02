@@ -27,10 +27,16 @@ uint16_t WeHumiture::getHumidity(bool update)
 }
 uint16_t WeHumiture::getTemperature(bool update)
 {
-   if(update)startRead();
+  if(update)startRead();
   return (_temperature);
 }
 
-
+uint16_t WeHumiture::getValue(uint8_t type, bool update)
+{
+  if(update)startRead();
+  if(type == 0)return _temperature;
+  if(type == 1)return _humidity;
+  return 0;
+}
 
 
