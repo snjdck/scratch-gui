@@ -77,6 +77,24 @@ void WeIRAvoidSensor::setLed(uint8_t value)
     _WeIRAvoidSensor.write_byte(_Led_data);
 }
 
+void WeIRAvoidSensor::setLed(uint8_t index, bool on)
+{
+  if(index & 1){
+    if(on){
+      RightLED_ON();
+    }else{
+      RightLED_OFF();
+    }
+  }
+  if(index & 2){
+    if(on){
+      LeftLED_ON();
+    }else{
+      LeftLED_OFF();
+    }
+  }
+}
+
  void WeIRAvoidSensor::RightLED_ON(void)
  {
     setLed(_Led_data | 1);

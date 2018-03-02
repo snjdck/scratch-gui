@@ -22,6 +22,7 @@ public:
   void LeftLED_OFF(void);
   void RightLED_ON(void);
   void RightLED_OFF(void);
+  void setLed(uint8_t index, bool on);
 
 private:
   void setLed(uint8_t);
