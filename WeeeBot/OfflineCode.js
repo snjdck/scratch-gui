@@ -136,6 +136,22 @@ module.exports = function(){
         return ["!digitalRead(" + pin + ")", b];
     };
 
+    arduino["weeebot_motor_dc_130"] = function(block){
+        var order = arduino.ORDER_NONE;
+        addInclude(arduino);
+
+        
+        var index = arduino.valueToCode(block, 'SENSOR_PORT', order);
+        var spd = arduino.valueToCode(block, 'SPEED', order);
+
+        let key = `dc_130_${index}`;
+
+        arduino.definitions_[key] = `We130DCMotor ${key}(${index});`;
+
+        let code = arduino.tab() + `${key}.run(${spd})` + arduino.END;
+        return code;
+    }
+
     arduino["weeebot_motor_dc"] = function (block) {
         var order = arduino.ORDER_NONE;
         addInclude(arduino);

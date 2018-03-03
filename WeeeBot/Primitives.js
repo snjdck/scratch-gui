@@ -41,6 +41,12 @@ function weeebot_motor_dc(argValues, util){
     return createPromise(util, 200, idx, spd);
 }
 
+function weeebot_motor_dc_130(argValues, util){
+    var spd = argValues.SPEED;
+    var idx = argValues.SENSOR_PORT;
+    return createPromise(util, 204, idx, spd);
+}
+
 function weeebot_motor_move(argValues, util) {
     var spd = argValues.SPEED;
     var dir = argValues.MOVE_DIRECTION;
@@ -210,6 +216,7 @@ function weeebot_led_matrix_clear(argValues, util){
 module.exports = function(){
     return {
         weeebot_motor_dc,
+        weeebot_motor_dc_130,
         weeebot_motor_move,
         on_board_servo,
         weeebot_stop,

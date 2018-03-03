@@ -14,6 +14,7 @@ WeUltrasonicSensor ultraSensor;
 WeLineFollower lineFollower;
 WeLEDPanelModuleMatrix7_21 ledPanel;
 WeDCMotor dc;
+We130DCMotor dc130(0);
 WeTemperature ts;
 WeRGBLed led;
 WeBuzzer buzzer(OnBoard_Buzzer);
@@ -37,6 +38,7 @@ const uint8_t MSG_ID_DC_SPEED = 200;
 const uint8_t MSG_ID_DC_MOVE = 201;
 const uint8_t MSG_ID_DC_STOP = 102;
 const uint8_t MSG_ID_SERVO = 202;
+const uint8_t MSG_ID_DC_130_SPEED = 204;
 const uint8_t MSG_ID_ULTRASONIC_LED = 109;
 const uint8_t MSG_ID_ULTRASONIC = 110;
 const uint8_t MSG_ID_LINE_FOLLOWER = 111;
@@ -185,6 +187,12 @@ void doDcSpeed(char *cmd)
 {
 	dc.reset(nextInt(&cmd));
 	dc.run(nextInt(&cmd));
+}
+
+void doDc130Speed(char *cmd)
+{
+	dc130.reset(nextInt(&cmd));
+	dc130.run(nextInt(&cmd));
 }
 
 void doServo(char *cmd)
@@ -405,9 +413,7 @@ void doStopAll(char *cmd)
 		}
 		if(1 == sensor_slot[i]){
 			ultraSensor.reset(sensor_port[i]);
-			ultraSensor.setColor1(0,0,0);
-			ultraSensor.setColor2(0,0,0);
-			ultraSensor.RGBShow();
+			ultraSensor.setColor(3,0,0,0);
 		}else if(3 == sensor_slot[i]){
 			ledPanel.reset(sensor_port[i]);
 			ledPanel.clearScreen();
@@ -449,6 +455,9 @@ void parseMcode(char *cmd)
 			break;
 		case MSG_ID_DC_SPEED:
 			handler = doDcSpeed;
+			break;
+		case MSG_ID_DC_130_SPEED:
+			handler = doDc130Speed;
 			break;
 		case MSG_ID_DC_MOVE:
 			handler = doDcMove;

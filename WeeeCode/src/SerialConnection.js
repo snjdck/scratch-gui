@@ -1,15 +1,7 @@
 
 /* Interprets an ArrayBuffer as UTF-8 encoded string data. */
-var ab2str = function(buf) {
-    try {
-        var bufView = new Uint8Array(buf);
-        var encodedString = String.fromCharCode.apply(null, bufView);
-        return decodeURIComponent(escape(encodedString));
-    }catch(e) {
-        console.log("Error ab2str "+e+" "+buf);
-        return "";
-    }
-};
+const decoder = new TextDecoder();
+const ab2str = buf => decoder.decode(buf);
 
 /* Converts a string to UTF-8 encoding in a Uint8Array; returns the array buffer. */
 var str2ab = function(str) {

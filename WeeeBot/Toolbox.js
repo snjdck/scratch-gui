@@ -47,6 +47,7 @@ function newBlock(type, children){
 }
 */
 //A0 = 14
+const SENSOR_PORTS = [0, 9, 10, 12, 4];
 const PORTS = [0, 14, 15, 19, 18, 17, 16];
 
 const toolbox = newXML("category", {"name":"WeeeBot", "key":"WeeeBot", "colour":"#FF6680", "secondaryColour":"#FF3355"}, [
@@ -60,6 +61,10 @@ const toolbox = newXML("category", {"name":"WeeeBot", "key":"WeeeBot", "colour":
             newNumberValue("SPEED", 120)
         ]),
         newBlock("weeebot_stop"),
+        newBlock("weeebot_motor_dc_130", [
+            newDropdownValue("SENSOR_PORT", SENSOR_PORTS[1]),
+            newNumberValue("SPEED", 0)
+        ]),
         /*newBlock("weeebot_steppermove", [
             newDropdownValue("MOTOR_PORT", 3),
             newNumberValue("SPEED", 3000),

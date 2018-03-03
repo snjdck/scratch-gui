@@ -196,6 +196,7 @@ module.exports = function (){
         ["　",0]]);
     regBlock("weeebot_motor_dc",   Translation.WB_DCMOTOR,    ["WEEEBOT_DCMOTOR_OPTION", "SPEED"]);
     regBlock("weeebot_motor_move", Translation.WB_MOTOR_MOVE, ["MOVE_DIRECTION", "SPEED"]);
+    regBlock("weeebot_motor_dc_130", "5V 130 " + Translation.WB_DCMOTOR, ["SENSOR_PORT", "SPEED"]);
     regBlock("on_board_servo", Translation.WB_BOARD_SERVO, ["BOARD_PORT", "ANGLE"]);
     regBlock("test_tone_note", Translation.WB_TONE, ["TEST_TONE_NOTE_NOTE_OPTION", "TEST_TONE_NOTE_BEAT_OPTION"]);
     regBlock("weeebot_encoder_move", Translation.WB_ENCODER_MOVE, ["MOTOR_PORT", "SPEED", "DISTANCE"]);
