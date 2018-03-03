@@ -279,7 +279,7 @@ Blockly.Arduino["sensing_loudness"] = function(block){
     return ["0", Blockly.Arduino.ORDER_NONE];
 }
 Blockly.Arduino["sensing_timer"] = function(block){
-    return ["millis()", Blockly.Arduino.ORDER_NONE];
+    return ["(millis()*0.001)", Blockly.Arduino.ORDER_NONE];
 }
 Blockly.Arduino["sensing_resettimer"] = function(block){
     return "";
