@@ -381,6 +381,13 @@ module.exports = function(){
         code +=    arduino.tab() + `ledPanel.showClock(${hour}, ${second}, ${showColon})` + arduino.END;
         return code;
     };
+    function findInputBlockType(block, name){
+        for(let item of  block.inputList){
+            if(item.name == name){
+                return item.connection.targetConnection.sourceBlock_.type;
+            }
+        }
+    }
     arduino["weeebot_led_matrix_string"] = function (block) {
         var order = arduino.ORDER_NONE;
 
@@ -389,11 +396,15 @@ module.exports = function(){
         var y = arduino.valueToCode(block, "Y", order);
         var str = arduino.valueToCode(block, "STR", order);
 
+        if(findInputBlockType(block, "STR") == "text"){
+            str = `"${str}"`;
+        }
+
         addInclude(arduino);
         arduino.definitions_["ledPanel"] = "WeLEDPanelModuleMatrix7_21 ledPanel;";
 
         var code = arduino.tab() + `ledPanel.reset(${port})`  + arduino.END;
-        code +=    arduino.tab() + `ledPanel.showChar(${x}, ${y}, "${str}")` + arduino.END;
+        code +=    arduino.tab() + `ledPanel.showChar(${x}, ${y}, ${str})` + arduino.END;
         return code;
     };
     arduino["weeebot_led_matrix_bitmap"] = function (block) {
