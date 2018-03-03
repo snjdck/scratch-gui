@@ -16,6 +16,7 @@ public:
   void turnOnDot(uint8_t x,uint8_t y);
   void turnOffDot(uint8_t x,uint8_t y);
   void showChar(int8_t X_position,int8_t Y_position,const char *str);
+  void showChar(int8_t X_position,int8_t Y_position,String str);
   void showClock(uint8_t hour, uint8_t minute, bool point_flag);
   void showNum(float value);
   void writeChar(int8_t X_position,int8_t Y_position,uint8_t buffer);

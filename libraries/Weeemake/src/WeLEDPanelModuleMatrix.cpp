@@ -129,6 +129,10 @@ void WeLEDPanelModuleMatrix::turnOffDot(uint8_t x,uint8_t y)
    showLine(x,Display_Buffer[x]);
 }
 
+void WeLEDPanelModuleMatrix::showChar(int8_t X_position, int8_t Y_position, String str)
+{
+	showChar(X_position, Y_position, str.c_str());
+}
 void WeLEDPanelModuleMatrix::showChar(int8_t X_position, int8_t Y_position, const char *str)
 {
 	
