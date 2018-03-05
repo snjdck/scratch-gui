@@ -131,7 +131,11 @@ module.exports = function (){
         [Translation.WB_Port3, 19],
         [Translation.WB_Port4, 18],
         [Translation.WB_Port5, 17],
-        [Translation.WB_Port6, 16]]);
+        [Translation.WB_Port6, 16],
+        [Translation.WB_PortA, 9],
+        [Translation.WB_PortB, 10],
+        [Translation.WB_PortC, 12],
+        [Translation.WB_PortD, 4]]);
     regOption("on_board_port", "Number", [
         [Translation.WB_OnBoard,2],
         [Translation.WB_Port1, 14],
