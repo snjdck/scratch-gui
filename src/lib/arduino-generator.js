@@ -380,7 +380,7 @@ Blockly.Arduino["operator_mod"] = function(block){
 Blockly.Arduino["operator_round"] = function(block){
 	var order = Blockly.Arduino.ORDER_HIGH;
 	var a=Blockly.Arduino.valueToCode(block,"NUM", order) || "0";
-	return [`round(${a})`, Blockly.Arduino.ORDER_NONE];
+	return [`int(round(${a}))`, Blockly.Arduino.ORDER_NONE];
 }
 Blockly.Arduino["operator_mathop"] = function(block){
 }
