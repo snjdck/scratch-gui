@@ -75,6 +75,7 @@ int searchServoPin(int pin){
 		}
 		if(servo_pins[i]==0){
 			servo_pins[i] = pin;
+			servos[i].attach(pin);
 			return i;
 		}
 	}
@@ -211,14 +212,9 @@ void doServo(char *cmd)
 {
 	int pin = nextInt(&cmd);
 	int v = nextInt(&cmd);
-	Servo sv = servos[searchServoPin(pin)];
-	if(v >= 0 && v <= 180)
-	{
-		if(!sv.attached())
-		{
-			sv.attach(pin);
-		}
-		sv.write(v);
+	int index = searchServoPin(pin);
+	if(v >= 0 && v <= 180){
+		servos[index].write(v);
 	}
 }
 
@@ -488,7 +484,6 @@ void doStopAll(char *cmd)
 			ultraSensor.reset(sensor_port[i]);
 			ultraSensor.setColor1(0,0,0);
 			ultraSensor.setColor2(0,0,0);
-			ultraSensor.RGBShow();
 		}else if(3 == sensor_slot[i]){
 			ledPanel.reset(sensor_port[i]);
 			ledPanel.clearScreen();
