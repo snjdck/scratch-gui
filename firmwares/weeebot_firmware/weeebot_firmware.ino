@@ -60,6 +60,7 @@ int searchServoPin(int pin){
 		}
 		if(servo_pins[i]==0){
 			servo_pins[i] = pin;
+			servos[i].attach(pin);
 			return i;
 		}
 	}
@@ -199,14 +200,9 @@ void doServo(char *cmd)
 {
 	int pin = nextInt(&cmd);
 	int v = nextInt(&cmd);
-	Servo sv = servos[searchServoPin(pin)];
-	if(v >= 0 && v <= 180)
-	{
-		if(!sv.attached())
-		{
-			sv.attach(pin);
-		}
-		sv.write(v);
+	int index = searchServoPin(pin);
+	if(v >= 0 && v <= 180){
+		servos[index].write(v);
 	}
 }
 
