@@ -34,12 +34,14 @@ class WeLEDPanelModuleMatrix7_21: public WeLEDPanelModuleMatrix
 {
 public:
   WeLEDPanelModuleMatrix7_21(uint8_t port=0);
+  void showNum(float value);
 };
 
 class WeLEDPanelModuleMatrix5_14: public WeLEDPanelModuleMatrix
 {
 public:
   WeLEDPanelModuleMatrix5_14(uint8_t port=0);
+  void showNum(float value);
 };
 
 #endif

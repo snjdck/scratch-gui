@@ -293,7 +293,664 @@ void WeLEDPanelModuleMatrix::showNum(float value)
      
 } 
  
- 
+
+void WeLEDPanelModuleMatrix7_21::showNum(float value)
+{
+  uint8_t tempBuf[10]={0};
+  int buf[4]={0};
+  uint8_t isNeg=0;
+  uint8_t int_num = 0;
+  uint8_t bit_num = 0;
+  uint8_t temp_num = 0;
+  uint8_t comma_flag=0;
+  double number = value;
+  if(number>=9999)
+  {
+     writeChar(-1,0,9+15);
+   writeChar(4,0,9+15);
+   writeChar(9,0,9+15);
+   writeChar(14,0,9+15);
+   showLine(20,0x00);
+  }
+  else if(number<= -999)
+  {
+   writeChar(4,0,9+15);
+   writeChar(10,0,9+15);
+   writeChar(15,0,9+15);
+   showLine(0,0x08);
+   showLine(1,0x08);
+   showLine(2,0x08);
+   showLine(3,0x08);
+   }
+  else if (number==0)
+  {
+     writeChar(0,0,3);
+   writeChar(5,0,3);
+   writeChar(10,0,3);
+   writeChar(15,0,15);
+  }
+  else
+  {
+     if (number<0)
+     {
+      number = -number;
+      isNeg = 1;
+     }
+     tempBuf[0]=number/1000;
+     tempBuf[1]=(int)number%1000/100;
+     tempBuf[2]=(int)number%100/10;
+     tempBuf[3]=(int)number%10;
+     tempBuf[4]=(int)(number*10)%10;
+     tempBuf[5]=(int)(number*100)%10;
+     tempBuf[6]=(int)(number*1000)%10;
+     while(tempBuf[int_num]==0)
+     {
+        int_num++;
+     }
+     if(number>=1)
+     {  
+        buf[0]=tempBuf[int_num];
+        buf[1]=tempBuf[int_num+1];
+        buf[2]=tempBuf[int_num+2];
+        buf[3]=tempBuf[int_num+3];
+        comma_flag=4-int_num;
+      }
+      else
+      {
+        buf[0]=tempBuf[3];
+        buf[1]=tempBuf[4];
+        buf[2]=tempBuf[5];
+        buf[3]=tempBuf[6];
+        comma_flag=1;
+      }
+
+    if(isNeg==1)         //
+    {
+      if (number >= 100)
+      {
+        temp_num = 3;
+        writeChar(-1,0,12);     //'-'
+      }
+      else if (number >= 10)
+      {
+        if (buf[2]!=0)
+        {
+          temp_num = 3;
+          writeChar(-1,0,12);     //'-'
+        }
+        else
+        {
+          temp_num =2;
+          writeChar(4,0,12);     //'-'
+        }
+      }
+      else if (number >=1)
+      {
+        if (buf[2]!=0)
+        {
+          temp_num =3;
+          writeChar(-1,0,12);     //'-'
+        }
+        else if (buf[2]==0&&buf[1]!=0)
+        {
+          temp_num = 2;
+          writeChar(4,0,12);     //'-'
+        }
+        else
+        {
+          temp_num = 1;
+          writeChar(9,0,12);     //'-'
+        }
+      }
+      else
+      {
+        if (buf[2]!=0)
+        {
+          temp_num =3;
+          writeChar(-1,0,12);     //'-'
+        }
+        else if (buf[2]==0&&buf[1]!=0)
+        {
+          temp_num = 2;
+          writeChar(4,0,12);     //'-'
+        }
+        else
+        {
+          temp_num = 1;
+          writeChar(9,0,12);     //'-'
+        }
+      }
+       
+      for(int i=0;i<temp_num;i++)
+      {
+        if (temp_num == 3)
+        {
+           if(comma_flag-1<i)
+           {
+              writeChar(6+i*5,0,buf[i]+15);
+           }
+           else
+           {
+              writeChar(4+i*5,0,buf[i]+15);
+           }
+           if (number>=100)
+           {
+             showLine(20,0x00);
+           }
+           else
+           {
+            showLine(5+5*comma_flag,0x40);
+           }
+        }
+        else if (temp_num == 2)
+        {
+            if(comma_flag-1<i)
+           {
+              writeChar(6+i*5+5,0,buf[i]+15);
+           }
+           else
+           {
+              writeChar(4+i*5+5,0,buf[i]+15);
+           }
+           writeChar(-1,0,3);
+           if (number>=10)
+           {
+             showLine(20,0x00);
+           }
+           else
+           {
+            showLine(5+5*comma_flag+5,0x40);
+           }
+        }
+        else
+        {
+            if(comma_flag-1<i)
+           {
+              writeChar(6+i*5+10,0,buf[i]+15);
+           }
+           else
+           {
+              writeChar(4+i*5+10,0,buf[i]+15);
+           }
+           writeChar(4,0,3);
+        } 
+      }
+  }   
+  
+   else
+   {
+     if (number>=1000)
+     {
+       temp_num = 4;
+     }
+     else if(number>=100)
+     {
+        if(buf[3]!=0)
+        {
+          temp_num = 4;
+        }
+        else
+        {
+          temp_num =3;
+        }
+     }
+     else if(number>=10)
+     {
+         if(buf[3]!=0)
+         {
+           temp_num = 4;
+         }
+         else if(buf[3]==0 && buf[2]!=0)
+         {
+           temp_num = 3;
+         }
+         else
+         {
+           temp_num = 2;
+         }
+         
+     }
+     else if(number>=1)
+     {
+       if(buf[3]!=0)
+       {
+         temp_num = 4;
+       }
+       else if(buf[3]==0 && buf[2]!=0)
+       {
+         temp_num = 3;
+       }
+       else if(buf[3]==0 && buf[2]==0 && buf[1]!=0)
+       {
+         temp_num = 2;
+       }
+       else
+       {
+        temp_num = 1;
+       }
+     }
+     else
+     {
+        if(buf[3]!=0)
+       {
+         temp_num = 4;
+       }
+       else if(buf[3]==0 && buf[2]!=0)
+       {
+         temp_num = 3;
+       }
+       else if(buf[3]==0 && buf[2]==0 && buf[1]!=0)
+       {
+         temp_num = 2;
+       }
+       else
+       {
+          temp_num = 1;
+       }
+     }
+     
+     for(int i=0;i<temp_num;i++)
+     {
+      if(temp_num == 4)
+      {
+        if(comma_flag-1<i)
+         {
+            writeChar(1+i*5,0,buf[i]+15);
+         }
+         else
+         {
+          writeChar(-1+i*5,0,buf[i]+15);
+         }
+         if(number>=1000)
+         {
+           showLine(20,0x00);
+         }
+         else
+         {
+            showLine(5*comma_flag,0x40);
+         } 
+      }
+      else if(temp_num == 3)
+      {
+      	writeChar(-1,0,3);
+          if(comma_flag-1<i)
+         {
+            writeChar(1+i*5+5,0,buf[i]+15);
+         }
+         else
+         {
+          writeChar(-1+i*5+5,0,buf[i]+15);
+         }
+         if (number>=100)
+         {
+           showLine(20,0x00);
+         }
+         else
+         {
+            showLine(5*comma_flag+5,0x40);
+         }
+      }
+      else if(temp_num == 2)
+      {
+		writeChar(-1,0,3);
+		writeChar(4,0,3);
+		if(comma_flag-1<i)
+		{
+			writeChar(1+i*5+10,0,buf[i]+15);
+		}
+		else
+		{
+			writeChar(-1+i*5+10,0,buf[i]+15);
+		}
+		if (number>=10)
+		{
+			showLine(20,0x00);
+		}
+		else
+		{
+			showLine(5*comma_flag+10,0x40);
+		}
+	  }
+	  else 
+	  {
+		writeChar(-1,0,3);
+		writeChar(4,0,3);
+		writeChar(9,0,3);
+		if(comma_flag-1<i)
+		{
+			writeChar(1+i*5+15,0,buf[i]+15);
+		}
+		else
+		{
+			writeChar(-1+i*5+15,0,buf[i]+15);
+		}
+		if (number>=1)
+		{
+			showLine(20,0x00);
+		}
+       }   
+   	}
+	}
+  } 
+} 
+
+void WeLEDPanelModuleMatrix5_14::showNum(float value)
+{
+  uint8_t tempBuf[10]={0};
+  int buf[4]={0};
+  uint8_t isNeg=0;
+  uint8_t int_num = 0;
+  double number = value;
+  if(number>=999)
+  {
+      writeChar(-1,0,9+15);
+	    writeChar(4,0,9+15);
+	    writeChar(9,0,9+15);
+	    //writeChar(14,0,9+15);
+	    //showLine(20,0x00);
+  }
+  else if(number<= -99)
+  {
+	 writeChar(0,0,12);
+	 writeChar(4,0,9+15);
+	 writeChar(9,0,9+15);
+  }
+  else if (number==0) 
+  {
+      writeChar(9,0,15);
+  }
+   else
+   {
+     if (number<0)
+     {
+      number = -number;
+      isNeg = 1;
+     }
+    tempBuf[0]=number/1000;
+   tempBuf[1]=(int)number%1000/100;
+   tempBuf[2]=(int)number%100/10;
+   tempBuf[3]=(int)number%10;
+   tempBuf[4]=(int)(number*10)%10;
+   tempBuf[5]=(int)(number*100)%10;
+   tempBuf[6]=(int)(number*1000)%10;
+	 while(tempBuf[int_num]==0)
+	 {
+	    int_num++;
+	 }
+	 if(number>=1)
+	 {
+	    
+	 	buf[0]=tempBuf[int_num];
+		buf[1]=tempBuf[int_num+1];
+		buf[2]=tempBuf[int_num+2];
+    buf[4]=tempBuf[int_num+3];
+	 }
+     else
+     {
+           buf[0]=tempBuf[3];
+		buf[1]=tempBuf[4];
+		buf[2]=tempBuf[5];
+    buf[3]=tempBuf[6];
+     }
+     if(isNeg==1)         //
+     {
+        //writeChar(-1,0,12);     //'-'
+        if (number >= 10)
+        {
+          writeChar(-1,0,12);     //'-'
+          writeChar(4,0,buf[0]+15);
+          if (buf[0] ==1)
+          {
+             writeChar(8,0,buf[1]+15);
+          }
+          else
+          {
+            writeChar(9,0,buf[1]+15);
+          }  
+        }
+        else if (number >= 1)
+        {
+            if (buf[1] == 0 && buf[2] == 0 )
+            {
+            	writeChar(0,0,3);
+              if (buf[0]==3 || buf[0] == 7 )
+              {
+                writeChar(8,0,buf[0]+15);
+                showLine(6,0x04);
+                showLine(7,0x04);
+                showLine(8,0x04);
+              }
+              else if (buf[0] == 4)
+              {
+                writeChar(8,0,buf[0]+15);
+                showLine(5,0x04);
+                showLine(6,0x04);
+                showLine(7,0x04);
+              }
+              else
+              {
+                 writeChar(0,0,3);     
+                 writeChar(5,0,12);     //'-'
+                writeChar(9,0,buf[0]+15);
+              }
+
+            }
+            else if (buf[0] == 1)
+            { 
+                if (buf[1] == 1 || buf[1] == 2)
+                {
+                  writeChar(-1,0,12);     //'-'
+                  writeChar(3,0,buf[0]+15);
+                  writeChar(9,0,buf[1]+15);
+                  showLine(8,0x10);
+                }
+                else if (buf[1] == 3)
+                {
+                  writeChar(0,0,12);     //'-'
+                  writeChar(4,0,buf[0]+15);
+                  writeChar(9,0,buf[1]+15);
+                  showLine(9,0x10);
+                }
+                else if (buf[1] == 4)
+                {
+                  writeChar(-1,0,12);     //'-'
+                  writeChar(3,0,buf[0]+15);
+                  writeChar(8,0,buf[1]+15);
+                  showLine(8,0x10);
+                }
+                else if (buf[1] == 7)
+                {
+                  writeChar(0,0,12);     //'-'
+                  writeChar(4,0,buf[0]+15);
+                  writeChar(9,0,buf[1]+15);
+                  showLine(9,0x10);
+                }
+                else
+                {
+                  writeChar(-1,0,12);     //'-'
+                  writeChar(3,0,buf[0]+15);
+                  writeChar(9,0,buf[1]+15);
+                  showLine(8,0x10);
+                }
+            }
+            else if (buf[0] == 2)
+            {
+                if (buf[1] == 2 || buf[1] == 4 || buf[1] == 5)
+                {
+                  writeChar(-1,0,12);     //'-'
+                  writeChar(3,0,buf[0]+15);
+                  if (buf[1] == 2 || buf[1] == 5)
+                  {
+                    writeChar(9,0,buf[1]+15);
+                  }
+                  else
+                  {
+                    writeChar(8,0,buf[1]+15);
+                  }
+                  showLine(7,0x02);
+                  showLine(8,0x10);
+                }
+                else if (buf[1] == 1)
+                {
+                  writeChar(-1,0,12);     //'-'
+                  writeChar(3,0,buf[0]+15);
+                  writeChar(10,0,buf[1]+15);
+                  showLine(9,0x10);
+                }
+                else 
+                {
+                  writeChar(-1,0,12);     //'-'
+                  writeChar(3,0,buf[0]+15);
+                  writeChar(9,0,buf[1]+15);
+                  showLine(9,0x10);
+                }
+            }
+            else if (buf[0] == 3)
+            {
+            	if (buf[1] == 3 || buf[1] == 4 || buf[1] == 7)
+            	{
+            		writeChar(2,0,buf[0]+15);
+              		writeChar(8,0,buf[1]+15);
+              		showLine(0,0x04);
+              		showLine(1,0x04);
+              		showLine(2,0x04);
+              		showLine(8,0x10);
+            	}
+            	else //if (/* condition */)
+            	{
+            		writeChar(2,0,buf[0]+15);
+              		writeChar(9,0,buf[1]+15);
+              		showLine(0,0x04);
+              		showLine(1,0x04);
+              		showLine(2,0x04);  
+              		showLine(8,0x10);
+            	}
+          	}
+          	else
+          	{
+            	if (buf[1] ==0 )
+            	{
+              		writeChar(9,0,buf[0]+15);
+            	}
+            	else
+            	{
+              		writeChar(-1,0,12);     //'-'
+              		writeChar(3,0,buf[0]+15);
+              	if(buf[1] == 1 || buf[1] == 3)
+              	{
+                 	writeChar(10,0,buf[1]+15);
+                 	showLine(9,0x10);
+              	}
+              	else
+              	{
+                	writeChar(9,0,buf[1]+15);
+                	showLine(9,0x10);
+              	}
+
+              	if (buf[1] == 2 || buf[1] == 5)
+              	{
+                	writeChar(9,0,buf[1]+15);
+                	showLine(8,0x10);
+              	}
+              	else
+              	{
+                	writeChar(9,0,buf[1]+15);
+                	showLine(9,0x10);
+              	}
+            }
+        }
+    }
+     }
+	 else
+	 {
+          if (number >=100)
+          {
+            if (buf[0] == 1)
+            {
+              writeChar(0,0,buf[0]+15);
+            }
+            else
+            {
+              writeChar(-1,0,buf[0]+15);
+            }
+            
+            writeChar(4,0,buf[1]+15);
+            writeChar(9,0,buf[2]+15);
+          }
+          else if (number >= 10)
+          {
+            writeChar(-1,0,buf[0]+15);
+            if (buf[0] == 1)
+            {
+              writeChar(3 ,0,buf[1]+15);
+            }
+            else
+            {
+              writeChar(4 ,0,buf[1]+15);
+            }
+            
+            if (buf[2] == 1)
+            {
+              writeChar(10,0,buf[2]+15);
+              showLine(9,0x10);
+            }
+            else
+            {
+              writeChar(9,0,buf[2]+15);
+              showLine(9,0x10);
+            }
+            
+          }
+          else if (number >= 1)
+          {
+            writeChar(-1,0,buf[0]+15);
+            if (buf[1] == 1)
+            {
+              writeChar(5,0,buf[1]+15);
+            }
+            else
+            {
+               writeChar(4,0,buf[1]+15);
+            }
+           
+            if (buf[2] == 1)
+            {
+              writeChar(10,0,buf[2]+15);
+            }
+            else
+            {
+             writeChar(9,0,buf[2]+15);
+             
+            }
+            showLine(4,0x10);
+          }
+          else
+          {
+            writeChar(-1,0,buf[0]+15);
+            if (buf[1] == 1)
+            {
+              writeChar(5,0,buf[1]+15);
+            }
+            else
+            {
+               writeChar(4,0,buf[1]+15);
+            }
+           
+            if (buf[2] == 1)
+            {
+              writeChar(10,0,buf[2]+15);
+              //showLine(5,0x10);
+            }
+            else
+            {
+             writeChar(9,0,buf[2]+15);
+             
+            }
+            showLine(4,0x10);
+          }
+	 }
+  }    
+} 
 
 
 

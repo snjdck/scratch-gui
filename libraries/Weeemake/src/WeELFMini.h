@@ -36,6 +36,7 @@
 #include "WeLimitSwitch.h"
 #include "WeColorSensor.h"
 #include "WeGyroSensor.h"
+#include "WeSingleLED.h"
 
 #define PORT_A  (A5)
 #define PORT_B  (A4)
