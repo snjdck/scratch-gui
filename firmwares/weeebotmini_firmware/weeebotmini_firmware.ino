@@ -22,8 +22,11 @@ WeUltrasonicSensor ultraSensor;
 WeLineFollower lineFollower;
 WeLEDPanelModuleMatrix5_14 ledPanel;
 WeDCMotor dc;
+We130DCMotor dc130;
 WeTemperature ts;
 WeRGBLed led;
+WeRGBLED_RJ led_RJ11;
+WePotentiomter potentiomter;
 WeBuzzer buzzer(OnBoard_Buzzer);
 WeInfraredReceiver ir(DEFAULT_IR_PIN);
 WeHumiture humitureSensor;
@@ -43,11 +46,13 @@ const uint8_t MSG_ID_BOARD_LIGHT = 8;
 const uint8_t MSG_ID_BOARD_IR = 7;
 const uint8_t MSG_ID_BOARD_SOUND = 11;
 const uint8_t MSG_ID_BOARD_TEMPERATURE = 12;
+const uint8_t MSG_ID_RJ11_RGB = 13;
 
 const uint8_t MSG_ID_DC_SPEED = 200;
 const uint8_t MSG_ID_DC_MOVE = 201;
 const uint8_t MSG_ID_DC_STOP = 102;
 const uint8_t MSG_ID_SERVO = 202;
+const uint8_t MSG_ID_DC_130_SPEED = 204;
 const uint8_t MSG_ID_ULTRASONIC_LED = 109;
 const uint8_t MSG_ID_ULTRASONIC = 110;
 const uint8_t MSG_ID_LINE_FOLLOWER = 111;
@@ -67,6 +72,8 @@ const uint8_t MSG_ID_TOUCH = 121;
 const uint8_t MSG_ID_HUMITURE = 122;
 const uint8_t MSG_ID_7SEGMENT = 123;
 const uint8_t MSG_ID_SOIL = 124;
+const uint8_t MSG_ID_SINGLE_LED = 125;
+const uint8_t MSG_ID_POTENTIOMTER = 126;
 
 int searchServoPin(int pin){
 	for(int i=0;i<MAX_SERVO_COUNT;i++){
@@ -200,6 +207,16 @@ void doRgb(char * cmd)
 	led.reset(port);
 	led.setColor(pix, r >> 4, g >> 4, b >> 4);
 	led.show();
+}
+
+void doRj11RGB(char *cmd)
+{
+	nextStr(&cmd);
+	int port, pix, r, g, b;
+	parsePinVal(cmd, &port, &pix, &r, &g, &b);
+	led_RJ11.reset(port);
+	led_RJ11.setColor(pix, r >> 4, g >> 4, b >> 4);
+	led_RJ11.RGBShow();
 }
 
 void doDcSpeed(char *cmd)
@@ -466,6 +483,27 @@ void do7Segment(char *cmd)
 	segmentDisplaySensor.showNumber(v);
 }
 
+void doDc130Speed(char *cmd)
+{
+	dc130.reset(nextInt(&cmd));
+	dc130.run(nextInt(&cmd));
+}
+
+void doSingleLed(char *cmd)
+{
+	int port = nextInt(&cmd);
+	int isOn = nextInt(&cmd);
+	pinMode(port, OUTPUT);
+	digitalWrite(port, isOn);
+}
+
+void getPotentiomter(char *cmd)
+{
+	int port = nextInt(&cmd);
+	potentiomter.reset(port);
+	Serial.println(potentiomter.readAnalog());
+}
+
 void doStopAll(char *cmd)
 {
 	//stop motor
@@ -475,6 +513,7 @@ void doStopAll(char *cmd)
 	digitalWrite(MINI_LEFT_YELLOW, LOW);
 	digitalWrite(MINI_RIGHT_RED, LOW);
 	digitalWrite(MINI_RIGHT_YELLOW, LOW);
+	loopSensor();
 	//stop RJ11 sensors
 	for(int i=0; i<sizeof(sensor_slot);++i){
 		if(!sensor_slot[i]){
@@ -602,6 +641,19 @@ void parseMcode(char *cmd)
 		case MSG_ID_7SEGMENT:
 			handler = do7Segment;
 			break;
+		case MSG_ID_DC_130_SPEED:
+			handler = doDc130Speed;
+			break;
+		case MSG_ID_SINGLE_LED:
+			handler = doSingleLed;
+			break;
+		case MSG_ID_POTENTIOMTER:
+			queryFlag = true;
+			handler = getPotentiomter;
+			break;
+		case MSG_ID_RJ11_RGB:
+			handler = doRj11RGB;
+			break;
 		default:
 			return;
 	}
@@ -644,7 +696,6 @@ void loop()
 {
 	loopIR();
 	loopSerial();
-	loopSensor();
 }
 
 void loopIR()
