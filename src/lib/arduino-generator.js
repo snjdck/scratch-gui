@@ -627,8 +627,8 @@ Blockly.Arduino.arduino_level_option=Blockly.Arduino.arduino_menu_option;
 Blockly.Arduino.arduino_analog_in_option=Blockly.Arduino.arduino_menu_option;
 //Blockly.Arduino.control={};
 Blockly.Arduino.control_wait=function(a){
-	a=Blockly.Arduino.valueToCode(a,"DURATION",Blockly.Arduino.ORDER_HIGH)+"*1000";
-	return Blockly.Arduino.tab()+"delay("+a+")"+Blockly.Arduino.END
+	a=Blockly.Arduino.valueToCode(a,"DURATION",Blockly.Arduino.ORDER_HIGH);
+	return Blockly.Arduino.tab()+`delay(${parseFloat(a)*1000})`+Blockly.Arduino.END;
 };
 Blockly.Arduino.control_repeat=function(a){
 	var b=Blockly.Arduino.valueToCode(a,"TIMES",Blockly.Arduino.ORDER_HIGH),
