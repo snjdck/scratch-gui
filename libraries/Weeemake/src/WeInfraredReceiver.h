@@ -124,11 +124,14 @@ public:
   int rawlen; // Number of records in rawbuf.
 
   ErrorStatus decode();
-  void begin(void);  
+  void begin(void);
+  void loop();
+  bool isKeyPressed(uint8_t key);
   ErrorStatus decodeNEC();
    
   
  private:
+  uint8_t IR_VALUE;
 	//volatile uint8_t _RxPin;
 };
 

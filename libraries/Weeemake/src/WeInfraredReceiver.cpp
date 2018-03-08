@@ -90,6 +90,21 @@ void WeInfraredReceiver::reset(uint8_t port)
   irparams.recvpin = _RxPin;
 }
 
+void WeInfraredReceiver::loop()
+{
+	static unsigned long timestamp = 0;
+	if(decode()){
+		timestamp = millis();
+		IR_VALUE = (value >> 16) & 0xFF;
+	}else if(millis() - timestamp > 200){
+		IR_VALUE = 0;
+	}
+}
+bool WeInfraredReceiver::isKeyPressed(uint8_t key)
+{
+	return IR_VALUE == key;
+}
+
 
 void WeInfraredReceiver::begin(void)
 {

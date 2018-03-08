@@ -6,10 +6,11 @@
 class WeDCMotor
 {
 public:
-
+  
   WeDCMotor(uint8_t port=0); 
   void reset(uint8_t port=0);
   void run(int16_t speed);
+  void move(uint8_t direction, int16_t speed);
   void stop(void);
 
   

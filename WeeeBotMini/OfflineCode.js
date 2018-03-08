@@ -37,7 +37,6 @@ module.exports = function(){
     arduino.on_off = option_handler;
 
     function gen_rgb_code(block, color, type, prefix, portName) {
-        addInclude(arduino);
         var order = arduino.ORDER_NONE;
 
         var port = arduino.valueToCode(block, portName, order);
@@ -66,7 +65,6 @@ module.exports = function(){
         var note = arduino.valueToCode(block, "TEST_TONE_NOTE_NOTE_OPTION", b);
         var hz = arduino.valueToCode(block, "TEST_TONE_NOTE_BEAT_OPTION", b);
 
-        addInclude(arduino);
         arduino.definitions_["buzzer"] = "WeBuzzer buzzer(OnBoard_Buzzer);";
         return arduino.tab() + "buzzer.tone(" + note + "," + hz + ")" + arduino.END;
     };
@@ -77,7 +75,6 @@ module.exports = function(){
 
         const key = `servo_${port}`;
 
-        addInclude(arduino);
         arduino.definitions_[key] = `Servo ${key};`;
         arduino.setupCodes_[key] = `${key}.attach(${port});`;
         return arduino.tab() + `${key}.write(${angle})` + arduino.END;
@@ -96,7 +93,6 @@ module.exports = function(){
     };
 
     arduino.board_temperature_sensor = function(block){
-        addInclude(arduino);
         var b = arduino.ORDER_NONE;
         var port = arduino.valueToCode(block, "BOARD_PORT", b);
 
@@ -108,7 +104,6 @@ module.exports = function(){
     };
 
     arduino.weeebot_on_board_button = function(block){
-        addInclude(arduino);
         var b = arduino.ORDER_NONE;
         var pin = arduino.valueToCode(block, "ON_BOARD_PORT", b);
         arduino.setupCodes_["pin_input_" + pin] = "pinMode(" + pin + ",INPUT);";
@@ -117,7 +112,6 @@ module.exports = function(){
 
     arduino["weeebot_motor_dc"] = function (block) {
         var order = arduino.ORDER_NONE;
-        addInclude(arduino);
         arduino.definitions_["dc"] = "WeDCMotor dc;";
         var index = arduino.valueToCode(block, 'WEEEBOT_DCMOTOR_OPTION', order);
         var spd = arduino.valueToCode(block, 'SPEED', order);
@@ -129,30 +123,16 @@ module.exports = function(){
 
     arduino["weeebot_stop"] = function (block) {
         var order = arduino.ORDER_NONE;
-        addInclude(arduino);
         arduino.definitions_["dc"] = "WeDCMotor dc;";
-
-        var code = arduino.tab() + "dc.reset(1)" + arduino.END;
-        code += arduino.tab() + "dc.run(0)" + arduino.END;
-        code += arduino.tab() + "dc.reset(2)" + arduino.END;
-        code += arduino.tab() + "dc.run(0)" + arduino.END;
-        return code;
+        return arduino.tab() + `dc.move(1, 0)` + arduino.END;
     };
 
     arduino["weeebot_motor_move"] = function (block) {
         var order = arduino.ORDER_NONE;
-        addInclude(arduino);
         arduino.definitions_["dc"] = "WeDCMotor dc;";
-        arduino.definitions_["speed"] = "int speed;";
-
         var spd = arduino.valueToCode(block, 'SPEED', order);
         var dir = arduino.valueToCode(block, 'MOVE_DIRECTION', order).toString();
-        var code = arduino.tab() + "speed = " + spd + arduino.END;
-        code += arduino.tab() + "dc.reset(2)" + arduino.END;
-        code += arduino.tab() + "dc.run(" + ("14".indexOf(dir) >= 0 ? "-" : "")  + "speed)" + arduino.END;
-        code += arduino.tab() + "dc.reset(1)" + arduino.END;
-        code += arduino.tab() + "dc.run(" + ("13".indexOf(dir) >= 0 ? "" : "-")  + "speed)" + arduino.END;
-        return code;
+        return arduino.tab() + `dc.move(${dir}, ${spd})` + arduino.END;
     };
 
     arduino["weeebot_rgb"] = function (block) {
@@ -191,35 +171,10 @@ module.exports = function(){
         var order = arduino.ORDER_HIGH;
         var code = arduino.valueToCode(block, 'IR_CODE', order);
 
-        addInclude(arduino);
         arduino.definitions_["ir"] = "WeInfraredReceiver ir(OnBoard_IR);";
-        arduino.definitions_["ir_v"] = "uint8_t IR_VALUE = 0;"
         arduino.setupCodes_["ir"] = "ir.begin();";
-        arduino.updateCodes_["ir"] = "loopIR();";
-        arduino.funcDefs_["ir"] = `void loopIR()
-{
-    static unsigned long timestamp = 0;
-    if(ir.decode()){
-        timestamp = millis();
-        IR_VALUE = (ir.value >> 16) & 0xFF;
-    }else if(millis() - timestamp > 200){
-        IR_VALUE = 0;
-    }
-}`;
-
-        var code = "(IR_VALUE == " + code + ")";
-        return [code, order]
-        /*
-        arduino.includes_["IRremote"] = '#include <IRremote.h>';
-        arduino.definitions_["IRremote"] = "IRrecv irrecv;";
-        arduino.definitions_["IRremote_result"] = "decode_results irResult;";
-
-        var rxpin = arduino.valueToCode(block, 'RXPIN', order);
-        arduino.setupCodes_["IRremote_attach"] = "irrecv.attach(" + rxpin + ");";
-        arduino.setupCodes_["IRremote_enable"] = "irrecv.enableIRIn();";
-        var code = "irrecv.readCode(&irResult)";
-        return [code, order];
-        */
+        arduino.updateCodes_["ir"] = "ir.loop();";
+        return [`ir.isKeyPressed(${code})`, order];
     };
 
     arduino["line_follower"] = function (block) {
@@ -230,7 +185,6 @@ module.exports = function(){
 
         var key = "lineFollower_" + port;
 
-        addInclude(arduino);
         arduino.definitions_[key] = "WeLineFollower "+key+"("+port+");";
 
         
@@ -245,7 +199,6 @@ module.exports = function(){
 
         var key = "ultrasonic_" + port;
 
-        addInclude(arduino);
         arduino.definitions_[key] = `WeUltrasonicSensor ${key}(${port});`;
         
         var code = key + ".distanceCm()";
@@ -273,7 +226,6 @@ module.exports = function(){
         var port = arduino.valueToCode(block, "SENSOR_PORT", order);
         var num = arduino.valueToCode(block, "NUM", order);
 
-        addInclude(arduino);
         arduino.definitions_["ledPanel"] = "WeLEDPanelModuleMatrix5_14 ledPanel;";
 
         var code = arduino.tab() + `ledPanel.reset(${port})`  + arduino.END;
@@ -296,7 +248,6 @@ module.exports = function(){
         var second = arduino.valueToCode(block, "SECOND", order);
         var showColon = arduino.valueToCode(block, "SHOW_COLON", order);
 
-        addInclude(arduino);
         arduino.definitions_["ledPanel"] = "WeLEDPanelModuleMatrix5_14 ledPanel;";
 
         var code = arduino.tab() + `ledPanel.reset(${port})`  + arduino.END;
@@ -311,7 +262,6 @@ module.exports = function(){
         var y = arduino.valueToCode(block, "Y", order);
         var str = arduino.valueToCode(block, "STR", order);
 
-        addInclude(arduino);
         arduino.definitions_["ledPanel"] = "WeLEDPanelModuleMatrix5_14 ledPanel;";
 
         var code = arduino.tab() + `ledPanel.reset(${port})`  + arduino.END;
@@ -338,7 +288,6 @@ module.exports = function(){
             }
         }
 
-        addInclude(arduino);
         arduino.definitions_["ledPanel"] = "WeLEDPanelModuleMatrix5_14 ledPanel;";
         arduino.definitions_["ledPanelData"] = "uint8_t ledPanelData[14];";
 
@@ -357,7 +306,6 @@ module.exports = function(){
         var x = arduino.valueToCode(block, "X", order);
         var y = arduino.valueToCode(block, "Y", order);
 
-        addInclude(arduino);
         arduino.definitions_["ledPanel"] = "WeLEDPanelModuleMatrix5_14 ledPanel;";
 
         var code = arduino.tab() + `ledPanel.reset(${port})`  + arduino.END;
@@ -371,7 +319,6 @@ module.exports = function(){
 
         var port = arduino.valueToCode(block, "SENSOR_PORT", order);
 
-        addInclude(arduino);
         arduino.definitions_["ledPanel"] = "WeLEDPanelModuleMatrix5_14 ledPanel;";
 
         var code = arduino.tab() + `ledPanel.reset(${port})`  + arduino.END;
@@ -387,7 +334,6 @@ module.exports = function(){
 
         var key = "IRAvoid_" + port;
 
-        addInclude(arduino);
         arduino.definitions_[key] = `WeIRAvoidSensor ${key}(${port});`;
         
         var code = key + ".isObstacle()";
@@ -401,7 +347,6 @@ module.exports = function(){
 
         var key = "singleLF_" + port;
 
-        addInclude(arduino);
         arduino.definitions_[key] = `WeSingleLineFollower ${key}(${port});`;
         
         var code = key + ".read()";
@@ -536,9 +481,7 @@ module.exports = function(){
 
     arduino["weeebot_motor_dc_130"] = function(block){
         var order = arduino.ORDER_NONE;
-        addInclude(arduino);
 
-        
         var index = arduino.valueToCode(block, 'SENSOR_PORT', order);
         var spd = arduino.valueToCode(block, 'SPEED', order);
 

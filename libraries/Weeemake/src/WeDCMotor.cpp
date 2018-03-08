@@ -1,5 +1,22 @@
 #include "WeDCMotor.h"
 
+void WeDCMotor::move(uint8_t direction, int16_t speed)
+{
+  //1,2,3,4 => F,B,L,R
+  reset(2);
+  if(direction == 1 || direction == 4){
+    run(-speed);
+  }else{
+    run(speed);
+  }
+  reset(1);
+  if(direction == 1 || direction == 3){
+    run(speed);
+  }else{
+    run(-speed);
+  }
+}
+
 WeDCMotor::WeDCMotor(uint8_t port)
 {
 
