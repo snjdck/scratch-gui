@@ -147,6 +147,10 @@ module.exports = function (){
     regOption("board_port_rgb", "Number", [
         [Translation.WB_OnBoard,3],
         ["OnBoardGroup",13],
+        [Translation.WB_PortA, 9],
+        [Translation.WB_PortB, 10],
+        [Translation.WB_PortC, 12],
+        [Translation.WB_PortD, 4],
         [Translation.WB_Port1, 14],
         [Translation.WB_Port2, 15],
         [Translation.WB_Port3, 19],
@@ -198,6 +202,9 @@ module.exports = function (){
     regOption("show_colon", "Number", [
         [":",1],
         ["　",0]]);
+    regOption("on_off", "Number", [
+        [Translation.ON , 1],
+        [Translation.OFF, 0]]);
     regBlock("weeebot_motor_dc",   Translation.WB_DCMOTOR,    ["WEEEBOT_DCMOTOR_OPTION", "SPEED"]);
     regBlock("weeebot_motor_move", Translation.WB_MOTOR_MOVE, ["MOVE_DIRECTION", "SPEED"]);
     regBlock("weeebot_motor_dc_130", "5V 130 " + Translation.WB_DCMOTOR, ["SENSOR_PORT", "SPEED"]);
@@ -208,6 +215,10 @@ module.exports = function (){
     regBlock("weeebot_stop", Translation.WB_STOP_MOTOR, []);
     regBlock("weeebot_rgb", Translation.WB_RGB1, ["BOARD_PORT_RGB", "PIXEL", "COLOR"]);
     regBlock("weeebot_rgb3", Translation.WB_RGB2, ["BOARD_PORT_RGB", "PIXEL", "R", "G", "B"]);
+
+    regBlock("weeebot_rgb_RJ11",  "RJ11 " + Translation.WB_RGB1, ["SENSOR_PORT", "PIXEL", "COLOR"]);
+    regBlock("weeebot_rgb3_RJ11", "RJ11 " + Translation.WB_RGB2, ["SENSOR_PORT", "PIXEL", "R", "G", "B"]);
+
     regBlock("board_light_sensor", Translation.WB_LIGHT, ["BOARD_PORT"], "Number");
     regBlock("board_temperature_sensor", Translation.WB_TEMPERATURE, ["BOARD_PORT"], "Number");
     regBlock("board_sound_sensor", Translation.WB_SOUND, ["BOARD_PORT"], "Number");
@@ -224,5 +235,10 @@ module.exports = function (){
     regBlock("weeebot_led_matrix_pixel_show", Translation.WB_LED_MATRIX_PIXEL_SHOW, ["SENSOR_PORT", "X", "Y"]);
     regBlock("weeebot_led_matrix_pixel_hide", Translation.WB_LED_MATRIX_PIXEL_HIDE, ["SENSOR_PORT", "X", "Y"]);
     regBlock("weeebot_led_matrix_clear", Translation.WB_LED_MATRIX_CLEAR, ["SENSOR_PORT"]);
+    regBlock("weeebot_single_led", Translation.WB_SINGLE_LED, ["SENSOR_PORT", "ON_OFF"]);
+    regBlock("sliding_potentiometer", Translation.WB_SLIDING_POTENTIOMETER, ["SENSOR_PORT"], "Number");
+    regBlock("potentiometer", Translation.WB_POTENTIOMETER, ["SENSOR_PORT"], "Number");
+    regBlock("gas_sensor", Translation.WB_GAS, ["SENSOR_PORT"], "Number");
+
     return result;
 };

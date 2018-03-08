@@ -95,6 +95,18 @@ const toolbox = newXML("category", {"name":"WeeeBot", "key":"WeeeBot", "colour":
             newNumberValue("G", 255),
             newNumberValue("B", 255)
         ]),
+        newBlock("weeebot_rgb_RJ11", [
+            newDropdownValue("SENSOR_PORT", SENSOR_PORTS[1]),
+            newNumberValue("PIXEL", 0),
+            newXML("value", {"name":"COLOR"}, [newXML("shadow", {"type":"colour_picker"})])
+        ]),
+        newBlock("weeebot_rgb3_RJ11", [
+            newDropdownValue("SENSOR_PORT", SENSOR_PORTS[1]),
+            newNumberValue("PIXEL", 0),
+            newNumberValue("R", 255),
+            newNumberValue("G", 255),
+            newNumberValue("B", 255)
+        ]),
         newBlock("weeebot_led_matrix_number", [
             newDropdownValue("SENSOR_PORT", 12),
             newNumberValue("NUM", 100)
@@ -142,6 +154,10 @@ const toolbox = newXML("category", {"name":"WeeeBot", "key":"WeeeBot", "colour":
             newNumberValue("G", 255),
             newNumberValue("B", 255)
         ]),
+        newBlock("weeebot_single_led", [
+            newDropdownValue("SENSOR_PORT", SENSOR_PORTS[1]),
+            newDropdownValue("ON_OFF", 1)
+        ]),
         newBlock("line_follower", [
             newDropdownValue("SENSOR_PORT", 9),
             newDropdownValue("LINE_FOLLOWER_INDEX", 1)
@@ -164,6 +180,15 @@ const toolbox = newXML("category", {"name":"WeeeBot", "key":"WeeeBot", "colour":
         newBlock("weeebot_infraread", [
             newDropdownValue("BOARD_PORT", PORTS[2]),
             newDropdownValue("IR_CODE", 69)
+        ]),
+        newBlock("sliding_potentiometer", [
+            newDropdownValue("SENSOR_PORT", SENSOR_PORTS[1])
+        ]),
+        newBlock("potentiometer", [
+            newDropdownValue("SENSOR_PORT", SENSOR_PORTS[1])
+        ]),
+        newBlock("gas_sensor", [
+            newDropdownValue("SENSOR_PORT", SENSOR_PORTS[1])
         ])
     ]);
 export default toolbox;

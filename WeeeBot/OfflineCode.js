@@ -13,28 +13,6 @@ function hexToRgb(hex) {
     } : null;
 }
 
-function genColorVar(arduino, color, index){
-    let code = "";
-    if((index & 3) == 3){
-        if(!/^\d+$/.test(color.r)){
-            arduino.definitions_["_color_r"] = `int _color_r;`;
-            code += arduino.tab() + `_color_r = ${color.r}` + arduino.END;
-            color.r = "_color_r";
-        }
-        if(!/^\d+$/.test(color.g)){
-            arduino.definitions_["_color_g"] = `int _color_g;`;
-            code += arduino.tab() + `_color_g = ${color.g}` + arduino.END;
-            color.g = "_color_g";
-        }
-        if(!/^\d+$/.test(color.b)){
-            arduino.definitions_["_color_b"] = `int _color_b;`;
-            code += arduino.tab() + `_color_b = ${color.b}` + arduino.END;
-            color.b = "_color_b";
-        }
-    }
-    return code;
-}
-
 module.exports = function(){
     const arduino = require("scratch-blocks").Arduino;
 	function option_handler(block){
@@ -55,18 +33,18 @@ module.exports = function(){
     arduino.line_follower_index = option_handler;
     arduino.ultrasonic_led_index = option_handler;
     arduino.move_direction = option_handler;
+    arduino.on_off = option_handler;
 
-    function gen_rgb_code(block, color) {
+    function gen_rgb_code(block, color, type, prefix, portName) {
         addInclude(arduino);
         var order = arduino.ORDER_NONE;
 
-        var port = arduino.valueToCode(block, 'BOARD_PORT_RGB', order);
+        var port = arduino.valueToCode(block, portName, order);
         var pix = arduino.valueToCode(block, 'PIXEL', order);
 
-        var key = "led_" + port;
+        var key = prefix + port;
 
-        arduino.definitions_[key] = `WeRGBLed ${key};`;
-        arduino.setupCodes_[key] = `${key}.reset(${port});`;
+        arduino.definitions_[key] = `${type} ${key}(${port});`;
         var code = arduino.tab() + `${key}.setColor(${pix}, ${color.r}, ${color.g}, ${color.b})` + arduino.END;
         code += arduino.tab() + `${key}.show()` + arduino.END;
         return code;
@@ -195,7 +173,7 @@ module.exports = function(){
     arduino["weeebot_rgb"] = function (block) {
         var order = arduino.ORDER_NONE;
         var color = hexToRgb(arduino.valueToCode(block, 'COLOR', order));
-        return gen_rgb_code(block, color);
+        return gen_rgb_code(block, color, "WeRGBLed", "led_", 'BOARD_PORT_RGB');
     };
 
     arduino["weeebot_rgb3"] = function (block) {
@@ -205,31 +183,26 @@ module.exports = function(){
             g: arduino.valueToCode(block, 'G', order),
             b: arduino.valueToCode(block, 'B', order)
         };
-        return gen_rgb_code(block, color);
+        return gen_rgb_code(block, color, "WeRGBLed", "led_", 'BOARD_PORT_RGB');
+    };
+
+    arduino["weeebot_rgb_RJ11"] = function (block) {
+        var order = arduino.ORDER_NONE;
+        var color = hexToRgb(arduino.valueToCode(block, 'COLOR', order));
+        return gen_rgb_code(block, color, "WeRGBLED_RJ", "led_RJ11_", 'SENSOR_PORT');
+    };
+
+    arduino["weeebot_rgb3_RJ11"] = function (block) {
+        var order = arduino.ORDER_NONE;
+        var color = {
+            r: arduino.valueToCode(block, 'R', order),
+            g: arduino.valueToCode(block, 'G', order),
+            b: arduino.valueToCode(block, 'B', order)
+        };
+        return gen_rgb_code(block, color, "WeRGBLED_RJ", "led_RJ11_", 'SENSOR_PORT');
     };
 
 
-/*
-    arduino["weeebot_power"] = function (block) {
-        var order = arduino.ORDER_HIGH;
-
-        arduino.includes_["weeebot"] = '#include "KittenBot.h"';
-        arduino.definitions_["KittenBot"] = "KittenBot KittenBot;";
-        var code = "KittenBot.getBatteryVoltage()";
-        return [code, order];
-    };
-
-    arduino["weeebot_ping"] = function (block) {
-        var order = arduino.ORDER_HIGH;
-        arduino.includes_["weeebot"] = '#include "KittenBot.h"';
-        arduino.definitions_["KittenBot"] = "KittenBot KittenBot;";
-
-        var trig = arduino.valueToCode(block, 'TRIGPIN', order);
-        var echo = arduino.valueToCode(block, 'ECHOPIN', order);
-        var code = "KittenBot.SR04doPing(" + trig + "," + echo + ")";
-        return [code, order];
-    };
-*/
     arduino["weeebot_infraread"] = function (block) {
         var order = arduino.ORDER_HIGH;
         var pin = arduino.valueToCode(block, 'BOARD_PORT', order);
@@ -306,17 +279,8 @@ module.exports = function(){
 
         var key = "ultrasonic_" + port;
 
-        addInclude(arduino);
         arduino.definitions_[key] = `WeUltrasonicSensor ${key}(${port});`;
-        
-        var code = "";
-        if(index & 1){
-            code += arduino.tab() + `${key}.setColor1(${color.r}, ${color.g}, ${color.b})`  + arduino.END;
-        }
-        if(index & 2){
-             code += arduino.tab() + `${key}.setColor2(${color.r}, ${color.g}, ${color.b})`  + arduino.END;
-        }
-        return code;
+        return arduino.tab() + `${key}.setColor(${index}, ${color.r}, ${color.g}, ${color.b})`  + arduino.END;
     };
 
     arduino["ultrasonic_led_rgb"] = function (block) {
@@ -332,17 +296,8 @@ module.exports = function(){
 
         var key = "ultrasonic_" + port;
 
-        addInclude(arduino);
         arduino.definitions_[key] = `WeUltrasonicSensor ${key}(${port});`;
-        
-        var code = genColorVar(arduino, color, index);
-        if(index & 1){
-            code += arduino.tab() + `${key}.setColor1(${color.r}, ${color.g}, ${color.b})`  + arduino.END;
-        }
-        if(index & 2){
-            code += arduino.tab() + `${key}.setColor2(${color.r}, ${color.g}, ${color.b})`  + arduino.END;
-        }
-        return code;
+        return arduino.tab() + `${key}.setColor(${index}, ${color.r}, ${color.g}, ${color.b})`  + arduino.END;
     };
 
     arduino["weeebot_led_matrix_number"] = function (block) {
@@ -465,6 +420,29 @@ module.exports = function(){
         code +=    arduino.tab() + `ledPanel.clearScreen()` + arduino.END;
         return code;
     }
+    arduino["weeebot_single_led"] = function(block){
+        var order = arduino.ORDER_NONE;
+        var port = arduino.valueToCode(block, "SENSOR_PORT", order);
+        var isOn = arduino.valueToCode(block, "ON_OFF", order);
+
+        arduino.setupCodes_["pin_input_" + port] = `pinMode(${port}, OUTPUT);`;
+        return arduino.tab() + `digitalWrite(${port}, ${parseInt(isOn) ? "HIGH" : "LOW"})` + arduino.END;
+    }
+
+    function createAnalogHandler(type, name){
+        arduino[name] = function(block){
+            var order = arduino.ORDER_NONE;
+            var port = arduino.valueToCode(block, "SENSOR_PORT", order);
+            var key = name + "_" + port;
+            arduino.definitions_[key] = `${type} ${key}(${port});`;
+            var code = key + ".readAnalog()";
+            return [code, order];
+        };
+    }
+
+    createAnalogHandler("WeSlidingPotentiomter", "sliding_potentiometer");
+    createAnalogHandler("WeGasSensor", "gas_sensor");
+    createAnalogHandler("WePotentiomter", "potentiometer");
     
 /*
     arduino["weeebot_lcd"] = function (block) {

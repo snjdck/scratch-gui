@@ -41,6 +41,12 @@ function weeebot_motor_dc(argValues, util){
     return createPromise(util, 200, idx, spd);
 }
 
+function weeebot_motor_dc_130(argValues, util){
+    var spd = argValues.SPEED;
+    var idx = argValues.SENSOR_PORT;
+    return createPromise(util, 204, idx, spd);
+}
+
 function weeebot_motor_move(argValues, util) {
     var spd = argValues.SPEED;
     var dir = argValues.MOVE_DIRECTION;
@@ -65,19 +71,27 @@ function weeebot_stop(argValues, util) {
     return createPromise(util, 102);
 }
 
-function weeebot_rgb(argValues, util) {
-    var pin = argValues.BOARD_PORT_RGB;
+function weeebot_rgb(argValues, util, msgID=9) {
+    var pin = argValues.SENSOR_PORT;
     var pix = argValues.PIXEL;
     var color = argValues.COLOR;
     color = hexToRgb(color);
-    return createPromise(util, 9, pin, pix, color.r, color.g, color.b);
+    return createPromise(util, msgID, pin, pix, color.r, color.g, color.b);
 }
 
-function weeebot_rgb3(argValues, util) {
-    var pin = argValues.BOARD_PORT_RGB;
+function weeebot_rgb3(argValues, util, msgID=9) {
+    var pin = argValues.SENSOR_PORT;
     var pix = argValues.PIXEL;
     var color = fetchRGB(argValues);
-    return createPromise(util, 9, pin, pix, color.r, color.g, color.b);
+    return createPromise(util, msgID, pin, pix, color.r, color.g, color.b);
+}
+
+function weeebot_rgb_RJ11(argValues, util) {
+    return weeebot_rgb(argValues, util, 13);
+}
+
+function weeebot_rgb3_RJ11(argValues, util) {
+    return weeebot_rgb3(argValues, util, 13);
 }
 
 function board_light_sensor(argValues, util) {
@@ -255,14 +269,37 @@ function segment_display_7(argValues, util){
     var num = argValues.NUM;
     return createPromise(util, 123, pin, num);
 }
+function weeebot_single_led(argValues, util){
+    var port = argValues.SENSOR_PORT;
+    var isOn = argValues.ON_OFF;
+    return createPromise(util, 125, port, isOn);
+}
+
+function sliding_potentiometer(argValues, util){
+    var port = argValues.SENSOR_PORT;
+    return createPromise(util, 126, port);
+}
+
+function gas_sensor(argValues, util){
+    var port = argValues.SENSOR_PORT;
+    return createPromise(util, 126, port);
+}
+
+function potentiometer(argValues, util){
+    var port = argValues.SENSOR_PORT;
+    return createPromise(util, 126, port);
+}
 module.exports = function(){
     return {
         weeebot_motor_dc,
+        weeebot_motor_dc_130,
         weeebot_motor_move,
         on_board_servo,
         weeebot_stop,
         weeebot_rgb,
         weeebot_rgb3,
+        weeebot_rgb_RJ11,
+        weeebot_rgb3_RJ11,
         board_light_sensor,
         board_temperature_sensor,
         board_sound_sensor,
@@ -292,6 +329,10 @@ module.exports = function(){
         humiture_humidity,
         touch,
         soil,
-        segment_display_7
+        segment_display_7,
+        weeebot_single_led,
+        sliding_potentiometer,
+        potentiometer,
+        gas_sensor
     };
 };

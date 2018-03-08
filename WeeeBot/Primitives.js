@@ -71,24 +71,27 @@ function weeebot_stop(argValues, util) {
     return createPromise(util, 102);
 }
 
-function weeebot_rgb(argValues, util) {
-    var pin = argValues.BOARD_PORT_RGB;
+function weeebot_rgb(argValues, util, msgID=9, portName="BOARD_PORT_RGB") {
+    var pin = argValues[portName];
     var pix = argValues.PIXEL;
     var color = argValues.COLOR;
     color = hexToRgb(color);
-    return createPromise(util, 9, pin, pix, color.r, color.g, color.b);
+    return createPromise(util, msgID, pin, pix, color.r, color.g, color.b);
 }
 
-function weeebot_rgb3(argValues, util) {
-    var pin = argValues.BOARD_PORT_RGB;
+function weeebot_rgb3(argValues, util, msgID=9, portName="BOARD_PORT_RGB") {
+    var pin = argValues[portName];
     var pix = argValues.PIXEL;
-    var r = argValues.R;
-    var g = argValues.G;
-    var b = argValues.B;
-    r = Math.round(Math.max(0, Math.min(255, r)));
-    g = Math.round(Math.max(0, Math.min(255, g)));
-    b = Math.round(Math.max(0, Math.min(255, b)));
-    return createPromise(util, 9, pin, pix, r, g, b);
+    var color = fetchRGB(argValues);
+    return createPromise(util, msgID, pin, pix, color.r, color.g, color.b);
+}
+
+function weeebot_rgb_RJ11(argValues, util) {
+    return weeebot_rgb(argValues, util, 13, "SENSOR_PORT");
+}
+
+function weeebot_rgb3_RJ11(argValues, util) {
+    return weeebot_rgb3(argValues, util, 13, "SENSOR_PORT");
 }
 
 function board_light_sensor(argValues, util) {
@@ -213,6 +216,27 @@ function weeebot_led_matrix_clear(argValues, util){
     return createPromise(util, 3, port);
 }
 
+function weeebot_single_led(argValues, util){
+    var port = argValues.SENSOR_PORT;
+    var isOn = argValues.ON_OFF;
+    return createPromise(util, 125, port, isOn);
+}
+
+function sliding_potentiometer(argValues, util){
+    var port = argValues.SENSOR_PORT;
+    return createPromise(util, 126, port);
+}
+
+function gas_sensor(argValues, util){
+    var port = argValues.SENSOR_PORT;
+    return createPromise(util, 126, port);
+}
+
+function potentiometer(argValues, util){
+    var port = argValues.SENSOR_PORT;
+    return createPromise(util, 126, port);
+}
+
 module.exports = function(){
     return {
         weeebot_motor_dc,
@@ -234,6 +258,12 @@ module.exports = function(){
         ultrasonic_led,
         ultrasonic_led_rgb,
         line_follower,
+        weeebot_single_led,
+        sliding_potentiometer,
+        potentiometer,
+        gas_sensor,
+        weeebot_rgb_RJ11,
+        weeebot_rgb3_RJ11,
         weeebot_led_matrix_number,
         weeebot_led_matrix_time,
         weeebot_led_matrix_string,

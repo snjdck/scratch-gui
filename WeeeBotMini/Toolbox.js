@@ -35,6 +35,7 @@ function newBlock(type, children=[]){
 //*/
 //A0 = 14
 const PORTS = [0, 19, 18, 16, 15];
+const SENSOR_PORTS = PORTS;
 /*
 #define MINI_LIFT_YELLOW   4
 #define MINI_LEFT_RED      3
@@ -54,6 +55,10 @@ const toolbox = create(["category", {"name":"WeeeBot\nMini", "key":"WeeeBotMini"
             newNumberValue("SPEED", 120)
         ]),
         newBlock("weeebot_stop"),
+        newBlock("weeebot_motor_dc_130", [
+            newDropdownValue("SENSOR_PORT", SENSOR_PORTS[1]),
+            newNumberValue("SPEED", 0)
+        ]),
         /*newBlock("weeebot_steppermove", [
             newDropdownValue("MOTOR_PORT", 3),
             newNumberValue("SPEED", 3000),
@@ -72,7 +77,7 @@ const toolbox = create(["category", {"name":"WeeeBot\nMini", "key":"WeeeBotMini"
             newDropdownValue("TEST_TONE_NOTE_NOTE_OPTION", 262),
             newDropdownValue("TEST_TONE_NOTE_BEAT_OPTION", 500)
         ]),
-        /*newBlock("weeebot_rgb", [
+        newBlock("weeebot_rgb", [
             newDropdownValue("SENSOR_PORT", PORTS[1]),
             newNumberValue("PIXEL", 0),
             newXML("value", {"name":"COLOR"}, [newXML("shadow", {"type":"colour_picker"})])
@@ -83,7 +88,19 @@ const toolbox = create(["category", {"name":"WeeeBot\nMini", "key":"WeeeBotMini"
             newNumberValue("R", 255),
             newNumberValue("G", 255),
             newNumberValue("B", 255)
-        ]),*/
+        ]),
+        newBlock("weeebot_rgb_RJ11", [
+            newDropdownValue("SENSOR_PORT", PORTS[1]),
+            newNumberValue("PIXEL", 0),
+            newXML("value", {"name":"COLOR"}, [newXML("shadow", {"type":"colour_picker"})])
+        ]),
+        newBlock("weeebot_rgb3_RJ11", [
+            newDropdownValue("SENSOR_PORT", PORTS[1]),
+            newNumberValue("PIXEL", 0),
+            newNumberValue("R", 255),
+            newNumberValue("G", 255),
+            newNumberValue("B", 255)
+        ]),
         newBlock("weeebot_led_matrix_number", [
             newDropdownValue("SENSOR_PORT", PORTS[3]),
             newNumberValue("NUM", 100)
@@ -148,6 +165,10 @@ const toolbox = create(["category", {"name":"WeeeBot\nMini", "key":"WeeeBotMini"
             newDropdownValue("SENSOR_PORT", PORTS[1]),
             newNumberValue("NUM", 100)
         ]),
+        newBlock("weeebot_single_led", [
+            newDropdownValue("SENSOR_PORT", SENSOR_PORTS[1]),
+            newDropdownValue("ON_OFF", 1)
+        ]),
         newBlock("front_led_light", [
             newDropdownValue("SENSOR_PORT", PORTS[2]),
             newDropdownValue("ULTRASONIC_LED_INDEX", 3),
@@ -196,6 +217,15 @@ const toolbox = create(["category", {"name":"WeeeBot\nMini", "key":"WeeeBotMini"
         ]),
         newBlock("soil", [
             newDropdownValue("SENSOR_PORT", PORTS[1])
+        ]),
+        newBlock("sliding_potentiometer", [
+            newDropdownValue("SENSOR_PORT", SENSOR_PORTS[1])
+        ]),
+        newBlock("potentiometer", [
+            newDropdownValue("SENSOR_PORT", SENSOR_PORTS[1])
+        ]),
+        newBlock("gas_sensor", [
+            newDropdownValue("SENSOR_PORT", SENSOR_PORTS[1])
         ])
     ]);
 export default toolbox;
