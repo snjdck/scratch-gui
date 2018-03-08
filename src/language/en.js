@@ -766,3 +766,7 @@ Blockly.Msg.WB_TOUCH = "touch sensor %1";
 Blockly.Msg.WB_SOIL = "moisture sensor %1";
 Blockly.Msg.WB_7_SEGMENT_DISPLAY = "4-digit display %1 show %2";
 Blockly.Msg.WB_ULTRASONIC_LED_RGB = "ultrasonic %1 led %2 R %3 G %4 B %5";
+Blockly.Msg.WB_SINGLE_LED = "single led %1 %2";
+Blockly.Msg.WB_SLIDING_POTENTIOMETER = "sliding potentiometer %1";
+Blockly.Msg.WB_POTENTIOMETER = "potentiometer %1";
+Blockly.Msg.WB_GAS = "gas sensor %1";

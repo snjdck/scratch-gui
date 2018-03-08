@@ -780,3 +780,7 @@ Blockly.Msg.WB_TOUCH = "触摸传感器 %1";
 Blockly.Msg.WB_SOIL = "土壤湿度传感器 %1";
 Blockly.Msg.WB_7_SEGMENT_DISPLAY = "四位数码管 %1 显示 %2";
 Blockly.Msg.WB_ULTRASONIC_LED_RGB = "设置超声波传感器 %1 灯 %2 红 %3 绿 %4 蓝 %5";
+Blockly.Msg.WB_SINGLE_LED = "单色LED %1 %2";
+Blockly.Msg.WB_SLIDING_POTENTIOMETER = "滑动电位器 %1";
+Blockly.Msg.WB_POTENTIOMETER = "电位器 %1";
+Blockly.Msg.WB_GAS = "气体传感器 %1";
