@@ -12,15 +12,24 @@ void WeRGBLED_RJ::reset(uint8_t port)
 
 void WeRGBLED_RJ::setColor(uint8_t index,uint8_t red, uint8_t green, uint8_t blue)
 {
-  if(index<6)
-  {
-    uint8_t tmp = (index-1) * 3;
-	_5RGB_data[tmp] = green;
-    _5RGB_data[tmp + 1] = red;
-    _5RGB_data[tmp + 2] = blue;
-  }
+	if(index == 0){
+		for(int i=0; i<5; ++i){
+			index = i * 3;
+			_5RGB_data[index] = green;
+			_5RGB_data[index + 1] = red;
+			_5RGB_data[index + 2] = blue;
+		}
+	}else if(index <= 5){
+		index = (index - 1) * 3;
+		_5RGB_data[index] = green;
+		_5RGB_data[index + 1] = red;
+		_5RGB_data[index + 2] = blue;
+	}
 }
-
+void WeRGBLED_RJ::show()
+{
+  RGBShow();
+}
 void WeRGBLED_RJ::RGBShow(void)
 {
    if (_WeRGBLED_RJ.reset()!=0)
