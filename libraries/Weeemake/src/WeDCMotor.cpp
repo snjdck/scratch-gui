@@ -19,40 +19,24 @@ void WeDCMotor::move(uint8_t direction, int16_t speed)
 
 WeDCMotor::WeDCMotor(uint8_t port)
 {
-
-  if(port>2)
-  {
-    _DCMotor.reset(WetwoPort[port].s1);
-	motor_flag=WetwoPort[port].s2;
-	onBoard_flag=0;
-  }
-  else
-  {
-    
-    pinMode(WetwoPort[port].s2,OUTPUT);
-    dc_pwm_pin=WetwoPort[port].s1;
-    dc_dir_pin=WetwoPort[port].s2;
-	onBoard_flag=1;
-  }
-  
+  reset(port);
 }
 
 
 void WeDCMotor::reset(uint8_t port)
 {
-	if(port>2)
-	{
-		_DCMotor.reset(WetwoPort[port].s1);
-		onBoard_flag=0;
-    }
-    else
-	{
-        pinMode(WetwoPort[port].s2, OUTPUT);
-		dc_pwm_pin=WetwoPort[port].s1;
-		dc_dir_pin=WetwoPort[port].s2;
-		onBoard_flag=1;
-	}
-	last_speed=300;
+  if(port > 2)
+  {
+    _DCMotor.reset(WetwoPort[port].s1);
+    motor_flag=WetwoPort[port].s2;
+    onBoard_flag=0;
+  }else{
+    pinMode(WetwoPort[port].s2, OUTPUT);
+    dc_pwm_pin=WetwoPort[port].s1;
+    dc_dir_pin=WetwoPort[port].s2;
+    onBoard_flag=1;
+  }
+  last_speed=300;
 }
 
 void WeDCMotor::run(int16_t speed)
