@@ -76,6 +76,19 @@ void WeLEDPanelModuleMatrix7_21::showPanel(void)
   delayMicroseconds(3000);
 }
 */
+void WeLEDPanelModuleMatrix5_14::showBitmap(int8_t x, int8_t y, uint8_t v0, uint8_t v1, uint8_t v2, uint8_t v3, uint8_t v4, uint8_t v5, uint8_t v6, uint8_t v7, uint8_t v8, uint8_t v9, uint8_t v10, uint8_t v11, uint8_t v12, uint8_t v13)
+{
+  uint8_t data[14] = {v0,v1,v2,v3,v4,v5,v6,v7,v8,v9,v10,v11,v12,v13};
+  WeLEDPanelModuleMatrix::showBitmap(x, y, data);
+}
+
+void WeLEDPanelModuleMatrix7_21::showBitmap(int8_t x, int8_t y, uint8_t v0, uint8_t v1, uint8_t v2, uint8_t v3, uint8_t v4, uint8_t v5, uint8_t v6, uint8_t v7, uint8_t v8, uint8_t v9, uint8_t v10, uint8_t v11, uint8_t v12, uint8_t v13, uint8_t v14, uint8_t v15, uint8_t v16, uint8_t v17, uint8_t v18, uint8_t v19, uint8_t v20)
+{
+  uint8_t data[21] = {v0,v1,v2,v3,v4,v5,v6,v7,v8,v9,v10,v11,v12,v13,v14,v15,v16,v17,v18,v19,v20};
+  WeLEDPanelModuleMatrix::showBitmap(x, y, data);
+}
+
+
 void WeLEDPanelModuleMatrix::showBitmap(int8_t x, int8_t y, uint8_t *data)
 	{
 	  const int w = panel_width;

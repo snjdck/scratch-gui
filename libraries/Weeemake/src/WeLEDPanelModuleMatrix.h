@@ -35,6 +35,7 @@ class WeLEDPanelModuleMatrix7_21: public WeLEDPanelModuleMatrix
 public:
   WeLEDPanelModuleMatrix7_21(uint8_t port=0);
   void showNum(float value);
+  void showBitmap(int8_t x, int8_t y, uint8_t v0, uint8_t v1, uint8_t v2, uint8_t v3, uint8_t v4, uint8_t v5, uint8_t v6, uint8_t v7, uint8_t v8, uint8_t v9, uint8_t v10, uint8_t v11, uint8_t v12, uint8_t v13, uint8_t v14, uint8_t v15, uint8_t v16, uint8_t v17, uint8_t v18, uint8_t v19, uint8_t v20);
 };
 
 class WeLEDPanelModuleMatrix5_14: public WeLEDPanelModuleMatrix
@@ -42,6 +43,7 @@ class WeLEDPanelModuleMatrix5_14: public WeLEDPanelModuleMatrix
 public:
   WeLEDPanelModuleMatrix5_14(uint8_t port=0);
   void showNum(float value);
+  void showBitmap(int8_t x, int8_t y, uint8_t v0, uint8_t v1, uint8_t v2, uint8_t v3, uint8_t v4, uint8_t v5, uint8_t v6, uint8_t v7, uint8_t v8, uint8_t v9, uint8_t v10, uint8_t v11, uint8_t v12, uint8_t v13);
 };
 
 #endif
