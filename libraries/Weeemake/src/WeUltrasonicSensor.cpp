@@ -72,7 +72,36 @@ void WeUltrasonicSensor::RGBShow(void)
   _WeUltrasonicSensor.write_byte(_RGB2_data[2]);
 }
 
+void WeUltrasonicSensor::setLed(uint8_t index, bool isOn)
+{
+	index &= 3;
+	if(0 == index)return;
+	if(isOn){
+		_Led_data |= index;
+	}else{
+		_Led_data &= ~index;
+	}
+	if(_WeUltrasonicSensor.reset())return;
+	_WeUltrasonicSensor.write_byte(0x04);
+	if(_WeUltrasonicSensor.reset())return;
+	_WeUltrasonicSensor.write_byte(_Led_data);
+}
 
-
+void WeUltrasonicSensor::RightLED_ON(void)
+ {
+    setLed(1, true);
+ }
+ void WeUltrasonicSensor::RightLED_OFF(void)
+ {
+    setLed(1, false);
+ }
+ void WeUltrasonicSensor::LeftLED_ON(void)
+ {
+    setLed(2, true);
+ }
+ void WeUltrasonicSensor::LeftLED_OFF(void)
+ {
+    setLed(2, false);
+ }
 
 

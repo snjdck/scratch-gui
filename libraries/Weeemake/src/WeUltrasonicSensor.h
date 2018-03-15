@@ -17,6 +17,11 @@ public:
   void setColor1(uint8_t red, uint8_t green, uint8_t blue);
   void setColor2(uint8_t red, uint8_t green, uint8_t blue);
   void setColor(uint8_t index, uint8_t red, uint8_t green, uint8_t blue);
+  void LeftLED_ON(void);
+  void LeftLED_OFF(void);
+  void RightLED_ON(void);
+  void RightLED_OFF(void);
+  void setLed(uint8_t index, bool isOn);
 private:
   void RGBShow(void);
 
@@ -29,6 +34,7 @@ private:
     volatile uint8_t  _Sensor_data2;
 	volatile uint8_t  _RGB1_data[3]={0};
 	volatile uint8_t  _RGB2_data[3]={0};
+  volatile uint8_t  _Led_data=0;
 };
 
 #endif
