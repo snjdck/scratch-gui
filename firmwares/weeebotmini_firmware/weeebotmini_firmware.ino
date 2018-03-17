@@ -205,7 +205,7 @@ void doRgb(char * cmd)
 	int port, pix, r, g, b;
 	parsePinVal(cmd, &port, &pix, &r, &g, &b);
 	led.reset(port);
-	led.setColor(pix, r >> 4, g >> 4, b >> 4);
+	led.setColor(pix, r, g, b);
 	led.show();
 }
 
@@ -215,7 +215,7 @@ void doRj11RGB(char *cmd)
 	int port, pix, r, g, b;
 	parsePinVal(cmd, &port, &pix, &r, &g, &b);
 	led_RJ11.reset(port);
-	led_RJ11.setColor(pix, r >> 4, g >> 4, b >> 4);
+	led_RJ11.setColor(pix, r, g, b);
 	led_RJ11.RGBShow();
 }
 
