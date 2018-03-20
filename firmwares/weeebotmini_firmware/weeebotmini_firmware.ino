@@ -321,32 +321,22 @@ void doIRAvoidLED(char *cmd)
 {
 	int port = nextInt(&cmd);
 	int index = nextInt(&cmd);
-	IRAvoid.reset(port);
 	int r = nextInt(&cmd);
 	int g = nextInt(&cmd);
 	int b = nextInt(&cmd);
-	if(index & 1){
-		IRAvoid.setColor1(r,g,b);
-	}
-	if(index & 2){
-		IRAvoid.setColor2(r,g,b);
-	}
+	IRAvoid.reset(port);
+	IRAvoid.setColor(index, r, g, b);
 }
 
 void doUltrasonicLed(char *cmd)
 {
 	int port = nextInt(&cmd);
 	int index = nextInt(&cmd);
-	ultraSensor.reset(port);
 	int r = nextInt(&cmd);
 	int g = nextInt(&cmd);
 	int b = nextInt(&cmd);
-	if(index & 1){
-		ultraSensor.setColor1(r,g,b);
-	}
-	if(index & 2){
-		ultraSensor.setColor2(r,g,b);
-	}
+	ultraSensor.reset(port);
+	ultraSensor.setColor(index, r, g, b);
 }
 
 void getLineFollower(char *cmd)
