@@ -36,44 +36,47 @@ We7SegmentDisplay segmentDisplaySensor;
 Servo servos[MAX_SERVO_COUNT];
 uint8_t servo_pins[MAX_SERVO_COUNT]={0};
 
-uint8_t IR_VALUE = 0;
-
-const uint8_t MSG_ID_STOP_ALL = 99;
-const uint8_t MSG_ID_BOARD_RGB = 9;
 const uint8_t MSG_ID_BOARD_BUTTON = 0;
-const uint8_t MSG_ID_BOARD_BUZZER = 10;
-const uint8_t MSG_ID_BOARD_LIGHT = 8;
+const uint8_t MSG_ID_LED_MATRIX_PIXEL_SHOW = 1;
+const uint8_t MSG_ID_LED_MATRIX_PIXEL_HIDE = 2;
+const uint8_t MSG_ID_LED_MATRIX_CLEAR = 3;
 const uint8_t MSG_ID_BOARD_IR = 7;
+const uint8_t MSG_ID_BOARD_LIGHT = 8;
+const uint8_t MSG_ID_BOARD_RGB = 9;
+const uint8_t MSG_ID_BOARD_BUZZER = 10;
 const uint8_t MSG_ID_BOARD_SOUND = 11;
 const uint8_t MSG_ID_BOARD_TEMPERATURE = 12;
 const uint8_t MSG_ID_RJ11_RGB = 13;
 
-const uint8_t MSG_ID_DC_SPEED = 200;
-const uint8_t MSG_ID_DC_MOVE = 201;
+const uint8_t MSG_ID_STOP_ALL = 99;
+
 const uint8_t MSG_ID_DC_STOP = 102;
-const uint8_t MSG_ID_SERVO = 202;
-const uint8_t MSG_ID_DC_130_SPEED = 204;
-const uint8_t MSG_ID_ULTRASONIC_LED = 109;
+const uint8_t MSG_ID_ULTRASONIC_RGB = 109;
 const uint8_t MSG_ID_ULTRASONIC = 110;
 const uint8_t MSG_ID_LINE_FOLLOWER = 111;
 const uint8_t MSG_ID_LED_MATRIX_NUMBER = 112;
 const uint8_t MSG_ID_LED_MATRIX_TIME = 113;
 const uint8_t MSG_ID_LED_MATRIX_STRING = 114;
 const uint8_t MSG_ID_LED_MATRIX_BITMAP = 115;
-const uint8_t MSG_ID_LED_MATRIX_PIXEL_SHOW = 1;
-const uint8_t MSG_ID_LED_MATRIX_PIXEL_HIDE = 2;
-const uint8_t MSG_ID_LED_MATRIX_CLEAR = 3;
 const uint8_t MSG_ID_SINGLE_LINE_FOLLOWER = 116;
 const uint8_t MSG_ID_IR_AVOID = 117;
-const uint8_t MSG_ID_IR_AVOID_LED = 118;
+const uint8_t MSG_ID_IR_AVOID_RGB = 118;
 const uint8_t MSG_ID_BACK_LED = 119;
-const uint8_t MSG_ID_FRONT_LED = 120;
+//const uint8_t MSG_ID_FRONT_LED = 120;
 const uint8_t MSG_ID_TOUCH = 121;
 const uint8_t MSG_ID_HUMITURE = 122;
 const uint8_t MSG_ID_7SEGMENT = 123;
 const uint8_t MSG_ID_SOIL = 124;
 const uint8_t MSG_ID_SINGLE_LED = 125;
 const uint8_t MSG_ID_POTENTIOMTER = 126;
+
+const uint8_t MSG_ID_ULTRASONIC_LED = 127;
+const uint8_t MSG_ID_IR_AVOID_LED = 128;
+
+const uint8_t MSG_ID_DC_SPEED = 200;
+const uint8_t MSG_ID_DC_MOVE = 201;
+const uint8_t MSG_ID_SERVO = 202;
+const uint8_t MSG_ID_DC_130_SPEED = 204;
 
 int searchServoPin(int pin){
 	for(int i=0;i<MAX_SERVO_COUNT;i++){
@@ -183,12 +186,6 @@ int nextInt(char **cmd)
 	return atoi(*cmd);
 }
 
-float nextFloat(char **cmd)
-{
-	nextStr(cmd);
-	return atof(*cmd);
-}
-
 void nextCharInt(char **cmd, char *c, int *i)
 {
 	nextStr(cmd);
@@ -196,8 +193,11 @@ void nextCharInt(char **cmd, char *c, int *i)
 	*i = atoi(*cmd+1);
 }
 
-
-
+float nextFloat(char **cmd)
+{
+	nextStr(cmd);
+	return atof(*cmd);
+}
 
 void doRgb(char * cmd)
 {
@@ -223,6 +223,12 @@ void doDcSpeed(char *cmd)
 {
 	dc.reset(nextInt(&cmd));
 	dc.run(nextInt(&cmd));
+}
+
+void doDc130Speed(char *cmd)
+{
+	dc130.reset(nextInt(&cmd));
+	dc130.run(nextInt(&cmd));
 }
 
 void doServo(char *cmd)
@@ -270,7 +276,7 @@ void getIR(char *cmd)
 	uint8_t pin = nextInt(&cmd);
 	ir.reset(pin);
 	int code = nextInt(&cmd);
-	Serial.println(IR_VALUE == code ? "true" : "false");
+	Serial.println(ir.isKeyPressed(code) ? "true" : "false");
 }
 
 void getTemperature(char *cmd)
@@ -317,7 +323,7 @@ void getSingleLineFollower(char *cmd)
 	Serial.println(singleLF.read());
 }
 
-void doIRAvoidLED(char *cmd)
+void doIRAvoidRGB(char *cmd)
 {
 	int port = nextInt(&cmd);
 	int index = nextInt(&cmd);
@@ -328,7 +334,7 @@ void doIRAvoidLED(char *cmd)
 	IRAvoid.setColor(index, r, g, b);
 }
 
-void doUltrasonicLed(char *cmd)
+void doUltrasonicRGB(char *cmd)
 {
 	int port = nextInt(&cmd);
 	int index = nextInt(&cmd);
@@ -337,6 +343,24 @@ void doUltrasonicLed(char *cmd)
 	int b = nextInt(&cmd);
 	ultraSensor.reset(port);
 	ultraSensor.setColor(index, r, g, b);
+}
+
+void doIRAvoidLed(char *cmd)
+{
+	int port = nextInt(&cmd);
+	int index = nextInt(&cmd);
+	int isOn = nextInt(&cmd);
+	IRAvoid.reset(port);
+	IRAvoid.setLed(index, isOn);
+}
+
+void doUltrasonicLed(char *cmd)
+{
+	int port = nextInt(&cmd);
+	int index = nextInt(&cmd);
+	int isOn = nextInt(&cmd);
+	ultraSensor.reset(port);
+	ultraSensor.setLed(index, isOn);
 }
 
 void getLineFollower(char *cmd)
@@ -473,12 +497,6 @@ void do7Segment(char *cmd)
 	segmentDisplaySensor.showNumber(v);
 }
 
-void doDc130Speed(char *cmd)
-{
-	dc130.reset(nextInt(&cmd));
-	dc130.run(nextInt(&cmd));
-}
-
 void doSingleLed(char *cmd)
 {
 	int port = nextInt(&cmd);
@@ -555,6 +573,9 @@ void parseMcode(char *cmd)
 		case MSG_ID_DC_SPEED:
 			handler = doDcSpeed;
 			break;
+		case MSG_ID_DC_130_SPEED:
+			handler = doDc130Speed;
+			break;
 		case MSG_ID_DC_MOVE:
 			handler = doDcMove;
 			break;
@@ -564,8 +585,17 @@ void parseMcode(char *cmd)
 		case MSG_ID_SERVO:
 			handler = doServo;
 			break;
+		case MSG_ID_ULTRASONIC_RGB:
+			handler = doUltrasonicRGB;
+			break;
+		case MSG_ID_IR_AVOID_RGB:
+			handler = doIRAvoidRGB;
+			break;
 		case MSG_ID_ULTRASONIC_LED:
 			handler = doUltrasonicLed;
+			break;
+		case MSG_ID_IR_AVOID_LED:
+			handler = doIRAvoidLed;
 			break;
 		case MSG_ID_ULTRASONIC:
 			queryFlag = true;
@@ -599,9 +629,6 @@ void parseMcode(char *cmd)
 		case MSG_ID_LED_MATRIX_CLEAR:
 			handler = doLedMatrixClear;
 			break;
-		case MSG_ID_IR_AVOID_LED:
-			handler = doIRAvoidLED;
-			break;
 		case MSG_ID_SINGLE_LINE_FOLLOWER:
 			queryFlag = true;
 			handler = getSingleLineFollower;
@@ -613,8 +640,15 @@ void parseMcode(char *cmd)
 		case MSG_ID_BACK_LED:
 			handler = doBackLed;
 			break;
-		case MSG_ID_FRONT_LED:
-			handler = doFrontLed;
+		case MSG_ID_SINGLE_LED:
+			handler = doSingleLed;
+			break;
+		case MSG_ID_POTENTIOMTER:
+			queryFlag = true;
+			handler = getPotentiomter;
+			break;
+		case MSG_ID_RJ11_RGB:
+			handler = doRj11RGB;
 			break;
 		case MSG_ID_TOUCH:
 			queryFlag = true;
@@ -630,19 +664,6 @@ void parseMcode(char *cmd)
 			break;
 		case MSG_ID_7SEGMENT:
 			handler = do7Segment;
-			break;
-		case MSG_ID_DC_130_SPEED:
-			handler = doDc130Speed;
-			break;
-		case MSG_ID_SINGLE_LED:
-			handler = doSingleLed;
-			break;
-		case MSG_ID_POTENTIOMTER:
-			queryFlag = true;
-			handler = getPotentiomter;
-			break;
-		case MSG_ID_RJ11_RGB:
-			handler = doRj11RGB;
 			break;
 		default:
 			return;
@@ -684,19 +705,8 @@ void setup()
 
 void loop()
 {
-	loopIR();
+	ir.loop();
 	loopSerial();
-}
-
-void loopIR()
-{
-	static unsigned long timestamp = 0;
-	if(ir.decode()){
-		timestamp = millis();
-		IR_VALUE = (ir.value >> 16) & 0xFF;
-	}else if(millis() - timestamp > 200){
-		IR_VALUE = 0;
-	}
 }
 
 void loopSerial()
