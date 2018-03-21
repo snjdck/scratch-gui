@@ -8,6 +8,8 @@
 #define NTD6 495
 #define NTD7 556
 
+#define FIRMWARE_VERSION 1
+
 #define MAX_SERVO_COUNT 10
 #define LED_MATRIX_WIDTH 21
 #define DEFAULT_IR_PIN PORT_2
@@ -40,6 +42,7 @@ const uint8_t MSG_ID_BOARD_BUTTON = 0;
 const uint8_t MSG_ID_LED_MATRIX_PIXEL_SHOW = 1;
 const uint8_t MSG_ID_LED_MATRIX_PIXEL_HIDE = 2;
 const uint8_t MSG_ID_LED_MATRIX_CLEAR = 3;
+const uint8_t MSG_ID_QUERY_VERSION = 5;
 const uint8_t MSG_ID_BOARD_IR = 7;
 const uint8_t MSG_ID_BOARD_LIGHT = 8;
 const uint8_t MSG_ID_BOARD_RGB = 9;
@@ -485,6 +488,11 @@ void getPotentiomter(char *cmd)
 	Serial.println(potentiomter.readAnalog());
 }
 
+void doQueryVersion(char *cmd)
+{
+	Serial.println(FIRMWARE_VERSION);
+}
+
 void doStopAll(char *cmd)
 {
 	//stop motor
@@ -633,6 +641,10 @@ void parseMcode(char *cmd)
 			break;
 		case MSG_ID_7SEGMENT:
 			handler = do7Segment;
+			break;
+		case MSG_ID_QUERY_VERSION:
+			queryFlag = true;
+			handler = doQueryVersion;
 			break;
 		default:
 			return;
