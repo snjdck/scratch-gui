@@ -14,7 +14,6 @@ void We130DCMotor::reset(uint8_t port)
 
 void We130DCMotor::run(int16_t speed)
 {
-  const float factor = 2.55;
   speed	= speed > 255 ? 255 : speed;
   speed	= speed < -255 ? -255 : speed;
 
@@ -31,7 +30,7 @@ void We130DCMotor::run(int16_t speed)
      _130DCMotor.reset();
 	 _130DCMotor.write_byte(0x02);
      _130DCMotor.reset();
-     _130DCMotor.write_byte((uint8_t)(speed/factor));
+     _130DCMotor.write_byte((uint8_t)(speed/2.55));
      delayMicroseconds(500);
   }
   else
@@ -39,7 +38,7 @@ void We130DCMotor::run(int16_t speed)
 	  _130DCMotor.reset();
 	  _130DCMotor.write_byte(0x02);
 	  _130DCMotor.reset();
-      _130DCMotor.write_byte((uint8_t)(100-speed/factor));
+      _130DCMotor.write_byte((uint8_t)(100-speed/2.55));
       delayMicroseconds(500);
   }
 }
