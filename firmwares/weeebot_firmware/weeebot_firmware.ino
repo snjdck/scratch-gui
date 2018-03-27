@@ -34,6 +34,8 @@ WeInfraredReceiver ir(DEFAULT_IR_PIN);
 WeHumiture humitureSensor;
 WeTouchSensor touchSensor;
 We7SegmentDisplay segmentDisplaySensor;
+We4LEDButton button4led;
+WePIRSensor pir;
 
 Servo servos[MAX_SERVO_COUNT];
 uint8_t servo_pins[MAX_SERVO_COUNT]={0};
@@ -50,6 +52,9 @@ const uint8_t MSG_ID_BOARD_BUZZER = 10;
 const uint8_t MSG_ID_BOARD_SOUND = 11;
 const uint8_t MSG_ID_BOARD_TEMPERATURE = 12;
 const uint8_t MSG_ID_RJ11_RGB = 13;
+const uint8_t MSG_ID_4_LED_BUTTON = 14;
+const uint8_t MSG_ID_4_LED_BUTTON_LED = 15;
+const uint8_t MSG_ID_PIR = 16;
 
 const uint8_t MSG_ID_STOP_ALL = 99;
 
@@ -202,6 +207,11 @@ float nextFloat(char **cmd)
 	return atof(*cmd);
 }
 
+void printBoolean(bool value)
+{
+	Serial.println(value ? "true" : "false");
+}
+
 void doRgb(char * cmd)
 {
 	nextStr(&cmd);
@@ -279,7 +289,7 @@ void getIR(char *cmd)
 	uint8_t pin = nextInt(&cmd);
 	ir.reset(pin);
 	int code = nextInt(&cmd);
-	Serial.println(ir.isKeyPressed(code) ? "true" : "false");
+	printBoolean(ir.isKeyPressed(code));
 }
 
 void getTemperature(char *cmd)
@@ -295,7 +305,7 @@ void getButton(char *cmd)
 	uint8_t pin = nextInt(&cmd);
 	pinMode(pin, INPUT);
 	boolean pressed = digitalRead(pin) == 0;
-	Serial.println(pressed ? "true" : "false");
+	printBoolean(pressed);
 }
 
 void doTone(char *cmd)
@@ -316,7 +326,7 @@ void getIRAvoid(char *cmd)
 {
 	int port = nextInt(&cmd);
 	IRAvoid.reset(port);
-	Serial.println(IRAvoid.isObstacle() ? "true" : "false");
+	printBoolean(IRAvoid.isObstacle());
 }
 
 void getSingleLineFollower(char *cmd)
@@ -443,7 +453,7 @@ void getTouch(char *cmd)
 {
 	int pin = nextInt(&cmd);
 	touchSensor.reset(pin);
-	Serial.println(touchSensor.touched() ? "true" : "false");
+	printBoolean(touchSensor.touched());
 }
 
 void getHumiture(char *cmd)
@@ -491,6 +501,34 @@ void getPotentiomter(char *cmd)
 void doQueryVersion(char *cmd)
 {
 	Serial.println(FIRMWARE_VERSION);
+}
+
+void get4LedButton(char *cmd)
+{
+	int port = nextInt(&cmd);
+	int index = nextInt(&cmd);
+	button4led.reset(port);
+	printBoolean(button4led.readKey() == index);
+}
+
+void do4LedButtonLight(char *cmd)
+{
+	int port = nextInt(&cmd);
+	int index = nextInt(&cmd);
+	int isOn = nextInt(&cmd);
+	button4led.reset(port);
+	if(isOn){
+		button4led.openLED(index);
+	}else{
+		button4led.closeLED(index);
+	}
+}
+
+void getPIR(char *cmd)
+{
+	int port = nextInt(&cmd);
+	pir.reset(port);
+	Serial.println(pir.readSensor());
 }
 
 void doStopAll(char *cmd)
@@ -645,6 +683,17 @@ void parseMcode(char *cmd)
 		case MSG_ID_QUERY_VERSION:
 			queryFlag = true;
 			handler = doQueryVersion;
+			break;
+		case MSG_ID_4_LED_BUTTON:
+			queryFlag = true;
+			handler = get4LedButton;
+			break;
+		case MSG_ID_4_LED_BUTTON_LED:
+			handler = do4LedButtonLight;
+			break;
+		case MSG_ID_PIR:
+			queryFlag = true;
+			handler = getPIR;
 			break;
 		default:
 			return;
