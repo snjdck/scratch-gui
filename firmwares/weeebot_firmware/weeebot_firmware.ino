@@ -36,6 +36,7 @@ WeTouchSensor touchSensor;
 We7SegmentDisplay segmentDisplaySensor;
 We4LEDButton button4led;
 WePIRSensor pir;
+WeColorSensor colorSensor;
 
 Servo servos[MAX_SERVO_COUNT];
 uint8_t servo_pins[MAX_SERVO_COUNT]={0};
@@ -55,6 +56,9 @@ const uint8_t MSG_ID_RJ11_RGB = 13;
 const uint8_t MSG_ID_4_LED_BUTTON = 14;
 const uint8_t MSG_ID_4_LED_BUTTON_LED = 15;
 const uint8_t MSG_ID_PIR = 16;
+const uint8_t MSG_ID_COLOR_WHITE_BALANCE = 17;
+const uint8_t MSG_ID_COLOR_SET_LIGHT = 18;
+const uint8_t MSG_ID_COLOR_VALUE = 19;
 
 const uint8_t MSG_ID_STOP_ALL = 99;
 
@@ -517,18 +521,37 @@ void do4LedButtonLight(char *cmd)
 	int index = nextInt(&cmd);
 	int isOn = nextInt(&cmd);
 	button4led.reset(port);
-	if(isOn){
-		button4led.openLED(index);
-	}else{
-		button4led.closeLED(index);
-	}
+	button4led.setLed(index, isOn);
 }
 
 void getPIR(char *cmd)
 {
 	int port = nextInt(&cmd);
 	pir.reset(port);
-	Serial.println(pir.readSensor());
+	printBoolean(pir.readSensor());
+}
+
+void setColorSensorWhiteBalance(char *cmd)
+{
+	int port = nextInt(&cmd);
+	colorSensor.reset(port);
+	colorSensor.whitebalance();
+}
+
+void setColorSensorLight(char *cmd)
+{
+	int port = nextInt(&cmd);
+	int isOn = nextInt(&cmd);
+	colorSensor.reset(port);
+	colorSensor.setLight(isOn);
+}
+
+void getColorSensorValue(char *cmd)
+{
+	int port = nextInt(&cmd);
+	int type = nextInt(&cmd);
+	colorSensor.reset(port);
+	Serial.println(colorSensor.readValue(type));
 }
 
 void doStopAll(char *cmd)
@@ -694,6 +717,16 @@ void parseMcode(char *cmd)
 		case MSG_ID_PIR:
 			queryFlag = true;
 			handler = getPIR;
+			break;
+		case MSG_ID_COLOR_WHITE_BALANCE:
+			handler = setColorSensorWhiteBalance;
+			break;
+		case MSG_ID_COLOR_SET_LIGHT:
+			handler = setColorSensorLight;
+			break;
+		case MSG_ID_COLOR_VALUE:
+			queryFlag = true;
+			handler = getColorSensorValue;
 			break;
 		default:
 			return;

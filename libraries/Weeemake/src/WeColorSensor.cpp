@@ -52,23 +52,28 @@ void WeColorSensor::whitebalance(void)
 
 void WeColorSensor::turnOnLight(void)
 {
-    if(_WeColorSensor.reset()!=0)
-       return ;
-    _WeColorSensor.write_byte(0x03);
-    if(_WeColorSensor.reset()!=0)
-       return ;
-	_WeColorSensor.write_byte(1);
+    setLight(true);
 }
 void WeColorSensor::turnOffLight(void)
 {
-    if(_WeColorSensor.reset()!=0)
-       return ;
-    _WeColorSensor.write_byte(0x03);
-    if(_WeColorSensor.reset()!=0)
-       return ;
-	_WeColorSensor.write_byte(0);
+    setLight(false);
 }
 
+void WeColorSensor::setLight(bool isOn)
+{
+	if(_WeColorSensor.reset())return;
+	_WeColorSensor.write_byte(0x03);
+	if(_WeColorSensor.reset())return;
+	_WeColorSensor.write_byte(isOn);
+}
 
-
-
+uint16_t WeColorSensor::readValue(uint8_t type)
+{
+	readColorData();
+	switch(type){
+		case 1: return Redvalue;
+		case 2: return Greenvalue;
+		case 3: return Bluevalue;
+	}
+	return Colorvalue;
+}

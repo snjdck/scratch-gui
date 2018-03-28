@@ -46,6 +46,16 @@ void We4LEDButton::closeLED(uint8_t value)
 	_We4LEDButton.write_byte(value);
  
 }
+
+void We4LEDButton::setLed(uint8_t index, bool isOn)
+{
+  if(_We4LEDButton.reset())return;
+  _We4LEDButton.write_byte(isOn ? 3 : 4);
+  if(_We4LEDButton.reset())return;
+  uint8_t value = index ? (1 << (index - 1)) : 0xF;
+  _We4LEDButton.write_byte(value);
+}
+
 uint8_t We4LEDButton::readValue(void)
 {
   if(_We4LEDButton.reset()!=0)

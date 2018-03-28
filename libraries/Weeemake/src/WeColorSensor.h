@@ -16,8 +16,9 @@ public:
   uint16_t showBlueData(void);
   uint16_t showColorData(void);
   void turnOnLight(void);
-  void turnOffLight(void);  
-  
+  void turnOffLight(void);
+  void setLight(bool isOn);  
+  uint16_t readValue(uint8_t type);
  
   
 private:

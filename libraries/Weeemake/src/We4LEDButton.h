@@ -12,6 +12,7 @@ public:
   void reset(uint8_t port=0);
   void openLED(uint8_t value);
   void closeLED(uint8_t value);
+  void setLed(uint8_t index, bool isOn);
   uint8_t readKey(void);
   uint8_t readValue(void);
   
