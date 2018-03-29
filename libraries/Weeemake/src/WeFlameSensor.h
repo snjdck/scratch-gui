@@ -14,6 +14,7 @@ public:
   uint8_t showSensor1(void);
   uint8_t showSensor2(void);
   uint8_t showSensor3(void);
+  uint8_t readValue(uint8_t index);
 
 
   

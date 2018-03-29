@@ -36,6 +36,15 @@ uint8_t WeFlameSensor::showSensor3(void)
    return _Sensor3;
 }
 
+uint8_t WeFlameSensor::readValue(uint8_t index)
+{
+  readData();
+  switch(index){
+    case 1: return _Sensor1;
+    case 3: return _Sensor3;
+  }
+  return _Sensor2;
+}
 
 
 

@@ -37,6 +37,7 @@ We7SegmentDisplay segmentDisplaySensor;
 We4LEDButton button4led;
 WePIRSensor pir;
 WeColorSensor colorSensor;
+WeFlameSensor flameSensor;
 
 Servo servos[MAX_SERVO_COUNT];
 uint8_t servo_pins[MAX_SERVO_COUNT]={0};
@@ -59,6 +60,7 @@ const uint8_t MSG_ID_PIR = 16;
 const uint8_t MSG_ID_COLOR_WHITE_BALANCE = 17;
 const uint8_t MSG_ID_COLOR_SET_LIGHT = 18;
 const uint8_t MSG_ID_COLOR_VALUE = 19;
+const uint8_t MSG_ID_FLAME = 20;
 
 const uint8_t MSG_ID_STOP_ALL = 99;
 
@@ -581,6 +583,14 @@ void getColorSensorValue(char *cmd)
 	Serial.println(colorSensor.readValue(type));
 }
 
+void getFlameValue(char *cmd)
+{
+	int port = nextInt(&cmd);
+	int index = nextInt(&cmd);
+	flameSensor.reset(port);
+	Serial.println(flameSensor.readValue(index));
+}
+
 void doStopAll(char *cmd)
 {
 	//stop motor
@@ -758,6 +768,10 @@ void parseMcode(char *cmd)
 		case MSG_ID_COLOR_VALUE:
 			queryFlag = true;
 			handler = getColorSensorValue;
+			break;
+		case MSG_ID_FLAME:
+			queryFlag = true;
+			handler = getFlameValue;
 			break;
 		default:
 			return;
