@@ -12,6 +12,7 @@ public:
 
   void openNC(void);
   void closeNC(void);
+  void setNC(bool isOn);
 
   
 private:

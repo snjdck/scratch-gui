@@ -366,13 +366,13 @@ void modeB()
 
 void modeC()
 {
-	const uint8_t base = 160;
+	const uint8_t base = 640;
 	static uint8_t line_speed = 100;
 	static uint8_t flag = 0;
 
 	lineFollower.startRead();
-	bool L_IN = lineFollower.readSensor1() > base;
-	bool R_IN = lineFollower.readSensor2() > base;
+	bool L_IN = lineFollower.readSensor1() < base;
+	bool R_IN = lineFollower.readSensor2() < base;
 
 	if(L_IN && R_IN){
 		motor_run(line_speed, line_speed);

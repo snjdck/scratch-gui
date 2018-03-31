@@ -15,6 +15,7 @@ public:
 
   void start(void);
   void stop(void);
+  void setRun(bool isOn);
 
   
 private:

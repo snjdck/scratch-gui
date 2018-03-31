@@ -37,6 +37,9 @@
 #include "WeColorSensor.h"
 #include "WeGyroSensor.h"
 #include "WeSingleLED.h"
+#include "WeWaterAtomizer.h"
+#include "WeMP3.h"
+#include "WeOLED.h"
 
 #define PORT_A  (A5)
 #define PORT_B  (A4)

@@ -11,15 +11,17 @@ void WeWaterAtomizer::reset(uint8_t port)
 
 void WeWaterAtomizer::start(void)
 {
-   if (_WeWaterAtomizer.reset()!=0)
-   	return;
-   _WeWaterAtomizer.write_byte(0x02);
+   setRun(true);
 }
 void WeWaterAtomizer::stop(void)
 {
-   if (_WeWaterAtomizer.reset()!=0)
-   	return;
-   _WeWaterAtomizer.write_byte(0x03);
+   setRun(false);
+}
+
+void WeWaterAtomizer::setRun(bool isOn)
+{
+	if(_WeWaterAtomizer.reset())return;
+   _WeWaterAtomizer.write_byte(isOn ? 2 : 3);
 }
 
 

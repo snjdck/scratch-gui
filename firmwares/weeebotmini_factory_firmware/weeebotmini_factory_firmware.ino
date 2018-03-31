@@ -256,7 +256,7 @@ void modeC()
 	static int tryLeftFirst = 1;
 	static int turnCount = 0;
 
-	if(singleLF.read() >= threshold){//forward
+	if(singleLF.read() <= threshold){//forward
 		motor_run(lineSpeed, lineSpeed);
 		turnTimeEnd = 0;
 		turnCount = 0;
