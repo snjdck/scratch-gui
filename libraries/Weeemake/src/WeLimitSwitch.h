@@ -9,8 +9,8 @@ class WeLimitSwitch
 public:
 
   WeLimitSwitch(uint8_t port=0);
-
-  uint8_t read(void);
+  void reset(uint8_t port);
+  bool read(void);
   
  private:
 	uint8_t _Sensorpin;

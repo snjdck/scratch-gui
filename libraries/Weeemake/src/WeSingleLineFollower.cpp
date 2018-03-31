@@ -5,7 +5,7 @@ WeSingleLineFollower::WeSingleLineFollower(uint8_t port)
 {
 }
 
-int16_t WeSingleLineFollower::read(void)
+uint16_t WeSingleLineFollower::read(void)
 {
-   return analogRead(_SensorPin);
+   return 1023 - analogRead(_SensorPin);
 }

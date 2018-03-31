@@ -2,14 +2,18 @@
 
 WeLimitSwitch::WeLimitSwitch(uint8_t port)
 {
-  _Sensorpin=port;
+  reset(port);
 }
 
-
-
-uint8_t WeLimitSwitch::read(void)
+void WeLimitSwitch::reset(uint8_t port)
 {
-   return(digitalRead(_Sensorpin));
+	_Sensorpin = port;
+	pinMode(_Sensorpin, INPUT);
+}
+
+bool WeLimitSwitch::read(void)
+{
+   return digitalRead(_Sensorpin);
 }
 
 

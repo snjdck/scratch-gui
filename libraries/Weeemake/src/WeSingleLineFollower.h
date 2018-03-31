@@ -8,7 +8,7 @@ class WeSingleLineFollower : public WeSensor
 {
 public:
   WeSingleLineFollower(uint8_t=0);
-  int16_t read(void);
+  uint16_t read(void);
 };
 
 #endif

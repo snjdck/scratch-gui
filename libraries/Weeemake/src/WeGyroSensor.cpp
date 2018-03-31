@@ -107,5 +107,32 @@ double  WeGyroSensor::getGyroY(void)
   return gyrY;
 }
 
+double WeGyroSensor::getGyroZ(void)
+{
+  return gyrZ;
+}
 
+double WeGyroSensor::readValue(uint8_t index)
+{
+  update();
+  switch(index){
+    case 0: return gyrX;
+    case 1: return gyrY;
+    case 2: return gyrZ;
+    case 3: return gx;
+    case 4: return gy;
+    case 5: return gz;
+  }
+  return 0;
+}
+
+double WeGyroSensor::getGyration(uint8_t index)
+{
+  return readValue(index % 3);
+}
+
+double WeGyroSensor::getAcceleration(uint8_t index)
+{
+  return readValue(index % 3 + 3);
+}
 

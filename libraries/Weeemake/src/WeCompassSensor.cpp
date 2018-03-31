@@ -28,16 +28,26 @@ void  WeCompassSensor::update(void)
   
 }
 
-double  WeCompassSensor::getHeadX(void)
+uint16_t  WeCompassSensor::getHeadX(void)
 {
   return head_X;
 }
-double  WeCompassSensor::getHeadY(void)
+uint16_t  WeCompassSensor::getHeadY(void)
 {
   return head_Y;
 }
-double  WeCompassSensor::getHeadZ(void)
+uint16_t  WeCompassSensor::getHeadZ(void)
 {
+  return head_Z;
+}
+
+uint16_t WeCompassSensor::readValue(uint8_t index)
+{
+  update();
+  switch(index){
+    case 0: return head_X;
+    case 1: return head_Y;
+  }
   return head_Z;
 }
 

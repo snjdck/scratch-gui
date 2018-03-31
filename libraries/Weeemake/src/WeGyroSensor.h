@@ -16,7 +16,10 @@ public:
   double getAngleZ(void);
   double getGyroX(void);
   double getGyroY(void);
-  
+  double getGyroZ(void);
+  double readValue(uint8_t index);
+  double getGyration(uint8_t index);
+  double getAcceleration(uint8_t index);
  
   
 private:

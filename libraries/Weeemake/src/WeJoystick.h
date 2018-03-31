@@ -14,6 +14,7 @@ public:
   uint8_t showX(void);
   uint8_t showY(void);
   uint8_t showKey(void);
+  uint8_t readValue(uint8_t axis);
 
   
 private:

@@ -10,9 +10,10 @@ public:
   WeCompassSensor(uint8_t port=0);
   void reset(uint8_t port=0);
   void update(void);
-  double getHeadX(void);
-  double getHeadY(void);
-  double getHeadZ(void);
+  uint16_t getHeadX(void);
+  uint16_t getHeadY(void);
+  uint16_t getHeadZ(void);
+  uint16_t readValue(uint8_t index);
   
  
   

@@ -36,6 +36,15 @@ uint8_t WeJoystick::showKey(void)
   return _Sensor3;
 }
 
+uint8_t WeJoystick::readValue(uint8_t axis)
+{
+  readData();
+  switch(axis){
+    case 0: return _Sensor1;
+    case 1: return _Sensor2;
+  }
+  return _Sensor3;
+}
 
 
 
