@@ -36,6 +36,7 @@
 #include "WeLimitSwitch.h"
 #include "WeColorSensor.h"
 #include "WeGyroSensor.h"
+#include "WeCompassSensor.h"
 #include "WeSingleLED.h"
 #include "WeWaterAtomizer.h"
 #include "WeMP3.h"

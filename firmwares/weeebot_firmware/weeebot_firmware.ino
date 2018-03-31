@@ -8,7 +8,7 @@
 #define NTD6 495
 #define NTD7 556
 
-#define FIRMWARE_VERSION 1
+#define FIRMWARE_VERSION 2
 
 #define MAX_SERVO_COUNT 10
 #define LED_MATRIX_WIDTH 21
@@ -38,6 +38,13 @@ We4LEDButton button4led;
 WePIRSensor pir;
 WeColorSensor colorSensor;
 WeFlameSensor flameSensor;
+WeLimitSwitch limitSwitch;
+WeJoystick joystick;
+WeCompassSensor compassSensor;
+WeGyroSensor gyro;
+WeTiltSwitch tilt;
+WeRelay relay;
+WeWaterAtomizer waterAtomizer;
 
 Servo servos[MAX_SERVO_COUNT];
 uint8_t servo_pins[MAX_SERVO_COUNT]={0};
@@ -61,6 +68,13 @@ const uint8_t MSG_ID_COLOR_WHITE_BALANCE = 17;
 const uint8_t MSG_ID_COLOR_SET_LIGHT = 18;
 const uint8_t MSG_ID_COLOR_VALUE = 19;
 const uint8_t MSG_ID_FLAME = 20;
+const uint8_t MSG_ID_LIMIT_SWITCH = 21;
+const uint8_t MSG_ID_JOYSTICK = 22;
+const uint8_t MSG_ID_COMPASS = 23;
+const uint8_t MSG_ID_GYRO = 24;
+const uint8_t MSG_ID_TILT = 25;
+const uint8_t MSG_ID_RELAY = 26;
+const uint8_t MSG_ID_WATER_ATOMIZER = 27;
 
 const uint8_t MSG_ID_STOP_ALL = 99;
 
@@ -564,6 +578,60 @@ void getFlameValue(char *cmd)
 	Serial.println(flameSensor.readValue(index));
 }
 
+void getLimitSwitch(char *cmd)
+{
+	int port = nextInt(&cmd);
+	limitSwitch.reset(port);
+	printBoolean(limitSwitch.read());
+}
+
+void getJoystick(char *cmd)
+{
+	int port = nextInt(&cmd);
+	int index = nextInt(&cmd);
+	joystick.reset(port);
+	Serial.println(joystick.readValue(index));
+}
+
+void getCompass(char *cmd)
+{
+	int port = nextInt(&cmd);
+	int index = nextInt(&cmd);
+	compassSensor.reset(port);
+	Serial.println(compassSensor.readValue(index));
+}
+
+void getGyro(char *cmd)
+{
+	int port = nextInt(&cmd);
+	int index = nextInt(&cmd);
+	gyro.reset(port);
+	Serial.println(gyro.readValue(index));
+}
+
+void getTilt(char *cmd)
+{
+	int port = nextInt(&cmd);
+	tilt.reset(port);
+	printBoolean(tilt.readSensor());
+}
+
+void setRelay(char *cmd)
+{
+	int port = nextInt(&cmd);
+	int isOn = nextInt(&cmd);
+	relay.reset(port);
+	relay.setNC(isOn);
+}
+
+void setWaterAtomizer(char *cmd)
+{
+	int port = nextInt(&cmd);
+	int isOn = nextInt(&cmd);
+	waterAtomizer.reset(port);
+	waterAtomizer.setRun(isOn);
+}
+
 void doStopAll(char *cmd)
 {
 	//stop motor
@@ -741,6 +809,32 @@ void parseMcode(char *cmd)
 		case MSG_ID_FLAME:
 			queryFlag = true;
 			handler = getFlameValue;
+			break;
+		case MSG_ID_LIMIT_SWITCH:
+			queryFlag = true;
+			handler = getLimitSwitch;
+			break;
+		case MSG_ID_JOYSTICK:
+			queryFlag = true;
+			handler = getJoystick;
+			break;
+		case MSG_ID_COMPASS:
+			queryFlag = true;
+			handler = getCompass;
+			break;
+		case MSG_ID_GYRO:
+			queryFlag = true;
+			handler = getGyro;
+			break;
+		case MSG_ID_TILT:
+			queryFlag = true;
+			handler = getTilt;
+			break;
+		case MSG_ID_RELAY:
+			handler = setRelay;
+			break;
+		case MSG_ID_WATER_ATOMIZER:
+			handler = setWaterAtomizer;
 			break;
 		default:
 			return;
