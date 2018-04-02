@@ -62,7 +62,7 @@ function weeebot_motor_move(argValues, util) {
 }
 
 function on_board_servo(argValues, util) {
-    var port = argValues.BOARD_PORT;
+    var port = argValues.SENSOR_PORT;
     var angle = argValues.ANGLE;
     return createPromise(util, 202, port, angle);
 }
