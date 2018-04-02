@@ -45,6 +45,7 @@ WeGyroSensor gyro;
 WeTiltSwitch tilt;
 WeRelay relay;
 WeWaterAtomizer waterAtomizer;
+WeMP3 mp3;
 
 Servo servos[MAX_SERVO_COUNT];
 uint8_t servo_pins[MAX_SERVO_COUNT]={0};
@@ -75,6 +76,14 @@ const uint8_t MSG_ID_GYRO = 24;
 const uint8_t MSG_ID_TILT = 25;
 const uint8_t MSG_ID_RELAY = 26;
 const uint8_t MSG_ID_WATER_ATOMIZER = 27;
+
+const uint8_t MSG_ID_MP3_SET_MUSIC = 28;
+const uint8_t MSG_ID_MP3_SET_VOLUME = 29;
+const uint8_t MSG_ID_MP3_SET_DEVICE = 30;
+const uint8_t MSG_ID_MP3_NEXT_MUSIC = 31;
+const uint8_t MSG_ID_MP3_PAUSE = 32;
+const uint8_t MSG_ID_MP3_PLAY = 33;
+const uint8_t MSG_ID_MP3_IS_OVER = 34;
 
 const uint8_t MSG_ID_STOP_ALL = 99;
 
@@ -659,6 +668,58 @@ void setWaterAtomizer(char *cmd)
 	waterAtomizer.setRun(isOn);
 }
 
+void getMp3IsOver(char *cmd)
+{
+	int port = nextInt(&cmd);
+	mp3.reset(port);
+	printBoolean(mp3.isOver());
+}
+
+void doMp3Play(char *cmd)
+{
+	int port = nextInt(&cmd);
+	mp3.reset(port);
+	mp3.play();
+}
+
+void doMp3Pause(char *cmd)
+{
+	int port = nextInt(&cmd);
+	mp3.reset(port);
+	mp3.pause();
+}
+
+void doMp3NextMusic(char *cmd)
+{
+	int port = nextInt(&cmd);
+	mp3.reset(port);
+	mp3.nextMusic();
+}
+
+void doMp3SetDevice(char *cmd)
+{
+	int port = nextInt(&cmd);
+	int index = nextInt(&cmd);
+	mp3.reset(port);
+	mp3.appointDevice(index);
+}
+
+void doMp3SetMusic(char *cmd)
+{
+	int port = nextInt(&cmd);
+	int index = nextInt(&cmd);
+	mp3.reset(port);
+	mp3.appointMusic(index);
+}
+
+void doMp3SetVolume(char *cmd)
+{
+	int port = nextInt(&cmd);
+	int index = nextInt(&cmd);
+	mp3.reset(port);
+	mp3.appointVolume(index);
+}
+
 void doStopAll(char *cmd)
 {
 	//stop motor
@@ -866,6 +927,28 @@ void parseMcode(char *cmd)
 			break;
 		case MSG_ID_WATER_ATOMIZER:
 			handler = setWaterAtomizer;
+			break;
+		case MSG_ID_MP3_IS_OVER:
+			queryFlag = true;
+			handler = getMp3IsOver;
+			break;
+		case MSG_ID_MP3_PLAY:
+			handler = doMp3Play;
+			break;
+		case MSG_ID_MP3_PAUSE:
+			handler = doMp3Pause;
+			break;
+		case MSG_ID_MP3_NEXT_MUSIC:
+			handler = doMp3NextMusic;
+			break;
+		case MSG_ID_MP3_SET_DEVICE:
+			handler = doMp3SetDevice;
+			break;
+		case MSG_ID_MP3_SET_MUSIC:
+			handler = doMp3SetMusic;
+			break;
+		case MSG_ID_MP3_SET_VOLUME:
+			handler = doMp3SetVolume;
 			break;
 		default:
 			return;
