@@ -46,6 +46,7 @@ WeTiltSwitch tilt;
 WeRelay relay;
 WeWaterAtomizer waterAtomizer;
 WeMP3 mp3;
+WeOLED oled;
 
 Servo servos[MAX_SERVO_COUNT];
 uint8_t servo_pins[MAX_SERVO_COUNT]={0};
@@ -84,6 +85,11 @@ const uint8_t MSG_ID_MP3_NEXT_MUSIC = 31;
 const uint8_t MSG_ID_MP3_PAUSE = 32;
 const uint8_t MSG_ID_MP3_PLAY = 33;
 const uint8_t MSG_ID_MP3_IS_OVER = 34;
+
+const uint8_t MSG_ID_OLED_SET_SIZE = 35;
+const uint8_t MSG_ID_OLED_SHOW_NUMBER = 36;
+const uint8_t MSG_ID_OLED_SHOW_STRING = 37;
+const uint8_t MSG_ID_OLED_CLEAR = 38;
 
 const uint8_t MSG_ID_STOP_ALL = 99;
 
@@ -693,6 +699,41 @@ void doMp3SetVolume(char *cmd)
 	mp3.appointVolume(index);
 }
 
+void doOledSetSize(char *cmd)
+{
+	int port = nextInt(&cmd);
+	int value = nextInt(&cmd);
+	oled.reset(port);
+	oled.setSize(value);
+}
+
+void doOledShowString(char *cmd)
+{
+	int port = nextInt(&cmd);
+	int x = nextInt(&cmd);
+	int y = nextInt(&cmd);
+	nextStr(&cmd);
+	oled.reset(port);
+	oled.showString(x, y, cmd);
+}
+
+void doOledShowNumber(char *cmd)
+{
+	int port = nextInt(&cmd);
+	int x = nextInt(&cmd);
+	int y = nextInt(&cmd);
+	float value = nextFloat(&cmd);
+	oled.reset(port);
+	oled.showNum(x, y, value);
+}
+
+void doOledClear(char *cmd)
+{
+	int port = nextInt(&cmd);
+	oled.reset(port);
+	oled.clearScreen();
+}
+
 void doStopAll(char *cmd)
 {
 	//stop motor
@@ -918,6 +959,18 @@ void parseMcode(char *cmd)
 			break;
 		case MSG_ID_MP3_SET_VOLUME:
 			handler = doMp3SetVolume;
+			break;
+		case MSG_ID_OLED_SET_SIZE:
+			handler = doOledSetSize;
+			break;
+		case MSG_ID_OLED_SHOW_STRING:
+			handler = doOledShowString;
+			break;
+		case MSG_ID_OLED_SHOW_NUMBER:
+			handler = doOledShowNumber;
+			break;
+		case MSG_ID_OLED_CLEAR:
+			handler = doOledClear;
 			break;
 		default:
 			return;

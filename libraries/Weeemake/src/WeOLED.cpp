@@ -27,7 +27,7 @@ void WeOLED::clearScreen(void)
   if(_WeOLED.reset()!=0)
    return;
   _WeOLED.write_byte(0x04);
-  delayMicroseconds(2000);
+  delayMicroseconds(3000);
 }
 
 void WeOLED::showString(uint8_t X_position,uint8_t Y_position,char *str)
@@ -46,7 +46,7 @@ void WeOLED::showString(uint8_t X_position,uint8_t Y_position,char *str)
 	  _WeOLED.write_byte((int8_t)(str[number_of_Str]));
 	}
 	_WeOLED.write_byte(0);
-	delayMicroseconds(2000);
+	delayMicroseconds(3000);
 }
 
 void WeOLED::showChar(uint8_t X_position,uint8_t Y_position,uint8_t buffer)
@@ -59,11 +59,12 @@ void WeOLED::showChar(uint8_t X_position,uint8_t Y_position,uint8_t buffer)
     _WeOLED.write_byte(X_position);
     _WeOLED.write_byte(Y_position);
 	_WeOLED.write_byte(buffer);
-	delayMicroseconds(2000);
+	delayMicroseconds(3000);
 }
 void WeOLED::sendNum(uint8_t X_position,uint8_t Y_position,uint8_t Num)
 {
-   if(_WeOLED.reset()!=0)
+   
+if(_WeOLED.reset()!=0)
      return;
 	_WeOLED.write_byte(0x05);
     if(_WeOLED.reset()!=0)
@@ -72,7 +73,7 @@ void WeOLED::sendNum(uint8_t X_position,uint8_t Y_position,uint8_t Num)
 	_WeOLED.write_byte(X_position);
 	_WeOLED.write_byte(Y_position);
 	_WeOLED.write_byte(Num);
-	delayMicroseconds(2000);
+	delayMicroseconds(3000);
 }
 
 void WeOLED::showNum(uint8_t X_position,uint8_t Y_position,double Num)
