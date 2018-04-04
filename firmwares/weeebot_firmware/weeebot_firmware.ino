@@ -416,9 +416,7 @@ void getLineFollower(char *cmd)
 	int port = nextInt(&cmd);
 	int index = nextInt(&cmd);
 	lineFollower.reset(port);
-	lineFollower.startRead();
-	uint8_t value = index == 1 ? lineFollower.readSensor1() : lineFollower.readSensor2();
-	Serial.println(value);
+	Serial.println(lineFollower.startRead(index));
 }
 void doLedMatrixShowNumber(char *cmd)
 {
