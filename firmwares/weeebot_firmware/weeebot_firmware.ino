@@ -347,7 +347,7 @@ void doTone(char *cmd)
 {
 	int note = nextInt(&cmd);
 	int hz   = nextInt(&cmd);
-	buzzer.tone(note, hz);
+	buzzer.tone2(note, hz);
 }
 
 void getUltrasonic(char *cmd)
