@@ -1034,8 +1034,6 @@ void onSetup()
 
 void setup()
 {
-	buzzer.tone(NTD1, 1000);
-	buzzer.tone(NTD6, 300);
 	Serial.begin(115200);
 	onSetup();
 }
