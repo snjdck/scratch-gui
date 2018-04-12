@@ -641,7 +641,7 @@ module.exports = function(){
         return arduino.tab() + `${key}.appointDevice(${device})` + arduino.END;
     }
 
-    arduino["mp3_set_device"] = function(block){
+    arduino["mp3_is_over"] = function(block){
         var order = arduino.ORDER_NONE;
         var port = arduino.valueToCode(block, "SENSOR_PORT", order);
 
