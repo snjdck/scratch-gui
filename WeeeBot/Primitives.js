@@ -237,6 +237,169 @@ function potentiometer(argValues, util){
     return createPromise(util, 126, port);
 }
 
+function seven_segment(argValues, util){
+    var port = argValues.SENSOR_PORT;
+    var num = argValues.NUM;
+    return createPromise(util, 123, port, num);
+}
+
+function led_button_light(argValues, util){
+    var port = argValues.SENSOR_PORT;
+    var index = argValues.BUTTON_INDEX;
+    var isOn = argValues.ON_OFF;
+    return createPromise(util, 15, port, index, isOn);
+}
+
+function relay(argValues, util){
+    var port = argValues.SENSOR_PORT;
+    var isOn = argValues.ON_OFF;
+    return createPromise(util, 26, port, isOn);
+}
+
+function water_atomizer(argValues, util){
+    var port = argValues.SENSOR_PORT;
+    var isOn = argValues.ON_OFF;
+    return createPromise(util, 27, port, isOn);
+}
+
+function color_sensor_white_balance(argValues, util){
+    var port = argValues.SENSOR_PORT;
+    return createPromise(util, 17, port);
+}
+
+function color_sensor_light(argValues, util){
+    var port = argValues.SENSOR_PORT;
+    var isOn = argValues.ON_OFF;
+    return createPromise(util, 18, port, isOn);
+}
+
+function mp3_play(argValues, util){
+    var port = argValues.SENSOR_PORT;
+    return createPromise(util, 33, port);
+}
+
+function mp3_pause(argValues, util){
+    var port = argValues.SENSOR_PORT;
+    return createPromise(util, 32, port);
+}
+
+function mp3_next_music(argValues, util){
+    var port = argValues.SENSOR_PORT;
+    return createPromise(util, 31, port);
+}
+
+function mp3_set_music(argValues, util){
+    var port = argValues.SENSOR_PORT;
+    var num = argValues.NUM;
+    return createPromise(util, 28, port, num);
+}
+
+function mp3_set_volume(argValues, util){
+    var port = argValues.SENSOR_PORT;
+    var num = argValues.NUM;
+    return createPromise(util, 29, port, num);
+}
+
+function mp3_set_device(argValues, util){
+    var port = argValues.SENSOR_PORT;
+    var num = argValues.MP3_DEVICE_TYPE;
+    return createPromise(util, 30, port, num);
+}
+
+function mp3_is_over(argValues, util){
+    var port = argValues.SENSOR_PORT;
+    return createPromise(util, 34, port);
+}
+
+function oled_set_size(argValues, util){
+    var port = argValues.SENSOR_PORT;
+    var size = argValues.OLED_SIZE;
+    return createPromise(util, 35, port, size);
+}
+
+function oled_show_string(argValues, util){
+    var port = argValues.SENSOR_PORT;
+    var x = argValues.X;
+    var y = argValues.Y;
+    var str = argValues.STR;
+    return createPromise(util, 37, port, x, y, str);
+}
+
+function oled_show_number(argValues, util){
+    var port = argValues.SENSOR_PORT;
+    var x = argValues.X;
+    var y = argValues.Y;
+    var num = argValues.NUM;
+    return createPromise(util, 36, port, x, y, num);
+}
+
+function oled_clear_screen(argValues, util){
+    var port = argValues.SENSOR_PORT;
+    return createPromise(util, 38, port);
+}
+
+function color_sensor(argValues, util){
+    var port = argValues.SENSOR_PORT;
+    var type = argValues.COLOR_TYPE;
+    return createPromise(util, 19, port, type);
+}
+
+function flame_sensor(argValues, util){
+    var port = argValues.SENSOR_PORT;
+    var index = argValues.FLAME_INDEX;
+    return createPromise(util, 20, port, index);
+}
+
+function joystick(argValues, util){
+    var port = argValues.SENSOR_PORT;
+    var axis = argValues.AXIS2;
+    return createPromise(util, 22, port, axis);
+}
+
+function limit_switch(argValues, util){
+    var port = argValues.SENSOR_PORT;
+    return createPromise(util, 21, port);
+}
+
+function compass(argValues, util){
+    var port = argValues.SENSOR_PORT;
+    var axis = argValues.AXIS3;
+    return createPromise(util, 23, port, axis);
+}
+
+function gyro_gyration(argValues, util){
+    var port = argValues.SENSOR_PORT;
+    var axis = argValues.AXIS3;
+    return createPromise(util, 24, port, axis);
+}
+
+function gyro_acceleration(argValues, util){
+    var port = argValues.SENSOR_PORT;
+    var axis = argValues.AXIS3;
+    return createPromise(util, 24, port, parseInt(axis)+3);
+}
+
+function touch(argValues, util){
+    var port = argValues.SENSOR_PORT;
+    return createPromise(util, 121, port);
+}
+
+function led_button(argValues, util){
+    var port = argValues.SENSOR_PORT;
+    var index = argValues.BUTTON_INDEX;
+    return createPromise(util, 14, port, index);
+}
+
+function pir(argValues, util){
+    var port = argValues.SENSOR_PORT;
+    return createPromise(util, 16, port);
+}
+
+function tilt(argValues, util){
+    var port = argValues.SENSOR_PORT;
+    return createPromise(util, 25, port);
+}
+
 module.exports = function(){
     return {
         weeebot_motor_dc,
@@ -270,6 +433,35 @@ module.exports = function(){
         weeebot_led_matrix_bitmap,
         weeebot_led_matrix_pixel_show,
         weeebot_led_matrix_pixel_hide,
-        weeebot_led_matrix_clear
+        weeebot_led_matrix_clear,
+
+        seven_segment,
+        led_button_light,
+        relay,
+        water_atomizer,
+		color_sensor_white_balance,
+		color_sensor_light,
+		mp3_play,
+		mp3_pause,
+		mp3_next_music,
+		mp3_set_music,
+		mp3_set_volume,
+		mp3_set_device,
+		mp3_is_over,
+		oled_set_size,
+		oled_show_string,
+		oled_show_number,
+		oled_clear_screen,
+		color_sensor,
+		flame_sensor,
+		joystick,
+		limit_switch,
+		compass,
+		gyro_gyration,
+		gyro_acceleration,
+		touch,
+		led_button,
+		pir,
+        tilt
     };
 };

@@ -158,6 +158,70 @@ const toolbox = newXML("category", {"name":"WeeeBot", "key":"WeeeBot", "colour":
             newDropdownValue("SENSOR_PORT", SENSOR_PORTS[1]),
             newDropdownValue("ON_OFF", 1)
         ]),
+        newBlock("seven_segment", [
+            newDropdownValue("SENSOR_PORT", SENSOR_PORTS[1]),
+            newNumberValue("NUM", 100)
+        ]),
+        newBlock("led_button_light", [
+            newDropdownValue("SENSOR_PORT", SENSOR_PORTS[1]),
+            newDropdownValue("BUTTON_INDEX", 1),
+            newDropdownValue("ON_OFF", 1)
+        ]),
+        newBlock("relay", [
+            newDropdownValue("SENSOR_PORT", SENSOR_PORTS[1]),
+            newDropdownValue("ON_OFF", 1)
+        ]),
+        newBlock("water_atomizer", [
+            newDropdownValue("SENSOR_PORT", SENSOR_PORTS[1]),
+            newDropdownValue("ON_OFF", 1)
+        ]),
+        newBlock("color_sensor_white_balance", [
+            newDropdownValue("SENSOR_PORT", SENSOR_PORTS[1])
+        ]),
+        newBlock("color_sensor_light", [
+            newDropdownValue("SENSOR_PORT", SENSOR_PORTS[1]),
+            newDropdownValue("ON_OFF", 1)
+        ]),
+        newBlock("mp3_play", [
+            newDropdownValue("SENSOR_PORT", SENSOR_PORTS[1])
+        ]),
+        newBlock("mp3_pause", [
+            newDropdownValue("SENSOR_PORT", SENSOR_PORTS[1])
+        ]),
+        newBlock("mp3_next_music", [
+            newDropdownValue("SENSOR_PORT", SENSOR_PORTS[1])
+        ]),
+        newBlock("mp3_set_music", [
+            newDropdownValue("SENSOR_PORT", SENSOR_PORTS[1]),
+            newNumberValue("NUM", 1)
+        ]),
+        newBlock("mp3_set_volume", [
+            newDropdownValue("SENSOR_PORT", SENSOR_PORTS[1]),
+            newNumberValue("NUM", 0)
+        ]),
+        newBlock("mp3_set_device", [
+            newDropdownValue("SENSOR_PORT", SENSOR_PORTS[1]),
+            newDropdownValue("MP3_DEVICE_TYPE", 4)
+        ]),
+        newBlock("oled_set_size", [
+            newDropdownValue("SENSOR_PORT", SENSOR_PORTS[1]),
+            newDropdownValue("OLED_SIZE", 8)
+        ]),
+        newBlock("oled_show_string", [
+            newDropdownValue("SENSOR_PORT", SENSOR_PORTS[1]),
+            newNumberValue("X", 0),
+            newNumberValue("Y", 0),
+            newTextValue("STR", "Hi")
+        ]),
+        newBlock("oled_show_number", [
+            newDropdownValue("SENSOR_PORT", SENSOR_PORTS[1]),
+            newNumberValue("X", 0),
+            newNumberValue("Y", 0),
+            newNumberValue("NUM", 100)
+        ]),
+        newBlock("oled_clear_screen", [
+            newDropdownValue("SENSOR_PORT", SENSOR_PORTS[1])
+        ]),
         newBlock("line_follower", [
             newDropdownValue("SENSOR_PORT", 9),
             newDropdownValue("LINE_FOLLOWER_INDEX", 1)
@@ -174,13 +238,6 @@ const toolbox = newXML("category", {"name":"WeeeBot", "key":"WeeeBot", "colour":
         newBlock("board_temperature_sensor", [
             newDropdownValue("BOARD_PORT", PORTS[1])
         ]),
-        newBlock("weeebot_on_board_button", [
-            newDropdownValue("ON_BOARD_PORT", 2)
-        ]),
-        newBlock("weeebot_infraread", [
-            newDropdownValue("BOARD_PORT", PORTS[2]),
-            newDropdownValue("IR_CODE", 69)
-        ]),
         newBlock("sliding_potentiometer", [
             newDropdownValue("SENSOR_PORT", SENSOR_PORTS[1])
         ]),
@@ -188,6 +245,56 @@ const toolbox = newXML("category", {"name":"WeeeBot", "key":"WeeeBot", "colour":
             newDropdownValue("SENSOR_PORT", SENSOR_PORTS[1])
         ]),
         newBlock("gas_sensor", [
+            newDropdownValue("SENSOR_PORT", SENSOR_PORTS[1])
+        ]),
+        newBlock("color_sensor", [
+            newDropdownValue("SENSOR_PORT", SENSOR_PORTS[1]),
+            newDropdownValue("COLOR_TYPE", 0)
+        ]),
+        newBlock("flame_sensor", [
+            newDropdownValue("SENSOR_PORT", SENSOR_PORTS[1]),
+            newDropdownValue("FLAME_INDEX", 1)
+        ]),
+        newBlock("joystick", [
+            newDropdownValue("SENSOR_PORT", SENSOR_PORTS[1]),
+            newDropdownValue("AXIS2", 0)
+        ]),
+        newBlock("compass", [
+            newDropdownValue("SENSOR_PORT", SENSOR_PORTS[1]),
+            newDropdownValue("AXIS3", 0)
+        ]),
+        newBlock("gyro_gyration", [
+            newDropdownValue("SENSOR_PORT", SENSOR_PORTS[1]),
+            newDropdownValue("AXIS3", 0)
+        ]),
+        newBlock("gyro_acceleration", [
+            newDropdownValue("SENSOR_PORT", SENSOR_PORTS[1]),
+            newDropdownValue("AXIS3", 0)
+        ]),
+        newBlock("weeebot_on_board_button", [
+            newDropdownValue("ON_BOARD_PORT", 2)
+        ]),
+        newBlock("weeebot_infraread", [
+            newDropdownValue("BOARD_PORT", PORTS[2]),
+            newDropdownValue("IR_CODE", 69)
+        ]),
+        newBlock("touch", [
+            newDropdownValue("SENSOR_PORT", SENSOR_PORTS[1])
+        ]),
+        newBlock("led_button", [
+            newDropdownValue("SENSOR_PORT", SENSOR_PORTS[1]),
+            newDropdownValue("BUTTON_INDEX", 1)
+        ]),
+        newBlock("pir", [
+            newDropdownValue("SENSOR_PORT", SENSOR_PORTS[1])
+        ]),
+        newBlock("tilt", [
+            newDropdownValue("SENSOR_PORT", SENSOR_PORTS[1])
+        ]),
+        newBlock("limit_switch", [
+            newDropdownValue("SENSOR_PORT", SENSOR_PORTS[1])
+        ]),
+        newBlock("mp3_is_over", [
             newDropdownValue("SENSOR_PORT", SENSOR_PORTS[1])
         ])
     ]);

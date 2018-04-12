@@ -34,6 +34,13 @@ module.exports = function(){
     arduino.ultrasonic_led_index = option_handler;
     arduino.move_direction = option_handler;
     arduino.on_off = option_handler;
+    arduino.button_index = option_handler;
+    arduino.mp3_device_type = option_handler;
+    arduino.oled_size = option_handler;
+    arduino.color_type = option_handler;
+    arduino.flame_index = option_handler;
+    arduino.axis2 = option_handler;
+    arduino.axis3 = option_handler;
 
     function gen_rgb_code(block, color, type, prefix, portName) {
         var order = arduino.ORDER_NONE;
@@ -389,6 +396,310 @@ module.exports = function(){
     createAnalogHandler("WeSlidingPotentiomter", "sliding_potentiometer");
     createAnalogHandler("WeGasSensor", "gas_sensor");
     createAnalogHandler("WePotentiomter", "potentiometer");
+
+    arduino["seven_segment"] = function(block){
+        var order = arduino.ORDER_NONE;
+        var port = arduino.valueToCode(block, "SENSOR_PORT", order);
+        var num = arduino.valueToCode(block, "NUM", order);
+
+        var key = "segmentDisplaySensor_" + port;
+
+        arduino.setupCodes_[key] = `We7SegmentDisplay ${key}(${port});`;
+        return arduino.tab() + `${key}.showNumber(${num})` + arduino.END;
+    }
+
+    arduino["led_button_light"] = function(block){
+        var order = arduino.ORDER_NONE;
+        var port = arduino.valueToCode(block, "SENSOR_PORT", order);
+        var index = arduino.valueToCode(block, "BUTTON_INDEX", order);
+        var isOn = arduino.valueToCode(block, "ON_OFF", order);
+
+        var key = "button4led_" + port;
+
+        arduino.setupCodes_[key] = `We4LEDButton ${key}(${port});`;
+        return arduino.tab() + `${key}.setLed(${index}, ${isOn})` + arduino.END;
+    }
+
+    arduino["relay"] = function(block){
+        var order = arduino.ORDER_NONE;
+        var port = arduino.valueToCode(block, "SENSOR_PORT", order);
+        var isOn = arduino.valueToCode(block, "ON_OFF", order);
+
+        var key = "relay_" + port;
+
+        arduino.setupCodes_[key] = `WeRelay ${key}(${port});`;
+        return arduino.tab() + `${key}.setNC(${isOn})` + arduino.END;
+    }
+
+    arduino["water_atomizer"] = function(block){
+        var order = arduino.ORDER_NONE;
+        var port = arduino.valueToCode(block, "SENSOR_PORT", order);
+        var isOn = arduino.valueToCode(block, "ON_OFF", order);
+
+        var key = "waterAtomizer_" + port;
+
+        arduino.setupCodes_[key] = `WeWaterAtomizer ${key}(${port});`;
+        return arduino.tab() + `${key}.setRun(${isOn})` + arduino.END;
+    }
+
+    arduino["color_sensor_white_balance"] = function(block){
+        var order = arduino.ORDER_NONE;
+        var port = arduino.valueToCode(block, "SENSOR_PORT", order);
+
+        var key = "colorSensor_" + port;
+
+        arduino.setupCodes_[key] = `WeColorSensor ${key}(${port});`;
+        return arduino.tab() + `${key}.whitebalance()` + arduino.END;
+    }
+
+    arduino["color_sensor_light"] = function(block){
+        var order = arduino.ORDER_NONE;
+        var port = arduino.valueToCode(block, "SENSOR_PORT", order);
+        var isOn = arduino.valueToCode(block, "ON_OFF", order);
+
+        var key = "colorSensor_" + port;
+
+        arduino.setupCodes_[key] = `WeColorSensor ${key}(${port});`;
+        return arduino.tab() + `${key}.setLight(${isOn})` + arduino.END;
+    }
+
+    arduino["mp3_play"] = function(block){
+        var order = arduino.ORDER_NONE;
+        var port = arduino.valueToCode(block, "SENSOR_PORT", order);
+
+        var key = "mp3_" + port;
+
+        arduino.setupCodes_[key] = `WeMP3 ${key}(${port});`;
+        return arduino.tab() + `${key}.play()` + arduino.END;
+    }
+
+    arduino["mp3_pause"] = function(block){
+        var order = arduino.ORDER_NONE;
+        var port = arduino.valueToCode(block, "SENSOR_PORT", order);
+
+        var key = "mp3_" + port;
+
+        arduino.setupCodes_[key] = `WeMP3 ${key}(${port});`;
+        return arduino.tab() + `${key}.pause()` + arduino.END;
+    }
+
+    arduino["mp3_next_music"] = function(block){
+        var order = arduino.ORDER_NONE;
+        var port = arduino.valueToCode(block, "SENSOR_PORT", order);
+
+        var key = "mp3_" + port;
+
+        arduino.setupCodes_[key] = `WeMP3 ${key}(${port});`;
+        return arduino.tab() + `${key}.nextMusic()` + arduino.END;
+    }
+
+    arduino["mp3_set_music"] = function(block){
+        var order = arduino.ORDER_NONE;
+        var port = arduino.valueToCode(block, "SENSOR_PORT", order);
+        var num = arduino.valueToCode(block, "NUM", order);
+
+        var key = "mp3_" + port;
+
+        arduino.setupCodes_[key] = `WeMP3 ${key}(${port});`;
+        return arduino.tab() + `${key}.appointMusic(${num})` + arduino.END;
+    }
+
+    arduino["mp3_set_volume"] = function(block){
+        var order = arduino.ORDER_NONE;
+        var port = arduino.valueToCode(block, "SENSOR_PORT", order);
+        var num = arduino.valueToCode(block, "NUM", order);
+
+        var key = "mp3_" + port;
+
+        arduino.setupCodes_[key] = `WeMP3 ${key}(${port});`;
+        return arduino.tab() + `${key}.appointVolume(${num})` + arduino.END;
+    }
+
+    arduino["mp3_set_device"] = function(block){
+        var order = arduino.ORDER_NONE;
+        var port = arduino.valueToCode(block, "SENSOR_PORT", order);
+        var device = arduino.valueToCode(block, "MP3_DEVICE_TYPE", order);
+
+        var key = "mp3_" + port;
+
+        arduino.setupCodes_[key] = `WeMP3 ${key}(${port});`;
+        return arduino.tab() + `${key}.appointDevice(${device})` + arduino.END;
+    }
+
+    arduino["mp3_set_device"] = function(block){
+        var order = arduino.ORDER_NONE;
+        var port = arduino.valueToCode(block, "SENSOR_PORT", order);
+
+        var key = "mp3_" + port;
+
+        arduino.setupCodes_[key] = `WeMP3 ${key}(${port});`;
+        return [`${key}.isOver()`, order];
+    }
+
+    arduino["oled_set_size"] = function(block){
+        var order = arduino.ORDER_NONE;
+        var port = arduino.valueToCode(block, "SENSOR_PORT", order);
+        var size = arduino.valueToCode(block, "OLED_SIZE", order);
+
+        var key = "oled_" + port;
+
+        arduino.setupCodes_[key] = `WeOLED ${key}(${port});`;
+        return arduino.tab() + `${key}.setSize(${size})` + arduino.END;
+    }
+
+    arduino["oled_show_string"] = function(block){
+        var order = arduino.ORDER_NONE;
+        var port = arduino.valueToCode(block, "SENSOR_PORT", order);
+        var x = arduino.valueToCode(block, "X", order);
+        var y = arduino.valueToCode(block, "Y", order);
+        var str = arduino.valueToCode(block, "STR", order);
+
+        var key = "oled_" + port;
+
+        arduino.setupCodes_[key] = `WeOLED ${key}(${port});`;
+        return arduino.tab() + `${key}.showString(${x}, ${y}, ${str})` + arduino.END;
+    }
+
+
+    arduino["oled_show_number"] = function(block){
+        var order = arduino.ORDER_NONE;
+        var port = arduino.valueToCode(block, "SENSOR_PORT", order);
+        var x = arduino.valueToCode(block, "X", order);
+        var y = arduino.valueToCode(block, "Y", order);
+        var num = arduino.valueToCode(block, "NUM", order);
+
+        var key = "oled_" + port;
+
+        arduino.setupCodes_[key] = `WeOLED ${key}(${port});`;
+        return arduino.tab() + `${key}.showNum(${x}, ${y}, ${num})` + arduino.END;
+    }
+
+    arduino["oled_clear_screen"] = function(block){
+        var order = arduino.ORDER_NONE;
+        var port = arduino.valueToCode(block, "SENSOR_PORT", order);
+
+        var key = "oled_" + port;
+
+        arduino.setupCodes_[key] = `WeOLED ${key}(${port});`;
+        return arduino.tab() + `${key}.clearScreen()` + arduino.END;
+    }
+
+    arduino["color_sensor"] = function(block){
+        var order = arduino.ORDER_NONE;
+        var port = arduino.valueToCode(block, "SENSOR_PORT", order);
+        var type = arduino.valueToCode(block, "COLOR_TYPE", order);
+
+        var key = "colorSensor_" + port;
+
+        arduino.setupCodes_[key] = `WeColorSensor ${key}(${port});`;
+        return [`${key}.readValue(${type})`, order];
+    }
+
+    arduino["flame_sensor"] = function(block){
+        var order = arduino.ORDER_NONE;
+        var port = arduino.valueToCode(block, "SENSOR_PORT", order);
+        var index = arduino.valueToCode(block, "FLAME_INDEX", order);
+
+        var key = "flameSensor_" + port;
+
+        arduino.setupCodes_[key] = `WeFlameSensor ${key}(${port});`;
+        return [`${key}.readValue(${index})`, order];
+    }
+
+    arduino["joystick"] = function(block){
+        var order = arduino.ORDER_NONE;
+        var port = arduino.valueToCode(block, "SENSOR_PORT", order);
+        var axis = arduino.valueToCode(block, "AXIS2", order);
+
+        var key = "joystick_" + port;
+
+        arduino.setupCodes_[key] = `WeJoystick ${key}(${port});`;
+        return [`${key}.readValue(${axis})`, order];
+    }
+
+    arduino["compass"] = function(block){
+        var order = arduino.ORDER_NONE;
+        var port = arduino.valueToCode(block, "SENSOR_PORT", order);
+        var axis = arduino.valueToCode(block, "AXIS3", order);
+
+        var key = "compass_" + port;
+
+        arduino.setupCodes_[key] = `WeCompassSensor ${key}(${port});`;
+        return [`${key}.readValue(${axis})`, order];
+    }
+
+    arduino["gyro_gyration"] = function(block){
+        var order = arduino.ORDER_NONE;
+        var port = arduino.valueToCode(block, "SENSOR_PORT", order);
+        var axis = arduino.valueToCode(block, "AXIS3", order);
+
+        var key = "gyro_" + port;
+
+        arduino.setupCodes_[key] = `WeGyroSensor ${key}(${port});`;
+        return [`${key}.getGyration(${index})`, order];
+    }
+
+    arduino["gyro_acceleration"] = function(block){
+        var order = arduino.ORDER_NONE;
+        var port = arduino.valueToCode(block, "SENSOR_PORT", order);
+        var axis = arduino.valueToCode(block, "AXIS3", order);
+
+        var key = "gyro_" + port;
+
+        arduino.setupCodes_[key] = `WeGyroSensor ${key}(${port});`;
+        return [`${key}.getAcceleration(${index})`, order];
+    }
+
+    arduino["touch"] = function(block){
+        var order = arduino.ORDER_NONE;
+        var port = arduino.valueToCode(block, "SENSOR_PORT", order);
+
+        var key = "touchSensor_" + port;
+
+        arduino.setupCodes_[key] = `WeTouchSensor ${key}(${port});`;
+        return [`${key}.touched()`, order];
+    }
+
+    arduino["led_button"] = function(block){
+        var order = arduino.ORDER_NONE;
+        var port = arduino.valueToCode(block, "SENSOR_PORT", order);
+        var index = arduino.valueToCode(block, "BUTTON_INDEX", order);
+
+        var key = "button4led_" + port;
+
+        arduino.setupCodes_[key] = `We4LEDButton ${key}(${port});`;
+        return [`(${key}.readKey() == ${index})`, order];
+    }
+
+    arduino["pir"] = function(block){
+        var order = arduino.ORDER_NONE;
+        var port = arduino.valueToCode(block, "SENSOR_PORT", order);
+
+        var key = "pir_" + port;
+
+        arduino.setupCodes_[key] = `WePIRSensor ${key}(${port});`;
+        return [`${key}.readSensor()`, order];
+    }
+
+    arduino["tilt"] = function(block){
+        var order = arduino.ORDER_NONE;
+        var port = arduino.valueToCode(block, "SENSOR_PORT", order);
+
+        var key = "tilt_" + port;
+
+        arduino.setupCodes_[key] = `WeTiltSwitch ${key}(${port});`;
+        return [`${key}.readSensor()`, order];
+    }
+
+    arduino["limit_switch"] = function(block){
+        var order = arduino.ORDER_NONE;
+        var port = arduino.valueToCode(block, "SENSOR_PORT", order);
+
+        var key = "limitSwitch_" + port;
+
+        arduino.setupCodes_[key] = `WeLimitSwitch ${key}(${port});`;
+        return [`${key}.read()`, order];
+    }
     
 /*
     arduino["weeebot_lcd"] = function (block) {
