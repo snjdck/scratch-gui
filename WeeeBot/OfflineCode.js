@@ -104,8 +104,7 @@ module.exports = function(){
 
         var key = "ts_" + port;
         
-        arduino.definitions_[key] = "WeTemperature " + key + ";";
-        arduino.setupCodes_[key] = key + ".reset(" + port + ");";
+        arduino.definitions_[key] = `WeTemperature ${key}(${port});`;
         return [key + ".temperature()", b];
     };
 
@@ -404,7 +403,7 @@ module.exports = function(){
 
         var key = "segmentDisplaySensor_" + port;
 
-        arduino.setupCodes_[key] = `We7SegmentDisplay ${key}(${port});`;
+        arduino.definitions_[key] = `We7SegmentDisplay ${key}(${port});`;
         return arduino.tab() + `${key}.showNumber(${num})` + arduino.END;
     }
 
@@ -416,7 +415,7 @@ module.exports = function(){
 
         var key = "button4led_" + port;
 
-        arduino.setupCodes_[key] = `We4LEDButton ${key}(${port});`;
+        arduino.definitions_[key] = `We4LEDButton ${key}(${port});`;
         return arduino.tab() + `${key}.setLed(${index}, ${isOn})` + arduino.END;
     }
 
@@ -427,7 +426,7 @@ module.exports = function(){
 
         var key = "relay_" + port;
 
-        arduino.setupCodes_[key] = `WeRelay ${key}(${port});`;
+        arduino.definitions_[key] = `WeRelay ${key}(${port});`;
         return arduino.tab() + `${key}.setNC(${isOn})` + arduino.END;
     }
 
@@ -438,7 +437,7 @@ module.exports = function(){
 
         var key = "waterAtomizer_" + port;
 
-        arduino.setupCodes_[key] = `WeWaterAtomizer ${key}(${port});`;
+        arduino.definitions_[key] = `WeWaterAtomizer ${key}(${port});`;
         return arduino.tab() + `${key}.setRun(${isOn})` + arduino.END;
     }
 
@@ -448,7 +447,7 @@ module.exports = function(){
 
         var key = "colorSensor_" + port;
 
-        arduino.setupCodes_[key] = `WeColorSensor ${key}(${port});`;
+        arduino.definitions_[key] = `WeColorSensor ${key}(${port});`;
         return arduino.tab() + `${key}.whitebalance()` + arduino.END;
     }
 
@@ -459,7 +458,7 @@ module.exports = function(){
 
         var key = "colorSensor_" + port;
 
-        arduino.setupCodes_[key] = `WeColorSensor ${key}(${port});`;
+        arduino.definitions_[key] = `WeColorSensor ${key}(${port});`;
         return arduino.tab() + `${key}.setLight(${isOn})` + arduino.END;
     }
 
@@ -469,7 +468,7 @@ module.exports = function(){
 
         var key = "mp3_" + port;
 
-        arduino.setupCodes_[key] = `WeMP3 ${key}(${port});`;
+        arduino.definitions_[key] = `WeMP3 ${key}(${port});`;
         return arduino.tab() + `${key}.play()` + arduino.END;
     }
 
@@ -479,7 +478,7 @@ module.exports = function(){
 
         var key = "mp3_" + port;
 
-        arduino.setupCodes_[key] = `WeMP3 ${key}(${port});`;
+        arduino.definitions_[key] = `WeMP3 ${key}(${port});`;
         return arduino.tab() + `${key}.pause()` + arduino.END;
     }
 
@@ -489,7 +488,7 @@ module.exports = function(){
 
         var key = "mp3_" + port;
 
-        arduino.setupCodes_[key] = `WeMP3 ${key}(${port});`;
+        arduino.definitions_[key] = `WeMP3 ${key}(${port});`;
         return arduino.tab() + `${key}.nextMusic()` + arduino.END;
     }
 
@@ -500,7 +499,7 @@ module.exports = function(){
 
         var key = "mp3_" + port;
 
-        arduino.setupCodes_[key] = `WeMP3 ${key}(${port});`;
+        arduino.definitions_[key] = `WeMP3 ${key}(${port});`;
         return arduino.tab() + `${key}.appointMusic(${num})` + arduino.END;
     }
 
@@ -511,7 +510,7 @@ module.exports = function(){
 
         var key = "mp3_" + port;
 
-        arduino.setupCodes_[key] = `WeMP3 ${key}(${port});`;
+        arduino.definitions_[key] = `WeMP3 ${key}(${port});`;
         return arduino.tab() + `${key}.appointVolume(${num})` + arduino.END;
     }
 
@@ -522,7 +521,7 @@ module.exports = function(){
 
         var key = "mp3_" + port;
 
-        arduino.setupCodes_[key] = `WeMP3 ${key}(${port});`;
+        arduino.definitions_[key] = `WeMP3 ${key}(${port});`;
         return arduino.tab() + `${key}.appointDevice(${device})` + arduino.END;
     }
 
@@ -532,7 +531,7 @@ module.exports = function(){
 
         var key = "mp3_" + port;
 
-        arduino.setupCodes_[key] = `WeMP3 ${key}(${port});`;
+        arduino.definitions_[key] = `WeMP3 ${key}(${port});`;
         return [`${key}.isOver()`, order];
     }
 
@@ -543,7 +542,7 @@ module.exports = function(){
 
         var key = "oled_" + port;
 
-        arduino.setupCodes_[key] = `WeOLED ${key}(${port});`;
+        arduino.definitions_[key] = `WeOLED ${key}(${port});`;
         return arduino.tab() + `${key}.setSize(${size})` + arduino.END;
     }
 
@@ -556,7 +555,7 @@ module.exports = function(){
 
         var key = "oled_" + port;
 
-        arduino.setupCodes_[key] = `WeOLED ${key}(${port});`;
+        arduino.definitions_[key] = `WeOLED ${key}(${port});`;
         return arduino.tab() + `${key}.showString(${x}, ${y}, ${str})` + arduino.END;
     }
 
@@ -570,7 +569,7 @@ module.exports = function(){
 
         var key = "oled_" + port;
 
-        arduino.setupCodes_[key] = `WeOLED ${key}(${port});`;
+        arduino.definitions_[key] = `WeOLED ${key}(${port});`;
         return arduino.tab() + `${key}.showNum(${x}, ${y}, ${num})` + arduino.END;
     }
 
@@ -580,7 +579,7 @@ module.exports = function(){
 
         var key = "oled_" + port;
 
-        arduino.setupCodes_[key] = `WeOLED ${key}(${port});`;
+        arduino.definitions_[key] = `WeOLED ${key}(${port});`;
         return arduino.tab() + `${key}.clearScreen()` + arduino.END;
     }
 
@@ -591,7 +590,7 @@ module.exports = function(){
 
         var key = "colorSensor_" + port;
 
-        arduino.setupCodes_[key] = `WeColorSensor ${key}(${port});`;
+        arduino.definitions_[key] = `WeColorSensor ${key}(${port});`;
         return [`${key}.readValue(${type})`, order];
     }
 
@@ -602,7 +601,7 @@ module.exports = function(){
 
         var key = "flameSensor_" + port;
 
-        arduino.setupCodes_[key] = `WeFlameSensor ${key}(${port});`;
+        arduino.definitions_[key] = `WeFlameSensor ${key}(${port});`;
         return [`${key}.readValue(${index})`, order];
     }
 
@@ -613,7 +612,7 @@ module.exports = function(){
 
         var key = "joystick_" + port;
 
-        arduino.setupCodes_[key] = `WeJoystick ${key}(${port});`;
+        arduino.definitions_[key] = `WeJoystick ${key}(${port});`;
         return [`${key}.readValue(${axis})`, order];
     }
 
@@ -624,7 +623,7 @@ module.exports = function(){
 
         var key = "compass_" + port;
 
-        arduino.setupCodes_[key] = `WeCompassSensor ${key}(${port});`;
+        arduino.definitions_[key] = `WeCompassSensor ${key}(${port});`;
         return [`${key}.readValue(${axis})`, order];
     }
 
@@ -635,7 +634,7 @@ module.exports = function(){
 
         var key = "gyro_" + port;
 
-        arduino.setupCodes_[key] = `WeGyroSensor ${key}(${port});`;
+        arduino.definitions_[key] = `WeGyroSensor ${key}(${port});`;
         return [`${key}.getGyration(${index})`, order];
     }
 
@@ -646,7 +645,7 @@ module.exports = function(){
 
         var key = "gyro_" + port;
 
-        arduino.setupCodes_[key] = `WeGyroSensor ${key}(${port});`;
+        arduino.definitions_[key] = `WeGyroSensor ${key}(${port});`;
         return [`${key}.getAcceleration(${index})`, order];
     }
 
@@ -656,7 +655,7 @@ module.exports = function(){
 
         var key = "touchSensor_" + port;
 
-        arduino.setupCodes_[key] = `WeTouchSensor ${key}(${port});`;
+        arduino.definitions_[key] = `WeTouchSensor ${key}(${port});`;
         return [`${key}.touched()`, order];
     }
 
@@ -667,7 +666,7 @@ module.exports = function(){
 
         var key = "button4led_" + port;
 
-        arduino.setupCodes_[key] = `We4LEDButton ${key}(${port});`;
+        arduino.definitions_[key] = `We4LEDButton ${key}(${port});`;
         return [`(${key}.readKey() == ${index})`, order];
     }
 
@@ -677,7 +676,7 @@ module.exports = function(){
 
         var key = "pir_" + port;
 
-        arduino.setupCodes_[key] = `WePIRSensor ${key}(${port});`;
+        arduino.definitions_[key] = `WePIRSensor ${key}(${port});`;
         return [`${key}.readSensor()`, order];
     }
 
@@ -687,7 +686,7 @@ module.exports = function(){
 
         var key = "tilt_" + port;
 
-        arduino.setupCodes_[key] = `WeTiltSwitch ${key}(${port});`;
+        arduino.definitions_[key] = `WeTiltSwitch ${key}(${port});`;
         return [`${key}.readSensor()`, order];
     }
 
@@ -697,7 +696,7 @@ module.exports = function(){
 
         var key = "limitSwitch_" + port;
 
-        arduino.setupCodes_[key] = `WeLimitSwitch ${key}(${port});`;
+        arduino.definitions_[key] = `WeLimitSwitch ${key}(${port});`;
         return [`${key}.read()`, order];
     }
     
