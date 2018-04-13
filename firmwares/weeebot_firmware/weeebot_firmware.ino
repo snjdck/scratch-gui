@@ -625,8 +625,9 @@ void getGyro(char *cmd)
 void getTilt(char *cmd)
 {
 	int port = nextInt(&cmd);
+	int index = nextInt(&cmd);
 	tilt.reset(port);
-	Serial.println(tilt.readSensor());
+	printBoolean(tilt.readSensor(index));
 }
 
 void setRelay(char *cmd)

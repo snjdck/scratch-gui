@@ -20,6 +20,14 @@ uint8_t WeTiltSwitch::readSensor(void)
    return _Sensor;
 }
 
-
+bool WeTiltSwitch::readSensor(uint8_t index)
+{
+	uint8_t value = readSensor();
+	switch(index){
+		case 1: return value == 2;
+		case 2: return value == 1;
+	}
+	return value != 0;
+}
 
 
