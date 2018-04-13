@@ -755,7 +755,7 @@ module.exports = function(){
         var key = "gyro_" + port;
 
         arduino.definitions_[key] = `WeGyroSensor ${key}(${port});`;
-        return [`${key}.getGyration(${index})`, order];
+        return [`${key}.getGyration(${axis})`, order];
     }
 
     arduino["gyro_acceleration"] = function(block){
@@ -766,7 +766,7 @@ module.exports = function(){
         var key = "gyro_" + port;
 
         arduino.definitions_[key] = `WeGyroSensor ${key}(${port});`;
-        return [`${key}.getAcceleration(${index})`, order];
+        return [`${key}.getAcceleration(${axis})`, order];
     }
 
     arduino["touch"] = function(block){
