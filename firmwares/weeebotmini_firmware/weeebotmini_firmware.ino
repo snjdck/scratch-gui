@@ -653,7 +653,7 @@ void getTilt(char *cmd)
 {
 	int port = nextInt(&cmd);
 	tilt.reset(port);
-	printBoolean(tilt.readSensor());
+	Serial.println(tilt.readSensor());
 }
 
 void setRelay(char *cmd)
