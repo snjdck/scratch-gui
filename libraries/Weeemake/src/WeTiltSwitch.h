@@ -11,7 +11,7 @@ public:
   WeTiltSwitch(uint8_t port=0);
   void reset(uint8_t port=0);
 
-  bool readSensor(void);
+  uint8_t readSensor(void);
 
   
 private:
