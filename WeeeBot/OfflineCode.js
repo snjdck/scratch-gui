@@ -553,6 +553,10 @@ module.exports = function(){
         var y = arduino.valueToCode(block, "Y", order);
         var str = arduino.valueToCode(block, "STR", order);
 
+        if(findInputBlockType(block, "STR") == "text"){
+            str = `"${str}"`;
+        }
+
         var key = "oled_" + port;
 
         arduino.definitions_[key] = `WeOLED ${key}(${port});`;
