@@ -803,11 +803,12 @@ module.exports = function(){
     arduino["tilt"] = function(block){
         var order = arduino.ORDER_NONE;
         var port = arduino.valueToCode(block, "SENSOR_PORT", order);
+        var index = arduino.valueToCode(block, "LINE_FOLLOWER_INDEX", order);
 
         var key = "tilt_" + port;
 
         arduino.definitions_[key] = `WeTiltSwitch ${key}(${port});`;
-        return [`${key}.readSensor()`, order];
+        return [`${key}.readSensor(${index})`, order];
     }
 
     arduino["limit_switch"] = function(block){

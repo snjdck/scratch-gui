@@ -246,7 +246,7 @@ module.exports = function (){
     regBlock("weeebot_single_line_follower", Translation.WB_SINGLE_LINE_FOLLOWER, ["SENSOR_PORT"], "Number");
     regBlock("back_led_light", Translation.WB_MINI_BACK_LED, ["BACK_LED_PORT", "ON_OFF"]);
     regBlock("front_led_light", Translation.WB_MINI_FRONT_LED, ["SENSOR_PORT", "ULTRASONIC_LED_INDEX", "ON_OFF"]);
-    regBlock("front_led_light", Translation.WB_MINI_FRONT_LED, ["SENSOR_PORT", "ULTRASONIC_LED_INDEX", "ON_OFF"]);
+    //regBlock("front_led_light", Translation.WB_MINI_FRONT_LED, ["SENSOR_PORT", "ULTRASONIC_LED_INDEX", "ON_OFF"]);
 
     regBlock("humiture_humidity", Translation.WB_HUMITURE_HUMIDITY, ["SENSOR_PORT"], "Number");
     regBlock("humiture_temperature", Translation.WB_HUMITURE_TEMPERATURE, ["SENSOR_PORT"], "Number");
@@ -286,7 +286,7 @@ module.exports = function (){
     regBlock("touch", "touch sensor %1", ["SENSOR_PORT"], "Boolean");
     regBlock("led_button", "LED button %1 %2 pressed?", ["SENSOR_PORT", "BUTTON_INDEX"], "Boolean");
     regBlock("pir",  "pir motion sensor %1", ["SENSOR_PORT"], "Boolean");
-    regBlock("tilt", "tilt sensor %1", ["SENSOR_PORT"], "Boolean");
+    regBlock("tilt", "tilt sensor %1 %2", ["SENSOR_PORT", "LINE_FOLLOWER_INDEX"], "Boolean");
     regBlock("limit_switch", "limit switch %1", ["SENSOR_PORT"], "Boolean");
 
     return result;

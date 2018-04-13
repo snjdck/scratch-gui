@@ -255,6 +255,8 @@ module.exports = function (){
     regBlock("ultrasonic", Translation.WB_ULTRASONIC, ["SENSOR_PORT"], "Number");
     regBlock("ultrasonic_led", Translation.WB_ULTRASONIC_LED, ["SENSOR_PORT", "ULTRASONIC_LED_INDEX", "COLOR"]);
     regBlock("ultrasonic_led_rgb", Translation.WB_ULTRASONIC_LED_RGB, ["SENSOR_PORT", "ULTRASONIC_LED_INDEX", "R", "G", "B"]);
+    regBlock("ir_avoid_led", Translation.WB_IR_AVOID_LED, ["SENSOR_PORT", "ULTRASONIC_LED_INDEX", "COLOR"]);
+    regBlock("ir_avoid_led_rgb", Translation.WB_IR_AVOID_LED_RGB, ["SENSOR_PORT", "ULTRASONIC_LED_INDEX", "R", "G", "B"]);
     regBlock("weeebot_led_matrix_number", Translation.WB_LED_MATRIX_NUMBER, ["SENSOR_PORT", "NUM"]);
     regBlock("weeebot_led_matrix_time", Translation.WB_LED_MATRIX_TIME, ["SENSOR_PORT", "HOUR", "SHOW_COLON", "SECOND"]);
     regBlock("weeebot_led_matrix_string", Translation.WB_LED_MATRIX_STRING, ["SENSOR_PORT", "X", "Y", "STR"]);
@@ -262,7 +264,17 @@ module.exports = function (){
     regBlock("weeebot_led_matrix_pixel_show", Translation.WB_LED_MATRIX_PIXEL_SHOW, ["SENSOR_PORT", "X", "Y"]);
     regBlock("weeebot_led_matrix_pixel_hide", Translation.WB_LED_MATRIX_PIXEL_HIDE, ["SENSOR_PORT", "X", "Y"]);
     regBlock("weeebot_led_matrix_clear", Translation.WB_LED_MATRIX_CLEAR, ["SENSOR_PORT"]);
+
+    regBlock("weeebot_ir_avoid", Translation.WB_IR_AVOID, ["SENSOR_PORT"], "Boolean");
+    regBlock("weeebot_single_line_follower", Translation.WB_SINGLE_LINE_FOLLOWER, ["SENSOR_PORT"], "Number");
+
+    regBlock("humiture_humidity", Translation.WB_HUMITURE_HUMIDITY, ["SENSOR_PORT"], "Number");
+    regBlock("humiture_temperature", Translation.WB_HUMITURE_TEMPERATURE, ["SENSOR_PORT"], "Number");
+    regBlock("soil", Translation.WB_SOIL, ["SENSOR_PORT"], "Number");
+
     regBlock("weeebot_single_led", Translation.WB_SINGLE_LED, ["SENSOR_PORT", "ON_OFF"]);
+
+
     regBlock("sliding_potentiometer", Translation.WB_SLIDING_POTENTIOMETER, ["SENSOR_PORT"], "Number");
     regBlock("potentiometer", Translation.WB_POTENTIOMETER, ["SENSOR_PORT"], "Number");
     regBlock("gas_sensor", Translation.WB_GAS, ["SENSOR_PORT"], "Number");
@@ -293,7 +305,7 @@ module.exports = function (){
     regBlock("touch", "touch sensor %1", ["SENSOR_PORT"], "Boolean");
     regBlock("led_button", "LED button %1 %2 pressed?", ["SENSOR_PORT", "BUTTON_INDEX"], "Boolean");
     regBlock("pir",  "pir motion sensor %1", ["SENSOR_PORT"], "Boolean");
-    regBlock("tilt", "tilt sensor %1", ["SENSOR_PORT"], "Boolean");
+    regBlock("tilt", "tilt sensor %1 %2", ["SENSOR_PORT", "LINE_FOLLOWER_INDEX"], "Boolean");
     regBlock("limit_switch", "limit switch %1", ["SENSOR_PORT"], "Boolean");
 
     return result;

@@ -289,7 +289,8 @@ const toolbox = newXML("category", {"name":"WeeeBot", "key":"WeeeBot", "colour":
             newDropdownValue("SENSOR_PORT", SENSOR_PORTS[1])
         ]),
         newBlock("tilt", [
-            newDropdownValue("SENSOR_PORT", SENSOR_PORTS[1])
+            newDropdownValue("SENSOR_PORT", SENSOR_PORTS[1]),
+            newDropdownValue("LINE_FOLLOWER_INDEX", 1)
         ]),
         newBlock("limit_switch", [
             newDropdownValue("SENSOR_PORT", SENSOR_PORTS[1])

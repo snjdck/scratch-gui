@@ -397,7 +397,8 @@ function pir(argValues, util){
 
 function tilt(argValues, util){
     var port = argValues.SENSOR_PORT;
-    return createPromise(util, 25, port);
+    var index = argValues.LINE_FOLLOWER_INDEX;
+    return createPromise(util, 25, port, index);
 }
 
 module.exports = function(){
