@@ -217,21 +217,21 @@ module.exports = function (){
         ["8",  8],
         ["16", 16]]);
     regOption("color_type", "Number", [
-        ["Light",0],
-        ["Red",  1],
-        ["Green",2],
-        ["Blue", 3]]);
+        [Translation.COLOUR_LIGHT,0],
+        [Translation.COLOUR_RGB_RED,  1],
+        [Translation.COLOUR_RGB_GREEN,2],
+        [Translation.COLOUR_RGB_BLUE, 3]]);
     regOption("flame_index", "Number", [
         ["1",1],
         ["2",2],
         ["3",3]]);
     regOption("axis2", "Number", [
-        ["X-Axis",0],
-        ["Y-Axis",1]]);
+        [Translation.X_AXIS,0],
+        [Translation.Y_AXIS,1]]);
     regOption("axis3", "Number", [
-        ["X-Axis",0],
-        ["Y-Axis",1],
-        ["Z-Axis",2]]);
+        [Translation.X_AXIS,0],
+        [Translation.Y_AXIS,1],
+        [Translation.Z_AXIS,2]]);
     regBlock("weeebot_motor_dc",   Translation.WB_DCMOTOR,    ["WEEEBOT_DCMOTOR_OPTION", "SPEED"]);
     regBlock("weeebot_motor_move", Translation.WB_MOTOR_MOVE, ["MOVE_DIRECTION", "SPEED"]);
     regBlock("weeebot_motor_dc_130", "5V 130 " + Translation.WB_DCMOTOR, ["SENSOR_PORT", "SPEED"]);
@@ -266,11 +266,11 @@ module.exports = function (){
     regBlock("weeebot_led_matrix_clear", Translation.WB_LED_MATRIX_CLEAR, ["SENSOR_PORT"]);
 
     regBlock("weeebot_ir_avoid", Translation.WB_IR_AVOID, ["SENSOR_PORT"], "Boolean");
-    regBlock("weeebot_single_line_follower", Translation.WB_SINGLE_LINE_FOLLOWER, ["SENSOR_PORT"], "Number");
+    regBlock("weeebot_single_line_follower", Translation.WB_SINGLE_LINE_FOLLOWER, ["BOARD_PORT"], "Number");
 
     regBlock("humiture_humidity", Translation.WB_HUMITURE_HUMIDITY, ["SENSOR_PORT"], "Number");
     regBlock("humiture_temperature", Translation.WB_HUMITURE_TEMPERATURE, ["SENSOR_PORT"], "Number");
-    regBlock("soil", Translation.WB_SOIL, ["SENSOR_PORT"], "Number");
+    regBlock("soil", Translation.WB_SOIL, ["BOARD_PORT"], "Number");
 
     regBlock("weeebot_single_led", Translation.WB_SINGLE_LED, ["SENSOR_PORT", "ON_OFF"]);
 
@@ -279,34 +279,34 @@ module.exports = function (){
     regBlock("potentiometer", Translation.WB_POTENTIOMETER, ["SENSOR_PORT"], "Number");
     regBlock("gas_sensor", Translation.WB_GAS, ["SENSOR_PORT"], "Number");
 
-    regBlock("seven_segment", "4-digit display %1 show %2", ["SENSOR_PORT", "NUM"]);
-    regBlock("led_button_light", "LED button %1 %2 %3", ["SENSOR_PORT", "BUTTON_INDEX", "ON_OFF"]);
-    regBlock("relay", "relay sensor %1 %2", ["SENSOR_PORT", "ON_OFF"]);
-    regBlock("water_atomizer", "water atomizer %1 %2", ["SENSOR_PORT", "ON_OFF"]);
-    regBlock("color_sensor_white_balance", "set color sensor %1 white balance", ["SENSOR_PORT"]);
-    regBlock("color_sensor_light", "set color sensor %1 light %2", ["SENSOR_PORT", "ON_OFF"]);
-    regBlock("mp3_play", "MP3 %1 play", ["SENSOR_PORT"]);
-    regBlock("mp3_pause", "MP3 %1 pause", ["SENSOR_PORT"]);
-    regBlock("mp3_next_music", "MP3 %1 next music", ["SENSOR_PORT"]);
-    regBlock("mp3_set_music", "MP3 %1 set music %2", ["SENSOR_PORT", "NUM"]);
-    regBlock("mp3_set_volume", "MP3 %1 set volume %2", ["SENSOR_PORT", "NUM"]);
-    regBlock("mp3_set_device", "MP3 %1 set device %2", ["SENSOR_PORT", "MP3_DEVICE_TYPE"]);
-    regBlock("mp3_is_over", "MP3 %1 is over", ["SENSOR_PORT"], "Boolean");
-    regBlock("oled_set_size", "OLED %1 set size %2", ["SENSOR_PORT", "OLED_SIZE"]);
-    regBlock("oled_show_string", "OLED %1 x %2 y %3 show string %4", ["SENSOR_PORT", "X", "Y", "STR"]);
-    regBlock("oled_show_number", "OLED %1 x %2 y %3 show number %4", ["SENSOR_PORT", "X", "Y", "NUM"]);
-    regBlock("oled_clear_screen", "OLED %1 clear screen", ["SENSOR_PORT"]);
-    regBlock("color_sensor", "color sensor %1 %2", ["SENSOR_PORT", "COLOR_TYPE"], "Number");
-    regBlock("flame_sensor", "flame sensor %1 %2", ["SENSOR_PORT", "FLAME_INDEX"], "Number");
-    regBlock("joystick", "joystick %1 %2", ["SENSOR_PORT", "AXIS2"], "Number");
-    regBlock("compass", "compass sensor %1 %2", ["SENSOR_PORT", "AXIS3"], "Number");
-    regBlock("gyro_gyration", "gyro sensor %1 %2 gyration", ["SENSOR_PORT", "AXIS3"], "Number");
-    regBlock("gyro_acceleration", "gyro sensor %1 %2 acceleration", ["SENSOR_PORT", "AXIS3"], "Number");
-    regBlock("touch", "touch sensor %1", ["SENSOR_PORT"], "Boolean");
-    regBlock("led_button", "LED button %1 %2 pressed?", ["SENSOR_PORT", "BUTTON_INDEX"], "Boolean");
-    regBlock("pir",  "pir motion sensor %1", ["SENSOR_PORT"], "Boolean");
-    regBlock("tilt", "tilt sensor %1 %2", ["SENSOR_PORT", "LINE_FOLLOWER_INDEX"], "Boolean");
-    regBlock("limit_switch", "limit switch %1", ["SENSOR_PORT"], "Boolean");
+    regBlock("seven_segment", Translation.WB_7_SEGMENT_DISPLAY, ["SENSOR_PORT", "NUM"]);
+    regBlock("led_button_light", Translation.WB_LED_BUTTON_LIGHT, ["SENSOR_PORT", "BUTTON_INDEX", "ON_OFF"]);
+    regBlock("relay", Translation.WB_RELAY, ["SENSOR_PORT", "ON_OFF"]);
+    regBlock("water_atomizer", Translation.WB_WATER_ATOMIZER, ["SENSOR_PORT", "ON_OFF"]);
+    regBlock("color_sensor_white_balance", Translation.WB_COLOR_SENSOR_WHITE_BALANCE, ["SENSOR_PORT"]);
+    regBlock("color_sensor_light", Translation.WB_COLOR_SENSOR_LIGHT, ["SENSOR_PORT", "ON_OFF"]);
+    regBlock("mp3_play", Translation.WB_MP3_PLAY, ["SENSOR_PORT"]);
+    regBlock("mp3_pause", Translation.WB_MP3_PAUSE, ["SENSOR_PORT"]);
+    regBlock("mp3_next_music", Translation.WB_MP3_NEXT_MUSIC, ["SENSOR_PORT"]);
+    regBlock("mp3_set_music", Translation.WB_MP3_SET_MUSIC, ["SENSOR_PORT", "NUM"]);
+    regBlock("mp3_set_volume", Translation.WB_MP3_SET_VOLUME, ["SENSOR_PORT", "NUM"]);
+    regBlock("mp3_set_device", Translation.WB_MP3_SET_DEVICE, ["SENSOR_PORT", "MP3_DEVICE_TYPE"]);
+    regBlock("mp3_is_over", Translation.WB_MP3_IS_OVER, ["SENSOR_PORT"], "Boolean");
+    regBlock("oled_set_size", Translation.WB_OLED_SET_SIZE, ["SENSOR_PORT", "OLED_SIZE"]);
+    regBlock("oled_show_string", Translation.WB_OLED_SHOW_STRING, ["SENSOR_PORT", "X", "Y", "STR"]);
+    regBlock("oled_show_number", Translation.WB_OLED_SHOW_NUMBER, ["SENSOR_PORT", "X", "Y", "NUM"]);
+    regBlock("oled_clear_screen", Translation.WB_OLED_CLEAR_SCREEN, ["SENSOR_PORT"]);
+    regBlock("color_sensor", Translation.WB_COLOR_SENSOR, ["SENSOR_PORT", "COLOR_TYPE"], "Number");
+    regBlock("flame_sensor", Translation.WB_FLAME_SENSOR, ["SENSOR_PORT", "FLAME_INDEX"], "Number");
+    regBlock("joystick", Translation.WB_JOYSTICK, ["SENSOR_PORT", "AXIS2"], "Number");
+    regBlock("compass", Translation.WB_COMPASS, ["SENSOR_PORT", "AXIS3"], "Number");
+    regBlock("gyro_gyration", Translation.WB_GYRO_GYRATION, ["SENSOR_PORT", "AXIS3"], "Number");
+    regBlock("gyro_acceleration", Translation.WB_GYRO_ACCELERATION, ["SENSOR_PORT", "AXIS3"], "Number");
+    regBlock("touch", Translation.WB_TOUCH, ["SENSOR_PORT"], "Boolean");
+    regBlock("led_button", Translation.WB_LED_BUTTON, ["SENSOR_PORT", "BUTTON_INDEX"], "Boolean");
+    regBlock("pir",  Translation.WB_PIR, ["SENSOR_PORT"], "Boolean");
+    regBlock("tilt", Translation.WB_TILT, ["SENSOR_PORT", "LINE_FOLLOWER_INDEX"], "Boolean");
+    regBlock("limit_switch", Translation.WB_LIMIT_SWITCH, ["SENSOR_PORT"], "Boolean");
 
     return result;
 };
