@@ -264,7 +264,7 @@ function soil(argValues, util){
     var pin = argValues.SENSOR_PORT;
     return createPromise(util, 124, pin);
 }
-function segment_display_7(argValues, util){
+function seven_segment(argValues, util){
     var pin = argValues.SENSOR_PORT;
     var num = argValues.NUM;
     return createPromise(util, 123, pin, num);
@@ -488,7 +488,7 @@ module.exports = function(){
         humiture_humidity,
         touch,
         soil,
-        segment_display_7,
+        seven_segment,
         weeebot_single_led,
         sliding_potentiometer,
         potentiometer,

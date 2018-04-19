@@ -251,7 +251,7 @@ module.exports = function (){
     regBlock("humiture_humidity", Translation.WB_HUMITURE_HUMIDITY, ["SENSOR_PORT"], "Number");
     regBlock("humiture_temperature", Translation.WB_HUMITURE_TEMPERATURE, ["SENSOR_PORT"], "Number");
     regBlock("soil", Translation.WB_SOIL, ["SENSOR_PORT"], "Number");
-    regBlock("segment_display_7", Translation.WB_7_SEGMENT_DISPLAY, ["SENSOR_PORT", "NUM"]);
+    regBlock("seven_segment", Translation.WB_7_SEGMENT_DISPLAY, ["SENSOR_PORT", "NUM"]);
 
     regBlock("weeebot_motor_dc_130", "5V 130 " + Translation.WB_DCMOTOR, ["SENSOR_PORT", "SPEED"]);
     regBlock("weeebot_single_led", Translation.WB_SINGLE_LED, ["SENSOR_PORT", "ON_OFF"]);

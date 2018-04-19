@@ -154,6 +154,18 @@ const toolbox = newXML("category", {"name":"WeeeBot", "key":"WeeeBot", "colour":
             newNumberValue("G", 255),
             newNumberValue("B", 255)
         ]),
+        newBlock("ir_avoid_led", [
+            newDropdownValue("SENSOR_PORT", SENSOR_PORTS[2]),
+            newDropdownValue("ULTRASONIC_LED_INDEX", 3),
+            newXML("value", {"name":"COLOR"}, [newXML("shadow", {"type":"colour_picker"})])
+        ]),
+        newBlock("ir_avoid_led_rgb", [
+            newDropdownValue("SENSOR_PORT", SENSOR_PORTS[2]),
+            newDropdownValue("ULTRASONIC_LED_INDEX", 3),
+            newNumberValue("R", 255),
+            newNumberValue("G", 255),
+            newNumberValue("B", 255)
+        ]),
         newBlock("weeebot_single_led", [
             newDropdownValue("SENSOR_PORT", SENSOR_PORTS[1]),
             newDropdownValue("ON_OFF", 1)
@@ -238,6 +250,18 @@ const toolbox = newXML("category", {"name":"WeeeBot", "key":"WeeeBot", "colour":
         newBlock("board_temperature_sensor", [
             newDropdownValue("BOARD_PORT", PORTS[1])
         ]),
+        newBlock("weeebot_single_line_follower", [
+            newDropdownValue("BOARD_PORT", PORTS[1])
+        ]),
+        newBlock("humiture_humidity", [
+            newDropdownValue("SENSOR_PORT", SENSOR_PORTS[1])
+        ]),
+        newBlock("humiture_temperature", [
+            newDropdownValue("SENSOR_PORT", SENSOR_PORTS[1])
+        ]),
+        newBlock("soil", [
+            newDropdownValue("BOARD_PORT", PORTS[1])
+        ]),
         newBlock("sliding_potentiometer", [
             newDropdownValue("SENSOR_PORT", SENSOR_PORTS[1])
         ]),
@@ -277,6 +301,9 @@ const toolbox = newXML("category", {"name":"WeeeBot", "key":"WeeeBot", "colour":
         newBlock("weeebot_infraread", [
             newDropdownValue("BOARD_PORT", PORTS[2]),
             newDropdownValue("IR_CODE", 69)
+        ]),
+        newBlock("weeebot_ir_avoid", [
+            newDropdownValue("SENSOR_PORT", SENSOR_PORTS[2])
         ]),
         newBlock("touch", [
             newDropdownValue("SENSOR_PORT", SENSOR_PORTS[1])

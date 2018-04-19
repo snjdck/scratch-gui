@@ -161,7 +161,7 @@ const toolbox = create(["category", {"name":"WeeeBot\nMini", "key":"WeeeBotMini"
             newNumberValue("G", 255),
             newNumberValue("B", 255)
         ]),
-        newBlock("segment_display_7", [
+        newBlock("seven_segment", [
             newDropdownValue("SENSOR_PORT", PORTS[1]),
             newNumberValue("NUM", 100)
         ]),

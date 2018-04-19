@@ -401,8 +401,50 @@ function tilt(argValues, util){
     return createPromise(util, 25, port, index);
 }
 
+function ir_avoid_led(argValues, util){
+    var port = argValues.SENSOR_PORT;
+    var index = argValues.ULTRASONIC_LED_INDEX;
+    var color = hexToRgb(argValues.COLOR);
+    return createPromise(util, 118, port, index, color.r, color.g, color.b);
+}
+function ir_avoid_led_rgb(argValues, util){
+    var port = argValues.SENSOR_PORT;
+    var index = argValues.ULTRASONIC_LED_INDEX;
+    var color = fetchRGB(argValues);
+    return createPromise(util, 118, port, index, color.r, color.g, color.b);
+}
+
+function weeebot_ir_avoid(argValues, util){
+    var port = argValues.SENSOR_PORT;
+    return createPromise(util, 117, port);
+}
+
+function weeebot_single_line_follower(argValues, util){
+    var port = argValues.BOARD_PORT;
+    return createPromise(util, 116, port);
+}
+function soil(argValues, util){
+    var pin = argValues.BOARD_PORT;
+    return createPromise(util, 124, pin);
+}
+function humiture_humidity(argValues, util){
+    var pin = argValues.SENSOR_PORT;
+    return createPromise(util, 122, pin, 1);
+}
+function humiture_temperature(argValues, util){
+    var pin = argValues.SENSOR_PORT;
+    return createPromise(util, 122, pin, 0);
+}
+
 module.exports = function(){
     return {
+        weeebot_single_line_follower,
+        soil,
+        humiture_humidity,
+        humiture_temperature,
+        weeebot_ir_avoid,
+        ir_avoid_led,
+        ir_avoid_led_rgb,
         weeebot_motor_dc,
         weeebot_motor_dc_130,
         weeebot_motor_move,
