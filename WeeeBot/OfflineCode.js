@@ -372,6 +372,61 @@ module.exports = function(){
         code +=    arduino.tab() + `ledPanel.clearScreen()` + arduino.END;
         return code;
     }
+    arduino["weeebot_ir_avoid"] = function(block){
+        var order = arduino.ORDER_NONE;
+
+        var port = arduino.valueToCode(block, "SENSOR_PORT", order);
+
+        var key = "IRAvoid_" + port;
+
+        arduino.definitions_[key] = `WeIRAvoidSensor ${key}(${port});`;
+        
+        var code = key + ".isObstacle()";
+        return [code, order];
+    }
+
+    arduino["weeebot_single_line_follower"] = function(block){
+        var order = arduino.ORDER_NONE;
+
+        var port = arduino.valueToCode(block, "BOARD_PORT", order);
+
+        var key = "singleLF_" + port;
+
+        arduino.definitions_[key] = `WeSingleLineFollower ${key}(${port});`;
+        
+        var code = key + ".read()";
+        return [code, order];
+    }
+
+    arduino["ir_avoid_led"] = function (block) {
+        var order = arduino.ORDER_NONE;
+
+        var port = arduino.valueToCode(block, "SENSOR_PORT", order);
+        var index = arduino.valueToCode(block, "ULTRASONIC_LED_INDEX", order);
+        var color = arduino.valueToCode(block, "COLOR", order);
+        color = hexToRgb(color);
+
+        var key = "IRAvoid_" + port;
+        arduino.definitions_[key] = `WeIRAvoidSensor ${key}(${port});`;
+        return arduino.tab() + `${key}.setColor(${index}, ${color.r}, ${color.g}, ${color.b})`  + arduino.END;
+    };
+
+    arduino["ir_avoid_led_rgb"] = function (block) {
+        var order = arduino.ORDER_NONE;
+
+        var port = arduino.valueToCode(block, "SENSOR_PORT", order);
+        var index = arduino.valueToCode(block, "ULTRASONIC_LED_INDEX", order);
+        var color = {
+            r: arduino.valueToCode(block, "R", order),
+            g: arduino.valueToCode(block, "G", order),
+            b: arduino.valueToCode(block, "B", order)
+        };
+
+        var key = "IRAvoid_" + port;
+
+        arduino.definitions_[key] = `WeIRAvoidSensor ${key}(${port});`;
+        return arduino.tab() + `${key}.setColor(${index}, ${color.r}, ${color.g}, ${color.b})`  + arduino.END;
+    };
     arduino["weeebot_single_led"] = function(block){
         var order = arduino.ORDER_NONE;
         var port = arduino.valueToCode(block, "SENSOR_PORT", order);
@@ -703,6 +758,36 @@ module.exports = function(){
 
         arduino.definitions_[key] = `WeLimitSwitch ${key}(${port});`;
         return [`${key}.read()`, order];
+    }
+
+    arduino.soil = function(block){
+        let order = arduino.ORDER_NONE;
+        var pin = arduino.valueToCode(block, "BOARD_PORT", order);
+        arduino.setupCodes_["pin_input_" + pin] = "pinMode(" + pin + ",INPUT);";
+        let code = `analogRead(${pin})`;
+        return [code, order];
+    }
+
+    arduino.humiture_humidity = function(block){
+        let order = arduino.ORDER_NONE;
+        var port = arduino.valueToCode(block, "SENSOR_PORT", order);
+        var key = "humiture_" + port;
+
+        arduino.definitions_[key] = `WeHumiture ${key}(${port});`;
+        
+        let code = `${key}.getHumidity(true)`;
+        return [code, order];
+    }
+
+    arduino.humiture_temperature = function(block){
+        let order = arduino.ORDER_NONE;
+        var port = arduino.valueToCode(block, "SENSOR_PORT", order);
+        var key = "humiture_" + port;
+
+        arduino.definitions_[key] = `WeHumiture ${key}(${port});`;
+        
+        let code = `${key}.getTemperature(true)`;
+        return [code, order];
     }
     
 /*

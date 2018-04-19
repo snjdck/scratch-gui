@@ -13,6 +13,14 @@ function hexToRgb(hex) {
     } : null;
 }
 
+function findInputBlockType(block, name){
+    for(let item of block.inputList){
+        if(item.name == name){
+            return item.connection.targetConnection.sourceBlock_.type;
+        }
+    }
+}
+
 module.exports = function(){
     const arduino = require("scratch-blocks").Arduino;
 	function option_handler(block){
@@ -267,11 +275,14 @@ module.exports = function(){
         var x = arduino.valueToCode(block, "X", order);
         var y = arduino.valueToCode(block, "Y", order);
         var str = arduino.valueToCode(block, "STR", order);
+        if(findInputBlockType(block, "STR") == "text"){
+            str = `"${str}"`;
+        }
 
         arduino.definitions_["ledPanel"] = "WeLEDPanelModuleMatrix5_14 ledPanel;";
 
         var code = arduino.tab() + `ledPanel.reset(${port})`  + arduino.END;
-        code +=    arduino.tab() + `ledPanel.showChar(${x}, ${y}, "${str}")` + arduino.END;
+        code +=    arduino.tab() + `ledPanel.showChar(${x}, ${y}, ${str})` + arduino.END;
         return code;
     };
     arduino["weeebot_led_matrix_bitmap"] = function (block) {
@@ -469,12 +480,13 @@ module.exports = function(){
 
     arduino.soil = function(block){
         let order = arduino.ORDER_NONE;
-        var port = arduino.valueToCode(block, "SENSOR_PORT", order);
-        let code = `analogRead(${port})`;
+        var pin = arduino.valueToCode(block, "SENSOR_PORT", order);
+        arduino.setupCodes_["pin_input_" + pin] = "pinMode(" + pin + ",INPUT);";
+        let code = `analogRead(${pin})`;
         return [code, order];
     }
 
-    arduino.segment_display_7 = function(block){
+    arduino.seven_segment = function(block){
         let order = arduino.ORDER_NONE;
         var port = arduino.valueToCode(block, "SENSOR_PORT", order);
         var num = arduino.valueToCode(block, "NUM", order);
