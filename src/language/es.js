@@ -773,3 +773,4 @@ Blockly.Msg.COLOUR_LIGHT = "light";
 Blockly.Msg.X_AXIS = "X-Axis";
 Blockly.Msg.Y_AXIS = "Y-Axis";
 Blockly.Msg.Z_AXIS = "Z-Axis";
+Blockly.Msg.WB_LED_STRIP = "set led strip %1 %2 red %3 green %4 blue %5";

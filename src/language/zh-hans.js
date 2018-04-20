@@ -815,3 +815,4 @@ Blockly.Msg.COLOUR_LIGHT = "亮度";
 Blockly.Msg.X_AXIS = "X轴";
 Blockly.Msg.Y_AXIS = "Y轴";
 Blockly.Msg.Z_AXIS = "Z轴";
+Blockly.Msg.WB_LED_STRIP = "设置灯带 %1 %2 红色%3 绿色%4 蓝色%5";
