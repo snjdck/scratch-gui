@@ -436,8 +436,13 @@ function humiture_temperature(argValues, util){
     return createPromise(util, 122, pin, 0);
 }
 
+function led_strip(argValues, util){
+    return weeebot_rgb3(argValues, util, 9, "SENSOR_PORT");
+}
+
 module.exports = function(){
     return {
+        led_strip,
         weeebot_single_line_follower,
         soil,
         humiture_humidity,

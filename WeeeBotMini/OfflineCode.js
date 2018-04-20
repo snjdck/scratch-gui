@@ -832,4 +832,14 @@ module.exports = function(){
         arduino.definitions_[key] = `WeLimitSwitch ${key}(${port});`;
         return [`${key}.read()`, order];
     }
+
+    arduino.led_strip = function(block){
+        var order = arduino.ORDER_NONE;
+        var color = {
+            r: arduino.valueToCode(block, 'R', order),
+            g: arduino.valueToCode(block, 'G', order),
+            b: arduino.valueToCode(block, 'B', order)
+        };
+        return gen_rgb_code(block, color, "WeRGBLed", "led_", 'SENSOR_PORT');
+    }
 };

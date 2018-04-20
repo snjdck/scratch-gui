@@ -259,6 +259,7 @@ module.exports = function (){
     regBlock("potentiometer", Translation.WB_POTENTIOMETER, ["SENSOR_PORT"], "Number");
     regBlock("gas_sensor", Translation.WB_GAS, ["SENSOR_PORT"], "Number");
 
+    regBlock("led_strip", Translation.WB_LED_STRIP, ["SENSOR_PORT", "PIXEL", "R", "G", "B"]);
     regBlock("seven_segment", Translation.WB_7_SEGMENT_DISPLAY, ["SENSOR_PORT", "NUM"]);
     regBlock("led_button_light", Translation.WB_LED_BUTTON_LIGHT, ["SENSOR_PORT", "BUTTON_INDEX", "ON_OFF"]);
     regBlock("relay", Translation.WB_RELAY, ["SENSOR_PORT", "ON_OFF"]);

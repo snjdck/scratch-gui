@@ -448,8 +448,13 @@ function tilt(argValues, util){
     return createPromise(util, 25, port, index);
 }
 
+function led_strip(argValues, util){
+    return weeebot_rgb3(argValues, util);
+}
+
 module.exports = function(){
     return {
+        led_strip,
         weeebot_motor_dc,
         weeebot_motor_dc_130,
         weeebot_motor_move,

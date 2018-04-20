@@ -210,6 +210,38 @@ module.exports = function (){
         ["2", 2],
         ["3", 3],
         ["4", 4]]);
+    regOption("led_strip_index", "Number", [
+        ["1", 1]
+        ["1", 1],
+        ["2", 2],
+        ["3", 3],
+        ["4", 4],
+        ["5", 5],
+        ["6", 6],
+        ["7", 7],
+        ["8", 8],
+        ["9", 9],
+        ["10", 10],
+        ["11", 11],
+        ["12", 12],
+        ["13", 13],
+        ["14", 14],
+        ["15", 15],
+        ["16", 16],
+        ["17", 17],
+        ["18", 18],
+        ["19", 19],
+        ["20", 20],
+        ["21", 21],
+        ["22", 22],
+        ["23", 23],
+        ["24", 24],
+        ["25", 25],
+        ["26", 26],
+        ["27", 27],
+        ["28", 28],
+        ["29", 29],
+        ["30", 30]]);
     regOption("mp3_device_type", "Number", [
         ["FLASH", 4],
         ["TF", 2]]);
@@ -279,6 +311,7 @@ module.exports = function (){
     regBlock("potentiometer", Translation.WB_POTENTIOMETER, ["SENSOR_PORT"], "Number");
     regBlock("gas_sensor", Translation.WB_GAS, ["SENSOR_PORT"], "Number");
 
+    regBlock("led_strip", Translation.WB_LED_STRIP, ["SENSOR_PORT", "PIXEL", "R", "G", "B"]);
     regBlock("seven_segment", Translation.WB_7_SEGMENT_DISPLAY, ["SENSOR_PORT", "NUM"]);
     regBlock("led_button_light", Translation.WB_LED_BUTTON_LIGHT, ["SENSOR_PORT", "BUTTON_INDEX", "ON_OFF"]);
     regBlock("relay", Translation.WB_RELAY, ["SENSOR_PORT", "ON_OFF"]);
