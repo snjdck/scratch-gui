@@ -21,6 +21,7 @@ private:
 	volatile uint8_t  _number3;
 	volatile uint8_t  _number4;
 	float last_number;
+  bool resetFlag;
 };
 
 #endif

@@ -8,6 +8,7 @@ We7SegmentDisplay::We7SegmentDisplay(uint8_t port)
 void We7SegmentDisplay::reset(uint8_t port)
 {
 	_We7SegmentDisplay.reset(port);
+	resetFlag = true;
 }
 
 void We7SegmentDisplay::sendNumber(void)
@@ -36,10 +37,12 @@ void We7SegmentDisplay::showChar(uint8_t Addr, uint8_t Data)
 
 void We7SegmentDisplay::showNumber(float value)
 {    
-	 if(last_number==value)
-	    return;
-	 else
-	    last_number=value;
+	if(resetFlag){
+		resetFlag = false;
+	}else if(last_number == value){
+		return;
+	}
+	 last_number = value;
 
      uint8_t tempBuf[10]={0};
      int buf[4]={0};
