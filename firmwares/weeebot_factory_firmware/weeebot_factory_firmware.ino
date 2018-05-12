@@ -366,7 +366,7 @@ void modeB()
 
 void modeC()
 {
-	const uint8_t base = 640;
+	const int base = 500;
 	static uint8_t line_speed = 100;
 	static uint8_t flag = 0;
 
