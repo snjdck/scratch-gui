@@ -31,7 +31,6 @@ class SerialConnection {
             return;
         }
         chrome.serial.getDevices(ports => {
-            ports = ports.filter(port => /^USB/.test(port.displayName));
             if(process.platform == "darwin"){
                 ports = ports.filter(port => /^\/dev\/tty\./.test(port.path));
             }
