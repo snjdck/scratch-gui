@@ -116,12 +116,12 @@ double WeGyroSensor::readValue(uint8_t index)
 {
   update();
   switch(index){
-    case 0: return gyrX;
-    case 1: return gyrY;
-    case 2: return gyrZ;
-    case 3: return gx;
-    case 4: return gy;
-    case 5: return gz;
+    case 0: return gx;
+    case 1: return gy;
+    case 2: return gz;
+    case 3: return gyrX;
+    case 4: return gyrY;
+    case 5: return gyrZ;
   }
   return 0;
 }
