@@ -41,6 +41,7 @@
 #include "WeWaterAtomizer.h"
 #include "WeMP3.h"
 #include "WeOLED.h"
+#include "WeEncoderMotor.h"
 
 #define PORT_A  (A5)
 #define PORT_B  (A4)
