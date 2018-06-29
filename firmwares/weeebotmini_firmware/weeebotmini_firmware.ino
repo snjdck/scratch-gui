@@ -47,6 +47,7 @@ WeRelay relay;
 WeWaterAtomizer waterAtomizer;
 WeMP3 mp3;
 WeOLED oled;
+WeLEDLineFollower ledLineFollower;
 
 Servo servos[MAX_SERVO_COUNT];
 uint8_t servo_pins[MAX_SERVO_COUNT]={0};
@@ -116,10 +117,15 @@ const uint8_t MSG_ID_POTENTIOMTER = 126;
 const uint8_t MSG_ID_ULTRASONIC_LED = 127;
 const uint8_t MSG_ID_IR_AVOID_LED = 128;
 
+const uint8_t MSG_ID_LED_LINE_FOLLOWER = 129;
+const uint8_t MSG_ID_LED_LINE_FOLLOWER_LIGHT = 130;
+
 const uint8_t MSG_ID_DC_SPEED = 200;
 const uint8_t MSG_ID_DC_MOVE = 201;
 const uint8_t MSG_ID_SERVO = 202;
 const uint8_t MSG_ID_DC_130_SPEED = 204;
+const uint8_t MSG_ID_ENCODER_RUN = 205;
+const uint8_t MSG_ID_ENCODER_RUN_SPEED = 206;
 
 int searchServoPin(int pin){
 	for(int i=0;i<MAX_SERVO_COUNT;i++){
@@ -760,6 +766,20 @@ void doOledClear(char *cmd)
 	oled.clearScreen();
 }
 
+void getLedLineFollower(char *cmd)
+{
+	int port = nextInt(&cmd);
+	ledLineFollower.reset(port);
+	Serial.println(ledLineFollower.readSensor());
+}
+void doLedLineFollowerLight(char *cmd)
+{
+	int port = nextInt(&cmd);
+	bool isOn = nextInt(&cmd);
+	ledLineFollower.reset(port);
+	ledLineFollower.showLED(isOn);
+}
+
 void doStopAll(char *cmd)
 {
 	//stop motor
@@ -1002,6 +1022,13 @@ void parseMcode(char *cmd)
 			break;
 		case MSG_ID_OLED_CLEAR:
 			handler = doOledClear;
+			break;
+		case MSG_ID_LED_LINE_FOLLOWER:
+			queryFlag = true;
+			handler = getLedLineFollower;
+			break;
+		case MSG_ID_LED_LINE_FOLLOWER_LIGHT:
+			handler = doLedLineFollowerLight;
 			break;
 		default:
 			return;

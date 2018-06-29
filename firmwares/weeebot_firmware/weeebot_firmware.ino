@@ -46,7 +46,9 @@ WeTiltSwitch tilt;
 WeRelay relay;
 WeWaterAtomizer waterAtomizer;
 WeMP3 mp3;
-WeOLED oled;
+//WeOLED oled;
+WeEncoderMotor encoderMotor;
+WeLEDLineFollower ledLineFollower;
 
 Servo servos[MAX_SERVO_COUNT];
 uint8_t servo_pins[MAX_SERVO_COUNT]={0};
@@ -115,11 +117,15 @@ const uint8_t MSG_ID_POTENTIOMTER = 126;
 
 const uint8_t MSG_ID_ULTRASONIC_LED = 127;
 const uint8_t MSG_ID_IR_AVOID_LED = 128;
+const uint8_t MSG_ID_LED_LINE_FOLLOWER = 129;
+const uint8_t MSG_ID_LED_LINE_FOLLOWER_LIGHT = 130;
 
 const uint8_t MSG_ID_DC_SPEED = 200;
 const uint8_t MSG_ID_DC_MOVE = 201;
 const uint8_t MSG_ID_SERVO = 202;
 const uint8_t MSG_ID_DC_130_SPEED = 204;
+const uint8_t MSG_ID_ENCODER_RUN = 205;
+const uint8_t MSG_ID_ENCODER_RUN_SPEED = 206;
 
 int searchServoPin(int pin){
 	for(int i=0;i<MAX_SERVO_COUNT;i++){
@@ -697,7 +703,7 @@ void doMp3SetVolume(char *cmd)
 	mp3.reset(port);
 	mp3.appointVolume(index);
 }
-
+/*
 void doOledSetSize(char *cmd)
 {
 	int port = nextInt(&cmd);
@@ -731,6 +737,36 @@ void doOledClear(char *cmd)
 	int port = nextInt(&cmd);
 	oled.reset(port);
 	oled.clearScreen();
+}
+//*/
+void doEncoderRun(char *cmd)
+{
+	int port = nextInt(&cmd);
+	int speed = nextInt(&cmd);
+	encoderMotor.reset(port);
+	encoderMotor.run(speed);
+}
+
+void doEncoderRunSpeed(char *cmd)
+{
+	int port = nextInt(&cmd);
+	int speed = nextInt(&cmd);
+	encoderMotor.reset(port);
+	encoderMotor.runSpeed(speed);
+}
+
+void getLedLineFollower(char *cmd)
+{
+	int port = nextInt(&cmd);
+	ledLineFollower.reset(port);
+	Serial.println(ledLineFollower.readSensor());
+}
+void doLedLineFollowerLight(char *cmd)
+{
+	int port = nextInt(&cmd);
+	bool isOn = nextInt(&cmd);
+	ledLineFollower.reset(port);
+	ledLineFollower.showLED(isOn);
 }
 
 void doStopAll(char *cmd)
@@ -959,6 +995,7 @@ void parseMcode(char *cmd)
 		case MSG_ID_MP3_SET_VOLUME:
 			handler = doMp3SetVolume;
 			break;
+      /*
 		case MSG_ID_OLED_SET_SIZE:
 			handler = doOledSetSize;
 			break;
@@ -970,6 +1007,20 @@ void parseMcode(char *cmd)
 			break;
 		case MSG_ID_OLED_CLEAR:
 			handler = doOledClear;
+			break;
+      //*/
+		case MSG_ID_ENCODER_RUN:
+			handler = doEncoderRun;
+			break;
+		case MSG_ID_ENCODER_RUN_SPEED:
+			handler = doEncoderRunSpeed;
+			break;
+		case MSG_ID_LED_LINE_FOLLOWER:
+			queryFlag = true;
+			handler = getLedLineFollower;
+			break;
+		case MSG_ID_LED_LINE_FOLLOWER_LIGHT:
+			handler = doLedLineFollowerLight;
 			break;
 		default:
 			return;
