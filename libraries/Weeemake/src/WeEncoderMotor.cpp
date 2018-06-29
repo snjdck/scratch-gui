@@ -34,7 +34,7 @@ void WeEncoderMotor::run(int16_t speed)
 	 _EncoderMotor.write_byte(0x02);
      _EncoderMotor.reset();
      _EncoderMotor.write_byte(motor_flag);
-     _EncoderMotor.write_byte((uint8_t)(speed/2.5));
+     _EncoderMotor.write_byte((uint8_t)(speed/2.55));
      delayMicroseconds(500);
   }
   else
@@ -44,7 +44,7 @@ void WeEncoderMotor::run(int16_t speed)
 	  _EncoderMotor.write_byte(0x02);
 	  _EncoderMotor.reset();
       _EncoderMotor.write_byte(motor_flag);
-      _EncoderMotor.write_byte((uint8_t)(100-speed/2.5));
+      _EncoderMotor.write_byte((uint8_t)(100-speed/2.55));
       delayMicroseconds(500);
 	
   }
@@ -102,22 +102,25 @@ void WeEncoderMotor:: move(uint8_t speed,long position)
        delayMicroseconds(500);
 }
 
+/* speed unit RPM */
 void WeEncoderMotor:: runSpeed(int16_t speed)
 {
-	if((last_speed != speed)&&(speed!=0))
-	  {
-	    last_speed = speed;
-	  }
-	  else
-	  {
-	    return;
-	  }
+	//rpm -> pulse/50ms
+	speed = int16_t(speed * 0.45);
+	if(last_speed == speed){
+		return;
+	}
+	if (speed == 0){
+		run(0);
+		return;
+	}
+	last_speed = speed;
 
-	  _EncoderMotor.reset();
-	  _EncoderMotor.write_byte(0x07);
-	  _EncoderMotor.reset();
-       _EncoderMotor.write_byte((uint8_t)speed);
-	  _EncoderMotor.write_byte((uint8_t)(speed>>8));
+	_EncoderMotor.reset();
+	_EncoderMotor.write_byte(0x07);
+	_EncoderMotor.reset();
+	_EncoderMotor.write_byte((uint8_t)speed);
+	_EncoderMotor.write_byte((uint8_t)(speed>>8));
 
 }
 void WeEncoderMotor::setAccurary(uint8_t num)   //>=1
