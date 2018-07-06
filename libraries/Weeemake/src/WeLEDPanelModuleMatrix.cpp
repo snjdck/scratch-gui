@@ -115,6 +115,9 @@ void WeLEDPanelModuleMatrix::showBitmap(int8_t x, int8_t y, uint8_t *data)
 
 void WeLEDPanelModuleMatrix::showLine(uint8_t x,uint8_t buffer)
 {
+  if(x < 0 || x >= panel_width){
+  	return;
+  }
   if(_WeLEDPanel.reset()!=0)
    return;
   _WeLEDPanel.write_byte(0x03);
