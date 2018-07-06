@@ -32,7 +32,13 @@ void WeMP3::appointVolume(uint8_t num)
 	_WeMP3.write_byte(num);
 	delay(60);
 }
-
+void WeMP3::prevMusic(void)
+{
+   if(_WeMP3.reset()!=0)
+       return ;
+    _WeMP3.write_byte(0x09);
+    delay(60);
+}
 void WeMP3::nextMusic(void)
 {
 	if(_WeMP3.reset()!=0)
