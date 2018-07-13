@@ -12,15 +12,16 @@ public:
 
   void run(int16_t speed);
   void stop(void);
+  void runTo(int16_t speed);
 
   
 private:
 	WeOneWire _130DCMotor;
-	volatile uint8_t dc_dir_pin;
-    volatile uint8_t dc_pwm_pin;
+	//volatile uint8_t dc_dir_pin;
+  //  volatile uint8_t dc_pwm_pin;
     int16_t  last_speed=0;
-    uint8_t  onBoard_flag=0;
-	uint8_t  motor_flag=0;
+  //  uint8_t  onBoard_flag=0;
+	//uint8_t  motor_flag=0;
 };
 
 #endif
