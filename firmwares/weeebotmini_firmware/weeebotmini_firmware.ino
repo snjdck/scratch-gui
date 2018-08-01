@@ -8,7 +8,7 @@
 #define NTD6 495
 #define NTD7 556
 
-#define FIRMWARE_VERSION 2
+#define FIRMWARE_VERSION 3
 
 #define MAX_SERVO_COUNT 4
 #define LED_MATRIX_WIDTH 14
@@ -46,7 +46,7 @@ WeTiltSwitch tilt;
 WeRelay relay;
 WeWaterAtomizer waterAtomizer;
 WeMP3 mp3;
-WeOLED oled;
+//WeOLED oled;
 WeLEDLineFollower ledLineFollower;
 
 Servo servos[MAX_SERVO_COUNT];
@@ -282,7 +282,7 @@ void doDcSpeed(char *cmd)
 void doDc130Speed(char *cmd)
 {
 	dc130.reset(nextInt(&cmd));
-	dc130.run(nextInt(&cmd));
+	dc130.runTo(nextInt(&cmd));
 }
 
 void doServo(char *cmd)
@@ -730,7 +730,7 @@ void doMp3SetVolume(char *cmd)
 	mp3.reset(port);
 	mp3.appointVolume(index);
 }
-
+/*
 void doOledSetSize(char *cmd)
 {
 	int port = nextInt(&cmd);
@@ -765,7 +765,7 @@ void doOledClear(char *cmd)
 	oled.reset(port);
 	oled.clearScreen();
 }
-
+*/
 void getLedLineFollower(char *cmd)
 {
 	int port = nextInt(&cmd);
@@ -1011,6 +1011,7 @@ void parseMcode(char *cmd)
 		case MSG_ID_MP3_SET_VOLUME:
 			handler = doMp3SetVolume;
 			break;
+/*
 		case MSG_ID_OLED_SET_SIZE:
 			handler = doOledSetSize;
 			break;
@@ -1023,6 +1024,7 @@ void parseMcode(char *cmd)
 		case MSG_ID_OLED_CLEAR:
 			handler = doOledClear;
 			break;
+//*/
 		case MSG_ID_LED_LINE_FOLLOWER:
 			queryFlag = true;
 			handler = getLedLineFollower;
@@ -1033,9 +1035,12 @@ void parseMcode(char *cmd)
 		default:
 			return;
 	}
-	Serial.write(cmd, strlen(cmd));
+	if(queryFlag){
+		Serial.write(cmd, strlen(cmd));
+	}
 	handler(cmd);
 	if(!queryFlag){
+		Serial.write(cmd, strlen(cmd));
 		Serial.println("OK");
 	}
 }

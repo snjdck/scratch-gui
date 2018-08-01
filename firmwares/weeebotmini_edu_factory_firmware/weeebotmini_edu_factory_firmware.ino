@@ -37,13 +37,13 @@ byte mode = MODE_A;
 enum{STOP, RUN_F, RUN_B, RUN_L, RUN_R}
 motor_sta = STOP;
 
-int moveSpeed = 150;
+int moveSpeed = 255;
 
-bool RGBUlt_flag = false;
+byte RGBUlt_flag = false;
 
 long command_timestamp = 0;
 uint8_t prev_mode = mode;
-bool prev_RGBUlt_flag = RGBUlt_flag;
+byte prev_RGBUlt_flag = RGBUlt_flag;
 int prev_moveSpeed = moveSpeed;
 bool bluetoothMode = false;
 
@@ -53,7 +53,7 @@ void handle_command(uint8_t value)
 	switch(value)
 	{
 	case IR_CONTROLLER_A:
-		moveSpeed = 150;
+		moveSpeed = 255;
 		mode = MODE_A;
 		Stop();
 		buzzer.tone2(NTD1, 300);
@@ -85,7 +85,11 @@ void handle_command(uint8_t value)
 		buzzer.tone2(NTD6, 300);
 		break;
 	case IR_CONTROLLER_OK:
-		RGBUlt_flag = !RGBUlt_flag;
+		RGBUlt_flag = (RGBUlt_flag + 1) % 3;
+		if(RGBUlt_flag == 0){
+			ultraSensor.setColor1(0, 0, 0);
+    		ultraSensor.setColor2(0, 0, 0);
+		}
 		buzzer.tone2(NTD6, 300);
 		break;
 	case IR_CONTROLLER_UP:
@@ -224,7 +228,7 @@ void loop()
 	case MODE_C: modeC(); break;
 	case MODE_F: modeF(); break;
 	}
-	if(RGBUlt_flag){
+	if(RGBUlt_flag == 1){
 		mode_RGBult();
 	}
 }
@@ -264,13 +268,13 @@ void modeB()
 
 void modeC()
 {
-	const uint8_t base = 640;
+	const int base = 640;
 	static uint8_t line_speed = 250;
 	static uint8_t flag = 0;
 
 	lineFollower.startRead();
-	bool L_IN = lineFollower.readSensor1() > base;
-	bool R_IN = lineFollower.readSensor2() > base;
+	bool L_IN = lineFollower.readSensor1() < base;
+	bool R_IN = lineFollower.readSensor2() < base;
 
 	if(L_IN && R_IN){
 		motor_run(line_speed, line_speed);
@@ -452,7 +456,9 @@ void handle_serial_command(char *cmd)
 			prev_mode = mode;
 
 			mode = MODE_A;
-			RGBUlt_flag = false;
+			RGBUlt_flag = 0;
+			ultraSensor.setColor1(0, 0, 0);
+    		ultraSensor.setColor2(0, 0, 0);
 			motor_run(0, 0);
 			buzzer.tone2(NTD1, 300);
 		}else{
