@@ -416,6 +416,20 @@ void handle_serial_command(char *cmd)
 		ledPanel.turnOnDot(x, y);
 		return;
 	}
+	if(isCmd(cmd, "BZ")){
+		int note = nextInt(&cmd);
+		int hz   = nextInt(&cmd);
+		buzzer.tone2(note, hz);
+		return;
+	}
+	if(isCmd(cmd, "RGB")){
+		int index = nextInt(&cmd);
+		int r = nextInt(&cmd);
+		int g = nextInt(&cmd);
+		int b = nextInt(&cmd);
+		IRAvoid.setColor(index, r, g, b);
+		return;
+	}
 	if(isCmd(cmd, "IR")){
 		serial_reply(cmd, "OK");
 		uint8_t code = atoi(cmd + 2);
