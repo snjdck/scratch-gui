@@ -43,7 +43,7 @@ void We130DCMotor::stop(void)
 void We130DCMotor::runTo(int16_t speed)
 {
 	const int DELAY = 20;
-	const int MAX_STEP = 20;
+	const int MAX_STEP = 10;
 
 	int16_t now_speed = last_speed;
 

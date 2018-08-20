@@ -91,7 +91,7 @@ void WeDCMotor::run(int16_t speed)
 	 _DCMotor.write_byte(0x02);
      _DCMotor.reset();
      _DCMotor.write_byte(motor_flag);
-     _DCMotor.write_byte((uint8_t)(speed/2.5));
+     _DCMotor.write_byte((uint8_t)(speed/2.55));
      delayMicroseconds(500);
    }
   }
@@ -127,7 +127,7 @@ void WeDCMotor::run(int16_t speed)
 	  _DCMotor.write_byte(0x02);
 	  _DCMotor.reset();
       _DCMotor.write_byte(motor_flag);
-      _DCMotor.write_byte((uint8_t)(100-speed/2.5));
+      _DCMotor.write_byte((uint8_t)(100-speed/2.55));
       delayMicroseconds(500);
 	}
   }
