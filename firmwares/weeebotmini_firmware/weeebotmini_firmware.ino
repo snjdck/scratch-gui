@@ -8,11 +8,12 @@
 #define NTD6 495
 #define NTD7 556
 
-#define FIRMWARE_VERSION 3
+#define FIRMWARE_VERSION "0.5"
 
 #define MAX_SERVO_COUNT 4
 #define LED_MATRIX_WIDTH 14
 #define DEFAULT_IR_PIN OnBoard_IR
+#define BATTERY_PIN A6
 
 const uint8_t sensor_port[4] = {PORT_A,PORT_B,PORT_C,PORT_D};
 uint8_t sensor_slot[4] = {0};
@@ -24,7 +25,7 @@ WeUltrasonicSensor ultraSensor;
 WeLineFollower lineFollower;
 WeLEDPanelModuleMatrix5_14 ledPanel;
 WeDCMotor dc;
-We130DCMotor dc130;
+We130DCMotor dc130[MAX_SERVO_COUNT];
 WeTemperature ts;
 WeRGBLed led;
 WeRGBLED_RJ led_RJ11;
@@ -57,6 +58,7 @@ const uint8_t MSG_ID_LED_MATRIX_PIXEL_SHOW = 1;
 const uint8_t MSG_ID_LED_MATRIX_PIXEL_HIDE = 2;
 const uint8_t MSG_ID_LED_MATRIX_CLEAR = 3;
 const uint8_t MSG_ID_QUERY_VERSION = 5;
+const uint8_t MSG_ID_BATTERY = 6;
 const uint8_t MSG_ID_BOARD_IR = 7;
 const uint8_t MSG_ID_BOARD_LIGHT = 8;
 const uint8_t MSG_ID_BOARD_RGB = 9;
@@ -281,8 +283,14 @@ void doDcSpeed(char *cmd)
 
 void doDc130Speed(char *cmd)
 {
-	dc130.reset(nextInt(&cmd));
-	dc130.runTo(nextInt(&cmd));
+	int port = nextInt(&cmd);
+	int speed = nextInt(&cmd);
+	for(int i=0; i<MAX_SERVO_COUNT; ++i){
+		if(port != sensor_port[i])
+			continue;
+		dc130[i].runTo(speed);
+		return;
+	}
 }
 
 void doServo(char *cmd)
@@ -780,6 +788,20 @@ void doLedLineFollowerLight(char *cmd)
 	ledLineFollower.showLED(isOn);
 }
 
+void getBattery(char *cmd)
+{
+	const int count = 50;
+	uint16_t value = 0;
+	for(int i=0; i<count; i++){
+		value += analogRead(BATTERY_PIN);
+	}
+	double v = value * 0.00537 / count;
+	v = min(4.1, max(3.0, v));
+	v = (v - 3.0) / 1.2;
+	int percent = round(100 * v);
+	Serial.println(percent);
+}
+
 void doStopAll(char *cmd)
 {
 	//stop motor
@@ -812,6 +834,10 @@ void parseMcode(char *cmd)
 	void (*handler)(char*);
 	switch(atoi(cmd+1))
 	{
+		case MSG_ID_BATTERY:
+			queryFlag = true;
+			handler = getBattery;
+			break;
 		case MSG_ID_BOARD_IR:
 			queryFlag = true;
 			handler = getIR;
@@ -1054,6 +1080,9 @@ void parseCmd(char *cmd)
 
 void onSetup()
 {
+	for(int i=0; i<MAX_SERVO_COUNT; ++i){
+		dc130[i].reset(sensor_port[i]);
+	}
 	pinMode(PORT_A, INPUT);
 	pinMode(PORT_B, INPUT);
 	pinMode(PORT_C, INPUT);
@@ -1062,6 +1091,7 @@ void onSetup()
 	pinMode(MINI_RIGHT_RED, OUTPUT);
 	pinMode(MINI_LEFT_YELLOW, OUTPUT);
 	pinMode(MINI_RIGHT_YELLOW, OUTPUT);
+	pinMode(BATTERY_PIN, INPUT);
 	ir.begin();
 }
 
