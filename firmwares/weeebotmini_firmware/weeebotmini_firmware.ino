@@ -97,6 +97,7 @@ const uint8_t MSG_ID_OLED_CLEAR = 38;
 const uint8_t MSG_ID_STOP_ALL = 99;
 
 const uint8_t MSG_ID_DC_STOP = 102;
+const uint8_t MSG_ID_LINE_FOLLOWER_BOOL = 108;
 const uint8_t MSG_ID_ULTRASONIC_RGB = 109;
 const uint8_t MSG_ID_ULTRASONIC = 110;
 const uint8_t MSG_ID_LINE_FOLLOWER = 111;
@@ -432,6 +433,15 @@ void getLineFollower(char *cmd)
 	lineFollower.reset(port);
 	Serial.println(lineFollower.startRead(index));
 }
+
+void getLineFollowerBool(char *cmd)
+{
+	int port = nextInt(&cmd);
+	int index = nextInt(&cmd);
+	lineFollower.reset(port);
+	printBoolean(lineFollower.startRead(index) < 640);
+}
+
 void doLedMatrixShowNumber(char *cmd)
 {
 	int port = nextInt(&cmd);
@@ -899,6 +909,10 @@ void parseMcode(char *cmd)
 		case MSG_ID_LINE_FOLLOWER:
 			queryFlag = true;
 			handler = getLineFollower;
+			break;
+		case MSG_ID_LINE_FOLLOWER_BOOL:
+			queryFlag = true;
+			handler = getLineFollowerBool;
 			break;
 		case MSG_ID_LED_MATRIX_NUMBER:
 			handler = doLedMatrixShowNumber;
