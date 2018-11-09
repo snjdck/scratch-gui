@@ -93,6 +93,8 @@ const uint8_t MSG_ID_OLED_SHOW_NUMBER = 36;
 const uint8_t MSG_ID_OLED_SHOW_STRING = 37;
 const uint8_t MSG_ID_OLED_CLEAR = 38;
 
+const uint8_t MSG_ID_MP3_PREV_MUSIC = 39;
+
 const uint8_t MSG_ID_STOP_ALL = 99;
 
 const uint8_t MSG_ID_DC_STOP = 102;
@@ -126,6 +128,7 @@ const uint8_t MSG_ID_SERVO = 202;
 const uint8_t MSG_ID_DC_130_SPEED = 204;
 const uint8_t MSG_ID_ENCODER_RUN = 205;
 const uint8_t MSG_ID_ENCODER_RUN_SPEED = 206;
+const uint8_t MSG_ID_ENCODER_MOVE = 207;
 
 int searchServoPin(int pin){
 	for(int i=0;i<MAX_SERVO_COUNT;i++){
@@ -680,6 +683,13 @@ void doMp3NextMusic(char *cmd)
 	mp3.nextMusic();
 }
 
+void doMp3PrevMusic(char *cmd)
+{
+	int port = nextInt(&cmd);
+	mp3.reset(port);
+	mp3.prevMusic();
+}
+
 void doMp3SetDevice(char *cmd)
 {
 	int port = nextInt(&cmd);
@@ -753,6 +763,15 @@ void doEncoderRunSpeed(char *cmd)
 	int speed = nextInt(&cmd);
 	encoderMotor.reset(port);
 	encoderMotor.runSpeed(speed);
+}
+
+void doEncoderMove(char *cmd)
+{
+	int port = nextInt(&cmd);
+	int speed = nextInt(&cmd);
+	int value = nextInt(&cmd);
+	encoderMotor.reset(port);
+	encoderMotor.move(speed, value);
 }
 
 void getLedLineFollower(char *cmd)
@@ -986,6 +1005,9 @@ void parseMcode(char *cmd)
 		case MSG_ID_MP3_NEXT_MUSIC:
 			handler = doMp3NextMusic;
 			break;
+		case MSG_ID_MP3_PREV_MUSIC:
+			handler = doMp3PrevMusic;
+			break;
 		case MSG_ID_MP3_SET_DEVICE:
 			handler = doMp3SetDevice;
 			break;
@@ -1014,6 +1036,9 @@ void parseMcode(char *cmd)
 			break;
 		case MSG_ID_ENCODER_RUN_SPEED:
 			handler = doEncoderRunSpeed;
+			break;
+		case MSG_ID_ENCODER_MOVE:
+			handler = doEncoderMove;
 			break;
 		case MSG_ID_LED_LINE_FOLLOWER:
 			queryFlag = true;

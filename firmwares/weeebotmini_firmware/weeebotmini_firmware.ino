@@ -8,7 +8,7 @@
 #define NTD6 495
 #define NTD7 556
 
-#define FIRMWARE_VERSION "0.5"
+#define FIRMWARE_VERSION "2.7"
 
 #define MAX_SERVO_COUNT 4
 #define LED_MATRIX_WIDTH 14
@@ -94,6 +94,8 @@ const uint8_t MSG_ID_OLED_SHOW_NUMBER = 36;
 const uint8_t MSG_ID_OLED_SHOW_STRING = 37;
 const uint8_t MSG_ID_OLED_CLEAR = 38;
 
+const uint8_t MSG_ID_MP3_PREV_MUSIC = 39;
+
 const uint8_t MSG_ID_STOP_ALL = 99;
 
 const uint8_t MSG_ID_DC_STOP = 102;
@@ -129,6 +131,7 @@ const uint8_t MSG_ID_SERVO = 202;
 const uint8_t MSG_ID_DC_130_SPEED = 204;
 const uint8_t MSG_ID_ENCODER_RUN = 205;
 const uint8_t MSG_ID_ENCODER_RUN_SPEED = 206;
+const uint8_t MSG_ID_ENCODER_MOVE = 207;
 
 int searchServoPin(int pin){
 	for(int i=0;i<MAX_SERVO_COUNT;i++){
@@ -725,6 +728,13 @@ void doMp3NextMusic(char *cmd)
 	mp3.nextMusic();
 }
 
+void doMp3PrevMusic(char *cmd)
+{
+	int port = nextInt(&cmd);
+	mp3.reset(port);
+	mp3.prevMusic();
+}
+
 void doMp3SetDevice(char *cmd)
 {
 	int port = nextInt(&cmd);
@@ -1041,6 +1051,9 @@ void parseMcode(char *cmd)
 			break;
 		case MSG_ID_MP3_NEXT_MUSIC:
 			handler = doMp3NextMusic;
+			break;
+		case MSG_ID_MP3_PREV_MUSIC:
+			handler = doMp3PrevMusic;
 			break;
 		case MSG_ID_MP3_SET_DEVICE:
 			handler = doMp3SetDevice;

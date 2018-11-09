@@ -529,7 +529,7 @@ void serial_reply(char *buffer, char *info)
 void handle_serial_command(char *cmd)
 {
 	if(isCmd(cmd, "VER")){
-		serial_reply(cmd, "weeebot_A_1");
+		serial_reply(cmd, "6in1_A_1");
 		return;
 	}
 	if(isCmd(cmd, "LFA")){

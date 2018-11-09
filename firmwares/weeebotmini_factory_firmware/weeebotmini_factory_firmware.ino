@@ -46,6 +46,9 @@ uint8_t prev_mode = mode;
 byte prev_RGBUlt_flag = RGBUlt_flag;
 int prev_moveSpeed = moveSpeed;
 bool bluetoothMode = false;
+bool isJoystickMode = false;
+int joystickSpeedL = 0;
+int joystickSpeedR = 0;
 
 void handle_command(uint8_t value)
 {
@@ -94,15 +97,19 @@ void handle_command(uint8_t value)
 		break;
 	case IR_CONTROLLER_UP:
 		motor_sta = RUN_F;
+		isJoystickMode = false;
 		break;
 	case IR_CONTROLLER_DOWN:
-		motor_sta = RUN_B;  
+		motor_sta = RUN_B;
+		isJoystickMode = false; 
 		break;
 	case IR_CONTROLLER_RIGHT:
 		motor_sta = RUN_R;
+		isJoystickMode = false;
 		break;
 	case IR_CONTROLLER_LEFT:
 		motor_sta = RUN_L;
+		isJoystickMode = false;
 		break;
 	case IR_CONTROLLER_9:
 		setMoveSpeed(NTDH2, 9);
@@ -164,6 +171,10 @@ void Stop()
 
 void modeA()
 {
+	if(isJoystickMode){
+		motor_run(joystickSpeedL, joystickSpeedR);
+		return;
+	}
 	switch(motor_sta){
 	case RUN_F:	Forward();	break;
 	case RUN_B:	Backward();	break;
@@ -227,6 +238,7 @@ void loop()
 	case MODE_B: modeB(); break;
 	case MODE_C: modeC(); break;
 	case MODE_F: modeF(); break;
+
 	}
 	if(RGBUlt_flag == 1){
 		mode_RGBult();
@@ -428,6 +440,12 @@ void handle_serial_command(char *cmd)
 		int g = nextInt(&cmd);
 		int b = nextInt(&cmd);
 		IRAvoid.setColor(index, r, g, b);
+		return;
+	}
+	if(isCmd(cmd, "JS")){
+		isJoystickMode = true;
+		joystickSpeedL = nextInt(&cmd);
+		joystickSpeedR = nextInt(&cmd);
 		return;
 	}
 	if(isCmd(cmd, "IR")){
