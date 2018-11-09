@@ -1,4 +1,4 @@
-#ifndef _WeEncoderMotor_H
+#ifndef _WeEncoderMotor188_H
 #define _WeEncoderMotor188_H
 
 #include "WePort.h"
