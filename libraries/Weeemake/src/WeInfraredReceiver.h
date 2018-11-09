@@ -127,6 +127,7 @@ public:
   void begin(void);
   void loop();
   bool isKeyPressed(uint8_t key);
+  uint8_t getValue(void);
   ErrorStatus decodeNEC();
    
   

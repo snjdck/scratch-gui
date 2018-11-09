@@ -45,6 +45,7 @@
 #include "WeEncoderMotor.h"
 #include "WeLEDLineFollower.h"
 
+#define PORT_0  (13)
 #define PORT_1  (A0)
 #define PORT_2  (A1)
 #define PORT_3  (A5)

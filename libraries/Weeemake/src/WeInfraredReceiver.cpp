@@ -105,6 +105,11 @@ bool WeInfraredReceiver::isKeyPressed(uint8_t key)
 	return IR_VALUE == key;
 }
 
+uint8_t WeInfraredReceiver::getValue(void)
+{
+  return IR_VALUE;
+}
+
 
 void WeInfraredReceiver::begin(void)
 {

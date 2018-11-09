@@ -673,7 +673,9 @@ void WeLEDPanelModuleMatrix5_14::showNum(float value)
   }
   else if (number==0) 
   {
-      writeChar(9,0,15);
+    writeChar(0,0,3);
+    writeChar(4,0,3);
+    writeChar(9,0,15);
   }
    else
    {

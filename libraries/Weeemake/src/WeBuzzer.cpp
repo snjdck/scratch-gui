@@ -1,11 +1,14 @@
 #include "WeBuzzer.h"
 #include <avr/wdt.h>
 
-uint8_t buzzer_pin;
-
 WeBuzzer::WeBuzzer(uint8_t port)
 {
   buzzer_pin=port;
+}
+
+void WeBuzzer::reset(uint8_t port)
+{
+  buzzer_pin = port;
 }
 
 
