@@ -105,6 +105,7 @@ bool WeOneWire::send(uint8_t id, uint8_t dataLen, byte* data)
 {
   if(reset())return false;
   write_byte(id);
+  if(dataLen == 0)return true;
   if(reset())return false;
   for(int i=0; i<dataLen; ++i)
     write_byte(data[i]);
