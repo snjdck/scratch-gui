@@ -6,6 +6,8 @@
 
 #define DEFAULT_MAX_LED_NUMBER  (32)
 
+void rgbled_sendarray_mask(uint8_t *array, uint16_t length, uint8_t pinmask, uint8_t *port);
+
 struct cRGB
 {
   uint8_t g;
@@ -38,10 +40,10 @@ public:
 	
 	uint16_t count_led;
 	uint8_t *pixels;
-	void rgbled_sendarray_mask(uint8_t *array, uint16_t length, uint8_t pinmask, uint8_t *port);
+	
 
     const volatile uint8_t *ws2812_port;
-    volatile uint8_t *ws2812_port_reg;
+    //volatile uint8_t *ws2812_port_reg;
     uint8_t pinMask;
 
 };

@@ -166,7 +166,7 @@ bool WeRGBLed::setColor(uint8_t index, long value)
 #define w_nop16 w_nop8 w_nop8
 
 
-void WeRGBLed::rgbled_sendarray_mask(uint8_t *data, uint16_t datlen, uint8_t maskhi, uint8_t *port)
+void rgbled_sendarray_mask(uint8_t *data, uint16_t datlen, uint8_t maskhi, uint8_t *port)
 {
   uint8_t curbyte, ctr, masklo;
   uint8_t oldSREG = SREG;
