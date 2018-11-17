@@ -10,18 +10,18 @@ public:
   WeStepperMotor(uint8_t port=0); 
   void reset(uint8_t port=0);
   void setMicroStep(uint8_t value);
-  void setSpeed(uint16_t speed);
-  void moveTo(int16_t value);
-  void move(int16_t value);
-  
+  void setSpeed(uint8_t speed);
+  void moveTo(long value);
+  void move(long value);
+  void stop(void);
+  void setPositionOrigin(void);
+  void enableInfo(void);
+  void run(void);
+  bool isComplete(void);
 private:
-	WeOneWire _WeStepperMotor;
-	volatile uint8_t dc_dir_pin;
-    volatile uint8_t dc_pwm_pin;
-    int16_t  last_speed=0;
-    uint8_t  onBoard_flag=0;
-	uint8_t  motor_flag=0;
-	uint8_t  setPWM_flag=0;
+  WeOneWire _WeStepperMotor;
+  long   last_value=0;
+  uint8_t pin;
 };
 
 #endif
