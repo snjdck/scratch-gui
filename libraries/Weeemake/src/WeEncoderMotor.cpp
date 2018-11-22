@@ -74,6 +74,7 @@ void WeEncoderMotor:: stop(void)
      _EncoderMotor.reset();
      _EncoderMotor.write_byte(motor_flag);
      _EncoderMotor.write_byte(0);
+     last_speed = 300;
 }
 void WeEncoderMotor:: moveTo(uint8_t speed,long position)
 {  
@@ -86,6 +87,7 @@ void WeEncoderMotor:: moveTo(uint8_t speed,long position)
 	  _EncoderMotor.write_byte((uint8_t)(position>>16));
 	  _EncoderMotor.write_byte((uint8_t)(position>>24));
        delayMicroseconds(500);
+        last_speed = 300;
     
 }
 void WeEncoderMotor:: move(uint8_t speed,long position)
@@ -100,6 +102,7 @@ void WeEncoderMotor:: move(uint8_t speed,long position)
 	  _EncoderMotor.write_byte((uint8_t)(position>>16));
 	  _EncoderMotor.write_byte((uint8_t)(position>>24));
        delayMicroseconds(500);
+        last_speed = 300;
 }
 
 /* speed unit RPM */
