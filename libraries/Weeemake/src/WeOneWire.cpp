@@ -122,6 +122,11 @@ bool WeOneWire::recv(uint8_t id, uint8_t dataLen, byte* data)
   return true;
 }
 
+bool WeOneWire::send(uint8_t id)
+{
+  send(id, 0, 0);
+}
+
 
 
 

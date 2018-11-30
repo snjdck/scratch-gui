@@ -21,7 +21,7 @@ public:
    void write_byte(uint8_t v);
    
    uint8_t read_byte(void);
-
+   bool send(uint8_t id);
    bool send(uint8_t id, uint8_t dataLen, byte* data);
    bool recv(uint8_t id, uint8_t dataLen, byte* data);
 
