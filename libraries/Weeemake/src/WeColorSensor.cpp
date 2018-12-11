@@ -2,8 +2,9 @@
 
 
 WeColorSensor::WeColorSensor(uint8_t port)
+:wb_flag(false)
 {
-  _WeColorSensor.reset(port);
+  reset(port);
 }
 void WeColorSensor::reset(uint8_t port)
 {
@@ -31,11 +32,11 @@ uint16_t WeColorSensor::showRedData(void)
 }
 uint16_t WeColorSensor::showGreenData(void)
 {
-  return Greenvalue;
+  return wb_flag ? Greenvalue : (Greenvalue / 2.2);
 }
 uint16_t WeColorSensor::showBlueData(void)
 {
-  return Bluevalue;
+  return wb_flag ? Bluevalue : (Bluevalue / 1.2);
 }
 uint16_t WeColorSensor::showColorData(void)
 {
@@ -48,6 +49,7 @@ void WeColorSensor::whitebalance(void)
        return ;
     _WeColorSensor.write_byte(0x04);
     delayMicroseconds(3000);
+    wb_flag = true;
 }
 
 void WeColorSensor::turnOnLight(void)
@@ -71,9 +73,9 @@ uint16_t WeColorSensor::readValue(uint8_t type)
 {
 	readColorData();
 	switch(type){
-		case 1: return Redvalue;
-		case 2: return Greenvalue;
-		case 3: return Bluevalue;
+		case 1: return showRedData();
+		case 2: return showGreenData();
+		case 3: return showBlueData();
 	}
-	return Colorvalue;
+	return showColorData();
 }

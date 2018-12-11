@@ -27,6 +27,7 @@ private:
      uint16_t Greenvalue;
      uint16_t Bluevalue;
      uint16_t Colorvalue;
+     bool wb_flag;
 };
 
 #endif

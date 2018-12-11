@@ -45,6 +45,12 @@
 #include "WeEncoderMotor.h"
 #include "WeEncoderMotor188.h"
 #include "WeLEDLineFollower.h"
+#include "WeBarometerSensor.h"
+#include "WePM25Sensor.h"
+#include "WeFunnyTouchSensor.h"
+#include "WeUVSensor.h"
+#include "WeWaterSensor.h"
+#include "WeUSBHost.h"
 
 #define PORT_0  (13)
 #define PORT_1  (A0)

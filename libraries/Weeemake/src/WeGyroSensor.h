@@ -17,6 +17,7 @@ public:
   double getGyroX(void);
   double getGyroY(void);
   double getGyroZ(void);
+  void Calibration(void);
   double readValue(uint8_t index);
   double getGyration(uint8_t index);
   double getAcceleration(uint8_t index);

@@ -11,14 +11,14 @@ public:
   WeMP3(uint8_t port=0);
   void reset(uint8_t port=0);
   
-  void appointMusic(uint16_t num);
+  void appointMusic(uint16_t num); 
   void appointVolume(uint8_t num); //0-30
-  void prevMusic(void);
   void nextMusic(void);
   void pause(void);
   void play(void);
   void appointDevice(uint8_t devtype);  //2-TF; 4-FLASH
   uint8_t isOver(void);
+  void prevMusic(void);
 
   
 private:

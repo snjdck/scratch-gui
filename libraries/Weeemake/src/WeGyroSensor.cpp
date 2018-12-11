@@ -14,7 +14,7 @@ void WeGyroSensor::begin(void)
   long xSum = 0, ySum = 0, zSum = 0;
   int8_t return_value;
   uint16_t x = 0;
-  uint16_t num = 500;
+  uint16_t num = 50;
   for(x = 0; x < num; x++)
   {
     if(_WeGyroSensor.reset()!=0)
@@ -33,6 +33,21 @@ void WeGyroSensor::begin(void)
   gyrYoffs = ySum / num;
   gyrZoffs = zSum / num;
   
+}
+
+void WeGyroSensor::Calibration(void)
+{
+    if(_WeGyroSensor.reset()!=0)
+    return ;
+    _WeGyroSensor.write_byte(0x04);
+    _WeGyroSensor.respond();
+    for(int i=0;i<6;i++)
+    {
+      i2cData[i]=_WeGyroSensor.read_byte();
+    }
+    gyrXoffs = ( (i2cData[1] << 8) | i2cData[0] );
+    gyrYoffs = ( (i2cData[3] << 8) | i2cData[2] );
+    gyrZoffs = ( (i2cData[5] << 8) | i2cData[4] );
 }
 
 void  WeGyroSensor::update(void)

@@ -43,6 +43,11 @@
 #include "WeOLED.h"
 #include "WeEncoderMotor.h"
 #include "WeLEDLineFollower.h"
+#include "WeBarometerSensor.h"
+#include "WePM25Sensor.h"
+#include "WeFunnyTouchSensor.h"
+#include "WeUVSensor.h"
+#include "WeWaterSensor.h"
 
 #define PORT_A  (A5)
 #define PORT_B  (A4)

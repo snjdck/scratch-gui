@@ -24,6 +24,8 @@ void WeMP3::appointMusic(uint16_t num)
 
 void WeMP3::appointVolume(uint8_t num)
 {
+     if(num>22)
+		num=22;
 	if(_WeMP3.reset()!=0)
        return ;
     _WeMP3.write_byte(0x03);
@@ -32,13 +34,7 @@ void WeMP3::appointVolume(uint8_t num)
 	_WeMP3.write_byte(num);
 	delay(60);
 }
-void WeMP3::prevMusic(void)
-{
-   if(_WeMP3.reset()!=0)
-       return ;
-    _WeMP3.write_byte(0x09);
-    delay(60);
-}
+
 void WeMP3::nextMusic(void)
 {
 	if(_WeMP3.reset()!=0)
@@ -82,6 +78,12 @@ uint8_t WeMP3::isOver(void)
 
    return _data1;
 }
-
+void WeMP3::prevMusic(void)
+{
+   if(_WeMP3.reset()!=0)
+       return ;
+    _WeMP3.write_byte(0x09);
+    delay(60);
+}
 
 
