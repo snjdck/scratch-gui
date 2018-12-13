@@ -167,6 +167,7 @@ public:
   uint8_t joystickRy(void);
   uint8_t joystickLx(void);
   uint8_t joystickLy(void);
+  uint8_t joystick(uint8_t, uint8_t);
 private:
   WeSerial *HSerial;
   int16_t stallCount;

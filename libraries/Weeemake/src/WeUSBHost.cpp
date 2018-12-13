@@ -408,6 +408,12 @@ uint8_t WeUSBHost::joystickLy(void)
 	return (js_buf[4]);
 }
 
+uint8_t WeUSBHost::joystick(uint8_t dir, uint8_t axis)
+{
+  uint8_t index = (dir ? 5 : 3) + (axis ? 1 : 0);
+  return js_buf[index];
+}
+
 void WeUSBHost::parseJoystick(uint8_t *buf)
 {
   int i = 0;
