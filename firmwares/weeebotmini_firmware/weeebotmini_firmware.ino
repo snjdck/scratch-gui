@@ -29,7 +29,7 @@ We130DCMotor dc130[MAX_SERVO_COUNT];
 WeTemperature ts;
 WeRGBLed led;
 WeRGBLED_RJ led_RJ11;
-WePotentiomter potentiomter;
+WePotentiometer potentiomter;
 WeBuzzer buzzer(OnBoard_Buzzer);
 WeInfraredReceiver ir(DEFAULT_IR_PIN);
 WeHumiture humitureSensor;
