@@ -9,6 +9,7 @@ void We7SegmentDisplay::reset(uint8_t port)
 {
 	_We7SegmentDisplay.reset(port);
 	resetFlag = true;
+	last_number = 10000;
 }
 
 void We7SegmentDisplay::sendNumber(void)
