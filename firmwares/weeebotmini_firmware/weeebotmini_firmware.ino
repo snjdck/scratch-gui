@@ -8,7 +8,7 @@
 #define NTD6 495
 #define NTD7 556
 
-#define FIRMWARE_VERSION "2.7"
+#define FIRMWARE_VERSION "2.8"
 
 #define MAX_SERVO_COUNT 4
 #define LED_MATRIX_WIDTH 14
@@ -50,8 +50,7 @@ WeMP3 mp3;
 //WeOLED oled;
 WeLEDLineFollower ledLineFollower;
 
-Servo servos[MAX_SERVO_COUNT];
-uint8_t servo_pins[MAX_SERVO_COUNT]={0};
+WeServo servo;
 
 const uint8_t MSG_ID_BOARD_BUTTON = 0;
 const uint8_t MSG_ID_LED_MATRIX_PIXEL_SHOW = 1;
@@ -133,19 +132,6 @@ const uint8_t MSG_ID_ENCODER_RUN = 205;
 const uint8_t MSG_ID_ENCODER_RUN_SPEED = 206;
 const uint8_t MSG_ID_ENCODER_MOVE = 207;
 
-int searchServoPin(int pin){
-	for(int i=0;i<MAX_SERVO_COUNT;i++){
-		if(servo_pins[i] == pin){
-			return i;
-		}
-		if(servo_pins[i]==0){
-			servo_pins[i] = pin;
-			servos[i].attach(pin);
-			return i;
-		}
-	}
-	return 0;
-}
 // parse pin, 0~13 digital, 14.. analog pin
 void parsePinVal(char * cmd, int * pin) {
   if (cmd[0] == 'A') {
@@ -301,10 +287,8 @@ void doServo(char *cmd)
 {
 	int pin = nextInt(&cmd);
 	int v = nextInt(&cmd);
-	int index = searchServoPin(pin);
-	if(v >= 0 && v <= 180){
-		servos[index].write(v);
-	}
+	servo.reset(pin, true);
+	servo.write(v);
 }
 
 void doDcMove(char *cmd)
