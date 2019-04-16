@@ -51,6 +51,9 @@
 #include "WeUVSensor.h"
 #include "WeWaterSensor.h"
 #include "WeUSBHost.h"
+#include "WeGestureSensor.h"
+#include "WeImageRecognition.h"
+#include "WeSpeechRecognition.h"
 
 #define PORT_0  (13)
 #define PORT_1  (A0)
