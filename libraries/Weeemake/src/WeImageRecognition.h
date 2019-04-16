@@ -19,8 +19,8 @@ public:
    void setLabColor3(int8_t minL,int8_t maxL,int8_t minA,int8_t maxA,int8_t minB,int8_t maxB);
    void setLabColor4(int8_t minL,int8_t maxL,int8_t minA,int8_t maxA,int8_t minB,int8_t maxB);
    bool getAppColorPosition(uint8_t mun);
-   void setLineFlowingMode(void);
-   bool getLineFlowingAngle(void);
+   void setLineFollowerMode(void);
+   bool getLineFollowerAngle(void);
    void getAllDatas(uint8_t color);
    void setPixelsThreshold(uint8_t mun);
    bool getColorAllPosition(uint8_t mun);

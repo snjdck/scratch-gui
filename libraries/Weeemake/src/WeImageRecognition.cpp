@@ -163,14 +163,14 @@ bool WeImageRecognition::getAppColorPosition(uint8_t mun)
 	return 1;
 }
 
-void WeImageRecognition::setLineFlowingMode(void)
+void WeImageRecognition::setLineFollowerMode(void)
 {
 	if(_WeImageRecognition.reset()!=0) 
 		return  ;
     _WeImageRecognition.write_byte(0x08);
 	delay(10);
 }
-bool WeImageRecognition::getLineFlowingAngle(void)
+bool WeImageRecognition::getLineFollowerAngle(void)
 {
 	if(_WeImageRecognition.reset()!=0) 
 		return  0;
