@@ -52,6 +52,7 @@
 #include "WeGestureSensor.h"
 #include "WeImageRecognition.h"
 #include "WeSpeechRecognition.h"
+#include "WeVibrationMotor.h"
 
 #define PORT_A  (A5)
 #define PORT_B  (A4)
