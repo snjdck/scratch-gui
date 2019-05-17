@@ -286,8 +286,28 @@ void WeImageRecognition::readData1(void)
 
 }
 
+void WeImageRecognition::setMode(uint8_t mode)
+{
+	if(mode == 0){
+		setAutoTrackingMode();
+	}else{
+		setLineFollowerMode();
+	}
+}
 
-
+uint16_t WeImageRecognition::getValue(uint8_t type)
+{
+	if(type == 0){
+		return centerX;
+	}
+	if(type == 1){
+		return centerY;
+	}
+	if(type == 2){
+		return pixels;
+	}
+	return 0;
+}
 
 
 
