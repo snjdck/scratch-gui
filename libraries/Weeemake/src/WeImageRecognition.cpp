@@ -306,6 +306,9 @@ uint16_t WeImageRecognition::getValue(uint8_t type)
 	if(type == 2){
 		return pixels;
 	}
+	if(type == 3){
+		return angle;
+	}
 	return 0;
 }
 
