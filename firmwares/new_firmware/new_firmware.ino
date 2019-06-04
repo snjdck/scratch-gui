@@ -6,7 +6,7 @@ typedef byte (*Handler)(byte*);
 Handler handlerList[] = {
 	onOneWireGet, onDigitalRead, onAnalogRead, onIR, onTemperature,
 	onOneWireSet, onDigitalWrite, onAnalogWrite, onBuzzer, onRGB, onServo, onStopMotor,
-	onLedMatrix
+	onLedMatrix, onRJ11RGB
 };
 
 Servo servo_list[MAX_SERVO_COUNT];
@@ -239,7 +239,7 @@ byte onStopMotor(byte *cmd)
 
 byte onLedMatrix(byte *cmd)
 {
-	byte type = cmd[0] >> 6;//0-7x21, 1-5x14
+	byte type = cmd[2] >> 6;//0-7x21, 1-5x14
 	byte data[21] = {0};
 	if(type == 0){
 		cast(cmd+2, data, 21, 7, 2);
@@ -249,6 +249,22 @@ byte onLedMatrix(byte *cmd)
 	WeOneWire oneWire(cmd[1]);
 	oneWire.send(2, type ? 14 : 21, data);
 	return 2 + (type ? 9 : 19);
+}
+
+byte onRJ11RGB(byte *cmd)
+{
+	byte index = cmd[0] >> 5;
+	byte data[15] = {0};
+	if(index > 0){
+		memcpy(data+(index-1)*3, cmd+2, 3);
+	}else{
+		for(int i=0; i<15; i+=3){
+			memcpy(data+i, cmd+2, 3);
+		}
+	}
+	WeOneWire oneWire(cmd[1]);
+	oneWire.send(2, 15, data);
+	return 5;
 }
 
 void cast(byte *src, byte *dest, byte destLen, byte bitCountPerByte, byte bitOffset)
