@@ -5,7 +5,8 @@
 typedef byte (*Handler)(byte*);
 Handler handlerList[] = {
 	onOneWireGet, onDigitalRead, onAnalogRead, onIR, onTemperature,
-	onOneWireSet, onDigitalWrite, onAnalogWrite, onBuzzer, onRGB, onServo, onStopMotor
+	onOneWireSet, onDigitalWrite, onAnalogWrite, onBuzzer, onRGB, onServo, onStopMotor,
+	onLedMatrix
 };
 
 Servo servo_list[MAX_SERVO_COUNT];
@@ -234,6 +235,39 @@ byte onStopMotor(byte *cmd)
 		}
 	}
 	return cmd[3] + 4;
+}
+
+byte onLedMatrix(byte *cmd)
+{
+	byte type = cmd[0] >> 6;//0-7x21, 1-5x14
+	byte data[21] = {0};
+	if(type == 0){
+		cast(cmd+2, data, 21, 7, 2);
+	}else{
+		cast(cmd+2, data, 14, 5, 2);
+	}
+	WeOneWire oneWire(cmd[1]);
+	oneWire.send(2, type ? 14 : 21, data);
+	return 2 + (type ? 9 : 19);
+}
+
+void cast(byte *src, byte *dest, byte destLen, byte bitCountPerByte, byte bitOffset)
+{
+	int mask = (1 << bitCountPerByte) - 1;
+	int offset = bitOffset;
+	for(int i=0; i<destLen; ++i){
+		int size = 8 - offset % 8;
+		int index = offset / 8;
+		int diff = size - bitCountPerByte;
+		byte value;
+		if(diff >= 0){
+			value = src[index] >> diff;
+		}else{
+			value = src[index] << -diff | src[index+1] >> diff+8;
+		}
+		dest[i] = value & mask;
+		offset += bitCountPerByte;
+	}
 }
 /*
 byte parseCmdBin(byte *cmd)
