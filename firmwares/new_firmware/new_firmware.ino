@@ -174,11 +174,13 @@ byte onBuzzer(byte *cmd)
 
 byte onRGB(byte *cmd)
 {
+	byte pixels[32*3] = {0};
+
 	uint8_t port = cmd[1];
 	uint8_t led_count = cmd[2];
 	uint8_t buff_size = led_count * 3;
 	uint8_t index = cmd[3];
-	uint8_t *pixels	= (uint8_t*)memset(malloc(buff_size), 0, buff_size);
+
 	if(index == 0){
 		for(int i=0; i<led_count; ++i){//grb
 			memcpy(pixels + i * 3, cmd + 4, 3);
@@ -190,7 +192,6 @@ byte onRGB(byte *cmd)
 	uint8_t *ws2812_port = (uint8_t*)portOutputRegister(digitalPinToPort(port));
 	pinMode(port, OUTPUT);
 	rgbled_sendarray_mask(pixels, buff_size, pin_mask, ws2812_port);
-	free(pixels);
 	return 7;
 }
 
