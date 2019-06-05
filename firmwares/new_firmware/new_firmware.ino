@@ -1,12 +1,13 @@
 #include <WeELF328P.h>
 
+#define VERSION 1
 #define MAX_SERVO_COUNT 10
 
 typedef byte (*Handler)(byte*);
 Handler handlerList[] = {
 	onOneWireGet, onDigitalRead, onAnalogRead, onIR, onTemperature,
 	onOneWireSet, onDigitalWrite, onAnalogWrite, onBuzzer, onRGB, onServo, onStopMotor,
-	onLedMatrix, onRJ11RGB
+	onLedMatrix, onRJ11RGB, 0, onQueryVersion
 };
 
 Servo servo_list[MAX_SERVO_COUNT];
@@ -37,7 +38,22 @@ void loopSerial()
 	int recv_count = Serial.readBytes(buffer + buffer_index, available);
 	if(recv_count <= 0)return;
 	buffer_index += recv_count;
-	if(buffer_index < 6)return;
+	if(buffer[0] == 'X'){
+		if(buffer_index < 20)return;
+		buffer_index = 0;
+		byte data[21] = {0};
+		byte info = buffer[19];
+		cast(buffer+1, data, 21, 7);
+		WeOneWire oneWire((info & 0xF) + (info & 0x10 ? A0 : 0));
+		oneWire.send(2, 21, data);
+		replyVoid(0);
+		return;
+	}
+	if(buffer[0] != 'W'){
+		buffer_index = 0;
+		return;
+	}
+	if(buffer_index < 5)return;
 	if(buffer[2] > buffer_index - 1)return;
 	buffer_index = 0;
 	if(buffer[buffer[2]] != 0xA)return;
@@ -240,16 +256,27 @@ byte onStopMotor(byte *cmd)
 
 byte onLedMatrix(byte *cmd)
 {
-	byte type = cmd[2] >> 6;//0-7x21, 1-5x14
+	bool isSmallMatrix = cmd[0] & 1 << 5;//0-7x21, 1-5x14
+	bool isCompressed = cmd[0] & 1 << 6;
 	byte data[21] = {0};
-	if(type == 0){
-		cast(cmd+2, data, 21, 7, 2);
+	byte length = 2 + (isSmallMatrix ? 9 : 19);
+	if(isCompressed){
+		byte x = cmd[2] >> 3;
+		byte y = cmd[2] & 7;
+		byte w = cmd[3] >> 3;
+		byte h = cmd[3] & 7;
+		cast(cmd+4, data+x, w, h);
+		for(int i=0; i<w; ++i)
+			data[x+i] <<= y;
+		length = 4 + ceil(w * h / 8.0);
+	}else if(isSmallMatrix){
+		cast(cmd+2, data, 14, 5);
 	}else{
-		cast(cmd+2, data, 14, 5, 2);
+		cast(cmd+2, data, 21, 7);
 	}
 	WeOneWire oneWire(cmd[1]);
-	oneWire.send(2, type ? 14 : 21, data);
-	return 2 + (type ? 9 : 19);
+	oneWire.send(2, isSmallMatrix ? 14 : 21, data);
+	return length;
 }
 
 byte onRJ11RGB(byte *cmd)
@@ -268,10 +295,17 @@ byte onRJ11RGB(byte *cmd)
 	return 5;
 }
 
-void cast(byte *src, byte *dest, byte destLen, byte bitCountPerByte, byte bitOffset)
+byte onQueryVersion(byte *cmd)
+{
+	uint8_t msg_index = *(cmd - 2);
+	replyU8(msg_index, VERSION);
+	return 1;
+}
+
+void cast(byte *src, byte *dest, byte destLen, byte bitCountPerByte)
 {
 	int mask = (1 << bitCountPerByte) - 1;
-	int offset = bitOffset;
+	int offset = 0;
 	for(int i=0; i<destLen; ++i){
 		int size = 8 - offset % 8;
 		int index = offset / 8;
