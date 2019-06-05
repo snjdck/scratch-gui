@@ -9,6 +9,7 @@ Handler handlerList[] = {
 	onOneWireSet, onDigitalWrite, onAnalogWrite, onBuzzer, onRGB, onServo, onStopMotor,
 	onLedMatrix, onRJ11RGB, 0, onQueryVersion
 };
+bool replyFlag;
 
 Servo servo_list[MAX_SERVO_COUNT];
 uint8_t servo_pins[MAX_SERVO_COUNT]={0};
@@ -57,19 +58,21 @@ void loopSerial()
 	if(buffer[2] > buffer_index - 1)return;
 	buffer_index = 0;
 	if(buffer[buffer[2]] != 0xA)return;
+	replyFlag = false;
 	int len = 3;
 	while(len < buffer[2]){
 		Handler handler = handlerList[buffer[len] & 0xF];
 		if(!handler)break;
 		len += handler(buffer+len);
 	}
-	if(buffer[3] & 0x10){
+	if(!replyFlag){
 		replyVoid(buffer[1]);
 	}
 }
 
 void replayWait(uint8_t recv_count)
 {
+	replyFlag = true;
 	Serial.print('R');
 	Serial.write(0);
 	Serial.write(5);
@@ -80,6 +83,7 @@ void replayWait(uint8_t recv_count)
 
 void replyVoid(uint8_t index)
 {
+	replyFlag = true;
 	Serial.print('R');
 	Serial.write(index);
 	Serial.write(4);
@@ -89,6 +93,7 @@ void replyVoid(uint8_t index)
 
 void replyU8(uint8_t index, uint8_t value)
 {
+	replyFlag = true;
 	Serial.print('R');
 	Serial.write(index);
 	Serial.write(5);
@@ -99,6 +104,7 @@ void replyU8(uint8_t index, uint8_t value)
 
 void replyU16(uint8_t index, uint16_t value)
 {
+	replyFlag = true;
 	Serial.print('R');
 	Serial.write(index);
 	Serial.write(6);
@@ -110,6 +116,7 @@ void replyU16(uint8_t index, uint16_t value)
 
 void replyBytes(uint8_t index, uint16_t len, byte *data)
 {
+	replyFlag = true;
 	Serial.print('R');
 	Serial.write(index);
 	Serial.write(4 + len);
