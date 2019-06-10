@@ -222,6 +222,17 @@ byte onServo(byte *cmd)
 {
 	uint8_t pin = cmd[1];
 	uint8_t value = cmd[2];
+	if(cmd[0] & 0x10){//mini
+		int pulsewidth = (value * 8) + 400;
+		pinMode(pin, OUTPUT);
+		for(int i=0;i<50;++i){
+			digitalWrite(pin, HIGH);
+			delayMicroseconds(pulsewidth);
+			digitalWrite(pin, LOW);
+			delayMicroseconds(20000 - pulsewidth);
+		}
+		return 3;
+	}
 	for(int i=0;i<MAX_SERVO_COUNT;++i){
 		if(servo_pins[i] == pin){
 			servo_list[i].write(value);
@@ -327,118 +338,3 @@ void cast(byte *src, byte *dest, byte destLen, byte bitCountPerByte)
 		offset += bitCountPerByte;
 	}
 }
-/*
-byte parseCmdBin(byte *cmd)
-{
-	uint8_t msg_index = *(cmd - 2);
-	switch(cmd[0]){
-		case 1://one wire set
-			oneWire.reset(cmd[1]);
-			oneWire.send(cmd[2], cmd[3], cmd+4);
-			return 4 + cmd[3];
-		case 2://one wire get
-			oneWire.reset(cmd[1]);
-			oneWire.recv(cmd[2], cmd[3], cmd+4);
-			replyBytes(msg_index, cmd[3], cmd+4);
-			return 4;
-		case 4://digitalRead
-			pinMode(cmd[1], INPUT);
-			replyU8(msg_index, digitalRead(cmd[1]));
-			return 2;
-		case 5://analogRead
-			pinMode(cmd[1], INPUT);
-			replyU16(msg_index, analogRead(cmd[1]));
-			return 2;
-		case 6://digitalWrite
-			pinMode(cmd[1], OUTPUT);
-			digitalWrite(cmd[1], cmd[2]);
-			return 3;
-		case 7://analogWrite
-			pinMode(cmd[1], OUTPUT);
-			analogWrite(cmd[1], cmd[2]);
-			return 3;
-		case 10://buzzer
-		{
-			uint16_t *frequency = (uint16_t *)(cmd + 2);
-			uint32_t *duration  = (uint32_t *)(cmd + 4);
-			buzzer.reset(cmd[1]);
-			buzzer.tone2(*frequency, *duration);
-			return 8;
-		}
-		case 11://ir
-			ir.reset(cmd[1]);
-			replyU8(msg_index, ir.getValue());
-			return 2;
-		case 12://temperature
-			temperature.reset(cmd[1]);
-			replyU16(msg_index, temperature.temperature() * 16);
-			return 2;
-		case 13://rgb led
-		{
-			uint8_t port = cmd[1];
-			uint8_t led_count = cmd[2];
-			uint8_t buff_size = led_count * 3;
-			uint8_t index = cmd[3];
-			uint8_t *pixels	= (uint8_t*)memset(malloc(buff_size), 0, buff_size);
-			if(index == 0){
-				for(int i=0; i<led_count; ++i){//grb
-					memcpy(pixels + i * 3, cmd + 4, 3);
-				}
-			}else{
-				memcpy(pixels + (index - 1) * 3, cmd + 4, 3);
-			}
-			uint8_t pin_mask = digitalPinToBitMask(port);
-			uint8_t *ws2812_port = (uint8_t*)portOutputRegister(digitalPinToPort(port));
-			pinMode(port, OUTPUT);
-			rgbled_sendarray_mask(pixels, buff_size, pin_mask, ws2812_port);
-			free(pixels);
-			return 7;
-		}
-		case 14://servo
-		{
-			uint8_t pin = cmd[1];
-			uint8_t value = cmd[2];
-			for(int i=0;i<MAX_SERVO_COUNT;++i){
-				if(servo_pins[i] == pin){
-					servo_list[i].write(value);
-					break;
-				}
-				if(servo_pins[i])continue;
-				servo_pins[i] = pin;
-				servo_list[i].attach(pin);
-				servo_list[i].write(value);
-				break;
-			}
-			return 3;
-		}
-		case 3://stop motors
-		{
-			//stop m1 m2
-			pinMode(cmd[1], OUTPUT);
-			pinMode(cmd[3], OUTPUT);
-			digitalWrite(cmd[1], 0);
-			digitalWrite(cmd[3], 0);
-			analogWrite(cmd[2], 0);
-			analogWrite(cmd[4], 0);
-
-			uint8_t sensorType = 0;
-			uint8_t buffer[2] = {0};
-			for(int i=0; i<cmd[5]; ++i){
-				oneWire.reset(cmd[6+i]);
-				if(!oneWire.recv(1, 1, &sensorType))continue;
-				if(sensorType == 6){//编码
-					buffer[0] = 1;
-					oneWire.send(2, 2, buffer);
-					delay(3);
-					buffer[0] = 2;
-					oneWire.send(2, 2, buffer);
-				}else if(sensorType == 7){//步进
-					oneWire.send(7, 0, 0);
-				}
-			}
-			return cmd[5] + 6;
-		}
-	}
-	return 0xFF;
-}
-*/
