@@ -12,7 +12,7 @@ Handler handlerList[] = {
 bool replyFlag;
 
 Servo servo_list[MAX_SERVO_COUNT];
-uint8_t servo_pins[MAX_SERVO_COUNT]={0};
+byte servo_pins[MAX_SERVO_COUNT]={0};
 
 WeInfraredReceiver ir;
 
@@ -54,13 +54,16 @@ void loopSerial()
 		buffer_index = 0;
 		return;
 	}
-	if(buffer_index < 5)return;
-	if(buffer[2] > buffer_index - 1)return;
+	if(buffer_index < 6 || buffer_index < buffer[2])return;
 	buffer_index = 0;
-	if(buffer[buffer[2]] != 0xA)return;
+	int offset = buffer[2] - 2;
+	if(buffer[offset] != 0xA || buffer[offset+1] != checksum(buffer, offset+1)){
+		replyError();
+		return;
+	}
 	replyFlag = false;
 	int len = 3;
-	while(len < buffer[2]){
+	while(len < offset){
 		Handler handler = handlerList[buffer[len] & 0xF];
 		if(!handler)break;
 		len += handler(buffer+len);
@@ -70,59 +73,52 @@ void loopSerial()
 	}
 }
 
-void replayWait(uint8_t recv_count)
+byte checksum(byte *data, int len)
 {
+	int sum = 0;
+	for(int i=0; i<len; ++i)
+		sum += data[i];
+	return sum & 0xFF;
+}
+
+void reply(byte *buffer, byte len)
+{
+	buffer[2] = len;
+	buffer[len-1] = checksum(buffer, len);
+	Serial.write(buffer, len);
 	replyFlag = true;
-	Serial.print('R');
-	Serial.write(0);
-	Serial.write(5);
-	Serial.write(0xFF);
-	Serial.write(recv_count);
-	Serial.write('\n');
+}
+
+void replyError()
+{
+	byte buffer[] = {'R', 0, 0, 0xFF, '\n', 0};
+	reply(buffer, sizeof(buffer));
 }
 
 void replyVoid(uint8_t index)
 {
-	replyFlag = true;
-	Serial.print('R');
-	Serial.write(index);
-	Serial.write(4);
-	Serial.write(0);
-	Serial.write('\n');
+	byte buffer[] = {'R', index, 0, 0, '\n', 0};
+	reply(buffer, sizeof(buffer));
 }
 
 void replyU8(uint8_t index, uint8_t value)
 {
-	replyFlag = true;
-	Serial.print('R');
-	Serial.write(index);
-	Serial.write(5);
-	Serial.write(1);
-	Serial.write(value);
-	Serial.write('\n');
+	byte buffer[] = {'R', index, 0, 1, value, '\n', 0};
+	reply(buffer, sizeof(buffer));
 }
 
 void replyU16(uint8_t index, uint16_t value)
 {
-	replyFlag = true;
-	Serial.print('R');
-	Serial.write(index);
-	Serial.write(6);
-	Serial.write(2);
-	Serial.write(value >> 8);
-	Serial.write(value & 0xFF);
-	Serial.write('\n');
+	byte buffer[] = {'R', index, 0, 2, value >> 8, value & 0xFF, '\n', 0};
+	reply(buffer, sizeof(buffer));
 }
 
-void replyBytes(uint8_t index, uint16_t len, byte *data)
+void replyBytes(uint8_t index, byte len, byte *data)
 {
-	replyFlag = true;
-	Serial.print('R');
-	Serial.write(index);
-	Serial.write(4 + len);
-	Serial.write(3);
-	Serial.write(data, len);
-	Serial.write('\n');
+	byte buffer[30] = {'R', index, 0, 3};
+	memcpy(buffer + 4, data, len);
+	buffer[len+4] = '\n';
+	reply(buffer, len + 6);
 }
 
 byte onOneWireGet(byte *cmd)
