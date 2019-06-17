@@ -43,7 +43,6 @@
 #include "WeMP3.h"
 #include "WeOLED.h"
 #include "WeEncoderMotor.h"
-#include "WeEncoderMotor188.h"
 #include "WeLEDLineFollower.h"
 #include "WeBarometerSensor.h"
 #include "WePM25Sensor.h"
