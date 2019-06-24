@@ -49,6 +49,7 @@ WeWaterAtomizer waterAtomizer;
 WeMP3 mp3;
 //WeOLED oled;
 WeLEDLineFollower ledLineFollower;
+WeFunnyTouchSensor funnyTouch;
 
 WeServo servo;
 
@@ -131,6 +132,8 @@ const uint8_t MSG_ID_DC_130_SPEED = 204;
 const uint8_t MSG_ID_ENCODER_RUN = 205;
 const uint8_t MSG_ID_ENCODER_RUN_SPEED = 206;
 const uint8_t MSG_ID_ENCODER_MOVE = 207;
+
+const uint8_t MSG_ID_FUNNY_TOUCH = 220;
 
 // parse pin, 0~13 digital, 14.. analog pin
 void parsePinVal(char * cmd, int * pin) {
@@ -792,6 +795,13 @@ void doLedLineFollowerLight(char *cmd)
 	ledLineFollower.showLED(isOn);
 }
 
+void getFunnyTouch(char *cmd)
+{
+	int port = nextInt(&cmd);
+	funnyTouch.reset(port);
+	Serial.println(funnyTouch.readValue());
+}
+
 void getBattery(char *cmd)
 {
 	const int count = 50;
@@ -1068,6 +1078,10 @@ void parseMcode(char *cmd)
 			break;
 		case MSG_ID_LED_LINE_FOLLOWER_LIGHT:
 			handler = doLedLineFollowerLight;
+			break;
+		case MSG_ID_FUNNY_TOUCH:
+			queryFlag = true;
+			handler = getFunnyTouch;
 			break;
 		default:
 			return;
