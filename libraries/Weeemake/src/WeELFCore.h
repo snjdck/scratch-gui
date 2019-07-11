@@ -23,7 +23,7 @@
 #include "WeConfig.h"
 #include "LinkedList.h"
 
-#include "WeDCMotor.h"
+#include "WeDCMotor_S.h"
 
 #include "WeLineFollower.h"
 #include "WeUltrasonicSensor.h"
