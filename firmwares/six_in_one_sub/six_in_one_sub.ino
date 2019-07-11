@@ -28,18 +28,43 @@
 #define DEFAULT_IR_PIN PORT_2
 
 
-WeUltrasonicSensor ultraSensor;
-WeLineFollower lineFollower;
-WeLEDPanelModuleMatrix7_21 ledPanel;
-WeDCMotor dc;
-WeRGBLed led(OnBoard_RGB);
-WeRGBLed& rgb = led;
-
+WeRGBLed rgb(OnBoard_RGB);
+WeInfraredReceiver ir(PORT_2);
 WeBuzzer buzzer(OnBoard_Buzzer);
-WeInfraredReceiver ir(DEFAULT_IR_PIN);
+
+WeRGBLed& led= rgb;
+WeDCMotor dc;
+
+WeUltrasonicSensor ultraSensor(NC);
+WeLineFollower lineFollower(NC);
+WeLEDPanelModuleMatrix7_21 ledPanel(NC);
 
 WeDCMotor MotorL(M2);
 WeDCMotor MotorR(M1);
+
+enum{MODE_A, MODE_B, MODE_C, MODE_D, MODE_E, MODE_F};
+byte mode = MODE_A;
+
+enum{STOP, RUN_F, RUN_B, RUN_L, RUN_R}
+motor_sta = STOP;
+
+int moveSpeed = 150;
+//int& line_speed = moveSpeed;
+
+int speedSetLeft = 0;
+int speedSetRight = 0;
+
+bool speed_flag = false;
+byte RGBUlt_flag = false;
+
+long command_timestamp = 0;
+uint8_t prev_mode = mode;
+byte prev_RGBUlt_flag = RGBUlt_flag;
+int prev_moveSpeed = moveSpeed;
+bool bluetoothMode = false;
+bool isJoystickMode = false;
+int joystickSpeedL = 0;
+int joystickSpeedR = 0;
 
 const uint8_t MSG_ID_BOARD_BUTTON = 0;
 const uint8_t MSG_ID_LED_MATRIX_PIXEL_SHOW = 1;
@@ -468,30 +493,6 @@ void parseMcode(char *cmd)
 	}
 }
 
-
-enum{MODE_A, MODE_B, MODE_C, MODE_D, MODE_E, MODE_F};
-byte mode = MODE_A;
-
-enum{STOP, RUN_F, RUN_B, RUN_L, RUN_R}
-motor_sta = STOP;
-
-int moveSpeed = 150;
-
-int speedSetLeft = 0;
-int speedSetRight = 0;
-
-bool speed_flag = false;
-byte RGBUlt_flag = false;
-
-long command_timestamp = 0;
-uint8_t prev_mode = mode;
-byte prev_RGBUlt_flag = RGBUlt_flag;
-int prev_moveSpeed = moveSpeed;
-bool bluetoothMode = false;
-bool isJoystickMode = false;
-int joystickSpeedL = 0;
-int joystickSpeedR = 0;
-
 void handle_command(uint8_t value)
 {
   command_timestamp = millis();
@@ -532,6 +533,7 @@ void handle_command(uint8_t value)
   case IR_CONTROLLER_E:   
     speed_flag = true;
     moveSpeed = 255;
+    mode = MODE_E;
     buzzer.tone2(NTD5, 300);
     break;       
   case IR_CONTROLLER_F:
@@ -641,11 +643,11 @@ void Backward()
 }
 void TurnLeft()
 {
-   doRun(0, moveSpeed);
+   doRun(-moveSpeed, moveSpeed);
 }
 void TurnRight()
 {
-   doRun(moveSpeed, 0);
+   doRun(moveSpeed,-moveSpeed);
 }
 void Stop()
 {
@@ -757,7 +759,7 @@ void loopSensor()
 
 void loop()
 {
-  ErrorStatus ir_result = ir.loop();
+   ErrorStatus ir_result = ir.loop();
   if(bluetoothMode){
     get_serial_command();
   }else if(Serial.available()){
@@ -773,6 +775,7 @@ void loop()
   case MODE_A: modeA(); break;
   case MODE_B: modeB(); break;
   case MODE_C: modeC(); break;
+  case MODE_E: modeE(); break;
   case MODE_F: modeF(); break;
   }
   if(RGBUlt_flag == 1){
@@ -819,7 +822,7 @@ void modeB()
 void modeC()
 {
   const int base = 500;
-  static uint8_t line_speed = 100;
+  //static uint8_t line_speed = 100;
   static uint8_t flag = 0;
 
   lineFollower.startRead();
@@ -827,27 +830,27 @@ void modeC()
   bool R_IN = lineFollower.readSensor2() < base;
 
   if(L_IN && R_IN){
-    motor_run(line_speed, line_speed);
-    ++line_speed;
+    motor_run(moveSpeed, moveSpeed);
   }else if(L_IN && !R_IN){
     flag = 1;
-    motor_run(line_speed, line_speed);
-    ++line_speed;
+    motor_run(moveSpeed, moveSpeed);
   }else if(!L_IN && R_IN){
     flag = 2;
-    motor_run(line_speed, line_speed);
-    ++line_speed;
+    motor_run(moveSpeed, moveSpeed);
   }else if(flag == 1){
-    motor_run(-line_speed, line_speed);
-    line_speed -= 20;
+    motor_run(-moveSpeed, moveSpeed);
   }else if(flag == 2){
-    motor_run(line_speed, -line_speed);
-    line_speed -= 20;
+    motor_run(moveSpeed, -moveSpeed);
+
   }
-  if(line_speed < 150)
-    line_speed = 150;
-  else if(line_speed > 160)
-    line_speed = 160;
+}
+
+void modeE()
+{
+  Forward();
+  delay(3000);
+  mode = MODE_A;
+  moveSpeed = 150;
 }
 
 void modeF()
@@ -936,6 +939,7 @@ void get_serial_command()
   }
 }
 
+
 bool isCmd(char *buffer, char *cmd)
 {
   while(*cmd){
@@ -957,7 +961,7 @@ void serial_reply(char *buffer, char *info)
 void handle_serial_command(char *cmd)
 {
   if(isCmd(cmd, "VER")){
-    serial_reply(cmd, "weeebot_A_1");
+    serial_reply(cmd, "6in1_A_1");
     return;
   }
   if(isCmd(cmd, "LFA")){
@@ -980,12 +984,14 @@ void handle_serial_command(char *cmd)
     return;
   }
   if(isCmd(cmd, "BZ")){
+    serial_reply(cmd, "OK");
     int note = nextInt(&cmd);
     int hz   = nextInt(&cmd);
     buzzer.tone2(note, hz);
     return;
   }
   if(isCmd(cmd, "RGB")){
+    serial_reply(cmd, "OK");
     int index = nextInt(&cmd);
     int r = nextInt(&cmd);
     int g = nextInt(&cmd);
@@ -994,9 +1000,16 @@ void handle_serial_command(char *cmd)
     return;
   }
   if(isCmd(cmd, "JS")){
+    serial_reply(cmd, "OK");
     isJoystickMode = true;
     joystickSpeedL = nextInt(&cmd);
     joystickSpeedR = nextInt(&cmd);
+    return;
+  }
+  if(isCmd(cmd, "US")){
+    uint8_t d = ultraSensor.distanceCm();
+    Serial.write(cmd, strlen(cmd));
+    Serial.println(d);
     return;
   }
   if(isCmd(cmd, "IR")){
@@ -1027,4 +1040,3 @@ void handle_serial_command(char *cmd)
     parseMcode(cmd);
   }
 }
-
