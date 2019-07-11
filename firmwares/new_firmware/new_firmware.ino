@@ -1,4 +1,5 @@
 #include <WeELF328P.h>
+#include <WeInfraredSender.h>
 
 #define VERSION 1
 #define MAX_SERVO_COUNT 10
@@ -7,7 +8,7 @@ typedef byte (*Handler)(byte*);
 Handler handlerList[] = {
 	onOneWireGet, onDigitalRead, onAnalogRead, onIR, onTemperature,
 	onOneWireSet, onDigitalWrite, onAnalogWrite, onBuzzer, onRGB, onServo, onStopMotor,
-	onLedMatrix, onRJ11RGB, 0, onQueryVersion
+	onLedMatrix, onRJ11RGB, onIR_Sender, onQueryVersion
 };
 bool replyFlag;
 
@@ -189,6 +190,13 @@ byte onBuzzer(byte *cmd)
 	WeBuzzer buzzer(cmd[1]);
 	buzzer.tone2(*frequency, *duration);
 	return 6;
+}
+
+byte onIR_Sender(byte *cmd)
+{
+	WeInfraredSender sender(cmd[1]);
+	sender.send_nec_message(cmd[3], cmd[2]);
+	return 4;
 }
 
 byte onRGB(byte *cmd)
