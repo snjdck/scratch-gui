@@ -73,6 +73,7 @@
 #include "WeSpeechRecognition.h"
 #include "WeInfraredSender.h"
 
+#include "WeBluetoothController.h"
 #include "WeAdapter.h"
 
 #define PORT_A  (A1)

@@ -53,6 +53,8 @@
 #include "WeImageRecognition.h"
 #include "WeSpeechRecognition.h"
 #include "WeVibrationMotor.h"
+#include "WeBluetoothController.h"
+#include "WeAdapter.h"
 
 #define PORT_A  (A5)
 #define PORT_B  (A4)
