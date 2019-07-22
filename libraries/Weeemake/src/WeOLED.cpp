@@ -38,6 +38,11 @@ void WeOLED::fullScreen(void)
   delayMicroseconds(3000);
 }
 
+void WeOLED::showString(uint8_t X_position, uint8_t Y_position, String str)
+{
+	showString(X_position, Y_position, str.c_str());
+}
+
 void WeOLED::showString(uint8_t X_position,uint8_t Y_position,char *str)
 {
 	uint8_t number_of_Str;
@@ -71,7 +76,8 @@ void WeOLED::show8dot(uint8_t X_position,uint8_t Y_position,uint8_t buffer)
 }
 void WeOLED::sendNum(uint8_t X_position,uint8_t Y_position,uint8_t Num)
 {
-   if(_WeOLED.reset()!=0)
+   
+if(_WeOLED.reset()!=0)
      return;
 	_WeOLED.write_byte(0x05);
     if(_WeOLED.reset()!=0)
