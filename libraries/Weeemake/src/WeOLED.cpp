@@ -43,7 +43,7 @@ void WeOLED::showString(uint8_t X_position, uint8_t Y_position, String str)
 	showString(X_position, Y_position, str.c_str());
 }
 
-void WeOLED::showString(uint8_t X_position,uint8_t Y_position,char *str)
+void WeOLED::showString(uint8_t X_position,uint8_t Y_position,const char *str)
 {
 	uint8_t number_of_Str;
 	if(_WeOLED.reset()!=0)
