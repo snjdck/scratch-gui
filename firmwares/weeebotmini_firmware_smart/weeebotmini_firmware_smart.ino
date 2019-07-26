@@ -20,16 +20,16 @@ uint8_t sensor_slot[4] = {0};
 WeOneWire portDetect;
 
 WeIRAvoidSensor IRAvoid;
-WeSingleLineFollower singleLF;
+//WeSingleLineFollower singleLF;
 WeUltrasonicSensor ultraSensor;
 WeLineFollower lineFollower;
-//WeLEDPanelModuleMatrix5_14 ledPanel;
+WeLEDPanelModuleMatrix5_14 ledPanel;
 WeDCMotor dc;
 We130DCMotor dc130[MAX_SERVO_COUNT];
 WeTemperature ts;
 WeRGBLed led;
 WeRGBLED_RJ led_RJ11;
-WePotentiometer potentiomter;
+//WePotentiometer potentiomter;
 WeBuzzer buzzer(OnBoard_Buzzer);
 WeInfraredReceiver ir(DEFAULT_IR_PIN);
 WeHumiture humitureSensor;
@@ -37,17 +37,17 @@ WeTouchSensor touchSensor;
 We7SegmentDisplay segmentDisplaySensor;
 We4LEDButton button4led;
 WePIRSensor pir;
-WeColorSensor colorSensor;
+//WeColorSensor colorSensor;
 WeFlameSensor flameSensor;
 WeLimitSwitch limitSwitch;
 WeJoystick joystick;
 WeCompassSensor compassSensor;
-WeGyroSensor gyro;
+//WeGyroSensor gyro;
 WeTiltSwitch tilt;
-WeRelay relay;
+//WeRelay relay;
 WeWaterAtomizer waterAtomizer;
 WeMP3 mp3;
-//WeOLED oled;
+WeOLED oled;
 WeLEDLineFollower ledLineFollower;
 
 WeServo servo;
@@ -380,14 +380,14 @@ void getIRAvoid(char *cmd)
 	IRAvoid.reset(port);
 	printBoolean(IRAvoid.isObstacle());
 }
-
+/*
 void getSingleLineFollower(char *cmd)
 {
 	int port = nextInt(&cmd);
 	singleLF.reset(port);
 	Serial.println(singleLF.read());
 }
-
+*/
 void doIRAvoidRGB(char *cmd)
 {
 	int port = nextInt(&cmd);
@@ -443,7 +443,7 @@ void getLineFollowerBool(char *cmd)
 	lineFollower.reset(port);
 	printBoolean(lineFollower.startRead(index) < 640);
 }
-/*
+
 void doLedMatrixShowNumber(char *cmd)
 {
 	int port = nextInt(&cmd);
@@ -507,7 +507,7 @@ void doLedMatrixClear(char *cmd)
 	ledPanel.reset(port);
 	ledPanel.clearScreen();
 }
-*/
+
 void doBackLed(char *cmd)
 {
 	int pin = nextInt(&cmd);
@@ -577,14 +577,14 @@ void doSingleLed(char *cmd)
 	pinMode(port, OUTPUT);
 	digitalWrite(port, isOn);
 }
-
+/*
 void getPotentiomter(char *cmd)
 {
 	int port = nextInt(&cmd);
 	potentiomter.reset(port);
 	Serial.println(potentiomter.readAnalog());
 }
-
+*/
 void doQueryVersion(char *cmd)
 {
 	Serial.println(FIRMWARE_VERSION);
@@ -613,7 +613,7 @@ void getPIR(char *cmd)
 	pir.reset(port);
 	printBoolean(pir.readSensor());
 }
-
+/*
 void setColorSensorWhiteBalance(char *cmd)
 {
 	int port = nextInt(&cmd);
@@ -636,7 +636,7 @@ void getColorSensorValue(char *cmd)
 	colorSensor.reset(port);
 	Serial.println(colorSensor.readValue(type));
 }
-
+*/
 void getFlameValue(char *cmd)
 {
 	int port = nextInt(&cmd);
@@ -667,7 +667,7 @@ void getCompass(char *cmd)
 	compassSensor.reset(port);
 	Serial.println(compassSensor.readValue(index));
 }
-
+/*
 void getGyro(char *cmd)
 {
 	int port = nextInt(&cmd);
@@ -675,7 +675,7 @@ void getGyro(char *cmd)
 	gyro.reset(port);
 	Serial.println(gyro.readValue(index));
 }
-
+*/
 void getTilt(char *cmd)
 {
 	int port = nextInt(&cmd);
@@ -683,7 +683,7 @@ void getTilt(char *cmd)
 	tilt.reset(port);
 	printBoolean(tilt.readSensor(index));
 }
-
+/*
 void setRelay(char *cmd)
 {
 	int port = nextInt(&cmd);
@@ -691,7 +691,7 @@ void setRelay(char *cmd)
 	relay.reset(port);
 	relay.setNC(isOn);
 }
-
+*/
 void setWaterAtomizer(char *cmd)
 {
 	int port = nextInt(&cmd);
@@ -758,7 +758,7 @@ void doMp3SetVolume(char *cmd)
 	mp3.reset(port);
 	mp3.appointVolume(index);
 }
-/*
+
 void doOledSetSize(char *cmd)
 {
 	int port = nextInt(&cmd);
@@ -793,7 +793,7 @@ void doOledClear(char *cmd)
 	oled.reset(port);
 	oled.clearScreen();
 }
-*/
+
 void getLedLineFollower(char *cmd)
 {
 	int port = nextInt(&cmd);
@@ -933,8 +933,8 @@ void doStopAll(char *cmd)
 			ultraSensor.setColor1(0,0,0);
 			ultraSensor.setColor2(0,0,0);
 		}else if(3 == sensor_slot[i]){
-			//ledPanel.reset(sensor_port[i]);
-			//ledPanel.clearScreen();
+			ledPanel.reset(sensor_port[i]);
+			ledPanel.clearScreen();
 		}
 	}
 }
@@ -1015,7 +1015,7 @@ void parseMcode(char *cmd)
 			queryFlag = true;
 			handler = getLineFollowerBool;
 			break;
-		/*case MSG_ID_LED_MATRIX_NUMBER:
+		case MSG_ID_LED_MATRIX_NUMBER:
 			handler = doLedMatrixShowNumber;
 			break;
 		case MSG_ID_LED_MATRIX_TIME:
@@ -1026,11 +1026,11 @@ void parseMcode(char *cmd)
 			break;
 		case MSG_ID_LED_MATRIX_BITMAP:
 			handler = doLedMatrixShowBitmap;
-			break;*/
+			break;
 		case MSG_ID_STOP_ALL:
 			handler = doStopAll;
 			break;
-		/*case MSG_ID_LED_MATRIX_PIXEL_SHOW:
+		case MSG_ID_LED_MATRIX_PIXEL_SHOW:
 			handler = doLedMatrixShowPixel;
 			break;
 		case MSG_ID_LED_MATRIX_PIXEL_HIDE:
@@ -1038,11 +1038,11 @@ void parseMcode(char *cmd)
 			break;
 		case MSG_ID_LED_MATRIX_CLEAR:
 			handler = doLedMatrixClear;
-			break;*/
-		case MSG_ID_SINGLE_LINE_FOLLOWER:
+			break;
+		/*case MSG_ID_SINGLE_LINE_FOLLOWER:
 			queryFlag = true;
 			handler = getSingleLineFollower;
-			break;
+			break;*/
 		case MSG_ID_IR_AVOID:
 			queryFlag = true;
 			handler = getIRAvoid;
@@ -1053,10 +1053,10 @@ void parseMcode(char *cmd)
 		case MSG_ID_SINGLE_LED:
 			handler = doSingleLed;
 			break;
-		case MSG_ID_POTENTIOMTER:
+		/*case MSG_ID_POTENTIOMTER:
 			queryFlag = true;
 			handler = getPotentiomter;
-			break;
+			break;*/
 		case MSG_ID_RJ11_RGB:
 			handler = doRj11RGB;
 			break;
@@ -1090,7 +1090,7 @@ void parseMcode(char *cmd)
 			queryFlag = true;
 			handler = getPIR;
 			break;
-		case MSG_ID_COLOR_WHITE_BALANCE:
+		/*case MSG_ID_COLOR_WHITE_BALANCE:
 			handler = setColorSensorWhiteBalance;
 			break;
 		case MSG_ID_COLOR_SET_LIGHT:
@@ -1099,7 +1099,7 @@ void parseMcode(char *cmd)
 		case MSG_ID_COLOR_VALUE:
 			queryFlag = true;
 			handler = getColorSensorValue;
-			break;
+			break;*/
 		case MSG_ID_FLAME:
 			queryFlag = true;
 			handler = getFlameValue;
@@ -1116,17 +1116,17 @@ void parseMcode(char *cmd)
 			queryFlag = true;
 			handler = getCompass;
 			break;
-		case MSG_ID_GYRO:
+		/*case MSG_ID_GYRO:
 			queryFlag = true;
 			handler = getGyro;
-			break;
+			break;*/
 		case MSG_ID_TILT:
 			queryFlag = true;
 			handler = getTilt;
 			break;
-		case MSG_ID_RELAY:
+		/*case MSG_ID_RELAY:
 			handler = setRelay;
-			break;
+			break;*/
 		case MSG_ID_WATER_ATOMIZER:
 			handler = setWaterAtomizer;
 			break;
@@ -1155,7 +1155,6 @@ void parseMcode(char *cmd)
 		case MSG_ID_MP3_SET_VOLUME:
 			handler = doMp3SetVolume;
 			break;
-/*
 		case MSG_ID_OLED_SET_SIZE:
 			handler = doOledSetSize;
 			break;
@@ -1168,7 +1167,6 @@ void parseMcode(char *cmd)
 		case MSG_ID_OLED_CLEAR:
 			handler = doOledClear;
 			break;
-//*/
 		case MSG_ID_LED_LINE_FOLLOWER:
 			queryFlag = true;
 			handler = getLedLineFollower;
