@@ -55,6 +55,7 @@
 #include "WeVibrationMotor.h"
 #include "WeBluetoothController.h"
 #include "WeAdapter.h"
+#include "WeWifi.h"
 
 #define PORT_0  (13)
 #define PORT_1  (A0)
