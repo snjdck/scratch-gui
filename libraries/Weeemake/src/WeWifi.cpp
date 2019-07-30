@@ -12,7 +12,7 @@ void WeWifi::reset(uint8_t port)
 
 void WeWifi::setWIFIinfo(char *ssid, char *pwd)  //wifi名称，密码(8-64个字节)
 {
-   if(_WeWifi.reset()!=0)
+   if(_WeWifi.reset()!=0)
     	return ;
     _WeWifi.write_byte(0x03);
 	if(_WeWifi.reset()!=0)
@@ -37,10 +37,10 @@ void WeWifi::setWIFIinfo(char *ssid, char *pwd)  //wifi名称，密码(8-64个字节)
 	_WeWifi.write_byte(0x00);
 }
 
-void WeWifi::initAP(void)
+void WeWifi::initAP(uint8_t chl)
 {
 	CWMode(2);
-	CWSAP(11,2);
+	CWSAP(chl,2);
 	CIPMux(1);
 	setPort(6602);
 }

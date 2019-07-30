@@ -15,7 +15,7 @@ public:
   void reset(uint8_t port=0);
 
   void setWIFIinfo(char *ssid, char *pwd);
-  void initAP(void);
+  void initAP(uint8_t chl=11);
   void CWSAP(uint8_t chl,uint8_t ecn);
   void CIPMux(bool mode);
   void initSTA(void);
