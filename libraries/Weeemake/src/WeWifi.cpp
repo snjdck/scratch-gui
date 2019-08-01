@@ -159,7 +159,11 @@ void WeWifi::setPort(uint16_t port) //¶Ë¿ÚºÅ
 	delay(500);
 }
 
-bool WeWifi::write(char *words,uint8_t linkID)  //linkID 0~4 
+bool WeWifi::write(String words,uint8_t linkID)  //linkID 0~4 
+{
+	return write(words.c_str(), linkID);
+}
+bool WeWifi::write(const char *words,uint8_t linkID)  //linkID 0~4 
 {
 	unsigned long time;
 	time = millis();

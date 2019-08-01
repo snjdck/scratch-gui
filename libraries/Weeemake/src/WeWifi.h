@@ -25,7 +25,8 @@ public:
   void initSlave(char *ip,uint16_t port);
   void CWMode(uint8_t mode);
   void setPort(uint16_t port);
-  bool write(char *words,uint8_t linkID=0); 
+  bool write(const char *words,uint8_t linkID=0); 
+  bool write(String words,uint8_t linkID=0); 
   bool readString(void);
   bool readIP(void);
   void restore(void);
