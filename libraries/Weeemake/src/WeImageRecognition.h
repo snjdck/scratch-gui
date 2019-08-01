@@ -27,6 +27,8 @@ public:
    bool getColorAllPosition(uint8_t num);
    bool getAppColorAllPosition(uint8_t num);
    void resetColorMode(uint8_t time);
+   void fastMode(bool mode);
+   bool getFacePositon(void);
 
    void setMode(uint8_t);
    uint16_t getValue(uint8_t);

@@ -290,6 +290,33 @@ void WeImageRecognition::resetColorMode(uint8_t time)  //1-20
 	delay(6000);
 }
 
+bool WeImageRecognition::getFacePositon(void)
+{
+	if(_WeImageRecognition.reset()!=0) 
+		return  0;
+    _WeImageRecognition.write_byte(0x10);
+	_WeImageRecognition.respond();
+   	uartData[0]=_WeImageRecognition.read_byte();
+	if (uartData[0]==0xff) return 0;
+	for(uint8_t i=1;i<4;i++)
+	{
+	   uartData[i]=_WeImageRecognition.read_byte();
+	}
+	centerX=(uartData[0]<<8)|uartData[1];
+	centerY=(uartData[2]<<8)|uartData[3];
+	return 1;
+}
+
+void WeImageRecognition::fastMode(bool mode)
+{
+	if(_WeImageRecognition.reset()!=0) 
+		return  ;
+    _WeImageRecognition.write_byte(0x11);
+	if(_WeImageRecognition.reset()!=0) 
+		return  ;
+	_WeImageRecognition.write_byte(mode);
+}
+
 
 void WeImageRecognition::setMode(uint8_t mode)
 {
