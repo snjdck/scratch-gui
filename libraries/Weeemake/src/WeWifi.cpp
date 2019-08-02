@@ -204,6 +204,7 @@ bool WeWifi::readString(void)
 		rx_buffer[i]=_WeWifi.read_byte();
 		if(rx_buffer[i]==0) return 1;
 	}
+	return 0;
 }
 
 bool WeWifi::readIP(void)
@@ -229,6 +230,7 @@ bool WeWifi::readIP(void)
 			return 1;
 		}
 	}
+	return 0;
 }
 
 void WeWifi::restore(void)  //ª÷∏¥≥ˆ≥ß…Ë÷√

@@ -122,6 +122,25 @@ bool WeOneWire::recv(uint8_t id, uint8_t dataLen, byte* data)
   return true;
 }
 
+bool WeOneWire::write(uint8_t id, uint8_t dataLen, byte* data, long time, uint8_t writeDataLen, byte* writeData)
+{
+  if(reset())return false;
+  write_byte(id);
+  if(writeDataLen > 0){
+    if(reset())return false;
+    for(int i=0; i<writeDataLen; ++i)
+      write_byte(writeData[i]);
+  }
+  if(dataLen == 0)return true;
+  unsigned long timestamp = millis() + time;
+  while(respond())
+    if(millis() >= timestamp)
+      return false;
+  for(int i=0; i<dataLen; ++i)
+    data[i] = read_byte();
+  return true;
+}
+
 bool WeOneWire::send(uint8_t id)
 {
   send(id, 0, 0);
