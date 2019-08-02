@@ -327,6 +327,15 @@ void WeImageRecognition::setMode(uint8_t mode)
 	}
 }
 
+bool WeImageRecognition::updateMode(uint8_t mode)
+{
+	if(mode == 0){
+		return getAutoPosition();
+	}else{
+		return getLineFollowerAngle();
+	}
+}
+
 uint16_t WeImageRecognition::getValue(uint8_t type)
 {
 	if(type == 0){

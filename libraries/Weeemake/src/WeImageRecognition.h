@@ -31,6 +31,7 @@ public:
    bool getFacePositon(void);
 
    void setMode(uint8_t);
+   bool updateMode(uint8_t);
    uint16_t getValue(uint8_t);
    
    int8_t  minL, maxL, minA, maxA, minB, maxB,angle;
