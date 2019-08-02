@@ -126,6 +126,12 @@ byte onOneWireGet(byte *cmd)
 {
 	uint8_t msg_index = *(cmd - 2);
 	WeOneWire oneWire(cmd[1]);
+	uint8_t len = *(cmd - 1);
+	if(len > 9){
+		oneWire.write(cmd[2], cmd[3], cmd + len - 5, cmd[4] * 1000, len - 10, cmd + 5);
+		replyBytes(msg_index, cmd[3], cmd + len - 5);
+		return len - 5;
+	}
 	oneWire.recv(cmd[2], cmd[3], cmd+4);
 	replyBytes(msg_index, cmd[3], cmd+4);
 	return 4;
