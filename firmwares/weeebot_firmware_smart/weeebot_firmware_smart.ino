@@ -28,7 +28,7 @@ We130DCMotor dc130;
 WeTemperature ts;
 WeRGBLed led;
 WeRGBLED_RJ led_RJ11;
-//WePotentiometer potentiomter;
+WePotentiometer potentiomter;
 WeBuzzer buzzer(OnBoard_Buzzer);
 WeInfraredReceiver ir(DEFAULT_IR_PIN);
 WeHumiture humitureSensor;
@@ -549,14 +549,14 @@ void doSingleLed(char *cmd)
 	pinMode(port, OUTPUT);
 	digitalWrite(port, isOn);
 }
-/*
+
 void getPotentiomter(char *cmd)
 {
 	int port = nextInt(&cmd);
 	potentiomter.reset(port);
 	Serial.println(potentiomter.readAnalog());
 }
-*/
+
 void doQueryVersion(char *cmd)
 {
 	Serial.println(FIRMWARE_VERSION);
@@ -1022,10 +1022,10 @@ void parseMcode(char *cmd)
 		case MSG_ID_SINGLE_LED:
 			handler = doSingleLed;
 			break;
-		/*case MSG_ID_POTENTIOMTER:
+		case MSG_ID_POTENTIOMTER:
 			queryFlag = true;
 			handler = getPotentiomter;
-			break;*/
+			break;
 		case MSG_ID_RJ11_RGB:
 			handler = doRj11RGB;
 			break;
