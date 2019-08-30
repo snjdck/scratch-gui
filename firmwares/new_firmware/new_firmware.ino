@@ -1,7 +1,7 @@
 #include <WeELF328P.h>
 #include <WeInfraredSender.h>
 
-#define VERSION 1
+#define VERSION 2
 #define MAX_SERVO_COUNT 10
 
 typedef byte (*Handler)(byte*);
@@ -228,19 +228,28 @@ byte onRGB(byte *cmd)
 	return 7;
 }
 
+void doServo(uint8_t pin, int n, int pulsewidth)
+{
+	pinMode(pin, OUTPUT);
+	for(int i=0;i<n;++i){
+		digitalWrite(pin, HIGH);
+		delayMicroseconds(pulsewidth);
+		digitalWrite(pin, LOW);
+		delayMicroseconds(20000 - pulsewidth);
+	}
+}
+
 byte onServo(byte *cmd)
 {
 	uint8_t pin = cmd[1];
+	if(cmd[0] & 0x20){//360
+		uint16_t* valuePtr = (uint16_t*)(cmd + 2);
+		doServo(pin, 200, *valuePtr * 4.3 + 400);
+		return 4;
+	}
 	uint8_t value = cmd[2];
 	if(cmd[0] & 0x10){//mini
-		int pulsewidth = (value * 8) + 400;
-		pinMode(pin, OUTPUT);
-		for(int i=0;i<50;++i){
-			digitalWrite(pin, HIGH);
-			delayMicroseconds(pulsewidth);
-			digitalWrite(pin, LOW);
-			delayMicroseconds(20000 - pulsewidth);
-		}
+		doServo(pin, 50, value * 8 + 400);
 		return 3;
 	}
 	for(int i=0;i<MAX_SERVO_COUNT;++i){
