@@ -57,6 +57,7 @@
 #include "WeBluetoothController.h"
 #include "WeAdapter.h"
 #include "WeWifi.h"
+#include "WeServo360.h"
 
 #define PORT_0  (13)
 #define PORT_1  (A0)
