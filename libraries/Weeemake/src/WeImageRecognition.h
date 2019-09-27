@@ -18,6 +18,7 @@ public:
    void setLabColor2(int8_t minL,int8_t maxL,int8_t minA,int8_t maxA,int8_t minB,int8_t maxB);
    void setLabColor3(int8_t minL,int8_t maxL,int8_t minA,int8_t maxA,int8_t minB,int8_t maxB);
    void setLabColor4(int8_t minL,int8_t maxL,int8_t minA,int8_t maxA,int8_t minB,int8_t maxB);
+   void setLabColor5(int8_t minL,int8_t maxL,int8_t minA,int8_t maxA,int8_t minB,int8_t maxB);
    bool getAppColorPosition(uint8_t num);
    void setLineFollowerMode(void);
    void setLineFollowerThreshold(uint8_t min,uint8_t max);
@@ -27,8 +28,10 @@ public:
    bool getColorAllPosition(uint8_t num);
    bool getAppColorAllPosition(uint8_t num);
    void resetColorMode(uint8_t time);
-   void fastMode(bool mode);
    bool getFacePositon(void);
+   void fastMode(bool mode=1);
+   void setTrafficSignsMode(uint8_t num=100);
+   uint8_t getTrafficSigns(void);
 
    void setMode(uint8_t);
    bool updateMode(uint8_t);

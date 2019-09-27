@@ -48,7 +48,9 @@ bool WeImageRecognition::getAutoPosition(void)
 	}
 	centerX=(uartData[0]<<8)|uartData[1];
 	centerY=(uartData[2]<<8)|uartData[3];
-	pixels=(uartData[4]<<8)|uartData[5];	
+	pixels=(uartData[4]<<8)|uartData[5];
+	if(centerX>320) return 0;
+	if(centerY>240) return 0;
 	//delay(10);
 	return 1;
 }
@@ -58,9 +60,9 @@ bool WeImageRecognition::getColorPosition(uint8_t num)
 	if(_WeImageRecognition.reset()!=0) 
 		return  0;
     _WeImageRecognition.write_byte(0x05|num<<5);
-  //  if(_WeImageRecognition.reset()!=0) 
+ //   if(_WeImageRecognition.reset()!=0) 
 //		return  0;
-//	_WeImageRecognition.write_byte(mun);
+//	_WeImageRecognition.write_byte(num);
 	_WeImageRecognition.respond();
    	uartData[0]=_WeImageRecognition.read_byte();
 	if (uartData[0]==0xff) return 0;
@@ -85,7 +87,7 @@ void WeImageRecognition::setLabColor1(int8_t minL,int8_t maxL,int8_t minA,int8_t
     _WeImageRecognition.write_byte(0x06);
 	if(_WeImageRecognition.reset()!=0) 
 		return  ;
-	_WeImageRecognition.write_byte(0x01);
+	_WeImageRecognition.write_byte(0x00);
 	_WeImageRecognition.write_byte(minL);
 	_WeImageRecognition.write_byte(maxL);
 	_WeImageRecognition.write_byte(minA);
@@ -101,7 +103,7 @@ void WeImageRecognition::setLabColor2(int8_t minL,int8_t maxL,int8_t minA,int8_t
     _WeImageRecognition.write_byte(0x06);
 	if(_WeImageRecognition.reset()!=0) 
 		return  ;
-	_WeImageRecognition.write_byte(0x02);
+	_WeImageRecognition.write_byte(0x01);
 	_WeImageRecognition.write_byte(minL);
 	_WeImageRecognition.write_byte(maxL);
 	_WeImageRecognition.write_byte(minA);
@@ -117,7 +119,7 @@ void WeImageRecognition::setLabColor3(int8_t minL,int8_t maxL,int8_t minA,int8_t
     _WeImageRecognition.write_byte(0x06);
 	if(_WeImageRecognition.reset()!=0) 
 		return  ;
-	_WeImageRecognition.write_byte(0x03);
+	_WeImageRecognition.write_byte(0x02);
 	_WeImageRecognition.write_byte(minL);
 	_WeImageRecognition.write_byte(maxL);
 	_WeImageRecognition.write_byte(minA);
@@ -127,6 +129,22 @@ void WeImageRecognition::setLabColor3(int8_t minL,int8_t maxL,int8_t minA,int8_t
 	delay(10);
 }
 void WeImageRecognition::setLabColor4(int8_t minL,int8_t maxL,int8_t minA,int8_t maxA,int8_t minB,int8_t maxB)
+{
+	if(_WeImageRecognition.reset()!=0) 
+		return  ;
+    _WeImageRecognition.write_byte(0x06);
+	if(_WeImageRecognition.reset()!=0) 
+		return  ;
+	_WeImageRecognition.write_byte(0x03);
+	_WeImageRecognition.write_byte(minL);
+	_WeImageRecognition.write_byte(maxL);
+	_WeImageRecognition.write_byte(minA);
+	_WeImageRecognition.write_byte(maxA);
+	_WeImageRecognition.write_byte(minB);
+	_WeImageRecognition.write_byte(maxB);	
+	delay(10);
+}
+void WeImageRecognition::setLabColor5(int8_t minL,int8_t maxL,int8_t minA,int8_t maxA,int8_t minB,int8_t maxB)
 {
 	if(_WeImageRecognition.reset()!=0) 
 		return  ;
@@ -147,6 +165,7 @@ bool WeImageRecognition::getAppColorPosition(uint8_t num)
 { 
 	if(_WeImageRecognition.reset()!=0) 
 		return  0;
+	num=num-1;
     _WeImageRecognition.write_byte(0x07|num<<5);
 //    if(_WeImageRecognition.reset()!=0) 
 //		return  0;
@@ -161,6 +180,8 @@ bool WeImageRecognition::getAppColorPosition(uint8_t num)
 	centerX=(uartData[0]<<8)|uartData[1];
 	centerY=(uartData[2]<<8)|uartData[3];
 	pixels=(uartData[4]<<8)|uartData[5];
+	if(centerX>320) return 0;
+	if(centerY>240) return 0;
 	//delay(10);
 	return 1;
 }
@@ -226,6 +247,7 @@ bool WeImageRecognition::getColorAllPosition(uint8_t num)
 { 
 	if(_WeImageRecognition.reset()!=0) 
 		return  0;
+	num=num-1;
     _WeImageRecognition.write_byte(0x0b|num<<5);
  //  if(_WeImageRecognition.reset()!=0) 
 //		return  0;
@@ -255,6 +277,7 @@ bool WeImageRecognition::getAppColorAllPosition(uint8_t num)
 { 
 	if(_WeImageRecognition.reset()!=0) 
 		return  0;
+	num=num-1;
     _WeImageRecognition.write_byte(0x0c|num<<5);
  //   if(_WeImageRecognition.reset()!=0) 
 //		return  0;
@@ -289,7 +312,6 @@ void WeImageRecognition::resetColorMode(uint8_t time)  //1-20
 	_WeImageRecognition.write_byte(time);
 	delay(6000);
 }
-
 bool WeImageRecognition::getFacePositon(void)
 {
 	if(_WeImageRecognition.reset()!=0) 
@@ -306,7 +328,6 @@ bool WeImageRecognition::getFacePositon(void)
 	centerY=(uartData[2]<<8)|uartData[3];
 	return 1;
 }
-
 void WeImageRecognition::fastMode(bool mode)
 {
 	if(_WeImageRecognition.reset()!=0) 
@@ -315,6 +336,63 @@ void WeImageRecognition::fastMode(bool mode)
 	if(_WeImageRecognition.reset()!=0) 
 		return  ;
 	_WeImageRecognition.write_byte(mode);
+}
+void WeImageRecognition::setTrafficSignsMode(uint8_t num)
+{
+	setLabColor4(10, 75, 25, 85, -20, 70);
+	setLabColor5(20, 95, -20, 36, -50, -15);
+	setPixelsThreshold(num);
+}
+
+uint8_t WeImageRecognition::getTrafficSigns(void)
+{
+	uint16_t frame_size,red_X,red_Y;
+	float density;
+	uint8_t Tnum=3;
+	if(getAppColorAllPosition(4)==1)
+	{
+		frame_size=high*width;
+		density=(float)pixels/frame_size;
+		//Serial.println(pixels);
+		
+		if((density>0.23)&&(density<0.35)&&(pixels>2000))
+		{
+			//Serial.println(pixels);
+			red_X=centerX;
+			red_Y=centerY;
+			while(Tnum)
+			{
+				Tnum--;
+				//Serial.println(Tnum);
+				if(getAppColorAllPosition(5)==1)
+				{
+					
+					//Serial.println(pixels);
+					//Serial.print(abs(centerX-red_X));
+					//Serial.println('-');
+					//Serial.print(abs(centerY-red_Y));
+					if((abs(centerX-red_X)<30)&&(abs(centerY-red_Y)<30)&&(pixels>2000))
+					{	
+						//Serial.print(abs(centerY-red_Y));
+						frame_size=high*width;
+				        density=(float)pixels/frame_size;
+						//Serial.print(rotation);
+						//Serial.print('-');
+						//Serial.println(density);
+						if((density>0.57)&&(density<0.64)) return 1;
+						if((density>0.51)&&(density<0.57)&&(rotation==0)) return 4;
+						if((density>0.51)&&(density<0.57)&&(rotation==2)) return 3;
+						if((density>0.46)&&(density<0.50)) return 5;
+						if((density>0.40)&&(density<0.45)) return 2;						
+								
+						return 0;
+					}
+				}
+			}
+		}
+		return 0;		
+	}
+	return 0;
 }
 
 
